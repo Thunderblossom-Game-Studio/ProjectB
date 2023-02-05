@@ -17,13 +17,13 @@ public class AICarController : MonoBehaviour
     public DemoAIState currentState = DemoAIState.Chase;
         
     // Test Car Class Called
-    private AITestCar car;
+    protected AITestCar car;
 
     #endregion
 
     [Header("Pathfinding Settings")]
 
-    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] protected NavMeshAgent agent;
     [SerializeField] private GameObject agentDebug;
 
     protected bool newState = false;

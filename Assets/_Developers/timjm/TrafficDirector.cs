@@ -4,43 +4,70 @@ using UnityEngine;
 
 public class TrafficDirector : MonoBehaviour
 {
-    public GameObject ExitOne;
-    public GameObject ExitTwo;
-    public GameObject ExitThree;
-    public GameObject ExitFour;
-    public float NextMarker;
+    public List<GameObject> Exits;
+
+    public int NextMarker;
     public GameObject Next;
-    public float ExitNumber;
-    public bool MultiExit;
+
     public GameObject Car;
+
+    public bool trafficlight = false;
+
+    public bool red = false;
+
+    public float lightMaxTimer = 3f;
+    private float lightTimer = 0f;
+
+    private void Update()
+    {
+        if (trafficlight)
+        {
+            if (red)
+            {
+                lightTimer -= Time.deltaTime;
+
+                if (lightTimer <= 0)
+                {
+                    red = false;
+                }
+            }
+            else
+            {
+                lightTimer += Time.deltaTime;
+
+                if (lightTimer > lightMaxTimer)
+                {
+                    red = true;
+                }
+            }
+        }
+        else
+        {
+            red = false;
+        }
+    }
 
     public void Lane()
     {
-        if( MultiExit == true )
+        if (Exits.Count == 0) return;
+
+        NextMarker = Random.Range(0, Exits.Count);
+
+        Next = Exits[NextMarker];
+
+        Car.GetComponent<TrafficTrigger>().Target = Next;
+    }
+
+    private void OnDrawGizmos()
+    {
+        foreach (GameObject exit in Exits)
         {
-            NextMarker = Random.Range(0f, ExitNumber);
-            NextMarker = (Mathf.Round(NextMarker));
-            if(NextMarker >= ExitNumber)
+            if (exit != null)
             {
-                NextMarker = ExitNumber - 1; 
-            }
-            if (NextMarker == 0)
-            {
-                Next = ExitOne;
-            }
-            if (NextMarker == 1)
-            {
-                Next = ExitTwo;
-            }
-            if (NextMarker == 2)
-            {
-                Next = ExitThree;
-            }
-            if (NextMarker == 3)
-            {
-                Next = ExitFour;
+                // Draws a blue line from this transform to the target
+                Gizmos.color = Color.blue;
+                Gizmos.DrawLine(transform.position, exit.transform.position);
             }
         }
-        Car.GetComponent<TrafficTrigger>().Target = Next;
     }
 }
