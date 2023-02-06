@@ -39,8 +39,9 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
 
     [Header("Video Settings")]
     [SerializeField] private HorizontalSelector screenResolutionSelector;
+    [SerializeField] private Toggle fullScreenToggle;
 
-    [Header("Gamepad Specifics")]
+   [Header("Gamepad Specifics")]
     [SerializeField] private List<GameObject> gamepadSpecifics;
 
     [Header("Keyboard Specifics")]
@@ -56,7 +57,9 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
         SetBindingButtons();
         UpdateBindingVisuals();
         
-        //PopulateScreenResolution();
+        PopulateScreenResolution();
+
+        fullScreenToggle.onValueChanged.AddListener((x) => Screen.fullScreen = x);
     }
 
     protected override void InputManager_OnDeviceChanged(object sender, InputManager.DeviceType deviceType)
