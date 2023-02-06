@@ -24,7 +24,6 @@ public class AICarController : MonoBehaviour
     [Header("Pathfinding Settings")]
 
     [SerializeField] protected NavMeshAgent agent;
-    [SerializeField] private GameObject agentDebug;
 
     protected bool newState = false;
     
@@ -106,11 +105,6 @@ public class AICarController : MonoBehaviour
 
         Evaluate();
 
-        if (Input.GetKeyDown(KeyCode.I) && agentDebug)
-        {
-            agentDebug.SetActive(!agentDebug.activeInHierarchy);
-        }
-
         if (c != currentState && !(currentState == DemoAIState.Evade && (Vector3.Distance(transform.position, agent.destination) < 10))) newState = true;
 
         SwapState();
@@ -149,4 +143,14 @@ public class AICarController : MonoBehaviour
     }
 
     #endregion
+
+    private void OnDrawGizmos()
+    {
+        if (agent)
+        {
+            Gizmos.color = Color.red;
+
+            Gizmos.DrawSphere(agent.transform.position, .5f);
+        }
+    }
 }

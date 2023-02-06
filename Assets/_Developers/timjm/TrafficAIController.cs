@@ -41,7 +41,6 @@ public class TrafficAIController : AICarController
                 if (hit.transform.gameObject != gameObject && Vector3.Distance(transform.position, hit.transform.position) < 4.25f)
                 {
                     CanMove = false;
-                    Debug.Log(hit.transform.gameObject.name);
                 }
             }
         }

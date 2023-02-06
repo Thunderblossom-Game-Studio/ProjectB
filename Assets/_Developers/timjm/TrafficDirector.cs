@@ -22,24 +22,24 @@ public class TrafficDirector : MonoBehaviour
     {
         if (trafficlight)
         {
-            if (red)
-            {
-                lightTimer -= Time.deltaTime;
+            //if (red)
+            //{
+            //    lightTimer -= Time.deltaTime;
 
-                if (lightTimer <= 0)
-                {
-                    red = false;
-                }
-            }
-            else
-            {
-                lightTimer += Time.deltaTime;
+            //    if (lightTimer <= 0)
+            //    {
+            //        red = false;
+            //    }
+            //}
+            //else
+            //{
+            //    lightTimer += Time.deltaTime;
 
-                if (lightTimer > lightMaxTimer)
-                {
-                    red = true;
-                }
-            }
+            //    if (lightTimer > lightMaxTimer)
+            //    {
+            //        red = true;
+            //    }
+            //}
         }
         else
         {
@@ -60,6 +60,10 @@ public class TrafficDirector : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.blue;
+
+        Gizmos.DrawSphere(transform.position, .5f);
+
         foreach (GameObject exit in Exits)
         {
             if (exit != null)
