@@ -618,9 +618,9 @@ namespace FMODUnity
             // Link all known platforms
             Platforms.ForEach(LinkPlatform);
 
-#if UNITY_EDITOR
-            EditorSettings.CheckActiveBuildTarget();
-#endif
+//#if UNITY_EDITOR
+//            EditorSettings.CheckActiveBuildTarget();
+//#endif
         }
 
         private void PopulatePlatformsFromAsset()
