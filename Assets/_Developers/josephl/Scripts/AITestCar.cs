@@ -32,6 +32,17 @@ public class AITestCar : MonoBehaviour
             return;
         }
 
+        /*
+        if (CollisionPrevention.CarCollisionPrevention == true)
+        {
+            maxAccSpeed = 0f;
+        }
+        else
+        {
+            maxAccSpeed = 30f;
+        }
+        */
+
     }
 
     private void FixedUpdate()
