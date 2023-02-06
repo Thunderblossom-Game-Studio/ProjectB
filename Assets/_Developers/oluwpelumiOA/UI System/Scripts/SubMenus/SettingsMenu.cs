@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.EventSystems;
+using UnityEngine.Audio;
 
 public class SettingsMenu : BaseMenu <SettingsMenu>
 {
@@ -32,8 +33,9 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
     [Header("Gamepad")]
     [SerializeField] private BindUI gamepadFireText;
     [SerializeField] private BindUI gamepadInteractText;
-
+    
     [Header("Audio Settings")]
+    [SerializeField] private AudioMixer audioMixer;
 
     [Header("Video Settings")]
     [SerializeField] private HorizontalSelector screenResolutionSelector;
@@ -237,6 +239,43 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
             UpdateBindingVisuals();
             if (InputManager.Instance.GetCurrentDeviceType() == InputManager.DeviceType.KeyboardAndMouse) EventSystem.current.SetSelectedGameObject(null);
         });
+    }
+
+    public void SetMasterVolume(float value)
+    {
+        //SetVolume("Master", value, masterDisplay);
+    }
+
+    public void SetMusicVolume(float value)
+    {
+       // SetVolume("Music", value, musicDisplay);
+    }
+
+    public void SetSfxVolume(float value)
+    {
+      //  SetVolume("Sfx", value, sfxDisplay);
+    }
+
+    void SetVolume(string parameter, float value, Text display)
+    {
+        audioMixer.SetFloat(parameter, Mathf.Log10(value) * 80);
+
+        display.text = (value * 100).ToString("0") + "%";
+    }
+
+    void SaveVolume(string parameter, float value)
+    {
+        PlayerPrefs.SetFloat(parameter, value);
+    }
+    
+    void LoadVolume(string parameter, Slider slider, Text display)
+    {
+        if (PlayerPrefs.HasKey(parameter))
+        {
+            float volume = PlayerPrefs.GetFloat(parameter);
+            slider.value = volume;
+            SetVolume(parameter, volume, display);
+        }
     }
 
     public void ApplyChanges()
