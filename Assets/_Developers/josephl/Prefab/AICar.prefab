@@ -122,6 +122,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AICar
       objectReference: {fileID: 0}
+    - target: {fileID: 5076553779408679790, guid: c18624b5658b9354883a6f68040ac546, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: f2014440aaea6074791b9aa7ad025efb, type: 2}
     m_RemovedComponents:
     - {fileID: 8581620588952657058, guid: c18624b5658b9354883a6f68040ac546, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c18624b5658b9354883a6f68040ac546, type: 3}
@@ -144,7 +148,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   agent: {fileID: 0}
-  agentDebug: {fileID: 0}
 --- !u!4 &6740902542980822745 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5076553779408679779, guid: c18624b5658b9354883a6f68040ac546, type: 3}
