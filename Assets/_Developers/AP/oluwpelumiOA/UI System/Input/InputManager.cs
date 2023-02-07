@@ -135,13 +135,13 @@ public class InputManager : MonoBehaviour
         switch (binding)
         {
             case Binding.Move_Up:
-                return playerInputActions.Player.Move.bindings[1].ToDisplayString();
-            case Binding.Move_Down:
                 return playerInputActions.Player.Move.bindings[2].ToDisplayString();
-            case Binding.Move_Left:
+            case Binding.Move_Down:
                 return playerInputActions.Player.Move.bindings[3].ToDisplayString();
-            case Binding.Move_Right:
+            case Binding.Move_Left:
                 return playerInputActions.Player.Move.bindings[4].ToDisplayString();
+            case Binding.Move_Right:
+                return playerInputActions.Player.Move.bindings[5].ToDisplayString();
                 
             case Binding.Fire:
                 return playerInputActions.Player.Fire.bindings[0].ToDisplayString();
@@ -167,19 +167,19 @@ public class InputManager : MonoBehaviour
         {
             case Binding.Move_Up:
                 inputAction = playerInputActions.Player.Move;
-                bindingIndex = 1;
+                bindingIndex = 2;
                 break;
             case Binding.Move_Down:
                 inputAction = playerInputActions.Player.Move;
-                bindingIndex = 2;
+                bindingIndex = 3;
                 break;
             case Binding.Move_Left:
                 inputAction = playerInputActions.Player.Move;
-                bindingIndex = 3;
+                bindingIndex = 4;
                 break;
             case Binding.Move_Right:
                 inputAction = playerInputActions.Player.Move;
-                bindingIndex = 4;
+                bindingIndex = 5;
                 break;
             case Binding.Fire:
                 inputAction = playerInputActions.Player.Fire;
