@@ -31,8 +31,6 @@ public class CarController : MonoBehaviour
     
     public void HandleMotor(float vInput)
     {
-        if (vechicleResources.GetCurrentFuelNormalized() <= 0) return;
-        
         //Car movement forward and backward
         if (rb.velocity.magnitude < maxCarSpeed) //maximum "speed" to accelerate to
         {
@@ -41,7 +39,7 @@ public class CarController : MonoBehaviour
 
             if (vInput > 0.1f || vInput < -0.1f)
             {
-                    VechicleResources.Instance.BurnResource("Fuel", VechicleResources.Instance._burnRate);
+                    vechicleResources.BurnResource("Fuel", vechicleResources._burnRate);
                     //Debug.Log("Fuel: " + VechicleResources.Instance.GetCurrentFuelNormalized());
             }                       
         }
