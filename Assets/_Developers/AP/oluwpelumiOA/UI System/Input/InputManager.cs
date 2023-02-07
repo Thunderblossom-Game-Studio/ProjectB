@@ -54,6 +54,7 @@ public class InputManager : MonoBehaviour
 
         LoadBinding();    
 
+        //CHANGE BEFORE BUILD
         playerInputActions.General.Enable();
 
         playerInputActions.UI.TabLeft.performed += TabLeft_performed;

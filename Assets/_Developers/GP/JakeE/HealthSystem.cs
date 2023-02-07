@@ -25,8 +25,8 @@ public class HealthSystem : MonoBehaviour, IDamageable
 
     #endregion
 
-    [Viewable] [SerializeField] private bool _isImmune;
-    [Viewable] [SerializeField] private float _currentHealth;
+     [SerializeField] private bool _isImmune;
+     [SerializeField] private float _currentHealth;
 
     [SerializeField] private float _spawnHealth;
     [SerializeField] private float _maximumHealth;
