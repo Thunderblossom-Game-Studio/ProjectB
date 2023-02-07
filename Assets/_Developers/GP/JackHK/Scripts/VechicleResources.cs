@@ -23,6 +23,7 @@ public class VechicleResources : MonoBehaviour
         }
     }
 
+
     private void Start()
     {
         foreach (Resource resource in _resources)
@@ -38,6 +39,10 @@ public class VechicleResources : MonoBehaviour
             if(resource.name == "Fuel")
             {
                 currentFuel = resource._amount;
+                if (GameMenu.Instance)
+                {
+                    GameMenu.GetInstance().UpdateFuelSlider(GetCurrentFuelNormalized());
+                }
             }
         }
     }

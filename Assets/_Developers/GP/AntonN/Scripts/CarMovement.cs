@@ -33,6 +33,7 @@ public class CarMovement : MonoBehaviour
                 {
                     //Debug.Log("Accelerating");
                     VechicleResources.Instance.BurnResource("Fuel", VechicleResources.Instance._burnRate);
+                    Debug.Log("Fuel: " + VechicleResources.Instance.GetCurrentFuelNormalized());
                 }
                 
                 //Car turning

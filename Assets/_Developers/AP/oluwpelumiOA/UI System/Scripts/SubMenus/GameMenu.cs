@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameMenu : BaseMenu<GameMenu>
 {
     [SerializeField] private CanvasGroup buttonHolder;
+    [SerializeField] private Slider carFuelSlider;
 
     public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
     {
@@ -43,5 +45,10 @@ public class GameMenu : BaseMenu<GameMenu>
     {
         if (PauseMenu.Instance && PauseMenu.IsOpened) return;
         PauseMenu.Open();
+    }
+
+    public void UpdateFuelSlider(float value)
+    {
+        carFuelSlider.value = value;
     }
 }

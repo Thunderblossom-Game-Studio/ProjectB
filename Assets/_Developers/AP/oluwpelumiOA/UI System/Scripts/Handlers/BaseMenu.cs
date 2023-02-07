@@ -8,8 +8,9 @@ public abstract class BaseMenu<T> : Menu
 {
     public static BaseMenu<T> Instance { get; private set; }
 
-    public static bool IsOpened { get; private set; }
+    public  static bool IsOpened { get; private set; }
 
+    public static T GetInstance() => (T)Convert.ChangeType(Instance, typeof(T));
 
     protected override void Awake()
     {
