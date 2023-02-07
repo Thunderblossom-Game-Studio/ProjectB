@@ -8,6 +8,7 @@ public class VechicleResources : MonoBehaviour
     public float _burnRate;
 
     public Resource[] _resources;
+    public float currentFuel;
 
 
     private void Awake()
@@ -30,6 +31,17 @@ public class VechicleResources : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        foreach (Resource resource in _resources)
+        {
+            if(resource.name == "Fuel")
+            {
+                currentFuel = resource._amount;
+            }
+        }
+    }
+
     public void GetResourceName(int index)
     {
         Debug.Log(_resources[index]._name);
@@ -46,23 +58,6 @@ public class VechicleResources : MonoBehaviour
                 {
                     resource._amount = resource._maxAmount;
                 }
-                UpdateSlider(resource);
-            }
-        }
-    }
-
-    public void DecreaseResource(string name, float amount)
-    {
-        foreach (Resource resource in _resources)
-        {
-            if (resource._name == name)
-            {
-                resource._amount -= amount;
-                if (resource._amount < 0 && !resource._canBeNegative)
-                {
-                    resource._amount = 0;
-                }
-                UpdateSlider(resource);
             }
         }
     }
@@ -78,14 +73,14 @@ public class VechicleResources : MonoBehaviour
                 {
                     resource._amount = 0;
                 }
-                UpdateSlider(resource);
             }
         }
     }
-
-    private void UpdateSlider(Resource resource)
+    
+    public float GetCurrentFuelNormalized()
     {
-        resource._resourceBar.value = resource._amount / resource._maxAmount;
+        return currentFuel = currentFuel / 100;
     }
+
 }
 

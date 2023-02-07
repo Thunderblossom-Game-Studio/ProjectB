@@ -13,6 +13,8 @@ public class CarMovement : MonoBehaviour
     private float angle = 45f;
     private Rigidbody rb;
 
+    [SerializeField] private float maxCarSpeed;
+
 
     void Start()
     {
@@ -20,19 +22,27 @@ public class CarMovement : MonoBehaviour
     }
 
     public void Accelerate(float hInput, float vInput)
-    {
+    {  
         for (int i = 0; i < CarWheelsCollider.Length; i++)
         {
             //Car movement forward and backward using W/S and Up/Down arrowkeys
-            if (rb.velocity.magnitude < 3) //maximum "speed" to accelerate to
+            if (rb.velocity.magnitude < maxCarSpeed) //maximum "speed" to accelerate to
             {
                 CarWheelsCollider[i].motorTorque = vInput * torque;
+                if (vInput > 0.1f || vInput < -0.1f)
+                {
+                    //Debug.Log("Accelerating");
+                    VechicleResources.Instance.BurnResource("Fuel", VechicleResources.Instance._burnRate);
+                }
+                
                 //Car turning
+                
                 if (i == 0 || i == 1) //First two wheels should be front wheels
                 {
                     CarWheelsCollider[i].steerAngle = hInput * angle; //Turn using A/D and Left/Right arrowkeys
                 }
-                print(rb.velocity.magnitude); //speed of rigidbody
+                
+                //print(rb.velocity.magnitude); //speed of rigidbody
             }
             else
             {

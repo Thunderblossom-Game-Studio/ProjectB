@@ -17,14 +17,14 @@ public class CameraSwitch : MonoBehaviour
 
     void Update()
     {
-        if((Input.GetButtonDown("CamSwitch")) && (cam1Active == true))
+        if((Input.GetKeyDown(KeyCode.Alpha1)) && (cam1Active == true))
         {
             camera1.SetActive(false);
             camera2.SetActive(true);
             cam1Active = false;
             cam2Active = true;
         }
-        else if ((Input.GetButtonDown("CamSwitch")) && (cam2Active == true))
+        else if ((Input.GetKeyDown(KeyCode.Alpha1)) && (cam2Active == true))
         {
             camera2.SetActive(false);
             camera1.SetActive(true);
