@@ -64,6 +64,8 @@ public class InputManager : MonoBehaviour
         playerInputActions.UI.Back.performed += Back_performed;
 
         playerInputActions.General.Pause.performed += Pause_performed;
+        
+        playerInputActions.Player.Enable();
     }
 
     private void OnEnable()

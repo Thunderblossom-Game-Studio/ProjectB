@@ -17,17 +17,22 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform[] CarWheelsMeshes;
     [SerializeField] private GameObject BrakeLightsOff;
     [SerializeField] private GameObject BrakeLightsOn;
+
+    private VechicleResources vechicleResources;
     
     private Rigidbody rb;
 
     private void Awake()
     {
+        vechicleResources = GetComponent<VechicleResources>();
         rb = GetComponent<Rigidbody>();
     }
 
     
     public void HandleMotor(float vInput)
     {
+        if (vechicleResources.GetCurrentFuelNormalized() <= 0) return;
+        
         //Car movement forward and backward
         if (rb.velocity.magnitude < maxCarSpeed) //maximum "speed" to accelerate to
         {
