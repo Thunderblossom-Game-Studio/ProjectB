@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class PlayerCarController : MonoBehaviour
 {
-    CarMovement carMovement;
+    CarController carMovement;
     InputManager inputManager;
+
+
+    float inputH;
 
     private void Awake()
     {
-        carMovement = GetComponent<CarMovement>();    
+        carMovement = GetComponent<CarController>();
+        Debug.Assert(carMovement != null, "CarController not found");
     }
 
     private void Start()
@@ -17,11 +21,11 @@ public class PlayerCarController : MonoBehaviour
         inputManager = InputManager.Instance;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        carMovement.Accelerate(inputManager.HandleMoveInput().ReadValue<Vector2>().x, inputManager.HandleMoveInput().ReadValue<Vector2>().y);
-
-        carMovement.Brake(inputManager.HandleBrakeInput().IsPressed());
+        carMovement.HandleMotor(inputManager.HandleMoveInput().ReadValue<Vector2>().y);
+        carMovement.HandleTurning(inputManager.HandleMoveInput().ReadValue<Vector2>().x);
+        carMovement.HandleBraking(inputManager.HandleBrakeInput().IsPressed());
     }
+    
 }
