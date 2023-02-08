@@ -16,7 +16,7 @@ public class Collectable : MonoBehaviour
     private void OnTriggerEnter(Collider objectCollider)
     {
         if (!_collideLayers.ContainsLayer(objectCollider.gameObject.layer)) return;
-        CollectableManager.Instance.GetCollectable(_collectableType)?.Invoke();
+        CollectableManager.Instance.GetCollectable(_collectableType)?.Invoke(objectCollider.gameObject);
         _onCollect.Invoke();
         if (!_destroyOnCollide) return;
         CollectableManager.Instance.DestroyCollectable(this);

@@ -6,7 +6,7 @@ public partial class CollectableManager : Singleton<CollectableManager>
 {
     [SerializeField] private Collectable _collectablePrefab;
 
-    public Action GetCollectable(CollectableType collectable)
+    public Action<GameObject> GetCollectable(CollectableType collectable)
     {
         switch (collectable)
         {
@@ -30,12 +30,15 @@ public partial class CollectableManager : Singleton<CollectableManager>
         return null;
     }
 
-    private void BoostRefuel()
+    private void BoostRefuel(GameObject collideObject)
     {
-        Debug.Log("boost collectable");
+        if (collideObject.TryGetComponent(out VechicleResources vechicleResources))
+        {
+            vechicleResources.IncreaseResource("Fuel", 100);
+        }
     }
 
-    private void InfiniteBoost()
+    private void InfiniteBoost(GameObject collideObject)
     {
         Debug.Log("infinite boost collectable");
     }
