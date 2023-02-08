@@ -144,7 +144,7 @@ public class AICarController : MonoBehaviour
 
     #endregion
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         if (agent)
         {

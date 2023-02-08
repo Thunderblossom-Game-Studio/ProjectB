@@ -10,6 +10,7 @@ public class PursuingCarController : AICarController
     public CollisionPrevention PreventionCollision;
     public GameObject Target;
 
+    [SerializeField] private float distanceToReset = 50f;
 
 
     [Header("Aggro Range")]
@@ -17,7 +18,7 @@ public class PursuingCarController : AICarController
     [SerializeField] LayerMask Car;
 
     [Header("Patrol Points")]
-    [SerializeField] Vector3[] ListOfPatrolPoints;
+    [SerializeField] Transform[] ListOfPatrolPoints;
     int NextPatrolPoint;
     [SerializeField] float DistanceFromPatrolPoint;
 
@@ -59,7 +60,7 @@ public class PursuingCarController : AICarController
                 {
                     
                     Target = hit.transform.gameObject;
-
+                    Debug.Log(hit.transform.gameObject.name);
 
                 }
             }
@@ -162,7 +163,16 @@ public class PursuingCarController : AICarController
     private void Patrol()
     {
 
-        float DistanceToNext = Vector3.Distance(transform.position, ListOfPatrolPoints[NextPatrolPoint]);
+        if (Vector3.Distance(transform.position, agent.transform.position) > distanceToReset)
+        {
+            Vector3 agentAbove = agent.transform.position;
+
+            agentAbove.y += 2;
+
+            transform.position = agentAbove;
+        }
+
+        float DistanceToNext = Vector3.Distance(transform.position, ListOfPatrolPoints[NextPatrolPoint].position);
 
         if (DistanceToNext <= DistanceFromPatrolPoint)
         {
@@ -175,16 +185,18 @@ public class PursuingCarController : AICarController
 
         }
 
-        agent.SetDestination(ListOfPatrolPoints[NextPatrolPoint]);
+        agent.SetDestination(ListOfPatrolPoints[NextPatrolPoint].position);
 
 
 
     }
 
-    private void OnDrawGizmos()
+    protected override void OnDrawGizmos()
     {
         Gizmos.color = new Color (255,0,0, 255);
         Gizmos.DrawSphere(transform.position, AggroRange);
+
+        base.OnDrawGizmos();
     }
 
 }
