@@ -148,7 +148,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7107115453569018000}
   m_Layer: 0
-  m_Name: JordanAICarTemplate
+  m_Name: ChasingAICarTemplate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -189,10 +189,14 @@ PrefabInstance:
     - target: {fileID: -1608978496140259931, guid: 25a625bef57ce1940ae55a650845ed6c, type: 3}
       propertyPath: agentDebug
       value: 
-      objectReference: {fileID: 1330326869769285958}
+      objectReference: {fileID: 0}
     - target: {fileID: 3723429905662685199, guid: 25a625bef57ce1940ae55a650845ed6c, type: 3}
       propertyPath: owner
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4354470905800460166, guid: 25a625bef57ce1940ae55a650845ed6c, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4800477397086440753, guid: 25a625bef57ce1940ae55a650845ed6c, type: 3}
       propertyPath: shootpoint
@@ -202,9 +206,37 @@ PrefabInstance:
       propertyPath: shotPrefab
       value: 
       objectReference: {fileID: 4073002032850515007, guid: 2383103bfa0cfcd4394d4aac43eb11b4, type: 3}
+    - target: {fileID: 6740902542980822741, guid: 25a625bef57ce1940ae55a650845ed6c, type: 3}
+      propertyPath: m_Drag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6740902542980822741, guid: 25a625bef57ce1940ae55a650845ed6c, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6740902542980822741, guid: 25a625bef57ce1940ae55a650845ed6c, type: 3}
+      propertyPath: m_AngularDrag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6740902542980822741, guid: 25a625bef57ce1940ae55a650845ed6c, type: 3}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6740902542980822742, guid: 25a625bef57ce1940ae55a650845ed6c, type: 3}
       propertyPath: m_Name
       value: AICar
+      objectReference: {fileID: 0}
+    - target: {fileID: 6740902542980822744, guid: 25a625bef57ce1940ae55a650845ed6c, type: 3}
+      propertyPath: rotSpeed
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6740902542980822744, guid: 25a625bef57ce1940ae55a650845ed6c, type: 3}
+      propertyPath: moveMulit
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6740902542980822744, guid: 25a625bef57ce1940ae55a650845ed6c, type: 3}
+      propertyPath: maxAccSpeed
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6740902542980822745, guid: 25a625bef57ce1940ae55a650845ed6c, type: 3}
       propertyPath: m_RootOrder
@@ -250,6 +282,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7353832322195897070, guid: 25a625bef57ce1940ae55a650845ed6c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 70dbb6b38f6773649b15a366db871a89, type: 2}
+    - target: {fileID: 8676667622984374997, guid: 25a625bef57ce1940ae55a650845ed6c, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -1608978496140259931, guid: 25a625bef57ce1940ae55a650845ed6c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 25a625bef57ce1940ae55a650845ed6c, type: 3}
@@ -277,9 +317,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   agent: {fileID: 1330326868928177836}
-  agentDebug: {fileID: 1330326869769285958}
-  NextState: 0
+  NextState: 4
   PreventionCollision: {fileID: 3957777371916195245}
+  Target: {fileID: 0}
+  distanceToReset: 50
+  AggroRange: 20
+  Car:
+    serializedVersion: 2
+    m_Bits: 8
+  ListOfPatrolPoints: []
+  DistanceFromPatrolPoint: 4
 --- !u!4 &4600735958413552370 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7286315517089669007, guid: 25a625bef57ce1940ae55a650845ed6c, type: 3}
@@ -295,6 +342,14 @@ PrefabInstance:
     - target: {fileID: 5725102409683620106, guid: 9636c90de6396184d86e232e0748f7c4, type: 3}
       propertyPath: m_Name
       value: Agent
+      objectReference: {fileID: 0}
+    - target: {fileID: 5725102409683620107, guid: 9636c90de6396184d86e232e0748f7c4, type: 3}
+      propertyPath: m_Speed
+      value: 15.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5725102409683620107, guid: 9636c90de6396184d86e232e0748f7c4, type: 3}
+      propertyPath: m_Radius
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 5725102409683620108, guid: 9636c90de6396184d86e232e0748f7c4, type: 3}
       propertyPath: m_RootOrder
@@ -362,10 +417,5 @@ Transform:
 --- !u!195 &1330326868928177836 stripped
 NavMeshAgent:
   m_CorrespondingSourceObject: {fileID: 5725102409683620107, guid: 9636c90de6396184d86e232e0748f7c4, type: 3}
-  m_PrefabInstance: {fileID: 6703013699955980199}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1330326869769285958 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5725102411525293793, guid: 9636c90de6396184d86e232e0748f7c4, type: 3}
   m_PrefabInstance: {fileID: 6703013699955980199}
   m_PrefabAsset: {fileID: 0}

@@ -10,6 +10,10 @@ public class TrafficAIController : AICarController
 
     [SerializeField] private LayerMask cars;
 
+    [SerializeField] private float distanceToReset = 50f;
+
+    private int lookOffset = 1;
+
     internal TrafficDirector td;
 
     protected override void FollowAgent()
@@ -23,6 +27,15 @@ public class TrafficAIController : AICarController
     protected override void Evaluate()
     {
         CanMove = true;
+
+        if (Vector3.Distance(transform.position, agent.transform.position) > distanceToReset)
+        {
+            Vector3 agentAbove = agent.transform.position;
+
+            agentAbove.y += 2;
+
+            transform.position = agentAbove;
+        }
 
         if (td)
         {

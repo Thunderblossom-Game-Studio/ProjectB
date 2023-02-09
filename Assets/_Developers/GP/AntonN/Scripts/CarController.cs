@@ -17,11 +17,14 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform[] CarWheelsMeshes;
     [SerializeField] private GameObject BrakeLightsOff;
     [SerializeField] private GameObject BrakeLightsOn;
+
+    private VechicleResources vechicleResources;
     
     private Rigidbody rb;
 
     private void Awake()
     {
+        vechicleResources = GetComponent<VechicleResources>();
         rb = GetComponent<Rigidbody>();
     }
 
@@ -36,7 +39,7 @@ public class CarController : MonoBehaviour
 
             if (vInput > 0.1f || vInput < -0.1f)
             {
-                    VechicleResources.Instance.BurnResource("Fuel", VechicleResources.Instance._burnRate);
+                    vechicleResources.BurnResource("Fuel", vechicleResources._burnRate);
                     //Debug.Log("Fuel: " + VechicleResources.Instance.GetCurrentFuelNormalized());
             }                       
         }

@@ -47,7 +47,7 @@ public class AITestCar : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.AddForce(frameMovement, ForceMode.Force);
+        if (rb) rb.AddForce(frameMovement, ForceMode.Force);
     }
 
     public void CustomAccelerate(int dir, float speed)
