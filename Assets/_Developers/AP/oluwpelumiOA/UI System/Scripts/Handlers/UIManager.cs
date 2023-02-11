@@ -43,7 +43,6 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        InputManager.Instance.OnBackAction += Instance_OnBackAction;
         LoadingMenu.Open();
     }
 
@@ -55,11 +54,6 @@ public class UIManager : MonoBehaviour
     private void AdvanceButton_OnAnyButtonClicked(object sender, EventArgs e)
     {
         menuAudio.PlayOneShot(clickSound);
-    }
-
-    private void Instance_OnBackAction(object sender, EventArgs e)
-    {
-        Menu.currentMenu?.OnBackPressed();
     }
 
     private void Update()

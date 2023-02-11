@@ -37,11 +37,6 @@ public class PauseMenu : BaseMenu<PauseMenu>
         yield return base.CloseMenuRoutine(OnComplected);
     }
 
-    public override void OnBackPressed()
-    {
-        
-    }
-
     public void RestartButton()
     {
         Close(() => (LoadingMenu.Instance as LoadingMenu).LoadScene(1));
