@@ -12,7 +12,6 @@ public class EntitySpawner : MonoBehaviour
     public void Spawn()
     {
         if (_spawnZones.Count <= 0 || _objectTypes.Count <= 0) return;
-        
         Zone randomZone = _spawnZones[Random.Range(0, _spawnZones.Count)];
         Vector3 randomPosition = GetRandomPosition(randomZone);
         Instantiate(GetObject().Object, randomPosition, Quaternion.identity);
@@ -67,7 +66,7 @@ public class EntitySpawner : MonoBehaviour
 
 
 [Serializable]
-public class Zone
+public struct Zone
 {
     #region Get & Set
     public Vector3 Position => _zonePosition;
