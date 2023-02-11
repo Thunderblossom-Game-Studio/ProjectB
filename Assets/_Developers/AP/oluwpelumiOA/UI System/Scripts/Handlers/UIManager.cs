@@ -108,21 +108,21 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void InstantiateMenu<T>()
+    public void InstantiateMenu<T>(Action OnOpen = null)
     {
         Menu menu = menuPrefabs.Find(x => x.GetType() == typeof(T));
-        if (menu != null) SpawnMenu(menu);
+        if (menu != null) SpawnMenu(menu, OnOpen);
     }
 
-    public void InstantiateMenu(Type type)
+    public void InstantiateMenu(Type type, Action OnOpen = null)
     {
         Menu menu = menuPrefabs.Find(x => x.GetType() == type);
-        if (menu != null) SpawnMenu(menu);
+        if (menu != null) SpawnMenu(menu, OnOpen);
     }
 
-    public void SpawnMenu(Menu menu)
+    public void SpawnMenu(Menu menu, Action OnOpen= null)
     {
         Menu newMenu = Instantiate(menu, transform);
-        newMenu.OpenMenu();
+        newMenu.OpenMenu(OnOpen);
     }
 }

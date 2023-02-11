@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7073372813994973298}
-  - component: {fileID: 7073372813994973299}
   - component: {fileID: 3801346233468764131}
+  - component: {fileID: 7073372813994973299}
   m_Layer: 0
   m_Name: UI System
   m_TagString: Untagged
@@ -34,28 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7073372813994973299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7073372813994973296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8856f89f61250fc459cde2c05960f608, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventSystem: {fileID: 7073372814973674381}
-  menuAudio: {fileID: 3801346233468764131}
-  hoverSound: {fileID: 8300000, guid: 2b0800d904a82e04fa17d96e1bdf7516, type: 3}
-  clickSound: {fileID: 8300000, guid: d556b6bb508f37e47bce1aab46892ca1, type: 3}
-  menuPrefabs:
-  - {fileID: 3188062716044385959, guid: 325ec09a6ed91754c8a5d1b5277afa8d, type: 3}
-  - {fileID: 897882873219953760, guid: f85361fcd749e724bb481630778da7c3, type: 3}
-  - {fileID: 569033565194243378, guid: 459c1cf2aa5e4f941a5b5c2d33257a05, type: 3}
-  - {fileID: 7673954269097896664, guid: 74353169ed483ca4591376cfb2656a8a, type: 3}
-  - {fileID: 7660207447228759124, guid: d1dcdd90f64f7f14ea131b31d8f7eb28, type: 3}
 --- !u!82 &3801346233468764131
 AudioSource:
   m_ObjectHideFlags: 0
@@ -152,6 +130,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7073372813994973299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7073372813994973296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8856f89f61250fc459cde2c05960f608, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventSystem: {fileID: 7073372814973674381}
+  menuAudio: {fileID: 3801346233468764131}
+  hoverSound: {fileID: 8300000, guid: 2b0800d904a82e04fa17d96e1bdf7516, type: 3}
+  clickSound: {fileID: 8300000, guid: d556b6bb508f37e47bce1aab46892ca1, type: 3}
+  menuPrefabs:
+  - {fileID: 3188062716044385959, guid: 325ec09a6ed91754c8a5d1b5277afa8d, type: 3}
+  - {fileID: 897882873219953760, guid: f85361fcd749e724bb481630778da7c3, type: 3}
+  - {fileID: 569033565194243378, guid: 459c1cf2aa5e4f941a5b5c2d33257a05, type: 3}
+  - {fileID: 7673954269097896664, guid: 74353169ed483ca4591376cfb2656a8a, type: 3}
+  - {fileID: 7660207447228759124, guid: d1dcdd90f64f7f14ea131b31d8f7eb28, type: 3}
 --- !u!1 &7073372814973674381
 GameObject:
   m_ObjectHideFlags: 0

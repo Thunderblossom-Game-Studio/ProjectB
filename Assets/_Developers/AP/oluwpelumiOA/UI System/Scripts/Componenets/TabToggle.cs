@@ -15,6 +15,7 @@ public class TabToggle : Toggle
         contentMenu.SetActive(isOn);
         if (isOn)
         {
+            //if (InputManager.Instance.GetCurrentDeviceType() == InputManager.DeviceType.Gamepad)
             Focus();
         } 
     }

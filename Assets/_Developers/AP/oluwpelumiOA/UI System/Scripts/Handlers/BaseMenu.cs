@@ -33,15 +33,15 @@ public abstract class BaseMenu<T> : Menu
 
     }
 
-    public static void Open()
+    public static void Open(Action OnOpened = null)
     {
         if (Instance != null)
         {
-            Instance.OpenMenu();
+            Instance.OpenMenu(OnOpened);
         } 
         else
         {
-            UIManager.Instance.InstantiateMenu<T>();
+            UIManager.Instance.InstantiateMenu<T>(OnOpened);
         }
     }
 
