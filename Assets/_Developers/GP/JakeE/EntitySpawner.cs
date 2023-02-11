@@ -5,16 +5,24 @@ using Random = UnityEngine.Random;
 
 public class EntitySpawner : MonoBehaviour
 {
+    #region GET & SET
+    public List<SpawnableObject> SpawnedObjects => _spawnedObjects;
+
+    #endregion
+    
+    
     [SerializeField] private Color _spawnZoneColor;
     [SerializeField] private List<Zone> _spawnZones;
     [SerializeField] private List<ObjectType> _objectTypes;
+    [SerializeField] private List<SpawnableObject> _spawnedObjects = new List<SpawnableObject>();
 
     public void Spawn()
     {
         if (_spawnZones.Count <= 0 || _objectTypes.Count <= 0) return;
         Zone randomZone = _spawnZones[Random.Range(0, _spawnZones.Count)];
         Vector3 randomPosition = GetRandomPosition(randomZone);
-        Instantiate(GetObject().Object, randomPosition, Quaternion.identity);
+        GameObject spawnedObject = Instantiate(GetObject().Object, randomPosition, Quaternion.identity);
+        spawnedObject.AddComponent<SpawnableObject>().Initialise(this);
     }
 
     private Vector3 GetRandomPosition(Zone randomZone)

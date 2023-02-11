@@ -12,7 +12,7 @@ public class PackageCollectable : Collectable
         PackageSystem packageSystem = collideObject.GetComponent<PackageSystem>();
         if (packageSystem == null) return;
         packageSystem.AddPackageData(_packageData);
-        Destroy(gameObject);
+        DestroyObject();
     }
 }
 

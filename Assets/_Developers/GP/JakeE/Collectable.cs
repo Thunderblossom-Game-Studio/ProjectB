@@ -3,6 +3,7 @@ using UnityEngine;
 
 public abstract class Collectable : MonoBehaviour
 {
+    private EntitySpawner _entitySpawner;
     [SerializeField] private LayerMask _collideLayers;
 
     private void OnTriggerEnter(Collider objectCollider)
@@ -10,6 +11,12 @@ public abstract class Collectable : MonoBehaviour
         if (!_collideLayers.ContainsLayer(objectCollider.gameObject.layer)) return;
         Collect(objectCollider.gameObject);
         Destroy(gameObject);
+    }
+    public void DestroyObject()
+    {
+        SpawnableObject spawnableObject = GetComponent<SpawnableObject>();
+        if (spawnableObject == null) return;
+        spawnableObject.DestroyObject();
     }
 
     protected abstract void Collect(GameObject collideObject);
