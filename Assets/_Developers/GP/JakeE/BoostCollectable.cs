@@ -11,5 +11,6 @@ public class BoostCollectable : Collectable
         VechicleResources vechicleResources = collideObject.GetComponent<VechicleResources>();
         if (vechicleResources == null) return;
         vechicleResources.IncreaseResource("Fuel", _increasedBoost);
+        DestroyObject();
     }
 }

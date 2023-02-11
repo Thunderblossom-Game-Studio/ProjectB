@@ -5,7 +5,7 @@ using JE.Utilities;
 using UnityEngine;
 
 [RequireComponent(typeof(EntitySpawner))]
-public class AutoSpawner : MonoBehaviour
+public class EntityAutoSpawner : MonoBehaviour
 {
     enum Status
     {
