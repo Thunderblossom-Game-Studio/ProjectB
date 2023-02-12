@@ -1,0 +1,106 @@
+To access the most recent and updated version of the documentation, please go to https://docs.playflowcloud.com/
+
+
+
+
+# Quick Start Guide
+
+Woohoo! So you made it to the docs! Welcome! :)
+
+Here is a quick start guide to get your free temporary server up and running:
+
+
+1. Make sure you have the Linux Build Modules for Unity installed (see Unity Requirements below for more details)
+
+![alt text](https://i.ibb.co/Gky5XDM/Up1VOnj.png)
+
+2. Download and import the PlayFlow Cloud Unity Package
+3. Open up the PlayFlow window by going to PlayFlow -> PlayFlowCloud
+4. Enter your dev token by logging into https://app.playflowcloud.com
+5. Assign a PlayFlow Port.
+6. Use the PlayFlow server URL & port and update your server information (NetworkManager or Transport) with this information
+7. Publish your Server and start connecting to your game once it succeeds.
+
+
+# Video Tutorial
+[tutorial](https://www.youtube.com/embed/0KkKO3dTkms ':include :type=iframe width=100% height=800px')
+
+
+
+
+
+# WebSockets Configuration for WebGL
+
+1. Follow the Quick Start Guide Above
+
+2. Click the Enable SSL Button in the PlayFlow Cloud Plugin Window
+
+![alt text](https://i.ibb.co/cvG6qsf/Capture.png)
+
+3. Make sure your WebSockets Transport's SSL Settings has Client Use Wss checked and SSL Enabled unchecked. PlayFlow Cloud will take care of SSL for you.
+
+![alt text](https://i.ibb.co/ZHwVdR2/sslplayflow.png)
+
+4. Publish your PlayFlow Cloud Server and you should be able to connect after publish succeeds
+
+
+
+# Documentation
+
+![alt text](https://uploads-ssl.webflow.com/612d6e96592f6f13f74e78e2/6136cff97b2d9a2e2345503c_playflow%20serverrrr.PNG)
+
+**PlayFlow Server URL: Port** - Your game server's URL and Port. Make sure to update your server's port in your server configuration (i.e Network Manager or Transport) with the PlayFlow port
+
+**Arguments (optional)** - Any arguments you'd like to provide to start your server
+
+**Enable SSL** - Check this box to enable SSL for WebSockets Secure. Note: If you enable SSL using this check box, then make sure Server SSL is not enabled on your Game Server's Network Transport/Manager settings. Only make sure that clients use WSS.
+
+**Assign PlayFlow Port**: A random port on the PlayFlow Cloud is assigned to you that you can use. Most of the time, you will only need to do this once.
+
+**Publish Server**: Builds a Linux Server version of your project and uploads it and starts it on the PlayFlow Cloud. Your server will be running for 60 minutes and will automatically stop after. You can publish multiple times to start new instances of your server.
+‍
+Publishing a server can take several minutes as it involves a few steps such as building the server version of your game, uploading it to PlayFlow, and then spinning up a temporary game server after. All uploaded server files are deleted after the game server is spun up.
+
+
+
+
+**Unity Requirements**: Must have the **Linux Build Support Modules** for Unity.
+‍
+![alt text](https://i.ibb.co/Gky5XDM/Up1VOnj.png)
+
+
+
+
+
+
+
+
+This is not intended to be a production version game's server. 
+The project will be updated occasionally so you may need to re-import the latest version of the Unity Package from time to time. 
+
+[Link to PlayFlow Cloud Website](https://playflowcloud.com/)     
+
+
+# License
+
+MIT License
+
+Copyright (c) 2021 PlayFlow, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
