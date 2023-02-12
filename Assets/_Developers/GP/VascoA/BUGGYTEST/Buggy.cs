@@ -42,7 +42,9 @@ public class Buggy : MonoBehaviour
     void ProcessInput()
     {
         verInput = Input.GetAxis("Vertical");
+        Debug.Log("Vertical Input: " + verInput);
         horInput = Input.GetAxis("Horizontal");
+        Debug.Log("Horizontal Input: " + horInput);
     }
 
     void ProcessForces()

@@ -15,7 +15,7 @@ public class Wheel : MonoBehaviour
     private void Start()
     {
         wcol = GetComponentInChildren<WheelCollider>();
-        wmesh = transform.Find("mesh_Wheel");
+        wmesh = transform.Find("Wheel Mesh");
     }
 
     public void Steer(float steerInput)
