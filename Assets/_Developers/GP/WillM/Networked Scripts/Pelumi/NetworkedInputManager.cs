@@ -55,9 +55,9 @@ public class NetworkedInputManager : MonoBehaviour
             _playerInput.enabled = true;
             playerInputActions = new PlayerInputActions();        
         }
-        catch
+        catch (Exception e)
         {
-            Debug.LogError("Unable to enable playerInput");
+            Debug.LogError("Unable to enable playerInput: " + e);
             return false;
         }
 
@@ -89,9 +89,9 @@ public class NetworkedInputManager : MonoBehaviour
         {
             InputUser.onChange += OnInputDeviceChange;
         }
-        catch
+        catch (Exception e)
         {
-            Debug.LogError("Unable to update input device");
+            Debug.LogError("Unable to update input device: " + e);
             return false;
         }
 

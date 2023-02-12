@@ -32,6 +32,8 @@ public class NetworkedCarController : NetworkBehaviour
         if (!IsOwner)
             return;
 
+        Debug.Log("Setting up car...");
+
         vechicleResources = GetComponent<VechicleResources>();
         rb = GetComponent<Rigidbody>();
 
@@ -52,6 +54,9 @@ public class NetworkedCarController : NetworkBehaviour
 
     public void HandleMotor(float vInput)
     {
+        if (!IsOwner)
+            return;
+
         //Car movement forward and backward
         if (rb.velocity.magnitude < maxCarSpeed) //maximum "speed" to accelerate to
         {
@@ -74,12 +79,17 @@ public class NetworkedCarController : NetworkBehaviour
 
     public void HandleTurning(float hInput)
     {
+        if (!IsOwner)
+            return;
         CarWheelsCollider[0].steerAngle = hInput * steeringAngle;
         CarWheelsCollider[1].steerAngle = hInput * steeringAngle;
     }
 
     public void HandleBraking(bool isBraking)
     {
+        if (!IsOwner)
+            return;
+
         if (isBraking)
         {
             foreach (var wheel in CarWheelsCollider)
@@ -104,11 +114,24 @@ public class NetworkedCarController : NetworkBehaviour
 
     void UpdateWheelMesh(WheelCollider wheelCol, Transform wheelTrans) //Fixes wheel mesh rotation issue
     {
+        if (!IsOwner)
+            return;
+
         Vector3 wheelPos = wheelTrans.position;
         Quaternion wheelRot = wheelTrans.rotation;
         wheelCol.GetWorldPose(out wheelPos, out wheelRot);
         wheelRot = wheelRot * Quaternion.Euler(new Vector3(0, 0, 90));
         wheelTrans.position = wheelPos;
         wheelTrans.rotation = wheelRot;
+    }
+
+    private void FixedUpdate()
+    {
+        if (!IsOwner)
+            return;
+
+        HandleMotor(NetworkedInputManager.Instance.HandleMoveInput().ReadValue<Vector2>().y);
+        HandleTurning(NetworkedInputManager.Instance.HandleMoveInput().ReadValue<Vector2>().x);
+        HandleBraking(NetworkedInputManager.Instance.HandleBrakeInput().IsPressed());
     }
 }

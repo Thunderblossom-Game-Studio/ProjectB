@@ -1825,6 +1825,7 @@ GameObject:
   - component: {fileID: -5401413814353630465}
   - component: {fileID: 6309327604921813073}
   - component: {fileID: -6860344917836029005}
+  - component: {fileID: 2517509201323621169}
   m_Layer: 0
   m_Name: NetworkedCar
   m_TagString: Untagged
@@ -1931,6 +1932,7 @@ MonoBehaviour:
   <PredictedSpawn>k__BackingField: {fileID: 0}
   _networkBehaviours:
   - {fileID: -5401413814353630465}
+  - {fileID: -6860344917836029005}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
@@ -1956,9 +1958,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2836e36774ca1c4bbbee976e17b649c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 1
   _addedNetworkObject: {fileID: 6309327604921813073}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 6309327604921813073}
   _synchronizeParent: 0
   _packing:
     Position: 1
@@ -1986,6 +1988,22 @@ MonoBehaviour:
     X: 0
     Y: 0
     Z: 0
+--- !u!114 &2517509201323621169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6936615119959345474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7823b3ae816668a4ba0b5dff96c88a2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _burnRate: 1
+  _resources:
+  - {fileID: 11400000, guid: e0b7b63a2dc60a94bbd9ac302f3ebd88, type: 2}
+  currentFuel: 100000
 --- !u!1 &6936615120797709765
 GameObject:
   m_ObjectHideFlags: 0
@@ -2476,7 +2494,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2549586197929457528}
   - component: {fileID: 1512815912644274287}
-  - component: {fileID: 534924297849872498}
   m_Layer: 0
   m_Name: Locked Camera
   m_TagString: Untagged
@@ -2542,14 +2559,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &534924297849872498
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8866909035865485815}
-  m_Enabled: 1
 --- !u!1001 &3841737696704505946
 PrefabInstance:
   m_ObjectHideFlags: 0
