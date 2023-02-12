@@ -20,9 +20,16 @@ public class VehicleController : MonoBehaviour
 
     private Rigidbody rigidBody;
 
+
+    /// <summary>
+    /// The center of mass of the vehicle.
+    /// </summary>
+    public GameObject vehicleCenterOfMass;
+
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
+        //rigidBody.centerOfMass = vehicleCenterOfMass.transform.localPosition;
     }
 
     private void Update()
