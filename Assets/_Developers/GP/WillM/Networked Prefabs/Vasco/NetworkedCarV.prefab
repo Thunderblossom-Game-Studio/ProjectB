@@ -626,7 +626,7 @@ GameObject:
   - component: {fileID: -7872437048049628692}
   - component: {fileID: -7491275500378773427}
   - component: {fileID: 6810100828894812597}
-  - component: {fileID: 6362809192738651319}
+  - component: {fileID: 2194974348838184964}
   m_Layer: 0
   m_Name: NetworkedCarV
   m_TagString: Untagged
@@ -3719,14 +3719,11 @@ MonoBehaviour:
   _networkBehaviours:
   - {fileID: -7425636015033376824}
   - {fileID: -7491275500378773427}
+  - {fileID: 0}
   - {fileID: 5914947637291431439}
-  - {fileID: 0}
   - {fileID: 4170159454315050158}
-  - {fileID: 0}
   - {fileID: 87757622669308912}
-  - {fileID: 0}
   - {fileID: 512199404896726252}
-  - {fileID: 0}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
@@ -3797,7 +3794,7 @@ MonoBehaviour:
   _overrideType: 3
   _updateHostVisibility: 1
   _observerConditions: []
---- !u!114 &6362809192738651319
+--- !u!114 &2194974348838184964
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3806,9 +3803,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 4714691293579607908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2de5ab5a75824fe4aa7e7678479a1004, type: 3}
+  m_Script: {fileID: 11500000, guid: 402926ef33e0a894d9fec352693988ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: -7872437048049628692}
+  _networkObjectCache: {fileID: 0}
+  _graphicalObject: {fileID: 4714691293579607909}
+  _enableTeleport: 0
+  _teleportThreshold: 1
+  _ownerInterpolation: 10
+  _predictionType: 0
+  _rigidbody: {fileID: 4714691293579607899}
+  _rigidbody2d: {fileID: 0}
+  _spectatorSmoothPosition: 1
+  _spectatorSmoothRotation: 1
+  _spectatorInterpolation: 4
+  _overflowMultiplier: 0.1
+  _maintainedVelocity: 0
+  _resendType: 1
+  _resendInterval: 30
+  _networkTransform: {fileID: -7491275500378773427}
 --- !u!1 &4714691294388451050
 GameObject:
   m_ObjectHideFlags: 0
@@ -6689,7 +6704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46aa766cf0aa3f04fa37633a74506b67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 8
+  _componentIndexCache: 6
   _addedNetworkObject: {fileID: -7872437048049628692}
   _networkObjectCache: {fileID: -7872437048049628692}
   isWheelPowered: 1
@@ -9669,7 +9684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46aa766cf0aa3f04fa37633a74506b67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 6
+  _componentIndexCache: 5
   _addedNetworkObject: {fileID: -7872437048049628692}
   _networkObjectCache: {fileID: -7872437048049628692}
   isWheelPowered: 1
@@ -12702,7 +12717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46aa766cf0aa3f04fa37633a74506b67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 2
+  _componentIndexCache: 3
   _addedNetworkObject: {fileID: -7872437048049628692}
   _networkObjectCache: {fileID: -7872437048049628692}
   isWheelPowered: 0
