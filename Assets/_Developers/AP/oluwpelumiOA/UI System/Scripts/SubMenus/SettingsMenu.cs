@@ -7,7 +7,6 @@ using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.EventSystems;
 using UnityEngine.Audio;
-using static Cinemachine.CinemachineTransposer;
 
 public class SettingsMenu : BaseMenu <SettingsMenu>
 {
