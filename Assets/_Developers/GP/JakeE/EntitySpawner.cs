@@ -5,19 +5,26 @@ using Random = UnityEngine.Random;
 
 public class EntitySpawner : MonoBehaviour
 {
+    #region GET & SET
+    public List<SpawnableObject> SpawnedObjects => _spawnedObjects;
+
+    #endregion
+
+    [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private Color _spawnZoneColor;
     [SerializeField] private List<Zone> _spawnZones;
     [SerializeField] private List<ObjectType> _objectTypes;
+    [SerializeField] private List<SpawnableObject> _spawnedObjects = new List<SpawnableObject>();
 
     public void Spawn()
     {
         if (_spawnZones.Count <= 0 || _objectTypes.Count <= 0) return;
-        
         Zone randomZone = _spawnZones[Random.Range(0, _spawnZones.Count)];
         Vector3 randomPosition = GetRandomPosition(randomZone);
-        Instantiate(GetObject().Object, randomPosition, Quaternion.identity);
+        Vector3 spawnPosition = ConvertToGroundPosition(randomZone, randomPosition);
+        GameObject spawnedObject = Instantiate(GetObject().Object, spawnPosition, Quaternion.identity);
+        spawnedObject.AddComponent<SpawnableObject>().Initialise(this);
     }
-
     private Vector3 GetRandomPosition(Zone randomZone)
     {
         return new Vector3(randomZone.Position.x + Random.Range(-randomZone.Size.x / 2, randomZone.Size.x / 2),
@@ -54,6 +61,12 @@ public class EntitySpawner : MonoBehaviour
         return weightList;
     }
 
+    private Vector3 ConvertToGroundPosition(Zone selectedZone, Vector3 randomPosition)
+    {
+        return Physics.Raycast(new Vector3(randomPosition.x, selectedZone.Position.y + selectedZone.Size.y / 2, randomPosition.z),
+            Vector3.down, out var raycastHit, selectedZone.Size.y * 2, _groundLayer) ? raycastHit.point : randomPosition;
+    }
+
     private void OnDrawGizmos()
     {
         if (_spawnZones.Count <= 0) return;
@@ -67,7 +80,7 @@ public class EntitySpawner : MonoBehaviour
 
 
 [Serializable]
-public class Zone
+public struct Zone
 {
     #region Get & Set
     public Vector3 Position => _zonePosition;

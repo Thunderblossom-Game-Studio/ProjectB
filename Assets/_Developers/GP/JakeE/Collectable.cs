@@ -1,29 +1,23 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using JE.General;
 using UnityEngine;
-using UnityEngine.Events;
-using Random = UnityEngine.Random;
 
-public class Collectable : MonoBehaviour
+public abstract class Collectable : MonoBehaviour
 {
-    [SerializeField] private CollectableType _collectableType;
+    private EntitySpawner _entitySpawner;
     [SerializeField] private LayerMask _collideLayers;
-    [SerializeField] private bool _destroyOnCollide;
-    [SerializeField] private UnityEvent _onCollect;
-    
+
     private void OnTriggerEnter(Collider objectCollider)
     {
         if (!_collideLayers.ContainsLayer(objectCollider.gameObject.layer)) return;
-        CollectableManager.Instance.GetCollectable(_collectableType)?.Invoke(objectCollider.gameObject);
-        _onCollect.Invoke();
-        if (!_destroyOnCollide) return;
-        CollectableManager.Instance.DestroyCollectable(this);
+        Collect(objectCollider.gameObject);
+        Destroy(gameObject);
+    }
+    public void DestroyObject()
+    {
+        SpawnableObject spawnableObject = GetComponent<SpawnableObject>();
+        if (spawnableObject == null) return;
+        spawnableObject.DestroyObject();
     }
 
-    public void SetType(CollectableType collectableType)
-    {
-        _collectableType = collectableType;
-    }
+    protected abstract void Collect(GameObject collideObject);
 }
