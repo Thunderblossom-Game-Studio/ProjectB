@@ -175,9 +175,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicBank: {fileID: 11400000, guid: 60910b8439682f144ac8c0c9c1463904, type: 2}
-  sfxBank: {fileID: 11400000, guid: 6c6ea8fa345296545a255b774e4c22e7, type: 2}
+  soundEffectBank: {fileID: 11400000, guid: 6c6ea8fa345296545a255b774e4c22e7, type: 2}
   musicPlayer: {fileID: 7058685829920936358}
-  sfxPlayer: {fileID: 7058685831297585296}
+  soundEffectPlayer: {fileID: 7058685831297585296}
 --- !u!1 &7058685831297585297
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 7058685831297585299}
   - component: {fileID: 7058685831297585296}
   m_Layer: 0
-  m_Name: Sfx Player
+  m_Name: SoundEffect  Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

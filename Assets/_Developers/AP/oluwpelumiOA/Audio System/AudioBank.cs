@@ -8,16 +8,25 @@ using System.Linq;
 public class AudioBank : ScriptableObject
 {
    [SerializeField] private List<AudioWithID> audioClips = new List<AudioWithID>();
-
+    
     public AudioClip GetAudioByID(string ID)
     {
-        AudioClip audioClip = audioClips.FirstOrDefault(x => x.ID == ID).audioClip;
-        if (audioClip == null) 
+        AudioWithID audioWithID = audioClips.FirstOrDefault(x => x.ID == ID);
+        if (audioWithID == null)
         {
             Debug.LogError("Audio with ID: " + ID + " not found in " + name);
             return null;
         }
-        return audioClip;
+
+        if (audioWithID.similarAudioClips.Length > 0)
+        {
+            if (Random.value > 0.5f) return audioWithID.audioClip;
+            else  return audioWithID.similarAudioClips[Random.Range(0, audioWithID.similarAudioClips.Length)];        
+        }
+        else
+        {
+            return audioWithID.audioClip;
+        }
     }
 }
 
@@ -27,6 +36,7 @@ public class AudioWithID
     public string ID;
     public AudioClip audioClip;
     public string info;
+    public AudioClip[] similarAudioClips;
 }
 
 #if UNITY_EDITOR
@@ -80,6 +90,7 @@ public class AudioWithIDEditor : Editor
             EditorGUILayout.PropertyField(element.FindPropertyRelative("audioClip"), GUIContent.none);
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.PropertyField(element.FindPropertyRelative("info"), GUIContent.none);
+            EditorGUILayout.PropertyField(element.FindPropertyRelative("similarAudioClips"));
             EditorGUILayout.EndVertical();
 
             GUILayout.Space(10);

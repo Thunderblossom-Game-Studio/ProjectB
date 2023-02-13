@@ -7,9 +7,9 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get; private set; }
 
     [SerializeField] AudioBank musicBank;
-    [SerializeField] AudioBank sfxBank;
+    [SerializeField] AudioBank soundEffectBank;
     [SerializeField] AudioSource musicPlayer;
-    [SerializeField] AudioSource sfxPlayer;
+    [SerializeField] AudioSource soundEffectPlayer;
 
     private void Awake()
     {
@@ -23,7 +23,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        ChangeMusicWithFade(GetMusicClip("Menu"), true);
+        ChangeMusicWithFade("Menu", true);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -31,7 +31,7 @@ public class AudioManager : MonoBehaviour
     {
         if (scene.buildIndex == 0)
         {
-            ChangeMusicWithFade(GetMusicClip("Menu"), true);
+            ChangeMusicWithFade("Menu", true);
         }
     }
 
@@ -87,31 +87,31 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private IEnumerator BlendTwoMusicRoutine(AudioClip intro, AudioClip loopMusic)
+    private IEnumerator BlendTwoMusicRoutine(AudioClip intro, AudioClip loopMusic, bool loop  = true)
     {
         ChangeMusic(intro, false);
         yield return new WaitForSecondsRealtime(musicPlayer.clip.length - 0.5f);
-        ChangeMusic(loopMusic, true);
+        ChangeMusic(loopMusic, loop);
     }
-    public static AudioClip GetMusicClip(string ID)
+    public static AudioClip GetMusicClip(string audioID)
     {
         if (!InstanceExists()) return null;
-        return  Instance.musicBank.GetAudioByID(ID);
+        return  Instance.musicBank.GetAudioByID(audioID);
     } 
     
-    public static AudioClip GetSfxClip(string ID)
+    public static AudioClip GetSoundEffectClip(string audioID)
     {
         if (!InstanceExists()) return null;
-        return Instance.sfxBank.GetAudioByID(ID);
+        return Instance.soundEffectBank.GetAudioByID(audioID);
     }
 
-    public AudioSource GetSfxAudioSource() => sfxPlayer;
+    public AudioSource GetSfxAudioSource() => soundEffectPlayer;
 
-    public static void PlaySfx(string ID, bool randomPitch = false)
+    public static void PlaySoundEffect(string audioID, bool randomPitch = false)
     {
         if (Instance == null) return;
-        Instance.sfxPlayer.pitch = randomPitch ? Random.Range(0.8f, 1.2f) : 1;
-        Instance.sfxPlayer.PlayOneShot(GetSfxClip(ID));
+        Instance.soundEffectPlayer.pitch = randomPitch ? Random.Range(0.8f, 1.2f) : 1;
+        Instance.soundEffectPlayer.PlayOneShot(GetSoundEffectClip(audioID));
     }
 
     public static void PlayMusic(string ID, bool loop = true)
@@ -138,16 +138,16 @@ public class AudioManager : MonoBehaviour
         Instance.StartCoroutine(Instance.StopMusicFade());
     }
 
-    public static void ChangeMusicWithFade(AudioClip audioClip, bool loop, float speed = 0.05f)
+    public static void ChangeMusicWithFade(string audioID, bool loop = true, float speed = 0.05f)
     {
         if (!InstanceExists()) return;
-        Instance.StartCoroutine(Instance.ChangeMusicWithFadeRoutine(audioClip, loop, speed));
+        Instance.StartCoroutine(Instance.ChangeMusicWithFadeRoutine(GetMusicClip(audioID), loop, speed));
     }
 
-    public static void BlendTwoMusic(AudioClip audioClip, AudioClip loopMusic)
+    public static void BlendTwoMusic(string startAudioID, string nextAudioID, bool loop = true)
     {
         if (!InstanceExists()) return;
-        Instance.StartCoroutine(Instance.BlendTwoMusicRoutine(audioClip, loopMusic));
+        Instance.StartCoroutine(Instance.BlendTwoMusicRoutine(GetMusicClip(startAudioID), GetMusicClip(nextAudioID), loop));
     }
 
     private static bool InstanceExists()
