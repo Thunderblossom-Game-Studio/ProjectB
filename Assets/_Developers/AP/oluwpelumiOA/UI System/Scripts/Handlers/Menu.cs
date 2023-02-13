@@ -96,9 +96,4 @@ public abstract class Menu : MonoBehaviour
     {
 
     }
-
-    public virtual void OnBackPressed()
-    {
-        
-    }
 }

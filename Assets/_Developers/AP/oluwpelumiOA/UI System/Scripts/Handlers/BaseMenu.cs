@@ -23,6 +23,11 @@ public abstract class BaseMenu<T> : Menu
         
     }
 
+    protected virtual void Instance_OnBackAction(object sender, EventArgs e)
+    {
+
+    }
+
     protected virtual void Instance_OnTabRightAction(object sender, EventArgs e)
     {
         
@@ -33,15 +38,15 @@ public abstract class BaseMenu<T> : Menu
 
     }
 
-    public static void Open()
+    public static void Open(Action OnOpened = null)
     {
         if (Instance != null)
         {
-            Instance.OpenMenu();
+            Instance.OpenMenu(OnOpened);
         } 
         else
         {
-            UIManager.Instance.InstantiateMenu<T>();
+            UIManager.Instance.InstantiateMenu<T>(OnOpened);
         }
     }
 
@@ -54,6 +59,7 @@ public abstract class BaseMenu<T> : Menu
 
         InputManager.Instance.OnDeviceChanged += InputManager_OnDeviceChanged;
 
+        InputManager.Instance.OnBackAction += Instance_OnBackAction;
         InputManager.Instance.OnTabLeftAction += Instance_OnTabLeftAction;
         InputManager.Instance.OnTabRightAction += Instance_OnTabRightAction;
     }
@@ -83,7 +89,8 @@ public abstract class BaseMenu<T> : Menu
     public override void OnMenuClosed()
     {
         InputManager.Instance.OnDeviceChanged -= InputManager_OnDeviceChanged;
-        
+
+        InputManager.Instance.OnBackAction -= Instance_OnBackAction;
         InputManager.Instance.OnTabLeftAction -= Instance_OnTabLeftAction;
         InputManager.Instance.OnTabRightAction -= Instance_OnTabRightAction;
 
