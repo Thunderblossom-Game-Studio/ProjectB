@@ -49,7 +49,7 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
 
     private Resolution[] resolutions;
 
-    private bool connectedBindingButtons;
+    private bool inBindingMode;
 
     public void Start()
     {
@@ -74,11 +74,13 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
 
     protected override void Instance_OnTabLeftAction(object sender, EventArgs e)
     {
+        if (inBindingMode) return;
         tabUI.SelectLeft();
     }
 
     protected override void Instance_OnTabRightAction(object sender, EventArgs e)
     {
+        if (inBindingMode) return;
         tabUI.SelectRight();
     }
     
@@ -106,8 +108,9 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
         buttonHolder.alpha = 0;
     }
 
-    public override void OnBackPressed()
+    protected override void Instance_OnBackAction(object sender, EventArgs e)
     {
+        if (inBindingMode) return;
         CloseButton();
     }
 
@@ -235,13 +238,21 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
 
     private void RebingBinding(InputManager.Binding binding)
     {
+        inBindingMode = true;
         TogglePressToRebind(true);
         InputManager.Instance.RebindBinding(binding, ()=> 
         {
             TogglePressToRebind(false);
             UpdateBindingVisuals();
             if (InputManager.Instance.GetCurrentDeviceType() == InputManager.DeviceType.KeyboardAndMouse) EventSystem.current.SetSelectedGameObject(null);
+            StartCoroutine(EnableControl());
         });
+    }
+
+    IEnumerator EnableControl()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+        inBindingMode = false;
     }
 
     public void SetMasterVolume(float value)
