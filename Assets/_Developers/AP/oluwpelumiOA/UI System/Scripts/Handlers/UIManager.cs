@@ -43,7 +43,6 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        InputManager.Instance.OnBackAction += Instance_OnBackAction;
         LoadingMenu.Open();
     }
 
@@ -55,11 +54,6 @@ public class UIManager : MonoBehaviour
     private void AdvanceButton_OnAnyButtonClicked(object sender, EventArgs e)
     {
         menuAudio.PlayOneShot(clickSound);
-    }
-
-    private void Instance_OnBackAction(object sender, EventArgs e)
-    {
-        Menu.currentMenu?.OnBackPressed();
     }
 
     private void Update()
@@ -108,21 +102,21 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void InstantiateMenu<T>()
+    public void InstantiateMenu<T>(Action OnOpen = null)
     {
         Menu menu = menuPrefabs.Find(x => x.GetType() == typeof(T));
-        if (menu != null) SpawnMenu(menu);
+        if (menu != null) SpawnMenu(menu, OnOpen);
     }
 
-    public void InstantiateMenu(Type type)
+    public void InstantiateMenu(Type type, Action OnOpen = null)
     {
         Menu menu = menuPrefabs.Find(x => x.GetType() == type);
-        if (menu != null) SpawnMenu(menu);
+        if (menu != null) SpawnMenu(menu, OnOpen);
     }
 
-    public void SpawnMenu(Menu menu)
+    public void SpawnMenu(Menu menu, Action OnOpen= null)
     {
         Menu newMenu = Instantiate(menu, transform);
-        newMenu.OpenMenu();
+        newMenu.OpenMenu(OnOpen);
     }
 }

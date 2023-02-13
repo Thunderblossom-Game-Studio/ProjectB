@@ -8,6 +8,7 @@ public class PauseMenu : BaseMenu<PauseMenu>
     [SerializeField] private CanvasGroup buttonHolder;
 
     [Header("Buttons")]
+    [SerializeField] private AdvanceButton restartButton;
     [SerializeField] private AdvanceButton resumeButton;
     [SerializeField] private AdvanceButton settingsButton;
     [SerializeField] private AdvanceButton menuButton;
@@ -15,6 +16,7 @@ public class PauseMenu : BaseMenu<PauseMenu>
 
     private void Start()
     {
+        restartButton.onClick.AddListener(RestartButton);
         resumeButton.onClick.AddListener(ResumeButton);
         settingsButton.onClick.AddListener(SettingsButton);
         menuButton.onClick.AddListener(MenuButton);
@@ -35,9 +37,9 @@ public class PauseMenu : BaseMenu<PauseMenu>
         yield return base.CloseMenuRoutine(OnComplected);
     }
 
-    public override void OnBackPressed()
+    public void RestartButton()
     {
-        
+        Close(() => (LoadingMenu.Instance as LoadingMenu).LoadScene(1));
     }
 
     public void ResumeButton()
