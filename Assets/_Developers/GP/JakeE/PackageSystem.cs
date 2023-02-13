@@ -13,8 +13,10 @@ public class PackageSystem : MonoBehaviour
     //Debug >>>
     [SerializeField] private TextMeshProUGUI _packageScoreText;
     //Debug <<<
-    
-    [Viewable] [SerializeField] private int _packageScore;
+#if UNITY_EDITOR
+    [Viewable]
+#endif
+    [SerializeField] private int _packageScore;
     [SerializeField] private int _maxPackages;
     private readonly List<PackageData> _currentPackages = new List<PackageData>();
 
