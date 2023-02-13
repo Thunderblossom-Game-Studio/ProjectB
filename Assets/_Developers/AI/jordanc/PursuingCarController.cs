@@ -191,6 +191,7 @@ public class PursuingCarController : AICarController
 
     }
 
+    /*
     protected override void OnDrawGizmos()
     {
         Gizmos.color = new Color (255,0,0, 255);
@@ -198,5 +199,5 @@ public class PursuingCarController : AICarController
 
         base.OnDrawGizmos();
     }
-
+    */
 }
