@@ -626,6 +626,7 @@ GameObject:
   - component: {fileID: -7872437048049628692}
   - component: {fileID: -7491275500378773427}
   - component: {fileID: 6810100828894812597}
+  - component: {fileID: 6362809192738651319}
   m_Layer: 0
   m_Name: NetworkedCarV
   m_TagString: Untagged
@@ -3719,13 +3720,13 @@ MonoBehaviour:
   - {fileID: -7425636015033376824}
   - {fileID: -7491275500378773427}
   - {fileID: 5914947637291431439}
-  - {fileID: 5705770480551337760}
+  - {fileID: 0}
   - {fileID: 4170159454315050158}
-  - {fileID: 657313396984715031}
+  - {fileID: 0}
   - {fileID: 87757622669308912}
-  - {fileID: 8446255283277526263}
+  - {fileID: 0}
   - {fileID: 512199404896726252}
-  - {fileID: 7102817546693131271}
+  - {fileID: 0}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
@@ -3796,6 +3797,18 @@ MonoBehaviour:
   _overrideType: 3
   _updateHostVisibility: 1
   _observerConditions: []
+--- !u!114 &6362809192738651319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4714691293579607908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de5ab5a75824fe4aa7e7678479a1004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4714691294388451050
 GameObject:
   m_ObjectHideFlags: 0
@@ -6640,8 +6653,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5759752187111917651}
   - component: {fileID: 512199404896726252}
-  - component: {fileID: 7102817546693131271}
-  - component: {fileID: 2598129552579608110}
   m_Layer: 0
   m_Name: Wheel
   m_TagString: Untagged
@@ -6685,63 +6696,6 @@ MonoBehaviour:
   maxWheelAngle: 0
   wheelOffset: 0
   brakePower: 1000
---- !u!114 &7102817546693131271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5759752187111917648}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2836e36774ca1c4bbbee976e17b649c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _componentIndexCache: 9
-  _addedNetworkObject: {fileID: -7872437048049628692}
-  _networkObjectCache: {fileID: -7872437048049628692}
-  _synchronizeParent: 0
-  _packing:
-    Position: 1
-    Rotation: 1
-    Scale: 1
-  _interpolation: 5
-  _extrapolation: 5
-  _enableTeleport: 0
-  _teleportThreshold: 1
-  _clientAuthoritative: 1
-  _sendToOwner: 1
-  _interval: 1
-  _synchronizePosition: 1
-  _positionSnapping:
-    X: 0
-    Y: 0
-    Z: 0
-  _synchronizeRotation: 1
-  _rotationSnapping:
-    X: 0
-    Y: 0
-    Z: 0
-  _synchronizeScale: 1
-  _scaleSnapping:
-    X: 0
-    Y: 0
-    Z: 0
---- !u!114 &2598129552579608110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5759752187111917648}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _overrideType: 3
-  _updateHostVisibility: 1
-  _observerConditions: []
 --- !u!1 &5759752187569022576
 GameObject:
   m_ObjectHideFlags: 0
@@ -9679,8 +9633,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5759752188046896517}
   - component: {fileID: 87757622669308912}
-  - component: {fileID: 8446255283277526263}
-  - component: {fileID: 7680897408455454244}
   m_Layer: 0
   m_Name: Wheel
   m_TagString: Untagged
@@ -9724,63 +9676,6 @@ MonoBehaviour:
   maxWheelAngle: 0
   wheelOffset: 0
   brakePower: 1000
---- !u!114 &8446255283277526263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5759752188046896518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2836e36774ca1c4bbbee976e17b649c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _componentIndexCache: 7
-  _addedNetworkObject: {fileID: -7872437048049628692}
-  _networkObjectCache: {fileID: -7872437048049628692}
-  _synchronizeParent: 0
-  _packing:
-    Position: 1
-    Rotation: 1
-    Scale: 1
-  _interpolation: 5
-  _extrapolation: 5
-  _enableTeleport: 0
-  _teleportThreshold: 1
-  _clientAuthoritative: 1
-  _sendToOwner: 1
-  _interval: 1
-  _synchronizePosition: 1
-  _positionSnapping:
-    X: 0
-    Y: 0
-    Z: 0
-  _synchronizeRotation: 1
-  _rotationSnapping:
-    X: 0
-    Y: 0
-    Z: 0
-  _synchronizeScale: 1
-  _scaleSnapping:
-    X: 0
-    Y: 0
-    Z: 0
---- !u!114 &7680897408455454244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5759752188046896518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _overrideType: 3
-  _updateHostVisibility: 1
-  _observerConditions: []
 --- !u!1 &5759752188193037245
 GameObject:
   m_ObjectHideFlags: 0
@@ -12656,8 +12551,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5759752188419795100}
   - component: {fileID: 4170159454315050158}
-  - component: {fileID: 657313396984715031}
-  - component: {fileID: 561284151121121200}
   m_Layer: 0
   m_Name: Wheel
   m_TagString: Untagged
@@ -12701,63 +12594,6 @@ MonoBehaviour:
   maxWheelAngle: 30
   wheelOffset: 0
   brakePower: 1000
---- !u!114 &657313396984715031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5759752188419795103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2836e36774ca1c4bbbee976e17b649c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _componentIndexCache: 5
-  _addedNetworkObject: {fileID: -7872437048049628692}
-  _networkObjectCache: {fileID: -7872437048049628692}
-  _synchronizeParent: 0
-  _packing:
-    Position: 0
-    Rotation: 0
-    Scale: 1
-  _interpolation: 2
-  _extrapolation: 2
-  _enableTeleport: 0
-  _teleportThreshold: 1
-  _clientAuthoritative: 1
-  _sendToOwner: 1
-  _interval: 1
-  _synchronizePosition: 1
-  _positionSnapping:
-    X: 0
-    Y: 0
-    Z: 0
-  _synchronizeRotation: 1
-  _rotationSnapping:
-    X: 0
-    Y: 0
-    Z: 0
-  _synchronizeScale: 1
-  _scaleSnapping:
-    X: 0
-    Y: 0
-    Z: 0
---- !u!114 &561284151121121200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5759752188419795103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _overrideType: 3
-  _updateHostVisibility: 1
-  _observerConditions: []
 --- !u!1 &5759752189032440681
 GameObject:
   m_ObjectHideFlags: 0
@@ -12830,8 +12666,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5759752189076050850}
   - component: {fileID: 5914947637291431439}
-  - component: {fileID: 5705770480551337760}
-  - component: {fileID: 5972533456695843097}
   m_Layer: 0
   m_Name: Wheel
   m_TagString: Untagged
@@ -12875,63 +12709,6 @@ MonoBehaviour:
   maxWheelAngle: 30
   wheelOffset: 0
   brakePower: 1000
---- !u!114 &5705770480551337760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5759752189076050849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2836e36774ca1c4bbbee976e17b649c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _componentIndexCache: 3
-  _addedNetworkObject: {fileID: -7872437048049628692}
-  _networkObjectCache: {fileID: -7872437048049628692}
-  _synchronizeParent: 0
-  _packing:
-    Position: 0
-    Rotation: 0
-    Scale: 1
-  _interpolation: 2
-  _extrapolation: 2
-  _enableTeleport: 0
-  _teleportThreshold: 1
-  _clientAuthoritative: 1
-  _sendToOwner: 1
-  _interval: 1
-  _synchronizePosition: 1
-  _positionSnapping:
-    X: 0
-    Y: 0
-    Z: 0
-  _synchronizeRotation: 1
-  _rotationSnapping:
-    X: 0
-    Y: 0
-    Z: 0
-  _synchronizeScale: 1
-  _scaleSnapping:
-    X: 0
-    Y: 0
-    Z: 0
---- !u!114 &5972533456695843097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5759752189076050849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _overrideType: 3
-  _updateHostVisibility: 1
-  _observerConditions: []
 --- !u!1 &5759752189111434859
 GameObject:
   m_ObjectHideFlags: 0
