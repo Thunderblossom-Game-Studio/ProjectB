@@ -153,8 +153,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 561588451734917665}
-  m_LocalRotation: {x: -0.22011408, y: -0.000000030259798, z: -0.000000006827804, w: 0.9754741}
-  m_LocalPosition: {x: -7.275958e-12, y: 2.5, z: 4.4}
+  m_LocalRotation: {x: 0.16908664, y: 0.62453496, z: 0.14092526, w: -0.749337}
+  m_LocalPosition: {x: -4.3279777, y: 2.5000002, z: 0.79284716}
   m_LocalScale: {x: 1, y: 1, z: -1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -270,7 +270,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223154616052114417}
-  m_LocalRotation: {x: -0.000001953467, y: 0.9754742, z: -0.22011405, w: -0.000008657132}
+  m_LocalRotation: {x: 0.20985834, y: 0.29428715, z: -0.06640537, w: 0.93002415}
   m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -475,7 +475,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3458840036062010935}
-  m_LocalRotation: {x: -0.000002258947, y: 0.9668135, z: -0.25548333, w: -0.000008548429}
+  m_LocalRotation: {x: 0.24357964, y: 0.29167435, z: -0.077075794, w: 0.921767}
   m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -553,7 +553,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3710975662304315006}
-  m_LocalRotation: {x: -0.0000016387262, y: 0.9827708, z: -0.18482865, w: -0.000008713434}
+  m_LocalRotation: {x: 0.176217, y: 0.29648843, z: -0.05576027, w: 0.9369808}
   m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -620,7 +620,7 @@ GameObject:
   - component: {fileID: 4714691293579607897}
   - component: {fileID: 4714691293579607896}
   - component: {fileID: 4714691293579607911}
-  - component: {fileID: 4714691293579607900}
+  - component: {fileID: 5491340395596082995}
   - component: {fileID: 4714691293579607899}
   - component: {fileID: 4714691293579607901}
   m_Layer: 0
@@ -3646,8 +3646,8 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4714691293579607908}
   m_Mesh: {fileID: 0}
---- !u!65 &4714691293579607900
-BoxCollider:
+--- !u!64 &5491340395596082995
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -3656,9 +3656,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.3464175, y: 1.492714, z: 4.2310123}
-  m_Center: {x: 0, y: -0.000000059604645, z: 0}
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!54 &4714691293579607899
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3738,6 +3739,8 @@ GameObject:
   - component: {fileID: 5759752187085202846}
   - component: {fileID: 5759752187085202845}
   - component: {fileID: 5759752187085202844}
+  - component: {fileID: 2088615991504726456}
+  - component: {fileID: 261547145470064367}
   m_Layer: 0
   m_Name: WheelMesh
   m_TagString: Untagged
@@ -6442,7 +6445,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 442
+  m_VersionIndex: 445
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -6528,6 +6531,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5759752187085202842}
   m_Mesh: {fileID: 0}
+--- !u!64 &2088615991504726456
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5759752187085202842}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
+--- !u!54 &261547145470064367
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5759752187085202842}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5759752187111917648
 GameObject:
   m_ObjectHideFlags: 0
@@ -6623,7 +6656,7 @@ WheelCollider:
     spring: 35000
     damper: 4500
     targetPosition: 0.94
-  m_SuspensionDistance: 0.15
+  m_SuspensionDistance: 0.5
   m_ForceAppPointDistance: 0
   m_Mass: 20
   m_WheelDampingRate: 0.25
@@ -6653,6 +6686,8 @@ GameObject:
   - component: {fileID: 5759752187737300640}
   - component: {fileID: 5759752187737300643}
   - component: {fileID: 5759752187737300642}
+  - component: {fileID: 5886952916162323215}
+  - component: {fileID: 2734672503224448041}
   m_Layer: 0
   m_Name: WheelMesh
   m_TagString: Untagged
@@ -9357,7 +9392,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 445
+  m_VersionIndex: 448
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -9443,6 +9478,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5759752187737300644}
   m_Mesh: {fileID: 0}
+--- !u!64 &5886952916162323215
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5759752187737300644}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
+--- !u!54 &2734672503224448041
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5759752187737300644}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5759752187990695246
 GameObject:
   m_ObjectHideFlags: 0
@@ -9488,7 +9553,7 @@ WheelCollider:
     spring: 35000
     damper: 4500
     targetPosition: 0.94
-  m_SuspensionDistance: 0.15
+  m_SuspensionDistance: 0.5
   m_ForceAppPointDistance: 0
   m_Mass: 20
   m_WheelDampingRate: 0.25
@@ -9568,6 +9633,8 @@ GameObject:
   - component: {fileID: 5759752188193037241}
   - component: {fileID: 5759752188193037242}
   - component: {fileID: 5759752188193037243}
+  - component: {fileID: 6865151739562840667}
+  - component: {fileID: 1228999066656432419}
   m_Layer: 0
   m_Name: WheelMesh
   m_TagString: Untagged
@@ -12272,7 +12339,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 445
+  m_VersionIndex: 448
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -12358,6 +12425,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5759752188193037245}
   m_Mesh: {fileID: 0}
+--- !u!64 &6865151739562840667
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5759752188193037245}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
+--- !u!54 &1228999066656432419
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5759752188193037245}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5759752188340143807
 GameObject:
   m_ObjectHideFlags: 0
@@ -12403,7 +12500,7 @@ WheelCollider:
     spring: 35000
     damper: 4500
     targetPosition: 0.94
-  m_SuspensionDistance: 0.15
+  m_SuspensionDistance: 0.5
   m_ForceAppPointDistance: 0
   m_Mass: 20
   m_WheelDampingRate: 0.25
@@ -12515,7 +12612,7 @@ WheelCollider:
     spring: 35000
     damper: 4500
     targetPosition: 0.94
-  m_SuspensionDistance: 0.15
+  m_SuspensionDistance: 0.5
   m_ForceAppPointDistance: 0
   m_Mass: 20
   m_WheelDampingRate: 0.25
@@ -12595,6 +12692,8 @@ GameObject:
   - component: {fileID: 5759752189111434863}
   - component: {fileID: 5759752189111434860}
   - component: {fileID: 5759752189111434861}
+  - component: {fileID: 718855025794743997}
+  - component: {fileID: 327828275328670544}
   m_Layer: 0
   m_Name: WheelMesh
   m_TagString: Untagged
@@ -15299,7 +15398,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 448
+  m_VersionIndex: 451
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -15385,6 +15484,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5759752189111434859}
   m_Mesh: {fileID: 0}
+--- !u!64 &718855025794743997
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5759752189111434859}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
+--- !u!54 &327828275328670544
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5759752189111434859}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8140959978792801163
 GameObject:
   m_ObjectHideFlags: 0
@@ -15410,7 +15539,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8140959978792801163}
   m_LocalRotation: {x: 0, y: 1, z: -0, w: -0.00000886619}
-  m_LocalPosition: {x: -7.275958e-12, y: 2.5, z: 4.4}
+  m_LocalPosition: {x: 2.5310793, y: 2.5000002, z: -3.5991163}
   m_LocalScale: {x: 1, y: 1, z: -1}
   m_ConstrainProportionsScale: 0
   m_Children:
