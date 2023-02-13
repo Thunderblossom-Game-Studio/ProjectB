@@ -23,7 +23,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        ChangeMusicWithFade("Menu", true);
+        PlayMusic("Menu", true);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -117,7 +117,7 @@ public class AudioManager : MonoBehaviour
     public static void PlayMusic(string ID, bool loop = true)
     {
         if (!InstanceExists()) return;
-        Instance.ChangeMusic(GetMusicClip(ID), loop);
+        Instance.StartCoroutine(Instance.PlayMusicFade(GetMusicClip(ID), loop));
     }
 
     public static void PauseMusic()
