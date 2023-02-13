@@ -132,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 287072271}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 287072270}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.12, z: 0}
+  m_LocalPosition: {x: 0, y: 1.644, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -163,7 +163,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 339564710}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: GunPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 364309524}
   - component: {fileID: 364309523}
   - component: {fileID: 364309522}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: GunCam
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 493137323}
   - component: {fileID: 493137322}
   - component: {fileID: 493137321}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: GunBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -411,7 +411,7 @@ GameObject:
   - component: {fileID: 750285048}
   - component: {fileID: 750285047}
   - component: {fileID: 750285046}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -625,7 +625,7 @@ GameObject:
   - component: {fileID: 927637478}
   - component: {fileID: 927637479}
   - component: {fileID: 927637480}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: WaterCannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -665,9 +665,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: 88a7a3f0cc288e9408ac320d51dba052, type: 2}
   shootCam: {fileID: 364309524}
-  ammo: {fileID: 1895822255032944273, guid: 76c3614b249a91d4e9b15e5f8f03e40d, type: 3}
   shootPoint: {fileID: 287072271}
   ammoParent: {fileID: 604609893}
+  ammo: {fileID: 1895822255032944273, guid: 76c3614b249a91d4e9b15e5f8f03e40d, type: 3}
   projectileHitMissDistance: 25
 --- !u!114 &927637480
 MonoBehaviour:
@@ -902,7 +902,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1609034036}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: CannonOrientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1003,7 +1003,7 @@ GameObject:
   - component: {fileID: 2024824839}
   - component: {fileID: 2024824841}
   - component: {fileID: 2024824840}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: CHRawImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1077,7 +1077,7 @@ GameObject:
   - component: {fileID: 2048211226}
   - component: {fileID: 2048211225}
   - component: {fileID: 2048211224}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: GunBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}

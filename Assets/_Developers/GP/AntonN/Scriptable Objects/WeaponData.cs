@@ -7,11 +7,11 @@ using UnityEngine;
 public class WeaponData : ScriptableObject
 {
     public string weaponName;
-    public float weaponDamage;
+    public int currentWeaponAmmo;
+    public int maxWeaponAmmo;
     public float weaponRange;
     public float weaponFireRate; //"Water" rate!
-    public float weaponCooldownTime;
-    public int weaponAmmo;
+    //[SerializeField] private float weaponCooldownTime;
     [HideInInspector]
     public bool coolingDown;
 }
