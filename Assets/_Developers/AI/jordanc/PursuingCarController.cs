@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mail;
 using UnityEngine;
 
 public class PursuingCarController : AICarController
 {
-    protected enum State { PURSUE, TURNLEFT, TURNRIGHT, BRAKE, PATROL }
+    protected enum State { PURSUE, PATROL, ATTACK, FLEE, PICKUP, SEARCHING, DELIVERY, TURNLEFT, TURNRIGHT, BRAKE }
     [SerializeField] protected State NextState;
     private AITestCar CurrentCar;
     public CollisionPrevention PreventionCollision;
@@ -12,6 +13,8 @@ public class PursuingCarController : AICarController
 
     [SerializeField] private float distanceToReset = 50f;
 
+    
+    [SerializeField] private float AttackRange;
 
     [Header("Aggro Range")]
     [SerializeField] float AggroRange;
@@ -43,13 +46,6 @@ public class PursuingCarController : AICarController
             NextState = State.BRAKE;
         }
 
-        /*
-        if ((PreventionCollision.TurnLeftBoolPass == false) && (PreventionCollision.TurnRightBoolPass == false) && (PreventionCollision.BrakeBoolPass == false))
-        {
-            NextState = State.PURSUE;
-        }
-        */
-
         RaycastHit[] Hits = Physics.SphereCastAll(transform.position, AggroRange, Vector3.forward, 0, Car);
 
         if (Hits.Length > 0)
@@ -58,7 +54,7 @@ public class PursuingCarController : AICarController
             {
                 if (hit.transform.gameObject != gameObject && hit.transform.CompareTag("Player"))
                 {
-                    
+
                     Target = hit.transform.gameObject;
                     Debug.Log(hit.transform.gameObject.name);
 
@@ -68,19 +64,56 @@ public class PursuingCarController : AICarController
 
         }
 
-        if (Target != null) 
+        if (Target != null)
         {
+            // Pursue
             if (Vector3.Distance(agent.transform.position, Target.transform.position) <= AggroRange)
             {
                 NextState = State.PURSUE;
             }
+
+            // Patrol
             else
             {
                 NextState = State.PATROL;
+         
+            }
+
+            // Attack
+            if (Vector3.Distance(transform.position, Target.transform.position) <= AttackRange)
+            {
+                NextState = State.ATTACK;
+            }
+
+            // Flee
+
+            // IF health < threshold || ammo < threshold
+
+            // Pickup
+
+            if (NextState == State.SEARCHING)
+            {
+                // Add heuristics
+            }
+
+            // Delivery
+
+            // IF hasPackage
+                // Deliever
+
+            // Reset Target
+            if (NextState == State.PATROL)
+            {
                 Target = null;
             }
+
+            // Searching
+
+            // IF target == NULL || need pickup
+
         }
 
+        
 
     }
 
@@ -96,6 +129,21 @@ public class PursuingCarController : AICarController
                 break;
             case State.PATROL:
                 Patrol();
+                break;
+            case State.ATTACK:
+                Attack();
+                break;
+            case State.FLEE:
+                Flee();
+                break;
+            case State.PICKUP:
+                Pickup();
+                break;
+            case State.DELIVERY:
+                Delivery();
+                break;
+            case State.SEARCHING:
+                Searching();
                 break;
             case State.TURNLEFT:
                 TurnLeft();
@@ -118,17 +166,13 @@ public class PursuingCarController : AICarController
             FollowAgent();
         }
 
+        
 
         State c = NextState;
 
         Evaluate();
 
-        /*
-        if (Input.GetKeyDown(KeyCode.I) && agentDebug)
-        {
-            agentDebug.SetActive(!agentDebug.activeInHierarchy);
-        }
-        */
+       
 
         if (c != NextState) newState = true;
 
@@ -138,11 +182,11 @@ public class PursuingCarController : AICarController
 
     private void Pursue()
     {
-        if(Target != null) 
+        if (Target != null)
         {
-            agent.SetDestination(Target.transform.position); 
+            agent.SetDestination(Target.transform.position);
         }
-        
+
     }
 
     private void TurnLeft()
@@ -191,10 +235,35 @@ public class PursuingCarController : AICarController
 
     }
 
-    /*
+    private void Attack()
+    {
+        Debug.Log("Attacked");
+    }
+
+    private void Flee()
+    {
+        Debug.Log("Fleeing");
+    }
+
+    private void Pickup()
+    {
+        Debug.Log("Pickup");
+    }
+
+    private void Delivery()
+    {
+        Debug.Log("Pickup");
+    }
+
+    private void Searching()
+    {
+        Debug.Log("Pickup");
+    }
+
+
     protected override void OnDrawGizmos()
     {
-        Gizmos.color = new Color (255,0,0, 255);
+        Gizmos.color = new Color(255, 0, 0, 255);
         Gizmos.DrawSphere(transform.position, AggroRange);
 
         base.OnDrawGizmos();
