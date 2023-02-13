@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class VehicleWheel : MonoBehaviour
 {
-
     [SerializeField] private bool isWheelPowered = false;
     [SerializeField] private float maxWheelAngle = 90f;
     [SerializeField] private float wheelOffset = 0f;
+    [SerializeField] private float brakePower = 1000.0f;
     
     private float wheelTurnAngle;
     private WheelCollider wheelCollider;
@@ -31,6 +31,12 @@ public class VehicleWheel : MonoBehaviour
         else wheelCollider.brakeTorque = 0;
     }
 
+    public void Brake(bool brakeInput)
+    {
+        if (brakeInput) wheelCollider.brakeTorque = brakePower;
+        else wheelCollider.brakeTorque = 0;
+
+    }
     public void UpdatePosition()
     {
         Vector3 position = transform.position;
