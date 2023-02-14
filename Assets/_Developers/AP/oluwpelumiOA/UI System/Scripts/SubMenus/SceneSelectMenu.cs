@@ -1,18 +1,76 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneSelectMenu : MonoBehaviour
+public class SceneSelectMenu : BaseMenu<SceneSelectMenu>
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("Buttons")]
+    [SerializeField] private AdvanceButton levelButton;
+    [SerializeField] private AdvanceButton leve2Button;
+    [SerializeField] private AdvanceButton mpButton;
+    [SerializeField] private AdvanceButton backButton;
+    
+
+    [SerializeField] private CanvasGroup buttonHolder;
+
+    private void Start()
     {
-        
+        levelButton.onClick.AddListener(() => SwitchScene(SceneType.Level1));
+        leve2Button.onClick.AddListener(() => SwitchScene(SceneType.Level2));
+        mpButton.onClick.AddListener(() => SwitchScene(SceneType.Multiplayer));
+        backButton.onClick.AddListener(CloseButton);
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Instance_OnTabLeftAction(object sender, EventArgs e)
     {
-        
+
     }
+
+    protected override void Instance_OnTabRightAction(object sender, EventArgs e)
+    {
+
+    }
+
+    protected override void Instance_OnBackAction(object sender, EventArgs e)
+    {
+        CloseButton();
+    }
+
+    public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
+    {
+        yield return FeelUtility.FadeFloat(null, buttonHolder.alpha, (v) => buttonHolder.alpha = v, new FeelFloatProperties(1, .5f, animationCurveType: AnimationCurveType.EaseInOut));
+
+        yield return base.OpenMenuRoutine(OnComplected);
+    }
+
+    public override IEnumerator CloseMenuRoutine(Action OnComplected = null)
+    {
+        yield return FeelUtility.FadeFloat(null, buttonHolder.alpha, (v) => buttonHolder.alpha = v, new FeelFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut));
+
+        yield return base.CloseMenuRoutine(OnComplected);
+    }
+
+    protected override void ResetUI()
+    {
+        buttonHolder.alpha = 0;
+    }
+
+    public void CloseButton()
+    {
+        Close(() => lastMenu.OpenMenu());
+    }
+
+    public void SwitchScene(SceneType sceneType)
+    {
+        Close(() => LoadingMenu.GetInstance().LoadScene((int)sceneType));
+    }
+}
+
+public enum SceneType
+{
+    MainMenu = 0,
+    Level1 = 1,
+    Level2 = 2,
+    Multiplayer = 3
 }

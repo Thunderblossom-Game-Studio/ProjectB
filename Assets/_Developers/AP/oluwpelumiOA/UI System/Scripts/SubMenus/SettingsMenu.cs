@@ -41,12 +41,6 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
     [SerializeField] private HorizontalSelector screenResolutionSelector;
     [SerializeField] private Toggle fullScreenToggle;
 
-   [Header("Gamepad Specifics")]
-    [SerializeField] private List<GameObject> gamepadSpecifics;
-
-    [Header("Keyboard Specifics")]
-    [SerializeField] private List<GameObject> keypadSpecifics;
-
     private Resolution[] resolutions;
 
     private bool inBindingMode;
@@ -64,12 +58,9 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
 
     protected override void InputManager_OnDeviceChanged(object sender, InputManager.DeviceType deviceType)
     {
-        if (!IsOpened) return;
-        
+        if (!IsOpened) return;    
         if (deviceType == InputManager.DeviceType.Gamepad) firstSelectedButton = tabUI.GetCurrentTabTogleSelectable();
         base.InputManager_OnDeviceChanged(sender, deviceType);
-        gamepadSpecifics.ForEach((x) => x.SetActive(deviceType == InputManager.DeviceType.Gamepad));
-        keypadSpecifics.ForEach((x) => x.SetActive(deviceType == InputManager.DeviceType.KeyboardAndMouse));
     }
 
     protected override void Instance_OnTabLeftAction(object sender, EventArgs e)

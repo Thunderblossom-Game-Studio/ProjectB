@@ -27,6 +27,15 @@ public class AudioManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("Space pressed");
+            Instance.StartCoroutine(ChangeMusicWithFadeRoutine(musicBank.GetRandomClip(), true));
+        }
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.buildIndex == 0)
@@ -51,7 +60,7 @@ public class AudioManager : MonoBehaviour
         while (musicPlayer.volume < 1)
         {
             musicPlayer.volume += 0.05f;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSecondsRealtime(0.1f);
         }
     }
 
@@ -62,17 +71,17 @@ public class AudioManager : MonoBehaviour
         while (musicPlayer.volume >= speed)
         {
             musicPlayer.volume -= speed;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSecondsRealtime(0.1f);
         }
 
         musicPlayer.Stop();
     }
 
-    private IEnumerator ChangeMusicWithFadeRoutine(AudioClip audioClip, bool loop, float speed)
+    private IEnumerator ChangeMusicWithFadeRoutine(AudioClip audioClip, bool loop)
     {
-        while (musicPlayer.volume >= speed)
+        while (musicPlayer.volume > 0)
         {
-            musicPlayer.volume -= speed;
+            musicPlayer.volume -= 0.05f;
             yield return new WaitForSecondsRealtime(0.1f);
         }
 
@@ -82,7 +91,7 @@ public class AudioManager : MonoBehaviour
 
         while (musicPlayer.volume < 1)
         {
-            musicPlayer.volume += speed;
+            musicPlayer.volume += 0.05f;
             yield return new WaitForSecondsRealtime(0.1f);
         }
     }
@@ -138,10 +147,10 @@ public class AudioManager : MonoBehaviour
         Instance.StartCoroutine(Instance.StopMusicFade());
     }
 
-    public static void ChangeMusicWithFade(string audioID, bool loop = true, float speed = 0.05f)
+    public static void ChangeMusicWithFade(string audioID, bool loop = true)
     {
         if (!InstanceExists()) return;
-        Instance.StartCoroutine(Instance.ChangeMusicWithFadeRoutine(GetMusicClip(audioID), loop, speed));
+        Instance.StartCoroutine(Instance.ChangeMusicWithFadeRoutine(GetMusicClip(audioID), loop));
     }
 
     public static void BlendTwoMusic(string startAudioID, string nextAudioID, bool loop = true)

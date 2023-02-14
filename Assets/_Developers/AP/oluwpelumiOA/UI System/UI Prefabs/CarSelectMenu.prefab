@@ -240,14 +240,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3637899211814173107}
-  m_LocalRotation: {x: 0.38268343, y: -0, z: -0, w: 0.92387956}
-  m_LocalPosition: {x: 285.46, y: 165.7, z: -4.9}
+  m_LocalRotation: {x: 0.16676876, y: 0, z: 0, w: 0.98599607}
+  m_LocalPosition: {x: 285.46, y: 163.89, z: -4.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3637899212838671123}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 19.2, y: 0, z: 0}
 --- !u!20 &3637899211814173134
 Camera:
   m_ObjectHideFlags: 0
@@ -574,7 +574,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 200, y: 7.8443604}
+  m_AnchoredPosition: {x: 80, y: 7.8443604}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3637899212221232091
@@ -631,9 +631,9 @@ MonoBehaviour:
     m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnDown: {fileID: 4342949483993657654}
+    m_SelectOnLeft: {fileID: 3637899213545708316}
+    m_SelectOnRight: {fileID: 3637899213545708316}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1105,7 +1105,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -200, y: 7.8443604}
+  m_AnchoredPosition: {x: -80, y: 7.8443604}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3637899213545708314
@@ -1162,9 +1162,9 @@ MonoBehaviour:
     m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnDown: {fileID: 4342949483993657654}
+    m_SelectOnLeft: {fileID: 3637899212221232088}
+    m_SelectOnRight: {fileID: 3637899212221232088}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1313,7 +1313,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyOnClose: 0
   navigatable: 1
-  firstSelectedButton: {fileID: 0}
+  firstSelectedButton: {fileID: 3637899212221232088}
+  gamepadSpecifics: []
+  keypadSpecifics: []
   closeButton: {fileID: 4342949483993657654}
   buttonHolder: {fileID: 4342949484338701262}
   animSpeed: 0.3
@@ -27160,8 +27162,8 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 3637899212221232088}
+    m_SelectOnDown: {fileID: 3637899213545708316}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1

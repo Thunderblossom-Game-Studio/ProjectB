@@ -11,6 +11,7 @@ public class MainMenu : BaseMenu<MainMenu>
 
     [Header("Buttons")]
     [SerializeField] private AdvanceButton startButton;
+    [SerializeField] private AdvanceButton carSelectButton;
     [SerializeField] private AdvanceButton settingsButton;
     [SerializeField] private AdvanceButton quitButton;
 
@@ -23,6 +24,7 @@ public class MainMenu : BaseMenu<MainMenu>
     private void Start()
     {
         startButton.onClick.AddListener(StartButton);
+        carSelectButton.onClick.AddListener(CarSelectButton);
         settingsButton.onClick.AddListener(OptionButton);
         quitButton.onClick.AddListener(QuitButton);
     }
@@ -50,7 +52,12 @@ public class MainMenu : BaseMenu<MainMenu>
 
     public void StartButton()
     {
-        Close(() => (LoadingMenu.Instance as LoadingMenu).LoadScene(1));
+        Close(() => SceneSelectMenu.Open());
+    }
+
+    public void CarSelectButton()
+    {
+        Close(() => CarSelectMenu.Open());
     }
 
     public void OptionButton()

@@ -56,24 +56,6 @@ public class UIManager : MonoBehaviour
         menuAudio.PlayOneShot(clickSound);
     }
 
-    private void Update()
-    {
-        //if (InputManager.Instance.HandleMoveInput().ReadValue<Vector2>() != Vector2.zero)
-        //{
-        //    Debug.Log(InputManager.Instance.HandleMoveInput().ReadValue<Vector2>());
-        //}
-
-        //if (InputManager.Instance.HandleFireInput().WasPressedThisFrame())
-        //{
-        //    Debug.Log("Fire");
-        //}
-
-        //if (InputManager.Instance.HandleInteractInput().WasPressedThisFrame())
-        //{
-        //    Debug.Log("Interact");
-        //}
-    }
-
     private void Menu_OnAnyUIOpened(object sender, EventArgs e)
     {
 
@@ -91,13 +73,16 @@ public class UIManager : MonoBehaviour
     
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        switch (scene.buildIndex)
+        SceneType loadedScene = (SceneType)scene.buildIndex;
+        switch (loadedScene)
         {
-            case 0: 
+            case SceneType.MainMenu:
                 MainMenu.Open();
                 InputManager.Instance.SwithControlMode(InputManager.ControlMode.UI);
                 break;
-            case 1: GameMenu.Open(); break;
+            case SceneType.Level1: GameMenu.Open(); break;
+            case SceneType.Level2: GameMenu.Open(); break;
+            case SceneType.Multiplayer: GameMenu.Open(); break;
             default: break;
         }
     }

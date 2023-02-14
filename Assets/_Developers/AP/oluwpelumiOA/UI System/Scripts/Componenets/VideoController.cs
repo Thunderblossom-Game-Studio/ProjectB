@@ -22,7 +22,7 @@ public class VideoController : MonoBehaviour
         //{
         //    FeelUtility.FadeCanvasGroup(canvasGroup, new FeelFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut));
         //}));
-        StartCoroutine(PlayVideo(videoClip, FeelUtility.FadeFloat(null, 0, (pos) => canvasGroup.alpha = pos, new FeelFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut), null)));
+        StartCoroutine(PlayVideo(videoClip, FeelUtility.FadeFloat(null, 1, (pos) => canvasGroup.alpha = pos, new FeelFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut), null)));
     }
 
     public IEnumerator PlayVideo(VideoClip videoClip, Action OnComplected = null)
