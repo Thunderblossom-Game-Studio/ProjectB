@@ -15,10 +15,10 @@ public class MainMenu : BaseMenu<MainMenu>
     [SerializeField] private AdvanceButton quitButton;
 
     [Header("Open Transition Settings")]
-    [SerializeField] private FeelScaleProperties view1OpenScaleTransition;
+    [SerializeField] private FeelVector3Properties view1OpenTransition;
 
     [Header("Close Transition Settings")]
-    [SerializeField] private FeelScaleProperties view1CloseScaleTransition;
+    [SerializeField] private FeelVector3Properties view1CloseTransition;
 
     private void Start()
     {
@@ -29,14 +29,15 @@ public class MainMenu : BaseMenu<MainMenu>
 
     public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
     {
-        yield return FeelUtility.ScaleObject(view1.transform, view1OpenScaleTransition);
-        yield return FeelUtility.FadeCanvasGroup(buttonHolder, new FeelFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut));
+        yield return FeelUtility.FadeVector3(null, Vector3.zero, (pos) => view1.transform.localScale = pos,  view1OpenTransition, null);
+        yield return FeelUtility.FadeFloat(null, 0, (pos) => buttonHolder.alpha = pos, new FeelFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
     }
 
     public override IEnumerator CloseMenuRoutine(Action OnComplected = null)
     {
-        yield return FeelUtility.FadeCanvasGroup(buttonHolder, new FeelFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut));
-        yield return FeelUtility.ScaleObject(view1.transform, view1CloseScaleTransition);
+
+        yield return FeelUtility.FadeFloat(null, buttonHolder.alpha, (pos) => buttonHolder.alpha = pos, new FeelFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
+        yield return FeelUtility.FadeVector3(null, view1.transform.localScale, (pos) => view1.transform.localScale = pos, view1CloseTransition, null);
 
         yield return base.CloseMenuRoutine(OnComplected);
     }

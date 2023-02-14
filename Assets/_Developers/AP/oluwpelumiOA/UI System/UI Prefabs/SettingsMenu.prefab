@@ -3462,8 +3462,8 @@ MonoBehaviour:
   buttonHolder: {fileID: 8599553824950788394}
   view1: {fileID: 0}
   tabUI: {fileID: 7177505671234787061}
-  textScaleTransition:
-    scale: {x: 1.2, y: 1.2, z: 1.2}
+  textPopTransition:
+    destination: {x: 1.2, y: 1.2, z: 1.2}
     duration: 0.1
     animationCurve:
       serializedVersion: 2
@@ -3472,33 +3472,41 @@ MonoBehaviour:
         time: 0
         value: 0
         inSlope: -2.1377413
-        outSlope: 1.8401408
+        outSlope: 4.4781623
         tangentMode: 69
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.5443624
-        value: 1.0017035
+        time: 0.22612512
+        value: 1.012625
         inSlope: -0.0016424804
         outSlope: -0.29018724
         tangentMode: 1
         weightedMode: 3
         inWeight: 0.74408114
-        outWeight: 0.6687002
+        outWeight: 0.4229497
+      - serializedVersion: 3
+        time: 0.8877468
+        value: 0.20022082
+        inSlope: 2.2122493
+        outSlope: 7.124779
+        tangentMode: 65
+        weightedMode: 3
+        inWeight: 0.5792643
+        outWeight: 0.4956185
       - serializedVersion: 3
         time: 1
-        value: 0
-        inSlope: -2.1984656
+        value: 1
+        inSlope: 7.124779
         outSlope: -2.1377413
         tangentMode: 69
-        weightedMode: 0
-        inWeight: 0.33333334
+        weightedMode: 1
+        inWeight: 0.40826756
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    relative: 0
   pressToRebindKey: {fileID: 4283586303751147181}
   moveUpBind: {fileID: 7152142468471208529}
   moveDownBind: {fileID: 6412272367054168012}

@@ -19,6 +19,8 @@ public class InputManager : MonoBehaviour
 
     public enum ControlMode { UI, Gameplay, UIandGameplay}
 
+    [SerializeField] public bool testing = true;
+
     [SerializeField] private DeviceType currentDeviceType;
 
     [SerializeField] private ControlMode controlMode;
@@ -54,7 +56,6 @@ public class InputManager : MonoBehaviour
 
         LoadBinding();    
 
-        //CHANGE BEFORE BUILD
         playerInputActions.General.Enable();
 
         playerInputActions.UI.TabLeft.performed += TabLeft_performed;
@@ -65,7 +66,7 @@ public class InputManager : MonoBehaviour
 
         playerInputActions.General.Pause.performed += Pause_performed;
         
-        playerInputActions.Player.Enable();
+        if(testing)  playerInputActions.Player.Enable();
     }
 
     private void OnEnable()

@@ -17,7 +17,7 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
     [SerializeField] private TabUI tabUI;
 
     [Header("Effect")]
-    [SerializeField] private FeelScaleProperties textScaleTransition;
+    [SerializeField] private FeelVector3Properties textPopTransition;
 
     [Header("Control Settings")]
 
@@ -86,7 +86,9 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
     
     public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
     {
-        StartCoroutine(FeelUtility.ScaleObject(title.transform, new FeelScaleProperties(new Vector3(1, 1, 1), .2f, animationCurveType: AnimationCurveType.EaseInOut)));
+        StartCoroutine(FeelUtility.FadeVector3(null, Vector3.zero, (pos) => title.transform.localScale = pos, 
+            new FeelVector3Properties(new Vector3(1, 1, 1), .1f, animationCurveType: AnimationCurveType.EaseInOut), null));
+        
         yield return FeelUtility.FadeFloat(null, -1177, (v) => view2.anchoredPosition =  new Vector2(v, view2.anchoredPosition.y), new FeelFloatProperties(0, .25f, animationCurveType: AnimationCurveType.EaseInOut));
         yield return FeelUtility.FadeFloat(null, buttonHolder.alpha,(v) => buttonHolder.alpha = v, new FeelFloatProperties(1, .5f, animationCurveType: AnimationCurveType.EaseInOut));
 
@@ -97,7 +99,9 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
     {
         yield return FeelUtility.FadeFloat(null, buttonHolder.alpha, (v) => buttonHolder.alpha = v, new FeelFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut));
         yield return FeelUtility.FadeFloat(null, 0, (v) => view2.anchoredPosition = new Vector2(v, view2.anchoredPosition.y), new FeelFloatProperties(-1177, .25f, animationCurveType: AnimationCurveType.EaseInOut));
-        StartCoroutine(FeelUtility.ScaleObject(title.transform, new FeelScaleProperties(new Vector3(0, 0, 0), .2f, animationCurveType: AnimationCurveType.EaseInOut)));
+    
+        StartCoroutine(FeelUtility.FadeVector3(null, title.transform.localScale, (pos) => title.transform.localScale = pos,
+    new FeelVector3Properties(Vector3.zero, .1f, animationCurveType: AnimationCurveType.EaseInOut), null));
 
         yield return base.CloseMenuRoutine(OnComplected);
     }
@@ -147,7 +151,8 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
 
     public void SetResolution(int resolutionIndex)
     {
-        StartCoroutine(FeelUtility.ScaleObject(screenResolutionSelector.GetText().transform, textScaleTransition));
+        StartCoroutine(FeelUtility.FadeVector3(null, Vector3.zero, (pos) => screenResolutionSelector.GetText().transform.localScale = pos,  textPopTransition, null));
+        
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         Debug.Log("Set Resolution: " + resolution.width + "x" + resolution.height);
