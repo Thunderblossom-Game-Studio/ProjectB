@@ -19,6 +19,8 @@ public class InputManager : MonoBehaviour
 
     public enum ControlMode { UI, Gameplay, UIandGameplay}
 
+    [SerializeField] public bool testing = true;
+
     [SerializeField] private DeviceType currentDeviceType;
 
     [SerializeField] private ControlMode controlMode;
@@ -54,7 +56,6 @@ public class InputManager : MonoBehaviour
 
         LoadBinding();    
 
-        //CHANGE BEFORE BUILD
         playerInputActions.General.Enable();
 
         playerInputActions.UI.TabLeft.performed += TabLeft_performed;
@@ -65,12 +66,24 @@ public class InputManager : MonoBehaviour
 
         playerInputActions.General.Pause.performed += Pause_performed;
         
-        playerInputActions.Player.Enable();
+        if(testing)  playerInputActions.Player.Enable();
     }
 
     private void OnEnable()
     {
         InputUser.onChange += OnInputDeviceChange;
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode arg1)
+    {
+        SceneType loadedScene = (SceneType)scene.buildIndex;
+        switch (loadedScene)
+        {
+           // case SceneType.Multiplayer: Destroy(gameObject); break;
+            default: break;
+        }
     }
 
     private void Pause_performed(InputAction.CallbackContext obj)
@@ -223,8 +236,7 @@ public class InputManager : MonoBehaviour
             playerInputActions.LoadBindingOverridesFromJson(PlayerPrefs.GetString(PLAYER_PREFS_BINDINGS));
         }
     }
-
-    
+  
     public void SwithControlMode(ControlMode newControlMode)
     {
         switch (newControlMode)
@@ -232,10 +244,14 @@ public class InputManager : MonoBehaviour
             case ControlMode.UI:
                 playerInputActions.Player.Disable();
                 playerInputActions.UI.Enable();
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
                 break;
             case ControlMode.Gameplay:
                 playerInputActions.Player.Enable();
                 playerInputActions.UI.Disable();
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
                 break;
             case ControlMode.UIandGameplay:
                 playerInputActions.Player.Enable();
@@ -261,5 +277,6 @@ public class InputManager : MonoBehaviour
     private void OnDisable()
     {
         InputUser.onChange -= OnInputDeviceChange;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

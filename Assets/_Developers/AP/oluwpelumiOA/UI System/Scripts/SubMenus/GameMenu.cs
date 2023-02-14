@@ -12,7 +12,7 @@ public class GameMenu : BaseMenu<GameMenu>
 
     public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
     {
-        yield return FeelUtility.FadeCanvasGroup(buttonHolder, new FeelFloatProperties(1, .5f, animationCurveType: AnimationCurveType.EaseInOut));
+        yield return FeelUtility.FadeFloat(null, 0, (pos) => buttonHolder.alpha = pos, new FeelFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
 
         InputManager.Instance.SwithControlMode(InputManager.ControlMode.Gameplay);
         
@@ -23,8 +23,7 @@ public class GameMenu : BaseMenu<GameMenu>
 
     public override IEnumerator CloseMenuRoutine(Action OnComplected = null)
     {
-        yield return FeelUtility.FadeCanvasGroup(buttonHolder, new FeelFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut));
-
+        yield return FeelUtility.FadeFloat(null, buttonHolder.alpha, (pos) => buttonHolder.alpha = pos, new FeelFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
         InputManager.Instance.OnPauseAction -= Instance_OnPauseAction;
 
         yield return base.CloseMenuRoutine(OnComplected);

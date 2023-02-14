@@ -28,6 +28,11 @@ public class AudioBank : ScriptableObject
             return audioWithID.audioClip;
         }
     }
+
+    public AudioClip GetRandomClip()
+    {
+        return audioClips[Random.Range(0, audioClips.Count)].audioClip;
+    }
 }
 
 [System.Serializable]

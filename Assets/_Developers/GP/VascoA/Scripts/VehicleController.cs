@@ -30,7 +30,7 @@ public class VehicleController : MonoBehaviour
         rigidBody.centerOfMass = vehicleCenterOfMass.transform.localPosition;
 
         //Lock mouse to center of screen
-        Cursor.lockState = CursorLockMode.Locked;
+       // Cursor.lockState = CursorLockMode.Locked;
         
     }
 

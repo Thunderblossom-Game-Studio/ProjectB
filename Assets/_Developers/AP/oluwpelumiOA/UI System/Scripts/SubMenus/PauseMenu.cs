@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : BaseMenu<PauseMenu>
 {
@@ -39,9 +40,9 @@ public class PauseMenu : BaseMenu<PauseMenu>
 
     public void RestartButton()
     {
-        Close(() => (LoadingMenu.Instance as LoadingMenu).LoadScene(1));
+        Close(() => LoadingMenu.GetInstance().LoadScene(SceneManager.GetActiveScene().buildIndex));
     }
-
+    
     public void ResumeButton()
     {
         Close(()=>InputManager.Instance.SwithControlMode(InputManager.ControlMode.Gameplay));
@@ -54,7 +55,7 @@ public class PauseMenu : BaseMenu<PauseMenu>
 
     public void MenuButton()
     {
-        Close(() => (LoadingMenu.Instance as LoadingMenu).LoadScene(0));
+        Close(() => LoadingMenu.GetInstance().LoadScene((int)SceneType.MainMenu));
         GameMenu.Close();
     }
     

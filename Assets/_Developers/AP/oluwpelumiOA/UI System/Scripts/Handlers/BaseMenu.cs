@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -11,6 +12,12 @@ public abstract class BaseMenu<T> : Menu
     public  static bool IsOpened { get; private set; }
 
     public static T GetInstance() => (T)Convert.ChangeType(Instance, typeof(T));
+
+    [Header("Gamepad Specifics")]
+    [SerializeField] protected List<GameObject> gamepadSpecifics;
+
+    [Header("Keyboard Specifics")]
+    [SerializeField] protected List<GameObject> keypadSpecifics;
 
     protected override void Awake()
     {
@@ -70,14 +77,13 @@ public abstract class BaseMenu<T> : Menu
 
         switch (deviceType)
         {
-            case InputManager.DeviceType.KeyboardAndMouse:
-                EventSystem.current.SetSelectedGameObject(null);
-                break;
-            case InputManager.DeviceType.Gamepad:
-                firstSelectedButton?.Select();
-                break;
+            case InputManager.DeviceType.KeyboardAndMouse:  EventSystem.current.SetSelectedGameObject(null);   break;
+            case InputManager.DeviceType.Gamepad: firstSelectedButton?.Select();  break;
             default: break;
         }
+
+        gamepadSpecifics.ForEach((x) => x.SetActive(deviceType == InputManager.DeviceType.Gamepad));
+        keypadSpecifics.ForEach((x) => x.SetActive(deviceType == InputManager.DeviceType.KeyboardAndMouse));
     }
 
     public static void Close(Action OnClosed = null)
