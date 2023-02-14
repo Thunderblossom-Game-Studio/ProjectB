@@ -8,8 +8,11 @@ using System.Linq;
 using UnityEngine.EventSystems;
 using UnityEngine.Audio;
 
-public class SettingsMenu : BaseMenu <SettingsMenu>
+public class SettingsMenu : BaseMenu <SettingsMenu>, IDataPersistance
 {
+    //Test variable to save to settings
+    public int testInt = 0;
+
     [SerializeField] private Transform title;
     [SerializeField] private RectTransform view2;
     [SerializeField] private CanvasGroup buttonHolder;
@@ -61,6 +64,9 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
 
         fullScreenToggle.onValueChanged.AddListener((x) => Screen.fullScreen = x);
     }
+
+    
+
 
     protected override void InputManager_OnDeviceChanged(object sender, InputManager.DeviceType deviceType)
     {
@@ -301,4 +307,29 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
     {
         
     }
+
+    public void LoadSettingsData(SettingsData data)
+    {
+        data.testInt = this.testInt;
+        //Add values you want to save here
+    }
+
+    public void SaveSettingsData(ref SettingsData data)
+    {
+        //Add values you want to save here
+        this.testInt = data.testInt;
+    }
+
+
+    #region GameData 
+    public void LoadGameData(GameData data)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SaveGameData(ref GameData data)
+    {
+        throw new NotImplementedException();
+    }
+    #endregion //NOT IMPLEMENTED
 }

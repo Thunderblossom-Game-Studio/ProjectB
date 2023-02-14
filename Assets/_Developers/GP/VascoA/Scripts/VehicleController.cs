@@ -13,7 +13,7 @@ public class VehicleController : MonoBehaviour
     private bool brakeInput;
     #endregion
 
-    public VehicleWheel[] vehicleWheels;
+    [SerializeField] private VehicleWheel[] vehicleWheels;
 
     private Rigidbody rigidBody;
     

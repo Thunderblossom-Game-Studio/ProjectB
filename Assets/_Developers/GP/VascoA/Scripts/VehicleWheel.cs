@@ -38,13 +38,9 @@ public class VehicleWheel : MonoBehaviour
 
     }
     public void UpdatePosition()
-    {
-        Vector3 position = transform.position;
-        Quaternion rotation = transform.rotation;
-
-        wheelCollider.GetWorldPose(out position, out rotation);
-        wheelMesh.transform.position = position;
-        wheelMesh.transform.rotation = rotation;
+    {  
+        wheelCollider.GetWorldPose(out Vector3 position, out Quaternion rotation);
+        wheelMesh.transform.SetPositionAndRotation(position, rotation);
     }
 
 
