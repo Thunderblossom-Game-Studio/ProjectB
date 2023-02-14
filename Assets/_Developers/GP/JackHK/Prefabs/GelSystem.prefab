@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6902132179573855578
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6902132179573855577}
+  - component: {fileID: 6902132179573855576}
+  m_Layer: 0
+  m_Name: GelSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6902132179573855577
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6902132179573855578}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6902132179573855576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6902132179573855578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e541df00ebd12c4fb47b22e13af4e5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropletPrefab: {fileID: 3244942132746529206, guid: 1e6a0cc142a4d3245b680b4c6bd47e78, type: 3}
+  _splatterPrefab: {fileID: 8928292869484311581, guid: 0345b9376df465b4db1d2a2ceeef0355, type: 3}
+  _isObjectPooling: 0
+  _groundLayerName: Ground
+  _playerTagName: Player
+  _enemyTagName: Enemy
+  _splatterLife: 3
+  _splatterScale: 80
+  _splatterDepth: 4
+  _splatterHeightAddition: 0.24
+  _splatterRotationMin: -180
+  _splatterRotationMax: 180
