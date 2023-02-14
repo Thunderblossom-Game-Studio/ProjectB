@@ -10,7 +10,6 @@ public abstract class Collectable : MonoBehaviour
     {
         if (!_collideLayers.ContainsLayer(objectCollider.gameObject.layer)) return;
         Collect(objectCollider.gameObject);
-        Destroy(gameObject);
     }
     public void DestroyObject()
     {

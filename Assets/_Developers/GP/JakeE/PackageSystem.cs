@@ -8,15 +8,15 @@ public class PackageSystem : MonoBehaviour
 {
     #region GET & SET
     public int PackageScore => _packageScore;
+    public int MaxPackages => _maxPackages;
+    public int PackageAmount => _currentPackages.Count;
 
     #endregion
     //Debug >>>
     [SerializeField] private TextMeshProUGUI _packageScoreText;
     //Debug <<<
-#if UNITY_EDITOR
-    [Viewable]
-#endif
-    [SerializeField] private int _packageScore;
+
+    [Viewable] [SerializeField] private int _packageScore;
     [SerializeField] private int _maxPackages;
     private readonly List<PackageData> _currentPackages = new List<PackageData>();
 

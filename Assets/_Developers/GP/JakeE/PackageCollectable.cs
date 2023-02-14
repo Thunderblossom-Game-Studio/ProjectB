@@ -11,6 +11,10 @@ public class PackageCollectable : Collectable
     {
         PackageSystem packageSystem = collideObject.GetComponent<PackageSystem>();
         if (packageSystem == null) return;
+        if (packageSystem.PackageAmount >= packageSystem.MaxPackages) return;
+
+        Debug.Log("waglgleoii");
+
         packageSystem.AddPackageData(_packageData);
         DestroyObject();
     }
