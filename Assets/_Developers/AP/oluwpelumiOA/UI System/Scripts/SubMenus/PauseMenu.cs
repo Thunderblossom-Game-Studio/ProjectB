@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : BaseMenu<PauseMenu>
 {
     [SerializeField] private CanvasGroup buttonHolder;
 
     [Header("Buttons")]
+    [SerializeField] private AdvanceButton restartButton;
     [SerializeField] private AdvanceButton resumeButton;
     [SerializeField] private AdvanceButton settingsButton;
     [SerializeField] private AdvanceButton menuButton;
@@ -15,6 +17,7 @@ public class PauseMenu : BaseMenu<PauseMenu>
 
     private void Start()
     {
+        restartButton.onClick.AddListener(RestartButton);
         resumeButton.onClick.AddListener(ResumeButton);
         settingsButton.onClick.AddListener(SettingsButton);
         menuButton.onClick.AddListener(MenuButton);
@@ -35,11 +38,11 @@ public class PauseMenu : BaseMenu<PauseMenu>
         yield return base.CloseMenuRoutine(OnComplected);
     }
 
-    public override void OnBackPressed()
+    public void RestartButton()
     {
-        
+        Close(() => LoadingMenu.GetInstance().LoadScene(SceneManager.GetActiveScene().buildIndex));
     }
-
+    
     public void ResumeButton()
     {
         Close(()=>InputManager.Instance.SwithControlMode(InputManager.ControlMode.Gameplay));
@@ -52,7 +55,7 @@ public class PauseMenu : BaseMenu<PauseMenu>
 
     public void MenuButton()
     {
-        Close(() => (LoadingMenu.Instance as LoadingMenu).LoadScene(0));
+        Close(() => LoadingMenu.GetInstance().LoadScene((int)SceneType.MainMenu));
         GameMenu.Close();
     }
     

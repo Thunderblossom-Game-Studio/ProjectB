@@ -4,15 +4,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameMenu : BaseMenu<GameMenu>
 {
     [SerializeField] private CanvasGroup buttonHolder;
-    [SerializeField] private Slider carFuelSlider;
+
+    [Header( "Package UI")]
+    [SerializeField] private FeelVector3Properties _packageUIProperties;
+    [SerializeField] private TextMeshProUGUI currentPackageText;
+    [SerializeField] private TextMeshProUGUI maxPackageText;
+    [SerializeField] private TextMeshProUGUI scoreText;
+
+    [Header("Events")]
+    [SerializeField] private GameEvent _onPickUp;
+    [SerializeField] private GameEvent _onDeliver;
+
+    private void OnEnable()
+    {
+        _onPickUp.Register(OnPickUp);
+        _onDeliver.Register(OnDeliver);
+    }
 
     public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
     {
-        yield return FeelUtility.FadeCanvasGroup(buttonHolder, new FeelFloatProperties(1, .5f, animationCurveType: AnimationCurveType.EaseInOut));
+        yield return FeelUtility.FadeFloat(null, 0, (pos) => buttonHolder.alpha = pos, new FeelFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
 
         InputManager.Instance.SwithControlMode(InputManager.ControlMode.Gameplay);
         
@@ -23,8 +39,7 @@ public class GameMenu : BaseMenu<GameMenu>
 
     public override IEnumerator CloseMenuRoutine(Action OnComplected = null)
     {
-        yield return FeelUtility.FadeCanvasGroup(buttonHolder, new FeelFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut));
-
+        yield return FeelUtility.FadeFloat(null, buttonHolder.alpha, (pos) => buttonHolder.alpha = pos, new FeelFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
         InputManager.Instance.OnPauseAction -= Instance_OnPauseAction;
 
         yield return base.CloseMenuRoutine(OnComplected);
@@ -46,9 +61,23 @@ public class GameMenu : BaseMenu<GameMenu>
         if (PauseMenu.Instance && PauseMenu.IsOpened) return;
         PauseMenu.Open();
     }
-
-    public void UpdateFuelSlider(float value)
+    private void OnPickUp(Component arg1, object arg2)
     {
-        carFuelSlider.value = value;
+        currentPackageText.text = (arg2 as int[])[0].ToString();
+        maxPackageText.text = (arg2 as int[])[1].ToString();
+        StartCoroutine(FeelUtility.FadeVector3(null, Vector3.zero, (pos) => currentPackageText.transform.localScale = pos, _packageUIProperties, null));
+    }
+    
+    private void OnDeliver(Component arg1, object arg2)
+    {
+        currentPackageText.text = "0";
+        scoreText.text = ((int)arg2) + " Points";
+        StartCoroutine(FeelUtility.FadeVector3(null, Vector3.zero, (pos) => scoreText.transform.localScale = pos, _packageUIProperties, null));
+    }
+
+    private void OnDisable()
+    {
+        _onPickUp.Unregister(OnPickUp);
+        _onDeliver.Unregister(OnDeliver);
     }
 }

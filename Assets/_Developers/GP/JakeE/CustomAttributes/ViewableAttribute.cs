@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-#if UNITY_EDITOR
 public class ViewableAttribute : PropertyAttribute
 {
     
 
 }
 
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(ViewableAttribute))]
 public class ViewableDrawer : PropertyDrawer
 {

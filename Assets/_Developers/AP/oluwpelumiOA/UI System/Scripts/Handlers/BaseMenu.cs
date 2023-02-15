@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -12,6 +13,12 @@ public abstract class BaseMenu<T> : Menu
 
     public static T GetInstance() => (T)Convert.ChangeType(Instance, typeof(T));
 
+    [Header("Gamepad Specifics")]
+    [SerializeField] protected List<GameObject> gamepadSpecifics;
+
+    [Header("Keyboard Specifics")]
+    [SerializeField] protected List<GameObject> keypadSpecifics;
+
     protected override void Awake()
     {
         base.Awake();
@@ -21,6 +28,11 @@ public abstract class BaseMenu<T> : Menu
     private void Start()
     {
         
+    }
+
+    protected virtual void Instance_OnBackAction(object sender, EventArgs e)
+    {
+
     }
 
     protected virtual void Instance_OnTabRightAction(object sender, EventArgs e)
@@ -33,15 +45,15 @@ public abstract class BaseMenu<T> : Menu
 
     }
 
-    public static void Open()
+    public static void Open(Action OnOpened = null)
     {
         if (Instance != null)
         {
-            Instance.OpenMenu();
+            Instance.OpenMenu(OnOpened);
         } 
         else
         {
-            UIManager.Instance.InstantiateMenu<T>();
+            UIManager.Instance.InstantiateMenu<T>(OnOpened);
         }
     }
 
@@ -54,6 +66,7 @@ public abstract class BaseMenu<T> : Menu
 
         InputManager.Instance.OnDeviceChanged += InputManager_OnDeviceChanged;
 
+        InputManager.Instance.OnBackAction += Instance_OnBackAction;
         InputManager.Instance.OnTabLeftAction += Instance_OnTabLeftAction;
         InputManager.Instance.OnTabRightAction += Instance_OnTabRightAction;
     }
@@ -64,14 +77,13 @@ public abstract class BaseMenu<T> : Menu
 
         switch (deviceType)
         {
-            case InputManager.DeviceType.KeyboardAndMouse:
-                EventSystem.current.SetSelectedGameObject(null);
-                break;
-            case InputManager.DeviceType.Gamepad:
-                firstSelectedButton?.Select();
-                break;
+            case InputManager.DeviceType.KeyboardAndMouse:  EventSystem.current.SetSelectedGameObject(null);   break;
+            case InputManager.DeviceType.Gamepad: firstSelectedButton?.Select();  break;
             default: break;
         }
+
+        gamepadSpecifics.ForEach((x) => x.SetActive(deviceType == InputManager.DeviceType.Gamepad));
+        keypadSpecifics.ForEach((x) => x.SetActive(deviceType == InputManager.DeviceType.KeyboardAndMouse));
     }
 
     public static void Close(Action OnClosed = null)
@@ -83,7 +95,8 @@ public abstract class BaseMenu<T> : Menu
     public override void OnMenuClosed()
     {
         InputManager.Instance.OnDeviceChanged -= InputManager_OnDeviceChanged;
-        
+
+        InputManager.Instance.OnBackAction -= Instance_OnBackAction;
         InputManager.Instance.OnTabLeftAction -= Instance_OnTabLeftAction;
         InputManager.Instance.OnTabRightAction -= Instance_OnTabRightAction;
 

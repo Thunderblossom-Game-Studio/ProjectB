@@ -5,63 +5,6 @@ using UnityEngine;
 
 public static class FeelUtility
 {
-    public static IEnumerator MoveObjectMultiple(Transform thisTransform, List<FeelMoveProperties> moveProperties, bool loop = false, Action OnFinished = null)
-    {
-        foreach (FeelMoveProperties moveProperty in moveProperties)
-        {
-            yield return MoveObject(thisTransform, moveProperty, OnFinished);
-        }
-        if (OnFinished != null) OnFinished();
-        if(loop) yield return MoveObjectMultiple(thisTransform, moveProperties, loop, OnFinished);
-    }
-
-    public static IEnumerator MoveObject(Transform thisTransform, FeelMoveProperties feelMoveProperties, Action OnFinished = null)
-    {
-        float i = 0.0f;
-        float rate = 1.0f / feelMoveProperties.duration;
-        Vector3 startPos = thisTransform.position;
-        Vector3 destination = feelMoveProperties.relative ? thisTransform.position + feelMoveProperties.position : feelMoveProperties.position;
-
-        while (i < 1.0f)
-        {
-            i += Time.unscaledDeltaTime * rate;
-            thisTransform.position = Vector3.Lerp(startPos, destination, feelMoveProperties.animationCurve.Evaluate(i));
-            yield return null;
-        }
-
-        if (OnFinished != null) OnFinished();
-    }
-
-    public static IEnumerator ScaleObjectMultiple(Transform thisTransform, List<FeelScaleProperties> feelScaleProperties, bool loop = false, Action OnFinished = null)
-    {
-        foreach (FeelScaleProperties scaleProperty in feelScaleProperties)
-        {
-            yield return ScaleObject(thisTransform, scaleProperty, OnFinished);
-        }
-
-        if (OnFinished != null) OnFinished();
-        if (loop) yield return ScaleObjectMultiple(thisTransform, feelScaleProperties, loop, OnFinished);
-    }
-
-    public static IEnumerator ScaleObject(Transform thisTransform, FeelScaleProperties feelScaleProperties, Action OnFinished = null)
-    {
-        float i = 0.0f;
-        float rate = 1.0f / feelScaleProperties.duration;
-        Vector3 startScale = thisTransform.localScale;
-        Vector3 finalScale = feelScaleProperties.relative ? thisTransform.localScale + feelScaleProperties.scale : feelScaleProperties.scale;
-        
-        while (i < 1.0f)
-        {
-            i += Time.unscaledDeltaTime * rate;
-            thisTransform.localScale = Vector3.Lerp(startScale, finalScale, feelScaleProperties.animationCurve.Evaluate(i));
-            yield return null;
-        }
-
-        //thisTransform.localScale = finalScale;
-
-        if (OnFinished != null) OnFinished();
-    }
-
     public static IEnumerator FadeObjectColourMutiple(Renderer renderer, List<FeelColorProperties> colorProperties, bool loop = false, Action OnFinished = null)
     {
         foreach (FeelColorProperties colourProperty in colorProperties)
@@ -117,23 +60,21 @@ public static class FeelUtility
         if (OnFinished != null) OnFinished();
     }
 
-    public static IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, FeelFloatProperties feelFloatProperties, Action OnFinished = null)
+    public static IEnumerator MultipleFadeVector3(Action OnBegin, Transform thisTransform, List<FeelVector3Properties> feelVector3Properties, bool loop = false, Action OnFinished = null)
     {
-        float i = 0.0f;
-        float rate = 1.0f / feelFloatProperties.duration;
-        float startValue = canvasGroup.alpha;
-        while (i < 1.0f)
+        OnBegin?.Invoke();
+        
+        foreach (FeelVector3Properties feelVector3Property in feelVector3Properties)
         {
-            i += Time.unscaledDeltaTime * rate;
-            canvasGroup.alpha = Mathf.Lerp(startValue, feelFloatProperties.destination, feelFloatProperties.animationCurve.Evaluate(i));
-            yield return null;
+            yield return FadeVector3(null, thisTransform.position, (value) => thisTransform.position = value, feelVector3Property, null);
+            if (OnFinished != null) OnFinished();
+            if (loop) yield return MultipleFadeVector3(OnBegin, thisTransform, feelVector3Properties, loop, OnFinished);
         }
-
-        if (OnFinished != null) OnFinished();
     }
 
-    public static IEnumerator FadeVector3(Vector3 startingValue, Action<Vector3> valueToModify, FeelVector3Properties feelVector3Properties, Action OnFinished = null)
+    public static IEnumerator FadeVector3(Action OnBegin, Vector3 startingValue, Action<Vector3> valueToModify, FeelVector3Properties feelVector3Properties, Action OnFinished = null)
     {
+        OnBegin?.Invoke();
         float i = 0.0f;
         float rate = 1.0f / feelVector3Properties.duration;
         Vector3 startValue = startingValue;

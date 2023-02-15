@@ -43,7 +43,6 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        InputManager.Instance.OnBackAction += Instance_OnBackAction;
         LoadingMenu.Open();
     }
 
@@ -55,29 +54,6 @@ public class UIManager : MonoBehaviour
     private void AdvanceButton_OnAnyButtonClicked(object sender, EventArgs e)
     {
         menuAudio.PlayOneShot(clickSound);
-    }
-
-    private void Instance_OnBackAction(object sender, EventArgs e)
-    {
-        Menu.currentMenu?.OnBackPressed();
-    }
-
-    private void Update()
-    {
-        //if (InputManager.Instance.HandleMoveInput().ReadValue<Vector2>() != Vector2.zero)
-        //{
-        //    Debug.Log(InputManager.Instance.HandleMoveInput().ReadValue<Vector2>());
-        //}
-
-        //if (InputManager.Instance.HandleFireInput().WasPressedThisFrame())
-        //{
-        //    Debug.Log("Fire");
-        //}
-
-        //if (InputManager.Instance.HandleInteractInput().WasPressedThisFrame())
-        //{
-        //    Debug.Log("Interact");
-        //}
     }
 
     private void Menu_OnAnyUIOpened(object sender, EventArgs e)
@@ -97,32 +73,35 @@ public class UIManager : MonoBehaviour
     
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        switch (scene.buildIndex)
+        SceneType loadedScene = (SceneType)scene.buildIndex;
+        switch (loadedScene)
         {
-            case 0: 
+            case SceneType.MainMenu:
                 MainMenu.Open();
                 InputManager.Instance.SwithControlMode(InputManager.ControlMode.UI);
                 break;
-            case 1: GameMenu.Open(); break;
+            case SceneType.Level1: GameMenu.Open(); break;
+            case SceneType.Level2: GameMenu.Open(); break;
+            case SceneType.Multiplayer: GameMenu.Open(); break;
             default: break;
         }
     }
 
-    public void InstantiateMenu<T>()
+    public void InstantiateMenu<T>(Action OnOpen = null)
     {
         Menu menu = menuPrefabs.Find(x => x.GetType() == typeof(T));
-        if (menu != null) SpawnMenu(menu);
+        if (menu != null) SpawnMenu(menu, OnOpen);
     }
 
-    public void InstantiateMenu(Type type)
+    public void InstantiateMenu(Type type, Action OnOpen = null)
     {
         Menu menu = menuPrefabs.Find(x => x.GetType() == type);
-        if (menu != null) SpawnMenu(menu);
+        if (menu != null) SpawnMenu(menu, OnOpen);
     }
 
-    public void SpawnMenu(Menu menu)
+    public void SpawnMenu(Menu menu, Action OnOpen= null)
     {
         Menu newMenu = Instantiate(menu, transform);
-        newMenu.OpenMenu();
+        newMenu.OpenMenu(OnOpen);
     }
 }
