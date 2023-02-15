@@ -33,6 +33,8 @@ public class MainMenu : BaseMenu<MainMenu>
     {
         yield return FeelUtility.FadeVector3(null, Vector3.zero, (pos) => view1.transform.localScale = pos,  view1OpenTransition, null);
         yield return FeelUtility.FadeFloat(null, 0, (pos) => buttonHolder.alpha = pos, new FeelFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
+
+        yield return base.OpenMenuRoutine(OnComplected);
     }
 
     public override IEnumerator CloseMenuRoutine(Action OnComplected = null)

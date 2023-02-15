@@ -39,10 +39,10 @@ public class VechicleResources : MonoBehaviour
             if(resource.name == "Fuel")
             {
                 currentFuel = resource._amount;
-                if (GameMenu.Instance)
-                {
-                    GameMenu.GetInstance().UpdateFuelSlider(GetCurrentFuelNormalized());
-                }
+                //if (GameMenu.Instance)
+                //{
+                //    GameMenu.GetInstance().UpdateFuelSlider(GetCurrentFuelNormalized());
+                //}
             }
         }
     }
