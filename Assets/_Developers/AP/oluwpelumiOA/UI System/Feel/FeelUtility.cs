@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Random = UnityEngine.Random;
 public static class FeelUtility
 {
     public static IEnumerator FadeObjectColourMutiple(Renderer renderer, List<FeelColorProperties> colorProperties, bool loop = false, Action OnFinished = null)
@@ -103,6 +103,11 @@ public static class FeelUtility
         }
 
        OnFinished?.Invoke();
+    }
+
+    public static float GetRange(float value)
+    {
+        return Random.Range(-value, value);
     }
 
 
