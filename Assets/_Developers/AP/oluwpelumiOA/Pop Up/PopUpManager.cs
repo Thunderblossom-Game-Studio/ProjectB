@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 using TMPro;
+using Pelumi.Juicer;
 
 public class PopUpManager : MonoBehaviour
 {
@@ -59,7 +60,7 @@ public class PopUpManager : MonoBehaviour
 
     public void SetPopUpInfo(GameObject textPopUp, Vector3 spawnPosition, Vector3 randomIntensity, string text, Color color)
     {
-        textPopUp.transform.position = spawnPosition += new Vector3(FeelUtility.GetRange(randomIntensity.x), FeelUtility.GetRange(randomIntensity.y), FeelUtility.GetRange(randomIntensity.z));
+        textPopUp.transform.position = spawnPosition += new Vector3(Juicer.GetRange(randomIntensity.x), Juicer.GetRange(randomIntensity.y), Juicer.GetRange(randomIntensity.z));
         textPopUp.GetComponent<TextPopUp>().SetText(text, color);
         textPopUp.SetActive(true);
     }

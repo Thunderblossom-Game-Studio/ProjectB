@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Pelumi.Juicer;
 
 public class PauseMenu : BaseMenu<PauseMenu>
 {
@@ -26,7 +27,7 @@ public class PauseMenu : BaseMenu<PauseMenu>
 
     public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
     {
-        yield return FeelUtility.FadeFloat(() => buttonHolder.interactable = true, buttonHolder.alpha, (v) => buttonHolder.alpha = v, new FeelFloatProperties(1, .5f, animationCurveType: AnimationCurveType.EaseInOut));
+        yield return Juicer.DoFloat(() => buttonHolder.interactable = true, buttonHolder.alpha, (v) => buttonHolder.alpha = v, new JuicerFloatProperties(1, .5f, animationCurveType: AnimationCurveType.EaseInOut));
         InputManager.Instance.SwithControlMode(InputManager.ControlMode.UI);
 
         yield return base.OpenMenuRoutine(OnComplected);
@@ -34,7 +35,7 @@ public class PauseMenu : BaseMenu<PauseMenu>
 
     public override IEnumerator CloseMenuRoutine(Action OnComplected = null)
     {
-        yield return FeelUtility.FadeFloat(() => buttonHolder.interactable = false, buttonHolder.alpha, (v) => buttonHolder.alpha = v, new FeelFloatProperties(0, .5f, animationCurveType: AnimationCurveType.EaseInOut));
+        yield return Juicer.DoFloat(() => buttonHolder.interactable = false, buttonHolder.alpha, (v) => buttonHolder.alpha = v, new JuicerFloatProperties(0, .5f, animationCurveType: AnimationCurveType.EaseInOut));
         yield return base.CloseMenuRoutine(OnComplected);
     }
 

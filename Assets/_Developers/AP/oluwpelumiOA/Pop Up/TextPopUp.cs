@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Pelumi.Juicer;
 
 public class TextPopUp : PoolObject
 {
@@ -9,7 +10,7 @@ public class TextPopUp : PoolObject
     [Header("TextPopUp")]
     [SerializeField] private TextMeshPro textMeshPro;
     [SerializeField] private Vector3 moveOffset;
-    [SerializeField] private FeelVector3Properties scaleEffect;
+    [SerializeField] private JuicerVector3Properties scaleEffect;
     
     protected override void OnEnable()
     {
@@ -24,10 +25,11 @@ public class TextPopUp : PoolObject
 
     public void Effect()
     {
-        StartCoroutine(FeelUtility.FadeVector3(null, transform.position, (pos) => transform.position = pos,
-    new FeelVector3Properties(transform.position + new Vector3(FeelUtility.GetRange(moveOffset.y), FeelUtility.GetRange(moveOffset.y), FeelUtility.GetRange(moveOffset.z)),
+        StartCoroutine(Juicer.DoVector3(null, transform.position, (pos) => transform.position = pos,
+
+    new JuicerVector3Properties(transform.position + new Vector3(Juicer.GetRange(moveOffset.y), Juicer.GetRange(moveOffset.y), Juicer.GetRange(moveOffset.z)),
     .5f, animationCurveType: AnimationCurveType.EaseInOut), null));
-        StartCoroutine(FeelUtility.FadeVector3(null, Vector3.zero, (pos) => transform.localScale = pos, scaleEffect, DisableObject));
+        StartCoroutine(Juicer.DoVector3(null, Vector3.zero, (pos) => transform.localScale = pos, scaleEffect, DisableObject));
     }
 
     private void OnDisable()

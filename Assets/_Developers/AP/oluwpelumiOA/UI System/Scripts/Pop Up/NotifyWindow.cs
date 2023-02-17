@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Pelumi.Juicer;
 
 public class NotifyWindow : BaseMenu<NotifyWindow>
 {
@@ -14,7 +15,7 @@ public class NotifyWindow : BaseMenu<NotifyWindow>
 
     public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
     {
-        yield return FeelUtility.FadeFloat(null, 0, (pos) => content.alpha = pos, new FeelFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut), () => ToggleLoadingContent(true));
+        yield return Juicer.DoFloat(null, 0, (pos) => content.alpha = pos, new JuicerFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut), () => ToggleLoadingContent(true));
 
 
         yield return base.OpenMenuRoutine(OnComplected);
@@ -22,7 +23,7 @@ public class NotifyWindow : BaseMenu<NotifyWindow>
 
     public override IEnumerator CloseMenuRoutine(Action OnComplected = null)
     {
-        yield return FeelUtility.FadeFloat(null, content.alpha, (pos) => content.alpha = pos, new FeelFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut), () => ToggleLoadingContent(false));
+        yield return Juicer.DoFloat(null, content.alpha, (pos) => content.alpha = pos, new JuicerFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut), () => ToggleLoadingContent(false));
 
         yield return base.CloseMenuRoutine(OnComplected);
     }

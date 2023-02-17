@@ -7,12 +7,10 @@ using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.EventSystems;
 using UnityEngine.Audio;
+using Pelumi.Juicer;
 
-public class SettingsMenu : BaseMenu <SettingsMenu>, IDataPersistance
+public class SettingsMenu : BaseMenu <SettingsMenu>
 {
-    //Test variable to save to settings
-    public int testInt = 0;
-
     [SerializeField] private Transform title;
     [SerializeField] private RectTransform view2;
     [SerializeField] private CanvasGroup buttonHolder;
@@ -20,7 +18,7 @@ public class SettingsMenu : BaseMenu <SettingsMenu>, IDataPersistance
     [SerializeField] private TabUI tabUI;
 
     [Header("Effect")]
-    [SerializeField] private FeelVector3Properties textPopTransition;
+    [SerializeField] private JuicerVector3Properties textPopTransition;
 
     [Header("Control Settings")]
 
@@ -59,9 +57,6 @@ public class SettingsMenu : BaseMenu <SettingsMenu>, IDataPersistance
         fullScreenToggle.onValueChanged.AddListener((x) => Screen.fullScreen = x);
     }
 
-    
-
-
     protected override void InputManager_OnDeviceChanged(object sender, InputManager.DeviceType deviceType)
     {
         if (!IsOpened) return;    
@@ -83,22 +78,22 @@ public class SettingsMenu : BaseMenu <SettingsMenu>, IDataPersistance
     
     public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
     {
-        StartCoroutine(FeelUtility.FadeVector3(null, Vector3.zero, (pos) => title.transform.localScale = pos, 
-            new FeelVector3Properties(new Vector3(1, 1, 1), .1f, animationCurveType: AnimationCurveType.EaseInOut), null));
+        StartCoroutine(Juicer.DoVector3(null, Vector3.zero, (pos) => title.transform.localScale = pos, 
+            new JuicerVector3Properties(new Vector3(1, 1, 1), .1f, animationCurveType: AnimationCurveType.EaseInOut), null));
         
-        yield return FeelUtility.FadeFloat(null, -1177, (v) => view2.anchoredPosition =  new Vector2(v, view2.anchoredPosition.y), new FeelFloatProperties(0, .25f, animationCurveType: AnimationCurveType.EaseInOut));
-        yield return FeelUtility.FadeFloat(null, buttonHolder.alpha,(v) => buttonHolder.alpha = v, new FeelFloatProperties(1, .5f, animationCurveType: AnimationCurveType.EaseInOut));
+        yield return Juicer.DoFloat(null, -1177, (v) => view2.anchoredPosition =  new Vector2(v, view2.anchoredPosition.y), new JuicerFloatProperties(0, .25f, animationCurveType: AnimationCurveType.EaseInOut));
+        yield return Juicer.DoFloat(null, buttonHolder.alpha,(v) => buttonHolder.alpha = v, new JuicerFloatProperties(1, .5f, animationCurveType: AnimationCurveType.EaseInOut));
 
         yield return base.OpenMenuRoutine(OnComplected);
     }
 
     public override IEnumerator CloseMenuRoutine(Action OnComplected = null)
     {
-        yield return FeelUtility.FadeFloat(null, buttonHolder.alpha, (v) => buttonHolder.alpha = v, new FeelFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut));
-        yield return FeelUtility.FadeFloat(null, 0, (v) => view2.anchoredPosition = new Vector2(v, view2.anchoredPosition.y), new FeelFloatProperties(-1177, .25f, animationCurveType: AnimationCurveType.EaseInOut));
+        yield return Juicer.DoFloat(null, buttonHolder.alpha, (v) => buttonHolder.alpha = v, new JuicerFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut));
+        yield return Juicer.DoFloat(null, 0, (v) => view2.anchoredPosition = new Vector2(v, view2.anchoredPosition.y), new JuicerFloatProperties(-1177, .25f, animationCurveType: AnimationCurveType.EaseInOut));
     
-        StartCoroutine(FeelUtility.FadeVector3(null, title.transform.localScale, (pos) => title.transform.localScale = pos,
-    new FeelVector3Properties(Vector3.zero, .1f, animationCurveType: AnimationCurveType.EaseInOut), null));
+        StartCoroutine(Juicer.DoVector3(null, title.transform.localScale, (pos) => title.transform.localScale = pos,
+    new JuicerVector3Properties(Vector3.zero, .1f, animationCurveType: AnimationCurveType.EaseInOut), null));
 
         yield return base.CloseMenuRoutine(OnComplected);
     }
@@ -122,7 +117,7 @@ public class SettingsMenu : BaseMenu <SettingsMenu>, IDataPersistance
 
     private void PopulateScreenResolution()
     {
-        resolutions = Screen.resolutions;
+        resolutions = GetResolutions().ToArray();
 
         screenResolutionSelector.ClearOptions();
 
@@ -148,7 +143,7 @@ public class SettingsMenu : BaseMenu <SettingsMenu>, IDataPersistance
 
     public void SetResolution(int resolutionIndex)
     {
-        StartCoroutine(FeelUtility.FadeVector3(null, Vector3.zero, (pos) => screenResolutionSelector.GetText().transform.localScale = pos,  textPopTransition, null));
+        StartCoroutine(Juicer.DoVector3(null, Vector3.zero, (pos) => screenResolutionSelector.GetText().transform.localScale = pos,  textPopTransition, null));
         
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
@@ -306,26 +301,48 @@ public class SettingsMenu : BaseMenu <SettingsMenu>, IDataPersistance
 
     public void LoadSettingsData(SettingsData data)
     {
-        data.testInt = this.testInt;
-        //Add values you want to save here
+
     }
 
-    public void SaveSettingsData(ref SettingsData data)
+    public void SaveSettingsData( SettingsData data)
     {
-        //Add values you want to save here
-        this.testInt = data.testInt;
+
     }
 
-
-    #region GameData 
-    public void LoadGameData(GameData data)
+    public static List<Resolution> GetResolutions()
     {
-        throw new NotImplementedException();
+        //Filters out all resolutions with low refresh rate:
+        Resolution[] resolutions = Screen.resolutions;
+        HashSet<Tuple<int, int>> uniqResolutions = new HashSet<Tuple<int, int>>();
+        Dictionary<Tuple<int, int>, int> maxRefreshRates = new Dictionary<Tuple<int, int>, int>();
+        for (int i = 0; i < resolutions.GetLength(0); i++)
+        {
+            //Add resolutions (if they are not already contained)
+            Tuple<int, int> resolution = new Tuple<int, int>(resolutions[i].width, resolutions[i].height);
+            uniqResolutions.Add(resolution);
+            //Get $$anonymous$$ghest framerate:
+            if (!maxRefreshRates.ContainsKey(resolution))
+            {
+                maxRefreshRates.Add(resolution, resolutions[i].refreshRate);
+            }
+            else
+            {
+                maxRefreshRates[resolution] = resolutions[i].refreshRate;
+            }
+        }
+        //Build resolution list:
+        List<Resolution> uniqResolutionsList = new List<Resolution>(uniqResolutions.Count);
+        foreach (Tuple<int, int> resolution in uniqResolutions)
+        {
+            Resolution newResolution = new Resolution();
+            newResolution.width = resolution.Item1;
+            newResolution.height = resolution.Item2;
+            if (maxRefreshRates.TryGetValue(resolution, out int refreshRate))
+            {
+                newResolution.refreshRate = refreshRate;
+            }
+            uniqResolutionsList.Add(newResolution);
+        }
+        return uniqResolutionsList;
     }
-
-    public void SaveGameData(ref GameData data)
-    {
-        throw new NotImplementedException();
-    }
-    #endregion //NOT IMPLEMENTED
 }

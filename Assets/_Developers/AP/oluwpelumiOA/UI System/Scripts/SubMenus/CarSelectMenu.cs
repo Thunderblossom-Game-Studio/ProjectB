@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using TMPro;
+using Pelumi.Juicer;
 
 public class CarSelectMenu : BaseMenu<CarSelectMenu>
 {
@@ -52,13 +53,13 @@ public class CarSelectMenu : BaseMenu<CarSelectMenu>
 
     public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
     {
-        yield return FeelUtility.FadeFloat(null, 0, (pos) => buttonHolder.alpha = pos, new FeelFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
+        yield return Juicer.DoFloat(null, 0, (pos) => buttonHolder.alpha = pos, new JuicerFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
         yield return base.OpenMenuRoutine(OnComplected);
     }
 
     public override IEnumerator CloseMenuRoutine(Action OnComplected = null)
     {
-        yield return FeelUtility.FadeFloat(null, buttonHolder.alpha, (pos) => buttonHolder.alpha = pos, new FeelFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
+        yield return Juicer.DoFloat(null, buttonHolder.alpha, (pos) => buttonHolder.alpha = pos, new JuicerFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
         yield return base.CloseMenuRoutine(OnComplected);
     }
 
@@ -131,13 +132,13 @@ public class CarSelectMenu : BaseMenu<CarSelectMenu>
         switch (direction)
         {
             case Direction.Left:
-                StartCoroutine(FeelUtility.FadeVector3(DisableRotate, carRightSpawnPos.position, (pos) => selectedCar.transform.position = pos,
-                    new FeelVector3Properties(carDestinationPos.position,
+                StartCoroutine(Juicer.DoVector3(DisableRotate, carRightSpawnPos.position, (pos) => selectedCar.transform.position = pos,
+                    new JuicerVector3Properties(carDestinationPos.position,
                     animSpeed, animationCurveType: AnimationCurveType.EaseInOut), EnableRotate));
                 break;
             case Direction.Right:
-                StartCoroutine(FeelUtility.FadeVector3(DisableRotate, carLeftSpawnPos.position, (pos) => selectedCar.transform.position = pos,
-                    new FeelVector3Properties(carDestinationPos.position, animSpeed, animationCurveType: AnimationCurveType.EaseInOut), EnableRotate));
+                StartCoroutine(Juicer.DoVector3(DisableRotate, carLeftSpawnPos.position, (pos) => selectedCar.transform.position = pos,
+                    new JuicerVector3Properties(carDestinationPos.position, animSpeed, animationCurveType: AnimationCurveType.EaseInOut), EnableRotate));
                 break;
         }
     }
@@ -182,13 +183,13 @@ public class CarSelectMenu : BaseMenu<CarSelectMenu>
         switch (direction)
         {
             case Direction.Left:
-                StartCoroutine(FeelUtility.FadeVector3(null, carRightSpawnPos.position, (pos) => selectedWeapon.transform.position = pos,
-                    new FeelVector3Properties(weaponDestinationPos.position,
+                StartCoroutine(Juicer.DoVector3(null, carRightSpawnPos.position, (pos) => selectedWeapon.transform.position = pos,
+                    new JuicerVector3Properties(weaponDestinationPos.position,
                     animSpeed, animationCurveType: AnimationCurveType.EaseInOut), OnWeponReachRoot));
                 break;
             case Direction.Right:
-                StartCoroutine(FeelUtility.FadeVector3(null, carLeftSpawnPos.position, (pos) => selectedWeapon.transform.position = pos,
-                    new FeelVector3Properties(weaponDestinationPos.position, animSpeed, animationCurveType: AnimationCurveType.EaseInOut), OnWeponReachRoot));
+                StartCoroutine(Juicer.DoVector3(null, carLeftSpawnPos.position, (pos) => selectedWeapon.transform.position = pos,
+                    new JuicerVector3Properties(weaponDestinationPos.position, animSpeed, animationCurveType: AnimationCurveType.EaseInOut), OnWeponReachRoot));
                 break;
         }
     }
