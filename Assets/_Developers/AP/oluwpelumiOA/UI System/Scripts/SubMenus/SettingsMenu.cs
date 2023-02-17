@@ -42,6 +42,11 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
     [SerializeField] private HorizontalSelector screenResolutionSelector;
     [SerializeField] private Toggle fullScreenToggle;
 
+    [Header("Save Settings")]
+    [SerializeField] private string saveID;
+    [SerializeField] private bool encryptData;
+    [SerializeField] private SettingsData settingsData;
+
     private Resolution[] resolutions;
 
     private bool inBindingMode;
@@ -288,25 +293,21 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
             SetVolume(parameter, volume, display);
         }
     }
-
+    
     public void ApplyChanges()
     {
         CloseButton();
     }
 
-    public void Save()
+    public void LoadSettingsData()
     {
-        
+        SettingsData savedData = SaveLoadManager.Load<SettingsData>(saveID, encryptData);
+        settingsData = savedData != null ? savedData : new SettingsData();
     }
 
-    public void LoadSettingsData(SettingsData data)
+    public void SaveSettingsData()
     {
-
-    }
-
-    public void SaveSettingsData( SettingsData data)
-    {
-
+        SaveLoadManager.Save(saveID, settingsData, encryptData);
     }
 
     public static List<Resolution> GetResolutions()
