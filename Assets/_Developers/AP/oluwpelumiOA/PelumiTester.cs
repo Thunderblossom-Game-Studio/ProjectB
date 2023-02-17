@@ -30,7 +30,7 @@ public class PelumiTester : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit raycast, 999f, detectLayer))
             {
                // debugObject.transform.position = raycast.point;
-                PopUpManager.Instance.PopUpAtTextPosition(raycast.point,  Vector3.up * 2, "Test", Color.red);
+                PopUpManager.Instance.PopUpAtTextPosition(raycast.point +  Vector3.up * .5f,  Vector3.zero, "Test", Color.red);
                 gameEvent.Raise(this, new HitMarkInfo(Color.red, raycast.point));
             }
         }
