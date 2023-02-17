@@ -2,12 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.UI;
+using TMPro;
 
 public class PopUpManager : MonoBehaviour
 {
+    public static PopUpManager Instance { get; private set; }
+
     [SerializeField] private GameObject popUpPrefab;
     private ObjectPool<GameObject> popUpPPool;
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
 
     private void Start()
     {
@@ -36,18 +44,23 @@ public class PopUpManager : MonoBehaviour
         Destroy(gameObjectToDestroy);
     }
 
-    public void PopUpText(GameObject textPopUp, Transform spawnPosition, Vector3 randomIntensity, string text, Color color, bool parent = false)
+    public void PopUpTextAtTransfrom(Transform spawnPosition, Vector3 randomIntensity, string text, Color color, bool parent = false)
     {
-        textPopUp.transform.position = spawnPosition.position += new Vector3(FeelUtility.GetRange(randomIntensity.x), FeelUtility.GetRange(randomIntensity.y), FeelUtility.GetRange(randomIntensity.z));
+        GameObject textPopUp = popUpPPool.Get();
         if (parent) textPopUp.transform.SetParent(spawnPosition);
-        textPopUp.GetComponent<TextMesh>().text = text;
-        textPopUp.GetComponent<TextMesh>().color = color;
+        SetPopUpInfo(textPopUp, spawnPosition.position, randomIntensity, text, color);
     }
 
-    public void PopUpAtPosition(GameObject textPopUp, Vector3 spawnPosition, Vector3 randomIntensity, string text, Color color)
+    public void PopUpAtTextPosition(Vector3 spawnPosition, Vector3 randomIntensity, string text, Color color)
+    {
+        GameObject textPopUp = popUpPPool.Get();
+        SetPopUpInfo(textPopUp, spawnPosition, randomIntensity, text, color);
+    }
+
+    public void SetPopUpInfo(GameObject textPopUp, Vector3 spawnPosition, Vector3 randomIntensity, string text, Color color)
     {
         textPopUp.transform.position = spawnPosition += new Vector3(FeelUtility.GetRange(randomIntensity.x), FeelUtility.GetRange(randomIntensity.y), FeelUtility.GetRange(randomIntensity.z));
-        textPopUp.GetComponent<TextMesh>().text = text;
-        textPopUp.GetComponent<TextMesh>().color = color;
+        textPopUp.GetComponent<TextPopUp>().SetText(text, color);
+        textPopUp.SetActive(true);
     }
 }

@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Pool;
-using UnityEngine.Timeline;
 
 public class HitMarkHandler : MonoBehaviour
 {
+    [SerializeField] private RectTransform spawnPos;
     [SerializeField] private GameObject hitMarkPrefab;
 
     [SerializeField] private GameEvent onHit;
@@ -30,7 +30,7 @@ public class HitMarkHandler : MonoBehaviour
 
     public void OnGet(GameObject gameObjectToGet)
     {
-        gameObjectToGet.transform.SetParent(transform);
+        gameObjectToGet.GetComponent<RectTransform>().SetParent(spawnPos);
     }
 
     public void OnRelease(GameObject gameObjectToRelease)
@@ -45,20 +45,33 @@ public class HitMarkHandler : MonoBehaviour
 
     public void TriggerHitmark(Component arg1, object arg2)
     {
-        ShotHitmark(Color.red, (Vector3)arg2);
+        ShotHitmark((HitMarkInfo)arg2);
     }
 
-    public void ShotHitmark(Color newColor, Vector3 spawnPos)
+    public void ShotHitmark(HitMarkInfo hitMarkInfo)
     {
         GameObject hitmark = hitMarkPool.Get();
         Image hitMarker = hitmark.GetComponent<Image>();
-        hitMarker.rectTransform.position = Camera.main.WorldToScreenPoint(spawnPos);
-        hitMarker.color = newColor;
+        hitMarker.rectTransform.position = Camera.main.WorldToScreenPoint(hitMarkInfo.spawnPos);
+        hitMarker.color = hitMarkInfo.color;
         hitMarker.gameObject.SetActive(true);
     }
 
     private void OnDisable()
     {
         onHit.Unregister(TriggerHitmark);
+    }
+}
+
+[System.Serializable]
+public struct HitMarkInfo
+{
+    public Color color;
+    public Vector3 spawnPos;
+
+    public HitMarkInfo(Color color, Vector3 spawnPos)
+    {
+        this.color = color;
+        this.spawnPos = spawnPos;
     }
 }

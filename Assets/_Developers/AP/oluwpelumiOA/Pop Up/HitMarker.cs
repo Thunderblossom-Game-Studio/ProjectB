@@ -8,7 +8,7 @@ public class HitMarker : PoolObject
     
     protected override void OnEnable()
     {
-        StartCoroutine(FeelUtility.FadeVector3(null, Vector3.zero, (pos) => transform.localScale = pos, scaleEffect, () => gameObject.SetActive(false)));
+        Effect();
     }
 
     public void Effect()
