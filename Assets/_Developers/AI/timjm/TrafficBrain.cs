@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrafficBrain : AICarController
+public class TrafficBrain : MonoBehaviour
 {
     public Transform goal;
     public GameObject pointy;
@@ -10,9 +10,8 @@ public class TrafficBrain : AICarController
     UnityEngine.AI.NavMeshAgent agent;
 
 
-    protected override void Start()
+    void Start()
     {
-        base.Start();
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         agent.destination = goal.position;
     }
@@ -79,25 +78,6 @@ public class TrafficBrain : AICarController
 
         }
     }
-
-
-
-    protected override void Evaluate()
-    {
-
-    }
-
-    protected override void SwapState()
-    {
-        
-    }
-
-    protected override void Act()
-    {
-       
-    }
-
-
 
 
 }
