@@ -75,9 +75,16 @@ public class TrafficBrain : MonoBehaviour
     {
         if(CompareTag("Player"))
         {
-
+          //  StartCoroutine(PanicMode());
         }
     }
+
+    /*
+    IEnumerator PanicMode()
+    {
+
+    }
+    8?
 
 
 }
