@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarController : MonoBehaviour
+public class CarControllerOLD : MonoBehaviour
 {
     [Header("Car Properties")]
     [SerializeField] private float carMotorTorque;
