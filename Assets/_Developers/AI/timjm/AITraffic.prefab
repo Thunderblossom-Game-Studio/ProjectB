@@ -486,6 +486,7 @@ GameObject:
   - component: {fileID: 3512849336716236233}
   - component: {fileID: 3581327450439052059}
   - component: {fileID: 6528334323293607357}
+  - component: {fileID: 9154246394163819993}
   m_Layer: 0
   m_Name: AITraffic
   m_TagString: Untagged
@@ -596,8 +597,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5dfaf4c0b96524a9007652c4f1eabb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
+  agent: {fileID: 0}
   goal: {fileID: 0}
   pointy: {fileID: 122882153777161177}
+  PointyTheSequel: {fileID: 4960384603844348745}
 --- !u!54 &3581327450439052059
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -628,6 +632,22 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &9154246394163819993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6825392363378918832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3557076eb8fa44543a0b80963ecaea0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minAccSpeed: 0
+  maxAccSpeed: 30
+  moveMulit: 100
+  rotSpeed: 0.3
 --- !u!1 &7157864259957678383
 GameObject:
   m_ObjectHideFlags: 0
