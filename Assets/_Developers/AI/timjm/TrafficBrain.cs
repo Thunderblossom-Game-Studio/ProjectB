@@ -5,9 +5,13 @@ using UnityEngine;
 public class TrafficBrain : MonoBehaviour
 {
     public Transform goal;
+    public Transform panicgoal;
+    public Transform savegoal;
     public GameObject pointy;
     public GameObject PointyTheSequel;
+    Vector3 paniclocation;
     UnityEngine.AI.NavMeshAgent agent;
+    public bool panic;
 
 
     void Start()
@@ -19,7 +23,7 @@ public class TrafficBrain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        #region
         if (Vector3.Distance(transform.position, goal.transform.position) < 1)
         {
             goal.GetComponent<WaypointControl>().Car = this.gameObject;
@@ -40,11 +44,6 @@ public class TrafficBrain : MonoBehaviour
             agent.isStopped = false;
         }
 
-
-
-
-
-
         if (Vector3.Distance(transform.position, goal.transform.position) < 1)
         {
             goal.GetComponent<WaypointControl>().Car = this.gameObject;
@@ -64,9 +63,13 @@ public class TrafficBrain : MonoBehaviour
         {
             agent.isStopped = false;
         }
+        #endregion
 
-
-
+        if(panic == true)
+        {
+            StartCoroutine(PanicMode());
+            panic = false;
+        }
 
     }
 
@@ -75,16 +78,25 @@ public class TrafficBrain : MonoBehaviour
     {
         if(CompareTag("Player"))
         {
-          //  StartCoroutine(PanicMode());
+           StartCoroutine(PanicMode());
         }
     }
 
-    /*
+    
     IEnumerator PanicMode()
     {
-
+        //point based off rng local
+        //point based off current pos + rng values
+        panicgoal.position = new Vector3((transform.position.x + (Random.Range(0, 7))), transform.position.y, (transform.position.z + 5f));
+        savegoal = goal;
+        goal = panicgoal;
+        agent.isStopped = true;
+        agent.ResetPath();
+        agent.isStopped = false;
+        agent.SetDestination(goal.position);
+        yield return new WaitForSeconds(3);
     }
-    8?
+    
 
 
 }
