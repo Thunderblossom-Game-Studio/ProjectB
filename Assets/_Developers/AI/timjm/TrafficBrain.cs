@@ -16,7 +16,10 @@ public class TrafficBrain : MonoBehaviour
     Vector3 paniclocation;
     UnityEngine.AI.NavMeshAgent agent;
     public bool panic;
-    [SerializeField] int DistanceForward = 5;
+    [SerializeField] int DistanceForwardIncrease = 2;
+    int DistanceForward = 0;
+    public int RPast;
+    public int R;
 
     void Start()
     {
@@ -93,21 +96,30 @@ public class TrafficBrain : MonoBehaviour
         //point based off current pos + rng values
         savegoal = goal;
         KeepX = transform.position.x;
-
+        agent.autoBraking = false;
+        R = 0;
         for (int i = 0; i < ForLoopLength; i++)
         {
-        panicgoal.position = new Vector3((KeepX + (Random.Range(0, 7))), transform.position.y, (transform.position.z + DistanceForward));
-        goal = panicgoal;
+            RPast = R;
+            R = Random.Range(0, 7);
+            //panicgoal.position = new Vector3((KeepX + (Random.Range(0, 7))), transform.position.y, (transform.position.z + DistanceForward));
+            panicgoal.transform.position = transform.position;
+            panicgoal.transform.localPosition = new Vector3((R - RPast), 0, 4);
+            goal = panicgoal;
+            agent.isStopped = true;
+            agent.ResetPath();
+            agent.isStopped = false;
+            agent.SetDestination(goal.position);
+            yield return new WaitForSeconds(1);
+            DistanceForwardIncrease += 5;
+        }
+        DistanceForwardIncrease += 2;
         agent.isStopped = true;
         agent.ResetPath();
         agent.isStopped = false;
-        agent.SetDestination(goal.position);
-        yield return new WaitForSeconds(3);
-
-        }
-        
-
-
+        agent.SetDestination(savegoal.position);
+        goal = savegoal;
+        agent.autoBraking = true;
     }
     
 
