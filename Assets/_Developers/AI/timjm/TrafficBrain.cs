@@ -7,12 +7,16 @@ public class TrafficBrain : MonoBehaviour
     public Transform goal;
     public Transform panicgoal;
     public Transform savegoal;
+    public float KeepX;
     public GameObject pointy;
+
+    int ForLoopLength = 3;
+
     public GameObject PointyTheSequel;
     Vector3 paniclocation;
     UnityEngine.AI.NavMeshAgent agent;
     public bool panic;
-
+    [SerializeField] int DistanceForward = 5;
 
     void Start()
     {
@@ -87,14 +91,23 @@ public class TrafficBrain : MonoBehaviour
     {
         //point based off rng local
         //point based off current pos + rng values
-        panicgoal.position = new Vector3((transform.position.x + (Random.Range(0, 7))), transform.position.y, (transform.position.z + 5f));
         savegoal = goal;
+        KeepX = transform.position.x;
+
+        for (int i = 0; i < ForLoopLength; i++)
+        {
+        panicgoal.position = new Vector3((KeepX + (Random.Range(0, 7))), transform.position.y, (transform.position.z + DistanceForward));
         goal = panicgoal;
         agent.isStopped = true;
         agent.ResetPath();
         agent.isStopped = false;
         agent.SetDestination(goal.position);
         yield return new WaitForSeconds(3);
+
+        }
+        
+
+
     }
     
 

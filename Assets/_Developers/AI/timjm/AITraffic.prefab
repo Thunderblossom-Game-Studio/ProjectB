@@ -597,11 +597,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5dfaf4c0b96524a9007652c4f1eabb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
-  agent: {fileID: 0}
   goal: {fileID: 0}
+  panicgoal: {fileID: 0}
+  savegoal: {fileID: 0}
+  KeepX: 0
   pointy: {fileID: 122882153777161177}
   PointyTheSequel: {fileID: 4960384603844348745}
+  panic: 0
+  DistanceForward: 5
 --- !u!54 &3581327450439052059
 Rigidbody:
   m_ObjectHideFlags: 0
