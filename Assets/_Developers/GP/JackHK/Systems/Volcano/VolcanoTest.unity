@@ -216,10 +216,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 865401220}
+  - component: {fileID: 865401221}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Spawner
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -231,13 +232,45 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 865401217}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 1.097, z: -7.7637424}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &865401221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865401217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e53da310d151df43a4a4fcdb2a81daf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hazards:
+  - {fileID: 370198586420494164, guid: 1cad9256c58cde54abc407de092d8987, type: 3}
+  - {fileID: 5875307805515243409, guid: e254063ada123b042a894ce6bc777e5f, type: 3}
+  - {fileID: 8433146902187877253, guid: e69c435d550f8844aa0c6d0c3a4309e7, type: 3}
+  _warningVisual: {fileID: 4294031463640632847, guid: 9e29e555ff881ac4588308974ab821e8, type: 3}
+  _hazardsAreRandom: 0
+  _hazardsFallWithGravity: 0
+  _fallHeight: 1
+  _isDebugMode: 1
+  _warningTime: 2
+  _hazardTime: 3
+  _onWarningStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _onHazardStart:
+    m_PersistentCalls:
+      m_Calls: []
+  _onFinished:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1001621949
 GameObject:
   m_ObjectHideFlags: 0
