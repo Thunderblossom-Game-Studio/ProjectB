@@ -1,10 +1,12 @@
 using JE.General;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Collectable : MonoBehaviour
 {
     private EntitySpawner _entitySpawner;
     [SerializeField] private LayerMask _collideLayers;
+    [SerializeField] protected UnityEvent _onCollect;
 
     private void OnTriggerEnter(Collider objectCollider)
     {

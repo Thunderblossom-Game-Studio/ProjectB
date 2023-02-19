@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JE.General;
 using UnityEngine;
 
 public class GelDroplet : MonoBehaviour
@@ -16,11 +17,9 @@ public class GelDroplet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer(_gelSystem._groundLayerName))
-        {
-            _gelSystem.CreateSplatter(gameObject, other.transform);
-            DestroyDroplet();
-        }
+        if (!_gelSystem._groundLayerName.ContainsLayer(other.gameObject.layer)) return;
+        _gelSystem.CreateSplatter(gameObject, other.transform);
+        DestroyDroplet();
     }
         
     public void DestroyDroplet()
