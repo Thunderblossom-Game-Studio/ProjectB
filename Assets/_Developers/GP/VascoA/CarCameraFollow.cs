@@ -25,7 +25,7 @@ public class CarCameraFollow : MonoBehaviour
     {
         Follow();
 
-        cameraMoveSpeed = (carController.KPH >= 50) ? 10 : carController.KPH / 5;
+        cameraMoveSpeed = (carController.GetSpeed() >= 50) ? 10 : carController.GetSpeed() / 5;
     }
 
     private void Follow()
