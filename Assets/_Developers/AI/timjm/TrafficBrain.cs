@@ -15,16 +15,28 @@ public class TrafficBrain : MonoBehaviour
     public GameObject PointyTheSequel;
     Vector3 paniclocation;
     UnityEngine.AI.NavMeshAgent agent;
-    public bool panic;
+    public static bool panic;
+    public bool ShowPanic;
     [SerializeField] int DistanceForwardIncrease = 2;
     int DistanceForward = 0;
     public int RPast;
     public int R;
 
+    public bool CarmageddonMode;
+    private bool IgnoreRaycasts;
+    [SerializeField] float CarSpeed;
+    float DefaultSpeed;
+    [SerializeField] float PanicCarSpeed;
+    bool PanicForever;
+    float SecondsToWait;
+
+
     void Start()
     {
+        panic = ShowPanic;
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         agent.destination = goal.position;
+        DefaultSpeed = CarSpeed;
     }
 
     // Update is called once per frame
@@ -38,10 +50,10 @@ public class TrafficBrain : MonoBehaviour
             agent.destination = goal.position;
         }
         RaycastHit hit;
-        Vector3 forward = pointy.transform.TransformDirection(Vector3.forward) * 2;
+        Vector3 forward = pointy.transform.TransformDirection(Vector3.forward) * CarSpeed;
         if (Physics.Raycast(pointy.transform.position, forward, out hit, 5.0f))
         {
-            if (hit.rigidbody != null)
+            if (hit.rigidbody != null && IgnoreRaycasts == true)
             {
                 agent.isStopped = true;
             }
@@ -58,10 +70,10 @@ public class TrafficBrain : MonoBehaviour
             agent.destination = goal.position;
         }
         RaycastHit AnotherHit;
-        Vector3 MovingForward = PointyTheSequel.transform.TransformDirection(Vector3.forward) * 2;
+        Vector3 MovingForward = PointyTheSequel.transform.TransformDirection(Vector3.forward) * CarSpeed;
         if (Physics.Raycast(PointyTheSequel.transform.position, MovingForward, out AnotherHit, 5.0f))
         {
-            if (AnotherHit.rigidbody != null)
+            if (AnotherHit.rigidbody != null && IgnoreRaycasts == true)
             {
                 agent.isStopped = true;
             }
@@ -72,10 +84,28 @@ public class TrafficBrain : MonoBehaviour
         }
         #endregion
 
-        if(panic == true)
+        if(panic == true && CarmageddonMode == false)
         {
             StartCoroutine(PanicMode());
             panic = false;
+        }
+
+        if(CarmageddonMode == true)
+        {
+            IgnoreRaycasts = true;
+            CarSpeed = PanicCarSpeed;
+            PanicForever = true;
+            StartCoroutine(PanicMode());
+            CarmageddonMode= false;
+        }
+
+        if (PanicForever == true)
+        {
+            SecondsToWait = 0.2f;
+        }
+        else
+        {
+            SecondsToWait = 1;
         }
 
     }
@@ -110,9 +140,19 @@ public class TrafficBrain : MonoBehaviour
             agent.ResetPath();
             agent.isStopped = false;
             agent.SetDestination(goal.position);
-            yield return new WaitForSeconds(1);
+
+            yield return new WaitForSeconds(0.5f);
+
             DistanceForwardIncrease += 5;
+
+            if (PanicForever == true)
+            {
+                i = 0;
+            }
+
+
         }
+
         DistanceForwardIncrease += 2;
         agent.isStopped = true;
         agent.ResetPath();
