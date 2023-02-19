@@ -8,9 +8,9 @@ public class CYLevelStreaming : MonoBehaviour
     void Start()
     {
 
-        Scene currentScene = SceneManager.GetActiveScene();
+        Scene currentScenePvE = SceneManager.GetActiveScene();
 
-        string sceneName = currentScene.name;
+        string sceneName = currentScenePvE.name;
 
         if (sceneName == "PvELevel1Part3")
         {
