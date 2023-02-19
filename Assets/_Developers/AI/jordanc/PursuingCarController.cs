@@ -10,6 +10,7 @@ public class PursuingCarController : AICarController
     private AITestCar CurrentCar;
     public CollisionPrevention PreventionCollision;
     public GameObject Target;
+    public GameObject Package;
 
     [SerializeField] private float distanceToReset = 50f;
 
@@ -61,6 +62,12 @@ public class PursuingCarController : AICarController
                 }
             }
 
+            if (Target == null && Target == Package)
+            {
+                NextState = State.PICKUP;
+            }
+            
+            
 
         }
 
@@ -76,11 +83,13 @@ public class PursuingCarController : AICarController
             else
             {
                 NextState = State.PATROL;
+
+                
          
             }
 
             // Attack
-            if (Vector3.Distance(transform.position, Target.transform.position) <= AttackRange)
+            if (Vector3.Distance(transform.position, Target.transform.position) <= AttackRange && Target != Package)
             {
                 NextState = State.ATTACK;
             }
@@ -104,7 +113,7 @@ public class PursuingCarController : AICarController
             // Reset Target
             if (NextState == State.PATROL)
             {
-                Target = null;
+                Target = Package;
             }
 
             // Searching
@@ -248,6 +257,8 @@ public class PursuingCarController : AICarController
     private void Pickup()
     {
         Debug.Log("Pickup");
+        Package = GameObject.Find("RarePackage");
+        Target = GameObject.Find("RarePackage");
     }
 
     private void Delivery()
