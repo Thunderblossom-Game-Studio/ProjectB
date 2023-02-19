@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Volcano : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject _lavaPool;
 
-    // Update is called once per frame
-    void Update()
+    public void CreateSplatter()
     {
-        
+        GameObject lava = Instantiate(_lavaPool, transform.position, Quaternion.identity);
     }
 }

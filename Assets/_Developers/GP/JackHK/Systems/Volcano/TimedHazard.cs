@@ -26,6 +26,8 @@ public class TimedHazard : MonoBehaviour
 
     [Header("System Settings")]
     [SerializeField] private bool _isDebugMode = false;
+    [SerializeField] private bool _activateOnStart = false;
+    [SerializeField] private bool _destroysHazard = false;
 
     [Tooltip("If true, GameObjects will be a child of _Dynamic. If false, they will be a child of this GameObject")]
     [SerializeField] private bool _useDynamic = false;
@@ -47,19 +49,21 @@ public class TimedHazard : MonoBehaviour
     private GameObject _warningVisualInstance;
     private float _hazardsScale;
 
-    private void Start() { Initialize(); }
+    private void Awake() { Initialize(); }
+    private void Start() { if (_activateOnStart) StartHazard(); }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartHazard();
-        }
-    }
+    private void OnEnable() { if (_activateOnStart) StartHazard(); }
 
     public void StartHazard()
     {
         StartCoroutine(HazardRoutine());
+    }
+
+    public void DestroyHazardParent(int hazardIndex)
+    {
+        Destroy(_hazardInstances[hazardIndex]);
+        _hazardInstances.RemoveAt(hazardIndex);
+        Destroy(gameObject);
     }
 
     private IEnumerator HazardRoutine()
@@ -80,6 +84,7 @@ public class TimedHazard : MonoBehaviour
         _onFinished.Invoke();
         ChangeHazardState(false, randomHazard);
         ChangeWarningState(_warningVisualInstance, false);
+        if (_destroysHazard) DestroyHazardParent(randomHazard);
     }
 
     private void Initialize()
