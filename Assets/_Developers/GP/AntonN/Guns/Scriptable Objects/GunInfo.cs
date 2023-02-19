@@ -12,6 +12,7 @@ public class GunInfo : ScriptableObject
     public int gunCurrentMagSize;
     public float gunRange;
     public float gunFireRate;
+    public GameObject projectileType;
     [HideInInspector] public bool gunReloading; //If the gun is in the process of reloading or not: true = reloading, false = not reloading
     public float gunReloadTime;
 }
