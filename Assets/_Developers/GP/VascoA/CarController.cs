@@ -33,8 +33,8 @@ public class CarController : MonoBehaviour
     [SerializeField] private float brakePower;
     [SerializeField] private int boostPower;
     [SerializeField] private float turningRadius;
-    [SerializeField] private float downForceValue;
-    private float currentSpeed;
+    [Viewable] [SerializeField] private float downForceValue;
+    [Viewable] [SerializeField] private float currentSpeed;
 
     private float topSpeedDrag, idleDrag = 50f;
 
