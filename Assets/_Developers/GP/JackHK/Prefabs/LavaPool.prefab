@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8119000168570007205}
   - component: {fileID: 1985022416}
   m_Layer: 0
-  m_Name: Splatter
+  m_Name: LavaPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8928292869484311581}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 4.869018, y: 0.11391057, z: 0.5198128}
-  m_LocalScale: {x: 160, y: 160, z: 2}
+  m_LocalScale: {x: 60, y: 60, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 59ac41a526c1e1845a3f0b20aa8b725b, type: 2}
+  - {fileID: 2100000, guid: f18b3ee786624ce41975dbd9d046bb5a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,10 +98,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gelSystem: {fileID: 0}
-  _usesGelSystem: 1
-  _splatterLife: 3
+  _usesGelSystem: 0
+  _splatterLife: 1
+  _usesLifeTimer: 0
   _splatterLifeTime: 10
-  _usesTimer: 0
   _playerTag: Player
   _enemyTag: Enemy
   _onTouched:

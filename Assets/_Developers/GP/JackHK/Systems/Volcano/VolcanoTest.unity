@@ -231,13 +231,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 865401217}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 2094300924}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &865401221
 MonoBehaviour:
@@ -255,11 +255,16 @@ MonoBehaviour:
   - {fileID: 370198586420494164, guid: 1cad9256c58cde54abc407de092d8987, type: 3}
   - {fileID: 5875307805515243409, guid: e254063ada123b042a894ce6bc777e5f, type: 3}
   - {fileID: 8433146902187877253, guid: e69c435d550f8844aa0c6d0c3a4309e7, type: 3}
-  _warningVisual: {fileID: 4294031463640632847, guid: 9e29e555ff881ac4588308974ab821e8, type: 3}
   _hazardsAreRandom: 0
   _hazardsFallWithGravity: 0
   _fallHeight: 1
+  _hazardsRandomScale: 0
+  _hazardsScaleMin: 0.5
+  _hazardsScaleMax: 4
+  _warningVisual: {fileID: 4294031463640632847, guid: 9e29e555ff881ac4588308974ab821e8, type: 3}
+  _warningYOffset: 3
   _isDebugMode: 1
+  _useDynamic: 0
   _warningTime: 2
   _hazardTime: 3
   _onWarningStart:
@@ -492,6 +497,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1727732954}
+  - {fileID: 865401220}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

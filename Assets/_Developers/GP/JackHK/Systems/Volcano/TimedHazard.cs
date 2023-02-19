@@ -16,12 +16,19 @@ public class TimedHazard : MonoBehaviour
     [SerializeField] private bool _hazardsFallWithGravity = false;
     [SerializeField] private float _fallHeight = 5.0f;
 
+    [SerializeField] private bool _hazardsRandomScale = false;
+    [SerializeField] private float _hazardsScaleMin = 0.7f;
+    [SerializeField] private float _hazardsScaleMax = 1.3f;
+
     [Header("Warning Settings")]
     public GameObject _warningVisual;
     [SerializeField] private float _warningYOffset = 3.0f;
 
     [Header("System Settings")]
     [SerializeField] private bool _isDebugMode = false;
+
+    [Tooltip("If true, GameObjects will be a child of _Dynamic. If false, they will be a child of this GameObject")]
+    [SerializeField] private bool _useDynamic = false;
 
     [Tooltip("Time in seconds to display warning visual before hazard")]
     [SerializeField] private float _warningTime = 5.0f;
@@ -38,9 +45,10 @@ public class TimedHazard : MonoBehaviour
     private int _hazardIndex = 0;
     private List<GameObject> _hazardInstances = new List<GameObject>();
     private GameObject _warningVisualInstance;
+    private float _hazardsScale;
 
     private void Start() { Initialize(); }
-    
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -58,14 +66,15 @@ public class TimedHazard : MonoBehaviour
     {
         int randomHazard = Random.Range(0, _hazards.Length);
         if (_isDebugMode) Debug.Log("Started Warning Time");
+        if (_hazardsRandomScale) RandomizeScale(randomHazard);
         ChangeWarningState(_warningVisualInstance, true);
         _onWarningStart.Invoke();
-        
+
         yield return new WaitForSeconds(_warningTime);
         if (_isDebugMode) Debug.Log("Started Hazard Time");
         _onHazardStart.Invoke();
         ChangeHazardState(true, randomHazard);
-
+        
         yield return new WaitForSeconds(_hazardTime);
         if (_isDebugMode) Debug.Log("Deactivated Hazard");
         _onFinished.Invoke();
@@ -80,8 +89,8 @@ public class TimedHazard : MonoBehaviour
             Debug.LogError("No hazards assigned!");
             return;
         }
-        
-        if (_dynamic == null)
+
+        if (_dynamic == null && _useDynamic == true)
         {
             if (GameObject.Find("_Dynamic") != null)
             {
@@ -92,7 +101,11 @@ public class TimedHazard : MonoBehaviour
                 _dynamic = new GameObject("_Dynamic");
             }
         }
-        
+        else
+        {
+            _dynamic = gameObject;
+        }
+
         foreach (GameObject hazard in _hazards)
         {
             GameObject _hazardInstance = Instantiate(hazard, transform.position, Quaternion.identity, _dynamic.transform);
@@ -108,14 +121,14 @@ public class TimedHazard : MonoBehaviour
     private void ChangeHazardState(bool isEnabled, int randomHazard)
     {
         GameObject targetHazard;
-        if (_hazardsAreRandom) { targetHazard = _hazardInstances[randomHazard] ; }
-        else 
-        { 
-            targetHazard = _hazardInstances[_hazardIndex]; 
-            if (!isEnabled && _hazardIndex < _hazardInstances.Count - 1) { _hazardIndex++; } 
+        if (_hazardsAreRandom) { targetHazard = _hazardInstances[randomHazard]; }
+        else
+        {
+            targetHazard = _hazardInstances[_hazardIndex];
+            if (!isEnabled && _hazardIndex < _hazardInstances.Count - 1) { _hazardIndex++; }
             else if (!isEnabled) { _hazardIndex = 0; }
         }
-        UpdateSpawnPosition(targetHazard); 
+        UpdateSpawnPosition(targetHazard);
         targetHazard.SetActive(isEnabled);
     }
 
@@ -123,7 +136,7 @@ public class TimedHazard : MonoBehaviour
     {
         targetObject.SetActive(isEnabled);
         targetObject.transform.position = new Vector3(transform.position.x, transform.position.y + _warningYOffset, transform.position.z);
-        targetObject.transform.eulerAngles = new Vector3 (90, 0, 0);
+        targetObject.transform.eulerAngles = new Vector3(90, 0, 0);
     }
 
     private void UpdateSpawnPosition(GameObject instance)
@@ -138,6 +151,14 @@ public class TimedHazard : MonoBehaviour
         {
             instance.transform.position = transform.position;
         }
+    }
+
+    private void RandomizeScale(int index)
+    {
+        _hazardsScale = Random.Range(_hazardsScaleMin, _hazardsScaleMax);
+        _hazardInstances[index].transform.localScale = new Vector3(_hazardsScale, _hazardsScale, _hazardsScale);
+        _warningVisualInstance.GetComponent<Light>().spotAngle = 30;
+        _warningVisualInstance.GetComponent<Light>().spotAngle = _warningVisualInstance.GetComponent<Light>().spotAngle + (_hazardsScale * 5);
     }
 
 
