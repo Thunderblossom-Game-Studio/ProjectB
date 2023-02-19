@@ -15,7 +15,7 @@ public class GelSystem : MonoBehaviour
     //[SerializeField] int _maxPoolSize = 20;
 
     [Header("Gel Splatter")]
-    public LayerMask _groundLayerName;
+    public string _groundLayerName = "Ground";
     public string _playerTagName = "Player";
     public string _enemyTagName = "Enemy";
     public int _splatterLife = 3;
