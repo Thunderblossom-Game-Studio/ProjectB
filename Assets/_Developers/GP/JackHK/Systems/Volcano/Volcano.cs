@@ -6,8 +6,8 @@ public class Volcano : MonoBehaviour
 {
     public GameObject _lavaPool;
 
-    public void CreateSplatter()
+    public void CreateSplatter(GameObject sender)
     {
-        GameObject lava = Instantiate(_lavaPool, transform.position, Quaternion.identity);
+        Instantiate(_lavaPool, sender.transform.position, Quaternion.identity);
     }
 }
