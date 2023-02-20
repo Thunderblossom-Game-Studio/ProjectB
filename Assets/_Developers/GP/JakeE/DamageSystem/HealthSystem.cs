@@ -138,6 +138,8 @@ namespace JE.DamageSystem
         transform.position = respawnPoint;
         transform.rotation = Quaternion.identity;
         _currentHealth = _maximumHealth;
+        if (!gameObject.TryGetComponent(out Rigidbody currentBody)) return;
+        currentBody.velocity = Vector3.zero;
     }
 
     private void OnDrawGizmos()

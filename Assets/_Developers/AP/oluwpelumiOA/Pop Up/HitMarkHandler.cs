@@ -38,10 +38,10 @@ public class HitMarkHandler : MonoBehaviour
         gameObjectToRelease.SetActive(false);
     }
 
-    //public void OnDestroy(GameObject gameObjectToDestroy)
-    //{
-    //    Destroy(gameObjectToDestroy);
-    //}
+    public void OnDismiss(GameObject gameObjectToDestroy)
+    {
+        Destroy(gameObjectToDestroy);
+    }
 
     public void TriggerHitmark(Component arg1, object arg2)
     {
