@@ -10,9 +10,11 @@ public class GunInfo : ScriptableObject
     public int gunCurrentAmmo; //Ammo that the gun currently has
     public int gunMaxMagSize;
     public int gunCurrentMagSize;
-    public float gunRange;
     public float gunFireRate;
     public GameObject projectileType;
     [HideInInspector] public bool gunReloading; //If the gun is in the process of reloading or not: true = reloading, false = not reloading
     public float gunReloadTime;
+    public float projectileSpeed;
+    public float projectileRange; //time to destroy
+    public float projectileDamage;
 }

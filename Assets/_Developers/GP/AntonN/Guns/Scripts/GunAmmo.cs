@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class GunAmmo : MonoBehaviour
 {
+    [SerializeField] GunInfo ScriptableObject;
     [SerializeField] private GameObject ammoDecal;
-    private float speed = 50f;
-    private float timeToDestroy = 2f;
 
     public Vector3 target { get; set; }
     public bool hit { get; set; }
 
     private void OnEnable()
     {
-        Destroy(gameObject, timeToDestroy);
+        Destroy(gameObject, ScriptableObject.projectileRange);
     }
 
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, target, ScriptableObject.projectileSpeed * Time.deltaTime);
         if(!hit && Vector3.Distance(transform.position, target) < .01f)
         {
             Destroy(gameObject);
@@ -30,5 +29,12 @@ public class GunAmmo : MonoBehaviour
             ContactPoint contact = other.GetContact(0);
             GameObject.Instantiate(ammoDecal, contact.point + contact.normal * 0.0001f, Quaternion.LookRotation(contact.normal));
             Destroy(gameObject);
+            DealDamage();
+    }
+
+    public void DealDamage()
+    {
+        float damage = ScriptableObject.projectileDamage;
+        //Deal damage here
     }
 }

@@ -1,15 +1,86 @@
+using FishNet.Object;
+using FishNet.Object.Prediction;
+using FishNet.Transporting;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarController : MonoBehaviour
+#region Packets
+public struct MoveData : IReplicateData
 {
+    public float horizontalInput;
+    public float verticalInput;
+    public bool handbrakeInput;
+    public bool boostInput;
+
+    MoveData(float h, float v, bool brake, bool boost)
+    {
+        horizontalInput = h;
+        verticalInput = v;
+        handbrakeInput = brake;
+        boostInput = boost;
+
+        _tick = 0;
+    }
+
+    private uint _tick;
+    public void Dispose() { }
+    public uint GetTick() => _tick;
+    public void SetTick(uint value) => _tick = value;
+}
+
+struct ReconcileData : IReconcileData
+{
+    public Vector3 position;
+    public Quaternion rotation;
+    public Vector3 velocity;
+    public WheelData[] wheelData;
+
+    ReconcileData(Vector3 pos, Quaternion rot, Vector3 vel, WheelData[] wd)
+    {
+        position = pos;
+        rotation = rot;
+        velocity = vel;
+        wheelData = wd;
+
+        _tick = 0;
+    }
+
+    private uint _tick;
+    public void Dispose() { }
+    public uint GetTick() => _tick;
+    public void SetTick(uint value) => _tick = value;
+}
+
+public struct WheelData
+{
+    public Vector3 position;
+    public Quaternion rotation;
+    public float rpm;
+    public float torque;
+
+    WheelData(Vector3 pos, Quaternion rot, float rpm, float torque)
+    {
+        position = pos;
+        rotation = rot;
+        this.rpm = rpm;
+        this.torque = torque;
+    }
+}
+
+#endregion
+
+
+public class PredictedCarController : NetworkBehaviour
+{
+    #region Variables
     private GameObject wheelMeshes, wheelColliders;
     private WheelCollider[] wheels = new WheelCollider[4];
     private GameObject[] wheelMesh = new GameObject[4];
     private Rigidbody rigidBody;
     private GameObject centerOfMass;
+    
     internal enum DriveType
     {
         FrontWheelDrive,
@@ -41,7 +112,7 @@ public class CarController : MonoBehaviour
     private float verticalInput;
     private bool handbrakeInput;
     private bool boostInput;
-    
+    #endregion
 
     private void Awake()
     {
@@ -50,10 +121,25 @@ public class CarController : MonoBehaviour
         rigidBody.centerOfMass = centerOfMass.transform.localPosition;
     }
 
+    #region ConnectionHandling
+    public override void OnStartNetwork()
+    {
+        base.OnStartNetwork();
+        if (base.IsServer || base.IsClient)
+            base.TimeManager.OnTick += TimeManager_OnTick;
+    }
+
+    public override void OnStopNetwork()
+    {
+        base.OnStopNetwork();
+        if (base.TimeManager != null)
+            base.TimeManager.OnTick -= TimeManager_OnTick;
+    }
+    #endregion
+
     private void Update()
     {
         HandleInput();
-        
     }
 
     private void FixedUpdate()
@@ -71,6 +157,83 @@ public class CarController : MonoBehaviour
         AddDownForce();
     }
 
+    private void TimeManager_OnTick()
+    {
+        if (IsOwner)
+        {
+            
+        }
+        if (IsServer)
+        {
+            
+        }
+    }
+
+    private void CheckInput(out MoveData data)
+    {
+        data = default;
+        data.horizontalInput = horizontalInput;
+        data.verticalInput = verticalInput;
+        data.handbrakeInput = handbrakeInput;
+        data.boostInput = boostInput;
+    }
+
+    [Replicate]
+    private void Move(MoveData data, bool asServer, Channel channel = Channel.Unreliable, bool replaying = false)
+    {
+
+    }
+
+    [Reconcile]
+    private void Reconcile(ReconcileData data, bool asServer, Channel channel = Channel.Unreliable)
+    {
+
+    }
+    
+
+
+
+
+    #region Original
+    void AdjustDrag()
+    {
+        if (currentSpeed >= topSpeed)
+        {
+            rigidBody.drag = topSpeedDrag;
+        }
+        else if (carPower == 0)
+        {
+            rigidBody.drag = idleDrag;
+        }
+    }
+
+    private void AddDownForce()
+    {
+        downForceValue = currentSpeed / 2;
+
+        rigidBody.AddForce(-transform.up * downForceValue * rigidBody.velocity.magnitude);
+    }
+
+    private void GetGameObjects()
+    {
+        wheelMeshes = GameObject.Find("Wheel_Meshes");
+        for (int i = 0; i < wheelMeshes.transform.childCount; i++)
+        {
+            wheelMesh[i] = wheelMeshes.transform.GetChild(i).gameObject;
+        }
+
+        wheelColliders = GameObject.Find("Wheel_Colliders");
+        for (int i = 0; i < wheelColliders.transform.childCount; i++)
+        {
+            wheels[i] = wheelColliders.transform.GetChild(i).GetComponent<WheelCollider>();
+        }
+
+        rigidBody = GetComponent<Rigidbody>();
+
+        centerOfMass = GameObject.Find("Center_Of_Mass");
+
+    }
+
     private void HandleAcceleration(float vInput)
     {
         if (driveType == DriveType.FourWheelDrive)
@@ -78,7 +241,6 @@ public class CarController : MonoBehaviour
             foreach (WheelCollider wheel in wheels)
             {
                 wheel.motorTorque = vInput * (carPower / 4);
-                //Debug.Log(wheel.motorTorque);
             }
         }
         else if (driveType == DriveType.RearWheelDrive)
@@ -104,13 +266,6 @@ public class CarController : MonoBehaviour
         if (boostInput)
         {
             rigidBody.AddForce(transform.forward * boostPower);
-        }
-        
-        foreach (WheelCollider wheel in wheels)
-        {
-            if (wheel.rpm > 400 && vInput == 0)
-                wheel.motorTorque = 0;
-
         }
     }
 
@@ -187,47 +342,8 @@ public class CarController : MonoBehaviour
         boostInput = Input.GetKey(KeyCode.LeftShift);
     }
 
-    private void AddDownForce()
-    {
-        downForceValue = currentSpeed / 2;
-        
-        rigidBody.AddForce(-transform.up * downForceValue * rigidBody.velocity.magnitude);
-    }
-
-    private void GetGameObjects()
-    {
-        wheelMeshes = GameObject.Find("Wheel_Meshes");
-        for (int i = 0; i < wheelMeshes.transform.childCount; i++)
-        {
-            wheelMesh[i] = wheelMeshes.transform.GetChild(i).gameObject;
-        }
-
-        wheelColliders = GameObject.Find("Wheel_Colliders");
-        for (int i = 0; i < wheelColliders.transform.childCount; i++)
-        {
-            wheels[i] = wheelColliders.transform.GetChild(i).GetComponent<WheelCollider>();
-        }
-
-        rigidBody = GetComponent<Rigidbody>();
-        
-        centerOfMass = GameObject.Find("Center_Of_Mass");
-
-    }
-    
-
-    void AdjustDrag()
-    {
-        if (currentSpeed >= topSpeed)
-        {
-            rigidBody.drag = topSpeedDrag;
-        }
-        else if(carPower == 0)
-        {
-            rigidBody.drag = idleDrag;
-        }
-    }
-
     public float GetSpeed() => currentSpeed;
+    #endregion
 
     private void OnGUI()
     {
@@ -237,16 +353,5 @@ public class CarController : MonoBehaviour
         GUI.skin.label.fontSize = 15;
         //Show speed on screen
         GUI.Label(new Rect(10, 10, 150, 100), "Speed: " + currentSpeed.ToString("0") + " KPH");
-
-        float avgRpm = 0;
-        
-        //Show wheel rpm
-        foreach (WheelCollider wheel in wheels)
-        {
-            avgRpm = wheel.rpm;
-        }
-
-        GUI.Label(new Rect(10, 30, 150, 100), "RPM: " + avgRpm.ToString("0") + " RPM");
     }
-
 }

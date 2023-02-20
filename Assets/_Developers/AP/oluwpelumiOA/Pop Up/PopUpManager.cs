@@ -40,10 +40,12 @@ public class PopUpManager : MonoBehaviour
         gameObjectToRelease.SetActive(false);
     }
 
+
     public void OnDismiss(GameObject gameObjectToDestroy)
     {
         Destroy(gameObjectToDestroy);
     }
+
 
     public void PopUpTextAtTransfrom(Transform spawnPosition, Vector3 randomIntensity, string text, Color color, bool parent = false)
     {
