@@ -20,7 +20,7 @@ public class PopUpManager : MonoBehaviour
 
     private void Start()
     {
-        popUpPPool = new ObjectPool<GameObject>(OnCreate, OnGet, OnRelease, OnDestroy, true);
+        //popUpPPool = new ObjectPool<GameObject>(OnCreate, OnGet, OnRelease, OnDestroy, true);
     }
 
     public GameObject OnCreate()
@@ -40,10 +40,10 @@ public class PopUpManager : MonoBehaviour
         gameObjectToRelease.SetActive(false);
     }
 
-    public void OnDestroy(GameObject gameObjectToDestroy)
-    {
-        Destroy(gameObjectToDestroy);
-    }
+    //public void OnDestroy(GameObject gameObjectToDestroy)
+    //{
+    //    Destroy(gameObjectToDestroy);
+    //}
 
     public void PopUpTextAtTransfrom(Transform spawnPosition, Vector3 randomIntensity, string text, Color color, bool parent = false)
     {
