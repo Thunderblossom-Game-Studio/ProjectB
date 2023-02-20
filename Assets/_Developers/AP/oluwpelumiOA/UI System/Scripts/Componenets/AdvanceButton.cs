@@ -20,6 +20,7 @@ public class AdvanceButton : Button
 
     protected override void OnEnable()
     {
+        base.OnEnable();
         interactable = true;
         if (scaleRoutine != null) StopCoroutine(scaleRoutine);
 
