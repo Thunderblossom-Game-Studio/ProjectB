@@ -3457,48 +3457,25 @@ MonoBehaviour:
   destroyOnClose: 0
   navigatable: 1
   firstSelectedButton: {fileID: 0}
+  gamepadSpecifics:
+  - {fileID: 4359401840048126222}
+  - {fileID: 6207998310218356561}
+  keypadSpecifics:
+  - {fileID: 8940593819928572179}
   title: {fileID: 4214464192814533578}
   view2: {fileID: 8457169806118009112}
   buttonHolder: {fileID: 8599553824950788394}
   view1: {fileID: 0}
   tabUI: {fileID: 7177505671234787061}
-  textScaleTransition:
-    scale: {x: 1.2, y: 1.2, z: 1.2}
-    duration: 0.1
+  textPopTransition:
+    destination: {x: 0, y: 0, z: 0}
+    duration: 0
     animationCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: -2.1377413
-        outSlope: 1.8401408
-        tangentMode: 69
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.5443624
-        value: 1.0017035
-        inSlope: -0.0016424804
-        outSlope: -0.29018724
-        tangentMode: 1
-        weightedMode: 3
-        inWeight: 0.74408114
-        outWeight: 0.6687002
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: -2.1984656
-        outSlope: -2.1377413
-        tangentMode: 69
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    relative: 0
   pressToRebindKey: {fileID: 4283586303751147181}
   moveUpBind: {fileID: 7152142468471208529}
   moveDownBind: {fileID: 6412272367054168012}
@@ -3511,11 +3488,8 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: 883c77b4e1a35bf4c9266e2821f07ee0, type: 2}
   screenResolutionSelector: {fileID: 3151026009052652430}
   fullScreenToggle: {fileID: 2503072794820168926}
-  gamepadSpecifics:
-  - {fileID: 4359401840048126222}
-  - {fileID: 6207998310218356561}
-  keypadSpecifics:
-  - {fileID: 8940593819928572179}
+  saveID: 
+  encryptData: 0
 --- !u!1 &4293422018358706922
 GameObject:
   m_ObjectHideFlags: 0

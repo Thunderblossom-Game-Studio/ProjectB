@@ -1,11 +1,15 @@
 using FishNet.Managing;
-using ParrelSync;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using ParrelSync;
+#endif
+
 public class AutoConnect : MonoBehaviour
 {
+#if UNITY_EDITOR
     private NetworkManager _nm;
 
     private void Start()
@@ -24,23 +28,11 @@ public class AutoConnect : MonoBehaviour
         _nm.ClientManager.StartConnection();
     }
 
-    private void Update()
+#else
+    private void Start()
     {
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    _nm.ClientManager.StopConnection();
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.Minus))
-        //{
-        //    _nm.ServerManager.StartConnection();
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.Equals))
-        //{
-        //    _nm.ClientManager.StartConnection();
-        //}
-
-
+        NetworkManager nm = gameObject.GetComponent<NetworkManager>();
+        nm.ClientManager.StartConnection();
     }
+#endif
 }

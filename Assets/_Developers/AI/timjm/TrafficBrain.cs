@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TrafficBrain : MonoBehaviour
 {
+    [Header("Waypoint Targets")]
     public Transform goal;
     public Transform panicgoal;
     public Transform savegoal;
@@ -13,17 +14,23 @@ public class TrafficBrain : MonoBehaviour
     int ForLoopLength = 3;
 
     public GameObject PointyTheSequel;
-    Vector3 paniclocation;
+    //Vector3 paniclocation;
     UnityEngine.AI.NavMeshAgent agent;
+
+    [Header("Panic States")]
     public static bool panic;
     public bool ShowPanic;
+    public bool CarmageddonMode;
     [SerializeField] int DistanceForwardIncrease = 2;
-    int DistanceForward = 0;
+    //int DistanceForward = 0;
     public int RPast;
     public int R;
 
-    public bool CarmageddonMode;
+
+    
     private bool IgnoreRaycasts;
+
+    [Header("Car Speed")]
     [SerializeField] float CarSpeed;
     float DefaultSpeed;
     [SerializeField] float PanicCarSpeed;
@@ -53,7 +60,7 @@ public class TrafficBrain : MonoBehaviour
         Vector3 forward = pointy.transform.TransformDirection(Vector3.forward) * CarSpeed;
         if (Physics.Raycast(pointy.transform.position, forward, out hit, 5.0f))
         {
-            if (hit.rigidbody != null && IgnoreRaycasts == true)
+            if (hit.rigidbody != null && IgnoreRaycasts == false)
             {
                 agent.isStopped = true;
             }
@@ -73,7 +80,7 @@ public class TrafficBrain : MonoBehaviour
         Vector3 MovingForward = PointyTheSequel.transform.TransformDirection(Vector3.forward) * CarSpeed;
         if (Physics.Raycast(PointyTheSequel.transform.position, MovingForward, out AnotherHit, 5.0f))
         {
-            if (AnotherHit.rigidbody != null && IgnoreRaycasts == true)
+            if (AnotherHit.rigidbody != null && IgnoreRaycasts == false)
             {
                 agent.isStopped = true;
             }
@@ -141,7 +148,7 @@ public class TrafficBrain : MonoBehaviour
             agent.isStopped = false;
             agent.SetDestination(goal.position);
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(SecondsToWait);
 
             DistanceForwardIncrease += 5;
 
