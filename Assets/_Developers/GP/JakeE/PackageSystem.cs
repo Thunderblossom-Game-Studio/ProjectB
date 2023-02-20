@@ -71,6 +71,8 @@ public class PackageSystem : MonoBehaviour
         packageObject.transform.SetParent(transform);
         packageObject.transform.GetChild(0).GetComponent<MeshRenderer>().material.color =
             _currentPackages[^1].PackageColor;
+        packageObject.transform.localEulerAngles = new Vector3(0, 0, 0);
+        packageObject.transform.localPosition = _packageSpawns[_currentPackages.Count - 1];
     }
 
     private void ClearPackageVisuals()
