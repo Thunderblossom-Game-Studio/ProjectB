@@ -32,25 +32,25 @@ public class HazzardWarning : MonoBehaviour
         {
             ToggleImageDisplay(0);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && images.Count > 1)
-        {
-            ToggleImageDisplay(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3) && images.Count > 2)
-        {
-            ToggleImageDisplay(2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4) && images.Count > 3)
-        {
-            ToggleImageDisplay(3);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha5) && images.Count > 4)
-        {
-            ToggleImageDisplay(4);
-        }
+        //else if (Input.GetKeyDown(KeyCode.Alpha2) && images.Count > 1)
+        //{
+        //    ToggleImageDisplay(1);
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Alpha3) && images.Count > 2)
+        //{
+        //    ToggleImageDisplay(2);
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Alpha4) && images.Count > 3)
+        //{
+        //    ToggleImageDisplay(3);
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Alpha5) && images.Count > 4)
+        //{
+        //    ToggleImageDisplay(4);
+        //}
     }
 
-    void ToggleImageDisplay(int index)
+  public void ToggleImageDisplay(int index)
     {
         isImageDisplayed[index] = !isImageDisplayed[index];
         images[index].enabled = isImageDisplayed[index];
