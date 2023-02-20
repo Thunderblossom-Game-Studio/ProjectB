@@ -136,7 +136,7 @@ public class AICarController : MonoBehaviour
 
         bool b = false;
 
-        if ((h != 0 && car.GetSpeed() > brakeSensitivity) || (Vector3.Distance(transform.position, agent.transform.position) < stopDistance) || (car.GetSpeed() > brakeSensitivity * 1.8))
+        if ((h != 0 && car.GetSpeed() > brakeSensitivity) || (Vector3.Distance(transform.position, agent.transform.position) < stopDistance && car.GetSpeed() > brakeSensitivity) || (car.GetSpeed() > brakeSensitivity * 1.8))
         {
             b = true;
         }

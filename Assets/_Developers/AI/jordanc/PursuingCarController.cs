@@ -39,19 +39,6 @@ public class PursuingCarController : AICarController
     protected override void Evaluate()
     {
         newState = false;
-        /*
-        if (PreventionCollision.TurnLeftBoolPass == true)
-        {
-            NextState = State.TURNLEFT;
-        }
-        if (PreventionCollision.TurnRightBoolPass == true)
-        {
-            NextState = State.TURNRIGHT;
-        }
-        if (PreventionCollision.BrakeBoolPass == true)
-        {
-            NextState = State.BRAKE;
-        }*/
 
         RaycastHit[] Hits = Physics.SphereCastAll(transform.position, AggroRange, Vector3.forward, 0, Car);
 
@@ -68,7 +55,7 @@ public class PursuingCarController : AICarController
                 }
             }
 
-            if (Target == null)
+            if (Target == null && NextState != State.PICKUP)
             {
                 NextState = State.PATROL;
             }
@@ -88,7 +75,10 @@ public class PursuingCarController : AICarController
             // Patrol
             else
             {
-                NextState = State.PATROL;
+                if (NextState != State.PICKUP)
+                {
+                    NextState = State.PATROL;
+                }
 
                 
          
@@ -140,7 +130,20 @@ public class PursuingCarController : AICarController
         {
             NextState = State.DELIVERY;
         }
-        
+
+
+        if (PreventionCollision.TurnLeftBoolPass == true)
+        {
+            NextState = State.TURNLEFT;
+        }
+        if (PreventionCollision.TurnRightBoolPass == true)
+        {
+            NextState = State.TURNRIGHT;
+        }
+        if (PreventionCollision.BrakeBoolPass == true)
+        {
+            NextState = State.BRAKE;
+        }
 
     }
 
@@ -179,7 +182,7 @@ public class PursuingCarController : AICarController
                 TurnRight();
                 break;
             case State.BRAKE:
-                Brake();
+                CourseCorrect();
                 break;
         }
     }
@@ -188,18 +191,23 @@ public class PursuingCarController : AICarController
 
     protected override void Act()
     {
-        if (NextState == State.PURSUE || NextState == State.PATROL)
+        if (!(NextState == State.TURNLEFT || NextState == State.TURNRIGHT || NextState == State.BRAKE))
         {
-            
+            FollowAgent();
         }
 
-        FollowAgent();
+        if (Vector3.Distance(transform.position, agent.transform.position) > 30)
+        {
+            agent.isStopped = true;
+        }
+        else
+        {
+            agent.isStopped = false;
+        }
 
         State c = NextState;
 
-        Evaluate();
-
-       
+        Evaluate();       
 
         if (c != NextState) newState = true;
 
@@ -218,17 +226,12 @@ public class PursuingCarController : AICarController
 
     private void TurnLeft()
     {
-        CurrentCar.Turn(-1);
+        car.HandleInput(1, -1, true);
     }
 
     private void TurnRight()
     {
-        CurrentCar.Turn(1);
-    }
-
-    private void Brake()
-    {
-        CurrentCar.Accelerate(-1);
+        car.HandleInput(1, 1, true);
     }
 
     private void Patrol()

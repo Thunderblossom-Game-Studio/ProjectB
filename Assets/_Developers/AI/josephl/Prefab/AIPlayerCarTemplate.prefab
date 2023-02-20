@@ -1,5 +1,143 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5359406165934288627
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1272048548196147138}
+  m_Layer: 0
+  m_Name: LeftRayCast
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1272048548196147138
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5359406165934288627}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.52, y: 0.115, z: 2.518}
+  m_LocalScale: {x: 1, y: 1, z: 4.63751}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8163660549459807150}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7037380251122027224
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7630988669872257488}
+  - component: {fileID: 1666968899265886167}
+  - component: {fileID: 1790488923463133250}
+  m_Layer: 6
+  m_Name: OtherCarCollision
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7630988669872257488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7037380251122027224}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8163660549459807150}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1666968899265886167
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7037380251122027224}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1790488923463133250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7037380251122027224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f6f187bf49b2ff45951ea863d9f0c98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minAccSpeed: 0
+  maxAccSpeed: 30
+  moveMulit: 100
+  rotSpeed: 0.3
+  HitDetection: 0
+  RayCastFireOne: 0
+  RayCastFireTwo: 0
+  RayCastLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  LeftRayCast: {fileID: 5359406165934288627}
+  RightRayCast: {fileID: 8438958172927521113}
+  TurnLeft: 0
+  TurnLeftBoolPass: 0
+  TurnRight: 0
+  TurnRightBoolPass: 0
+  Brake: 0
+  BrakeBoolPass: 0
+--- !u!1 &8438958172927521113
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 251481596546619599}
+  m_Layer: 0
+  m_Name: RightRayCast
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &251481596546619599
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8438958172927521113}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.52, y: 0.115, z: 2.518}
+  m_LocalScale: {x: 1, y: 1, z: 4.63751}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8163660549459807150}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8764265262410545688
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,6 +333,29 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1706928550936786387, guid: 5385fffbeacea004e918e0c07e43451d, type: 3}
   m_PrefabInstance: {fileID: 7420556135878573683}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &288890687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8163660549459807136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9e5aa3e3b804214cacb73c626f1b566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _packageScore: 0
+  _packageAmount: 0
+  _maxPackages: 5
+  _onPickUp: {fileID: 11400000, guid: 4b1759fe418d4464da69da8ce2ab9dde, type: 2}
+  _onDeliver: {fileID: 11400000, guid: e94fc5f98f5aaf34ba76062f76667d49, type: 2}
+  _packageObject: {fileID: 5676333477140487690, guid: c273e1d1bba822c448ad29ab53a3e576, type: 3}
+  _packageSpawns:
+  - {x: 0, y: 1, z: 0}
+  _onDeliverEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3723057679946869351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,9 +396,10 @@ MonoBehaviour:
   angle: 20
   stopDistance: 0
   NextState: 4
-  PreventionCollision: {fileID: 0}
+  PreventionCollision: {fileID: 1790488923463133250}
   Target: {fileID: 0}
-  Package: {fileID: 0}
+  packageSpawner: {fileID: 0}
+  PackageSystem: {fileID: 288890687}
   distanceToReset: 150
   AttackRange: 0
   AggroRange: 20
@@ -257,30 +419,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  DeliveryPoint: {fileID: 0}
   DistanceFromPatrolPoint: 20
---- !u!114 &288890687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8163660549459807136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9e5aa3e3b804214cacb73c626f1b566, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _packageScore: 0
-  _packageAmount: 0
-  _maxPackages: 5
-  _onPickUp: {fileID: 11400000, guid: 4b1759fe418d4464da69da8ce2ab9dde, type: 2}
-  _onDeliver: {fileID: 11400000, guid: e94fc5f98f5aaf34ba76062f76667d49, type: 2}
-  _packageObject: {fileID: 5676333477140487690, guid: c273e1d1bba822c448ad29ab53a3e576, type: 3}
-  _packageSpawns:
-  - {x: 0, y: 1, z: 0}
-  _onDeliverEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &8163660549459807150 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1706928550936786397, guid: 5385fffbeacea004e918e0c07e43451d, type: 3}
