@@ -139,6 +139,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car
       objectReference: {fileID: 0}
+    - target: {fileID: 1706928550936786387, guid: 5385fffbeacea004e918e0c07e43451d, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1706928550936786397, guid: 5385fffbeacea004e918e0c07e43451d, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -229,7 +233,8 @@ MonoBehaviour:
   turnmultiplier: 5
   brakeSensitivity: 40
   angle: 20
-  NextState: 1
+  stopDistance: 0
+  NextState: 4
   PreventionCollision: {fileID: 0}
   Target: {fileID: 0}
   Package: {fileID: 0}
@@ -253,6 +258,29 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   DistanceFromPatrolPoint: 20
+--- !u!114 &288890687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8163660549459807136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9e5aa3e3b804214cacb73c626f1b566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _packageScore: 0
+  _packageAmount: 0
+  _maxPackages: 5
+  _onPickUp: {fileID: 11400000, guid: 4b1759fe418d4464da69da8ce2ab9dde, type: 2}
+  _onDeliver: {fileID: 11400000, guid: e94fc5f98f5aaf34ba76062f76667d49, type: 2}
+  _packageObject: {fileID: 5676333477140487690, guid: c273e1d1bba822c448ad29ab53a3e576, type: 3}
+  _packageSpawns:
+  - {x: 0, y: 1, z: 0}
+  _onDeliverEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &8163660549459807150 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1706928550936786397, guid: 5385fffbeacea004e918e0c07e43451d, type: 3}

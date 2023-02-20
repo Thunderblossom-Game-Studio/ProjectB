@@ -15,6 +15,7 @@ public class AICarController : MonoBehaviour
     [Range(0f, 5f)] [SerializeField] protected float turnmultiplier;
     [Range(0, 100)] [SerializeField] protected float brakeSensitivity = 50;
     [Range(0, 180)] [SerializeField] protected int angle;
+    [SerializeField] protected float stopDistance = 10;
 
     protected bool newState = false;
     
@@ -135,7 +136,7 @@ public class AICarController : MonoBehaviour
 
         bool b = false;
 
-        if ((h != 0 && car.GetSpeed() > brakeSensitivity) || (Vector3.Distance(transform.position, agent.transform.position) < 10) || (car.GetSpeed() > brakeSensitivity * 1.8))
+        if ((h != 0 && car.GetSpeed() > brakeSensitivity) || (Vector3.Distance(transform.position, agent.transform.position) < stopDistance) || (car.GetSpeed() > brakeSensitivity * 1.8))
         {
             b = true;
         }
