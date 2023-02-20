@@ -14,11 +14,12 @@ public class NewAim : MonoBehaviour
         cam1 = Camera.main;
     }
 
-    void Update()
+    private void Update()
     {
+
         Ray ray = cam1.ScreenPointToRay(Input.mousePosition);
         Vector3 mouseDirection = ray.direction;
-        mouseDirection.y = 0;
+
         Quaternion targetRotation = Quaternion.LookRotation(mouseDirection);
 
         if (isInstant)
@@ -30,12 +31,16 @@ public class NewAim : MonoBehaviour
             Quaternion currentRotation = transform.rotation;
             float angularDifference = Quaternion.Angle(currentRotation, targetRotation);
 
-            if (angularDifference > 0) transform.rotation = Quaternion.Slerp(
-                                         currentRotation,
-                                         targetRotation,
-                                         (rotationSpeed * 180 * Time.deltaTime) / angularDifference
-                                    );
-            else transform.rotation = targetRotation;
+            if (angularDifference > 0)
+            {
+                transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, (rotationSpeed * 180 * Time.deltaTime) / angularDifference);
+            }
+            else
+            {
+                transform.rotation = targetRotation;
+            }
+
         }
     }
+
 }

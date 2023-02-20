@@ -13,10 +13,9 @@ public class GunShooting : MonoBehaviour
     private bool outOfMags;
     private int SelectFiringMode;
 
-    public int pelletCount;
-    public float spreadAngle;
-    public float pelletFireVel = 1;
-    List<Quaternion> pellets;
+    private int pelletsShot = 10;
+    private float pelletSpread = 10;
+    private float pelletFireVel = 5;
 
 
     private void Start()
@@ -26,12 +25,6 @@ public class GunShooting : MonoBehaviour
         ScriptableObject.gunCurrentMagSize = ScriptableObject.gunMaxMagSize;
         outOfMags = false;
         SelectFiringMode = 1;
-
-        pellets = new List<Quaternion>(pelletCount);
-        for(int i = 0; i < pelletCount; i++)
-        {
-            pellets.Add(Quaternion.Euler(Vector3.zero));
-        }
     }
 
     private void Update()
@@ -136,7 +129,6 @@ public class GunShooting : MonoBehaviour
         {
             if (CanFire())
             {
-                Debug.Log("Fire!");
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 GameObject projectile = GameObject.Instantiate(ScriptableObject.projectileType, shootPoint.position, Quaternion.identity, ammoParent);
@@ -174,16 +166,17 @@ public class GunShooting : MonoBehaviour
             if (CanFire())
             {
                 Debug.Log("Fire!");
-                RaycastHit hit;
-                for (int i = 0; i < pelletCount; i++)
+                float TotalSpread = pelletSpread / pelletsShot;
+                for (int i = 0; i < pelletsShot; i++)
                 {
-                    pellets[i] = Random.rotation;
-                    GameObject pellet = GameObject.Instantiate(ScriptableObject.projectileType, shootPoint.position, shootPoint.rotation);
-                    pellet.transform.rotation = Quaternion.RotateTowards(pellet.transform.rotation, pellets[i], spreadAngle);
-                    pellet.GetComponent<Rigidbody>().AddForce(pellet.transform.right * pelletFireVel);
-                    i++;
+                    float spreadA = TotalSpread * (i + 1);
+                    float spreadB = pelletSpread / 2.0f;
+                    float spread = spreadB - spreadA + TotalSpread / 2;
+                    float angle = shootCam.transform.eulerAngles.y;
+                    Quaternion rotation = Quaternion.Euler(new Vector3(0, spread + angle, 0));
+                    GameObject pellet = Instantiate(ScriptableObject.projectileType, shootCam.position, shootCam.rotation);
+                    pellet.GetComponent<Rigidbody>().AddForce(transform.forward * pelletFireVel);
                 }
-                
             }
         }
         else if (!ScriptableObject.gunReloading)//if ammo is 0 or less
