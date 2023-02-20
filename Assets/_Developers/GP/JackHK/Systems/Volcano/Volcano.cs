@@ -17,15 +17,22 @@ public class Volcano : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == PlayerTagName) { _playerInRange = true; }
-        else { _playerInRange = false; }
-        if (other == null) { _playerInRange = false; }
+        if (_usesRangeDetection)
+        {
+            if (other.tag == PlayerTagName) { _playerInRange = true; }
+            else { _playerInRange = false; }
+            if (other == null) { _playerInRange = false; }
+        }
+
     }
 
     private void Update()
     {
-        if (_playerInRange) _spawner.enabled = true;
-        else _spawner.enabled = false;
+        if (_usesRangeDetection)
+        {
+            if (_playerInRange) _spawner.enabled = true;
+            else _spawner.enabled = false;
+        }
     }
 
     public void CreateSplatter(GameObject sender)
