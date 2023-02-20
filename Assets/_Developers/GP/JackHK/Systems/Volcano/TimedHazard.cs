@@ -6,6 +6,10 @@ using UnityEngine.Events;
 
 public class TimedHazard : MonoBehaviour
 {
+    [Header("IMPORTANT!")]
+    [Tooltip("Is this used with the EntitySpawner.cs script? If so, set this to true.")]
+    [SerializeField] private bool _usesEntitySpawner;
+
     [Header("Hazard Settings")]
     [SerializeField] private GameObject[] _hazards;
 
@@ -26,9 +30,9 @@ public class TimedHazard : MonoBehaviour
 
     [Header("System Settings")]
     [SerializeField] private bool _isDebugMode = false;
-    [SerializeField] private bool _activateOnStart = false;
-    [SerializeField] private bool _destroysHazard = false;
-
+    [SerializeField] private bool _activeOnStart = true;
+    [SerializeField] private bool _destroyOnFinish = true;
+   
     [Tooltip("If true, GameObjects will be a child of _Dynamic. If false, they will be a child of this GameObject")]
     [SerializeField] private bool _useDynamic = false;
 
@@ -50,20 +54,20 @@ public class TimedHazard : MonoBehaviour
     private float _hazardsScale;
 
     private void Awake() { Initialize(); }
-    private void Start() { if (_activateOnStart) StartHazard(); }
-
-    private void OnEnable() { if (_activateOnStart) StartHazard(); }
+    
+    private void Start() { if (_activeOnStart) StartHazard(); }
 
     public void StartHazard()
     {
         StartCoroutine(HazardRoutine());
     }
 
-    public void DestroyHazardParent(int hazardIndex)
+    public void DestroyTimedHazard(int hazardIndex)
     {
-        Destroy(_hazardInstances[hazardIndex]);
-        _hazardInstances.RemoveAt(hazardIndex);
-        Destroy(gameObject);
+        foreach (GameObject hazardInstance in _hazardInstances) { Destroy(hazardInstance); }
+        _hazardInstances.Clear();
+        Destroy(_warningVisualInstance);
+        gameObject.GetComponent<SpawnableObject>().DestroyObject();
     }
 
     private IEnumerator HazardRoutine()
@@ -84,7 +88,7 @@ public class TimedHazard : MonoBehaviour
         _onFinished.Invoke();
         ChangeHazardState(false, randomHazard);
         ChangeWarningState(_warningVisualInstance, false);
-        if (_destroysHazard) DestroyHazardParent(randomHazard);
+        if (_destroyOnFinish) DestroyTimedHazard(randomHazard);
     }
 
     private void Initialize()
@@ -116,7 +120,6 @@ public class TimedHazard : MonoBehaviour
             GameObject _hazardInstance = Instantiate(hazard, transform.position, Quaternion.identity, _dynamic.transform);
             UpdateSpawnPosition(_hazardInstance);
             _hazardInstances.Add(_hazardInstance);
-            _hazardInstance.SetActive(false);
         }
 
         _warningVisualInstance = Instantiate(_warningVisual, transform.position, Quaternion.identity, _dynamic.transform);
