@@ -20,7 +20,7 @@ public class PopUpManager : MonoBehaviour
 
     private void Start()
     {
-        popUpPPool = new ObjectPool<GameObject>(OnCreate, OnGet, OnRelease, OnDestroy, true);
+        popUpPPool = new ObjectPool<GameObject>(OnCreate, OnGet, OnRelease, OnDismiss, true);
     }
 
     public GameObject OnCreate()
@@ -40,7 +40,7 @@ public class PopUpManager : MonoBehaviour
         gameObjectToRelease.SetActive(false);
     }
 
-    public void OnDestroy(GameObject gameObjectToDestroy)
+    public void OnDismiss(GameObject gameObjectToDestroy)
     {
         Destroy(gameObjectToDestroy);
     }
