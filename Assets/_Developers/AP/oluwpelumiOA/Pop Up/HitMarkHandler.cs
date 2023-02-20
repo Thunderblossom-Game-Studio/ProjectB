@@ -18,7 +18,7 @@ public class HitMarkHandler : MonoBehaviour
 
     private void Start()
     {
-        hitMarkPool = new ObjectPool<GameObject>(OnCreate, OnGet, OnRelease, OnDestroy, true);
+        //hitMarkPool = new ObjectPool<GameObject>(OnCreate, OnGet, OnRelease, OnDestroy, true);
     }
 
     public GameObject OnCreate()
@@ -38,10 +38,10 @@ public class HitMarkHandler : MonoBehaviour
         gameObjectToRelease.SetActive(false);
     }
 
-    public void OnDestroy(GameObject gameObjectToDestroy)
-    {
-        Destroy(gameObjectToDestroy);
-    }
+    //public void OnDestroy(GameObject gameObjectToDestroy)
+    //{
+    //    Destroy(gameObjectToDestroy);
+    //}
 
     public void TriggerHitmark(Component arg1, object arg2)
     {
