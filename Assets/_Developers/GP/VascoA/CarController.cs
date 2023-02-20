@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 public class CarController : MonoBehaviour
 {
     private GameObject wheelMeshes, wheelColliders;
@@ -106,6 +104,13 @@ public class CarController : MonoBehaviour
         if (boostInput)
         {
             rigidBody.AddForce(transform.forward * boostPower);
+        }
+        
+        foreach (WheelCollider wheel in wheels)
+        {
+            if (wheel.rpm > 400 && vInput == 0)
+                wheel.motorTorque = 0;
+
         }
     }
 
@@ -232,6 +237,16 @@ public class CarController : MonoBehaviour
         GUI.skin.label.fontSize = 15;
         //Show speed on screen
         GUI.Label(new Rect(10, 10, 150, 100), "Speed: " + currentSpeed.ToString("0") + " KPH");
+
+        float avgRpm = 0;
+        
+        //Show wheel rpm
+        foreach (WheelCollider wheel in wheels)
+        {
+            avgRpm = wheel.rpm;
+        }
+
+        GUI.Label(new Rect(10, 30, 150, 100), "RPM: " + avgRpm.ToString("0") + " RPM");
     }
 
 }
