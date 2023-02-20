@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -79,6 +80,15 @@ public class PackageSystem : MonoBehaviour
     {
         foreach (GameObject packageObject in _currentPackageObjects) { Destroy(packageObject); }
         _currentPackageObjects.Clear();
+    }
+
+    private void OnDrawGizmos()
+    {
+        foreach (Vector3 packageLocation in _packageSpawns)
+        {
+            Gizmos.color = Color.grey;
+            Gizmos.DrawCube(transform.position + packageLocation, _packageObject.transform.localScale);
+        }
     }
 }
 
