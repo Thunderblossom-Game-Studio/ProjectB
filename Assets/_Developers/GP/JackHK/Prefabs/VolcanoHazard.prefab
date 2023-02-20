@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hazards:
   - {fileID: 8433146902187877253, guid: e69c435d550f8844aa0c6d0c3a4309e7, type: 3}
-  _hazardsAreRandom: 1
+  _hazardsAreRandom: 0
   _hazardsFallWithGravity: 1
   _fallHeight: 6
   _hazardsRandomScale: 0
@@ -54,9 +54,10 @@ MonoBehaviour:
   _hazardsScaleMax: 1.3
   _warningVisual: {fileID: 4294031463640632847, guid: 9e29e555ff881ac4588308974ab821e8, type: 3}
   _warningYOffset: 3
-  _isDebugMode: 0
+  _isDebugMode: 1
   _activateOnStart: 1
   _destroysHazard: 1
+  _usesEntitySpawner: 1
   _useDynamic: 1
   _warningTime: 5
   _hazardTime: 5

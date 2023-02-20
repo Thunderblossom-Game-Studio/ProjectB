@@ -14,7 +14,7 @@ public class EntityAutoSpawner : MonoBehaviour
     }
 
     [Header("Settings")] 
-    [SerializeField] private Status _spawnerStatus;
+    [SerializeField] Status _spawnerStatus;
     [SerializeField] private float _spawnRate;
     [SerializeField] private float _spawnMaximum;
 
