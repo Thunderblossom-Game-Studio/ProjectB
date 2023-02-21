@@ -1,10 +1,7 @@
 //Created with help from Kieran Moore. Hi Kostas! :) [Delete this message if absolutely necessary]
-
-
-
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
+
 
 public class Cutscene_1_Handler : MonoBehaviour
 {
@@ -21,7 +18,7 @@ public class Cutscene_1_Handler : MonoBehaviour
         //This starts the cutscene IEnumerator
         StartCoroutine("StartCutscene");
     }
-
+   
     IEnumerator StartCutscene()
     {
         //Disable the player and start the cutscene
@@ -32,12 +29,14 @@ public class Cutscene_1_Handler : MonoBehaviour
         //Re-enable the player
         thePlayer.SetActive(true);
         cineMachineHandler.SetActive(false);
-    }
 
+        //Add Camera Follow script to "Camera"
+
+    }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
