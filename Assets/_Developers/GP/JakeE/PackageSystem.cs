@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -71,12 +72,23 @@ public class PackageSystem : MonoBehaviour
         packageObject.transform.SetParent(transform);
         packageObject.transform.GetChild(0).GetComponent<MeshRenderer>().material.color =
             _currentPackages[^1].PackageColor;
+        packageObject.transform.localEulerAngles = new Vector3(0, 0, 0);
+        packageObject.transform.localPosition = _packageSpawns[_currentPackages.Count - 1];
     }
 
     private void ClearPackageVisuals()
     {
         foreach (GameObject packageObject in _currentPackageObjects) { Destroy(packageObject); }
         _currentPackageObjects.Clear();
+    }
+
+    private void OnDrawGizmos()
+    {
+        foreach (Vector3 packageLocation in _packageSpawns)
+        {
+            Gizmos.color = Color.grey;
+            Gizmos.DrawCube(transform.position + packageLocation, _packageObject.transform.localScale);
+        }
     }
 }
 

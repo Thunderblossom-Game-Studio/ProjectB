@@ -111,7 +111,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8ca86ac9bc582d4aa65d4ebf58c015e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ScriptableObject: {fileID: 11400000, guid: 520a312cad417b34c85c282704840341, type: 2}
   ammoDecal: {fileID: 0}
+  projectileSpeed: 20
+  timeToDestroy: 2
 --- !u!54 &3582217669255219919
 Rigidbody:
   m_ObjectHideFlags: 0
