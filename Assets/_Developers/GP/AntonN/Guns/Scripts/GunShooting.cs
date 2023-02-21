@@ -129,21 +129,21 @@ public class GunShooting : MonoBehaviour
         {
             if (CanFire())
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
+                //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                //RaycastHit hit;
                 GameObject projectile = GameObject.Instantiate(ScriptableObject.projectileType, shootPoint.position, Quaternion.identity, ammoParent);
 
                 GunAmmo gunAmmo = projectile.GetComponent<GunAmmo>();
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-                {
-                    gunAmmo.target = hit.point;
-                    gunAmmo.hit = true;
-                }
-                else
-                {
+                //if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+                //{
+                //    gunAmmo.target = hit.point;
+                //    gunAmmo.hit = true;
+                //}
+                //else
+                //{
                     gunAmmo.target = shootCam.position + shootCam.forward * projectileHitMissDistance;
                     gunAmmo.hit = false;
-                }
+                //}
                 ScriptableObject.gunCurrentAmmo--;
                 timeSinceLastFired = 0;
             }
