@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
+using TMPro;
 using UnityEngine;
 
 public class ScoreCounter : MonoBehaviour
 {
-
-    public Text ScoreText;
+    [Header("Components")]
+    public TextMeshProUGUI ScoreText;
     public int score = 0;
     public int maxScore;
-
+    
+    public GameObject objectiveTimer;
     public GameObject Score;
     public GameObject WinText;
 
@@ -25,7 +26,7 @@ public class ScoreCounter : MonoBehaviour
     
     public void UpdateScore()
     {
-        ScoreText.text = "Score: " + score;
+        ScoreText.text = "PP (Package Points): " + score;
     }
 
     void Update()
@@ -36,6 +37,7 @@ public class ScoreCounter : MonoBehaviour
         {
             Score.SetActive(false);
             WinText.SetActive(true);
+            objectiveTimer.SetActive(false);
         }
 
         //Debug/Testing below
