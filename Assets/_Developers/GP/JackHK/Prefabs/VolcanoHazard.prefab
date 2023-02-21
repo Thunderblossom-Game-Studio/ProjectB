@@ -44,20 +44,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e53da310d151df43a4a4fcdb2a81daf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _usesEntitySpawner: 1
   _hazards:
   - {fileID: 8433146902187877253, guid: e69c435d550f8844aa0c6d0c3a4309e7, type: 3}
   _hazardsAreRandom: 0
   _hazardsFallWithGravity: 1
-  _fallHeight: 6
+  _fallHeight: 25
   _hazardsRandomScale: 0
-  _hazardsScaleMin: 0.7
-  _hazardsScaleMax: 1.3
+  _hazardsScaleMin: 1
+  _hazardsScaleMax: 1
   _warningVisual: {fileID: 4294031463640632847, guid: 9e29e555ff881ac4588308974ab821e8, type: 3}
   _warningYOffset: 3
   _isDebugMode: 1
-  _activateOnStart: 1
-  _destroysHazard: 1
-  _usesEntitySpawner: 1
+  _activeOnStart: 1
+  _destroyOnFinish: 1
   _useDynamic: 1
   _warningTime: 5
   _hazardTime: 5
