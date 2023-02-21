@@ -5,14 +5,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
-using Pelumi.Juicer;
 
 public class GameMenu : BaseMenu<GameMenu>
 {
     [SerializeField] private CanvasGroup buttonHolder;
 
     [Header( "Package UI")]
-    [SerializeField] private JuicerVector3Properties _packageUIProperties;
+    [SerializeField] private FeelVector3Properties _packageUIProperties;
     [SerializeField] private TextMeshProUGUI currentPackageText;
     [SerializeField] private TextMeshProUGUI maxPackageText;
     [SerializeField] private TextMeshProUGUI scoreText;
@@ -29,7 +28,7 @@ public class GameMenu : BaseMenu<GameMenu>
 
     public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
     {
-        yield return Juicer.DoFloat(null, 0, (pos) => buttonHolder.alpha = pos, new JuicerFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
+        yield return FeelUtility.FadeFloat(null, 0, (pos) => buttonHolder.alpha = pos, new FeelFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
 
         InputManager.Instance.SwithControlMode(InputManager.ControlMode.Gameplay);
         
@@ -40,7 +39,7 @@ public class GameMenu : BaseMenu<GameMenu>
 
     public override IEnumerator CloseMenuRoutine(Action OnComplected = null)
     {
-        yield return Juicer.DoFloat(null, buttonHolder.alpha, (pos) => buttonHolder.alpha = pos, new JuicerFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
+        yield return FeelUtility.FadeFloat(null, buttonHolder.alpha, (pos) => buttonHolder.alpha = pos, new FeelFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
         InputManager.Instance.OnPauseAction -= Instance_OnPauseAction;
 
         yield return base.CloseMenuRoutine(OnComplected);
@@ -66,14 +65,14 @@ public class GameMenu : BaseMenu<GameMenu>
     {
         currentPackageText.text = (arg2 as int[])[0].ToString();
         maxPackageText.text = (arg2 as int[])[1].ToString();
-        StartCoroutine(Juicer.DoVector3(null, Vector3.zero, (pos) => currentPackageText.transform.localScale = pos, _packageUIProperties, null));
+        StartCoroutine(FeelUtility.FadeVector3(null, Vector3.zero, (pos) => currentPackageText.transform.localScale = pos, _packageUIProperties, null));
     }
     
     private void OnDeliver(Component arg1, object arg2)
     {
         currentPackageText.text = "0";
         scoreText.text = ((int)arg2) + " Points";
-        StartCoroutine(Juicer.DoVector3(null, Vector3.zero, (pos) => scoreText.transform.localScale = pos, _packageUIProperties, null));
+        StartCoroutine(FeelUtility.FadeVector3(null, Vector3.zero, (pos) => scoreText.transform.localScale = pos, _packageUIProperties, null));
     }
 
     private void OnDisable()

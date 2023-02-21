@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,15 +26,25 @@ public class MissionWaypoint : MonoBehaviour
     public float rotOffset = -90f;
     public float rotMult = 10f;
 
-    public EntitySpawner _entitySpawner;
-
     void Update()
     {
+        //float minX1 = img1.GetPixelAdjustedRect().width / 2;
+        //float maxX1 = Screen.width - minX1;
 
-        if (_entitySpawner.SpawnedObjects.Count > 0)
-        {
-            targets[0] = _entitySpawner.SpawnedObjects[0].transform;
-        }
+        //float minY1 = img1.GetPixelAdjustedRect().height / 2;
+        //float maxY1 = Screen.height - minY1;
+
+        //float minX2 = img2.GetPixelAdjustedRect().width / 2;
+        //float maxX2 = Screen.width - minX2;
+
+        //float minY2 = img2.GetPixelAdjustedRect().height / 2;
+        //float maxY2 = Screen.height - minY2;
+
+        //float minX3 = img3.GetPixelAdjustedRect().width / 2;
+        //float maxX3 = Screen.width - minX3;
+
+        //float minY3 = img3.GetPixelAdjustedRect().height / 2;
+        //float maxY3 = Screen.height - minY3;
 
         for (int i = 0; i < targets.Count; i++) 
         {
@@ -44,9 +53,10 @@ public class MissionWaypoint : MonoBehaviour
 
             float minY = markers[i].GetPixelAdjustedRect().height / 2;
             float maxY = Screen.height - minY;
-            
+
             Vector2 pos = Camera.main.WorldToScreenPoint(targets[i].position + offset);
-            
+
+
             float rotshit = 0f;
 
             if (Vector3.Dot((targets[i].position - transform.position), transform.forward) < 0)
@@ -159,11 +169,5 @@ public class MissionWaypoint : MonoBehaviour
 
         */
         #endregion
-    }
-
-    private void Start()
-    {
-        Transform packageLocation = _entitySpawner.SpawnedObjects[0].transform;
-        targets.Add(packageLocation);
     }
 }
