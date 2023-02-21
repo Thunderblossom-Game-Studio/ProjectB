@@ -28,20 +28,20 @@ public class AdvanceButton : Button
         scaleRoutine = StartCoroutine(Juicer.DoVector3(null, transform.localScale, (pos) => transform.localScale = pos, new JuicerVector3Properties(new Vector3(1, 1, 1), .1f, animationCurveType: AnimationCurveType.EaseInOut), null));
     }
 
-    public override void OnPointerEnter(PointerEventData eventData)
-    {
-        OnAnyButtonHovered?.Invoke(this, EventArgs.Empty);
-        base.OnPointerEnter(eventData);
-        if (scaleRoutine != null) StopCoroutine(scaleRoutine);
-        scaleRoutine = StartCoroutine(Juicer.DoVector3(null, transform.localScale, (pos) => transform.localScale = pos, new JuicerVector3Properties(new Vector3(1.2f, 1.2f, 1.2f), .1f, animationCurveType: AnimationCurveType.EaseInOut), null));
-    }
+    //public override void OnPointerEnter(PointerEventData eventData)
+    //{
+    //    OnAnyButtonHovered?.Invoke(this, EventArgs.Empty);
+    //    base.OnPointerEnter(eventData);
+    //    if (scaleRoutine != null) StopCoroutine(scaleRoutine);
+    //    scaleRoutine = StartCoroutine(Juicer.DoVector3(null, transform.localScale, (pos) => transform.localScale = pos, new JuicerVector3Properties(new Vector3(1.2f, 1.2f, 1.2f), .1f, animationCurveType: AnimationCurveType.EaseInOut), null));
+    //}
 
 
-     {
-         interactable = true;
-         if (scaleRoutine != null) StopCoroutine(scaleRoutine);
-         scaleRoutine = StartCoroutine(Juicer.DoVector3(null, transform.localScale, (pos) => transform.localScale = pos, new JuicerVector3Properties(new Vector3(1, 1, 1), .1f, animationCurveType: AnimationCurveType.EaseInOut), null));
-     }
+     //{
+     //    interactable = true;
+     //    if (scaleRoutine != null) StopCoroutine(scaleRoutine);
+     //    scaleRoutine = StartCoroutine(Juicer.DoVector3(null, transform.localScale, (pos) => transform.localScale = pos, new JuicerVector3Properties(new Vector3(1, 1, 1), .1f, animationCurveType: AnimationCurveType.EaseInOut), null));
+     //}
     
      public override void OnPointerEnter(PointerEventData eventData)
      {
