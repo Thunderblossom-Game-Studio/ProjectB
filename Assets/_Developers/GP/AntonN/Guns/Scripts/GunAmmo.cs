@@ -27,7 +27,7 @@ public class GunAmmo : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
             ContactPoint contact = other.GetContact(0);
-            GameObject.Instantiate(ammoDecal, contact.point + contact.normal * 0.0001f, Quaternion.LookRotation(contact.normal));
+            //GameObject.Instantiate(ammoDecal, contact.point + contact.normal * 0.0001f, Quaternion.LookRotation(contact.normal));
             Destroy(gameObject);
             DealDamage();
     }
