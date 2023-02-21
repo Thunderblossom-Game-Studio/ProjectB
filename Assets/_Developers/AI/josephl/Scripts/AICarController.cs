@@ -3,19 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(AIVehicleController))]
+[RequireComponent(typeof(AITestCar))]
 public class AICarController : MonoBehaviour
 {
-    protected AIVehicleController car;
+    #region Test Scene Specific Definitions
+
+    // Test States Definition
+    public enum DemoAIState { Chase, Evade, Patrol }
+
+    [Header("Test Scene Specific")]
+
+    // Test States Declaration
+    public DemoAIState currentState = DemoAIState.Chase;
+        
+    // Test Car Class Called
+    protected AITestCar car;
+
+    #endregion
 
     [Header("Pathfinding Settings")]
 
     [SerializeField] protected NavMeshAgent agent;
-    [Range(0f, 1f)] [SerializeField] protected float forwardmultiplier;
-    [Range(0f, 5f)] [SerializeField] protected float turnmultiplier;
-    [Range(0, 100)] [SerializeField] protected float brakeSensitivity = 50;
-    [Range(0, 180)] [SerializeField] protected int angle;
-    [SerializeField] protected float stopDistance = 10;
 
     protected bool newState = false;
     
@@ -27,7 +35,7 @@ public class AICarController : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        car = GetComponent<AIVehicleController>();
+        car = GetComponent<AITestCar>();
     }
 
     // Update is called once per frame
@@ -75,8 +83,9 @@ public class AICarController : MonoBehaviour
             crashReverseTime = 0;
         }
 
-        
-        car.HandleInput(-1, 1, false);
+        car.Accelerate(-1);
+
+        car.Turn(1);
 
         newState = false;
     }
@@ -92,8 +101,11 @@ public class AICarController : MonoBehaviour
     {
         FollowAgent();
 
+        DemoAIState c = currentState;
+
         Evaluate();
 
+        if (c != currentState && !(currentState == DemoAIState.Evade && (Vector3.Distance(transform.position, agent.destination) < 10))) newState = true;
 
         SwapState();
     }
@@ -109,42 +121,25 @@ public class AICarController : MonoBehaviour
 
         float distance = Vector3.Distance(transform.position, agent.transform.position);
 
-        float v = 0;
-        float h = 0;
-
-        float direction2 = Vector3.SignedAngle(transform.forward, dir, Vector3.up);
-
-        if (direction2 < -angle / 2)
-        {
-            h = -1;
-        }
-        else if (direction2 > angle / 2)
-        {
-            h = 1;
-        }
-
         if (direction < -0.3f)
         {
-            v = -1;
+            car.Accelerate(-1);
         }
         else if (direction > 0.3f)
         {
-            v = 1 * forwardmultiplier;
+            car.CustomAccelerate(1,distance*2);
         }
 
-        //v -= Mathf.Abs(h) * turnmultiplier;
+        float direction2 = Vector3.Dot(dir, transform.right);
 
-        bool b = false;
-
-        if ((h != 0 && car.GetSpeed() > brakeSensitivity) || (Vector3.Distance(transform.position, agent.transform.position) < stopDistance && car.GetSpeed() > brakeSensitivity) || (car.GetSpeed() > brakeSensitivity * 1.8))
+        if (direction2 < -0.3f)
         {
-            b = true;
+            car.Turn(-1);
         }
-
-        v = Mathf.Clamp(v, -1f, 1f);
-        h = Mathf.Clamp(h, -1f, 1f);
-
-        car.HandleInput(v, h, b);
+        else if (direction2 > 0.3f)
+        {
+            car.Turn(1);
+        }
     }
 
     #endregion

@@ -21,7 +21,7 @@ public class TrafficAIController : AICarController
         agent.gameObject.SetActive(CanMove);
 
         if (CanMove) base.FollowAgent();
-        //else car.Accelerate(0);
+        else car.Accelerate(0);
     }
 
     protected override void Evaluate()

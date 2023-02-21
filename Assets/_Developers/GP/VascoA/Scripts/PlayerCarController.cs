@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerCarController : MonoBehaviour
 {
-    CarControllerOLD carMovement;
+    CarController carMovement;
     InputManager inputManager;
 
 
@@ -12,7 +12,7 @@ public class PlayerCarController : MonoBehaviour
 
     private void Awake()
     {
-        carMovement = GetComponent<CarControllerOLD>();
+        carMovement = GetComponent<CarController>();
         Debug.Assert(carMovement != null, "CarController not found");
     }
 

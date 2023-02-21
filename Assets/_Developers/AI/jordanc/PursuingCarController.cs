@@ -11,10 +11,6 @@ public class PursuingCarController : AICarController
     public CollisionPrevention PreventionCollision;
     public GameObject Target;
 
-    [SerializeField] private EntitySpawner packageSpawner;
-    [SerializeField] private PackageSystem PackageSystem;
-
-
     [SerializeField] private float distanceToReset = 50f;
 
     
@@ -27,7 +23,6 @@ public class PursuingCarController : AICarController
     [Header("Patrol Points")]
     [SerializeField] Transform[] ListOfPatrolPoints;
     int NextPatrolPoint;
-    [SerializeField] Transform DeliveryPoint;
     [SerializeField] float DistanceFromPatrolPoint;
 
     protected override void Start()
@@ -38,7 +33,18 @@ public class PursuingCarController : AICarController
 
     protected override void Evaluate()
     {
-        newState = false;
+        if (PreventionCollision.TurnLeftBoolPass == true)
+        {
+            NextState = State.TURNLEFT;
+        }
+        if (PreventionCollision.TurnRightBoolPass == true)
+        {
+            NextState = State.TURNRIGHT;
+        }
+        if (PreventionCollision.BrakeBoolPass == true)
+        {
+            NextState = State.BRAKE;
+        }
 
         RaycastHit[] Hits = Physics.SphereCastAll(transform.position, AggroRange, Vector3.forward, 0, Car);
 
@@ -55,12 +61,6 @@ public class PursuingCarController : AICarController
                 }
             }
 
-            if (Target == null && NextState != State.PICKUP)
-            {
-                NextState = State.PATROL;
-            }
-            
-            
 
         }
 
@@ -75,12 +75,7 @@ public class PursuingCarController : AICarController
             // Patrol
             else
             {
-                if (NextState != State.PICKUP)
-                {
-                    NextState = State.PATROL;
-                }
-
-                
+                NextState = State.PATROL;
          
             }
 
@@ -118,32 +113,7 @@ public class PursuingCarController : AICarController
 
         }
 
-        if (packageSpawner)
-        {
-            if (packageSpawner.SpawnedObjects.Count > 0)
-            {
-                NextState = State.PICKUP;
-            }
-        }
-
-        if (PackageSystem.PackageAmount == PackageSystem.MaxPackages)
-        {
-            NextState = State.DELIVERY;
-        }
-
-
-        if (PreventionCollision.TurnLeftBoolPass == true)
-        {
-            NextState = State.TURNLEFT;
-        }
-        if (PreventionCollision.TurnRightBoolPass == true)
-        {
-            NextState = State.TURNRIGHT;
-        }
-        if (PreventionCollision.BrakeBoolPass == true)
-        {
-            NextState = State.BRAKE;
-        }
+        
 
     }
 
@@ -182,7 +152,7 @@ public class PursuingCarController : AICarController
                 TurnRight();
                 break;
             case State.BRAKE:
-                CourseCorrect();
+                Brake();
                 break;
         }
     }
@@ -191,23 +161,18 @@ public class PursuingCarController : AICarController
 
     protected override void Act()
     {
-        if (!(NextState == State.TURNLEFT || NextState == State.TURNRIGHT || NextState == State.BRAKE))
+        if (NextState == State.PURSUE || NextState == State.PATROL)
         {
             FollowAgent();
         }
 
-        if (Vector3.Distance(transform.position, agent.transform.position) > 30)
-        {
-            agent.isStopped = true;
-        }
-        else
-        {
-            agent.isStopped = false;
-        }
+        
 
         State c = NextState;
 
-        Evaluate();       
+        Evaluate();
+
+       
 
         if (c != NextState) newState = true;
 
@@ -226,12 +191,17 @@ public class PursuingCarController : AICarController
 
     private void TurnLeft()
     {
-        car.HandleInput(1, -1, true);
+        CurrentCar.Turn(-1);
     }
 
     private void TurnRight()
     {
-        car.HandleInput(1, 1, true);
+        CurrentCar.Turn(1);
+    }
+
+    private void Brake()
+    {
+        CurrentCar.Accelerate(-1);
     }
 
     private void Patrol()
@@ -278,27 +248,11 @@ public class PursuingCarController : AICarController
     private void Pickup()
     {
         Debug.Log("Pickup");
-        
-        if (newState)
-        {
-            Target = packageSpawner.SpawnedObjects[Random.Range(0, packageSpawner.SpawnedObjects.Count)].gameObject;
-        }
-
-        if (Target)
-        {
-            agent.SetDestination(Target.transform.position);
-        }
-        else
-        {
-            NextState = State.PATROL;
-        }
-
     }
 
     private void Delivery()
     {
         Debug.Log("Pickup");
-        agent.SetDestination(DeliveryPoint.position);
     }
 
     private void Searching()

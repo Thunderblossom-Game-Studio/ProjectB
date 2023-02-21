@@ -3,13 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-#if UNITY_EDITOR
-using ParrelSync;
-#endif
-
 public class AutoConnect : MonoBehaviour
 {
-#if UNITY_EDITOR
     private NetworkManager _nm;
 
     private void Start()
@@ -20,19 +15,9 @@ public class AutoConnect : MonoBehaviour
         {
             Debug.LogError("NetworkManager not found");
         }
-
-        if (!ClonesManager.IsClone())
+        else
         {
-            _nm.ServerManager.StartConnection();
+            _nm.ClientManager.StartConnection();
         }
-        _nm.ClientManager.StartConnection();
     }
-
-#else
-    private void Start()
-    {
-        NetworkManager nm = gameObject.GetComponent<NetworkManager>();
-        nm.ClientManager.StartConnection();
-    }
-#endif
 }

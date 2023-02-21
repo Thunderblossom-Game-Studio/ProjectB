@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
-using Pelumi.Juicer;
 
 public class VideoController : MonoBehaviour
 {
@@ -23,8 +22,7 @@ public class VideoController : MonoBehaviour
         //{
         //    FeelUtility.FadeCanvasGroup(canvasGroup, new FeelFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut));
         //}));
-        StartCoroutine(PlayVideo(videoClip, Juicer.DoFloat(null, 1, (pos) => canvasGroup.alpha = pos, new JuicerFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut),
-            () => gameObject.SetActive(false))));
+        StartCoroutine(PlayVideo(videoClip, FeelUtility.FadeFloat(null, 1, (pos) => canvasGroup.alpha = pos, new FeelFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut), null)));
     }
 
     public IEnumerator PlayVideo(VideoClip videoClip, Action OnComplected = null)

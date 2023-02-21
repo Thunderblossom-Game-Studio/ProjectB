@@ -10,7 +10,6 @@ public class WaypointControl : MonoBehaviour
     public GameObject Next;
     public bool Red;
     public GameObject Car;
-    public bool ActivatePanic;
 
     public void Lane()
     {
@@ -23,20 +22,10 @@ public class WaypointControl : MonoBehaviour
         {
             //StartCoroutine("Hold");
         }
-
-        else if (ActivatePanic == true)
-        {
-            TrafficBrain.panic = true;
-            ActivatePanic = false;
-        }
-
         else
         {
             Car.GetComponent<TrafficBrain>().goal = Next.transform;
         }
-
-        
-
     }
 
     private void OnDrawGizmos()
