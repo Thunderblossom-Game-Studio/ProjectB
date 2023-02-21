@@ -98,6 +98,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gelSystem: {fileID: 0}
+  _usesGelSystem: 1
+  _splatterLife: 3
+  _splatterLifeTime: 10
+  _usesTimer: 0
+  _playerTag: Player
+  _enemyTag: Enemy
+  _onTouched:
+    m_PersistentCalls:
+      m_Calls: []
+  _onCleanedUp:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &1985022416
 BoxCollider:
   m_ObjectHideFlags: 0

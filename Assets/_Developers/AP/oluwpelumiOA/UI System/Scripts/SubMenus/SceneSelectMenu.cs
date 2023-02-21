@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Pelumi.Juicer;
 public class SceneSelectMenu : BaseMenu<SceneSelectMenu>
 {
     [Header("Buttons")]
@@ -39,14 +39,14 @@ public class SceneSelectMenu : BaseMenu<SceneSelectMenu>
 
     public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
     {
-        yield return FeelUtility.FadeFloat(null, buttonHolder.alpha, (v) => buttonHolder.alpha = v, new FeelFloatProperties(1, .5f, animationCurveType: AnimationCurveType.EaseInOut));
+        yield return Juicer.DoFloat(null, buttonHolder.alpha, (v) => buttonHolder.alpha = v, new JuicerFloatProperties(1, .5f, animationCurveType: AnimationCurveType.EaseInOut));
 
         yield return base.OpenMenuRoutine(OnComplected);
     }
 
     public override IEnumerator CloseMenuRoutine(Action OnComplected = null)
     {
-        yield return FeelUtility.FadeFloat(null, buttonHolder.alpha, (v) => buttonHolder.alpha = v, new FeelFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut));
+        yield return Juicer.DoFloat(null, buttonHolder.alpha, (v) => buttonHolder.alpha = v, new JuicerFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut));
 
         yield return base.CloseMenuRoutine(OnComplected);
     }

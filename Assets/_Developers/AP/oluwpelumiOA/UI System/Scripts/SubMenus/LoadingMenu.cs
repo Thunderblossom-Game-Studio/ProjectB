@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Pelumi.Juicer;
 
 public class LoadingMenu : BaseMenu<LoadingMenu>
 {
@@ -38,7 +39,7 @@ public class LoadingMenu : BaseMenu<LoadingMenu>
         loadingBar.fillAmount = 0;
         loadingText.text = "Loading...";
 
-        yield return FeelUtility.FadeFloat(null,0, (v) => loadingContent.alpha = v, new FeelFloatProperties(1, .5f, animationCurveType: AnimationCurveType.EaseInOut), ()=> ToggleLoadingContent(true));
+        yield return Juicer.DoFloat(null,0, (v) => loadingContent.alpha = v, new JuicerFloatProperties(1, .5f, animationCurveType: AnimationCurveType.EaseInOut), ()=> ToggleLoadingContent(true));
 
         AsyncOperation sceneToLoad = SceneManager.LoadSceneAsync(sceneIndex);
         sceneToLoad.allowSceneActivation = false;
@@ -58,7 +59,7 @@ public class LoadingMenu : BaseMenu<LoadingMenu>
 
         yield return new WaitForSecondsRealtime(.15f);
 
-        yield return FeelUtility.FadeFloat(null,1, (v) => loadingContent.alpha = v, new FeelFloatProperties(0, .5f, animationCurveType: AnimationCurveType.EaseInOut), () => ToggleLoadingContent(false));
+        yield return Juicer.DoFloat(null,1, (v) => loadingContent.alpha = v, new JuicerFloatProperties(0, .5f, animationCurveType: AnimationCurveType.EaseInOut), () => ToggleLoadingContent(false));
     }
 
     public void ShowRandomTip()

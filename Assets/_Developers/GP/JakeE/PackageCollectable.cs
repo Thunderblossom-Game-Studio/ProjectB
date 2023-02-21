@@ -12,10 +12,8 @@ public class PackageCollectable : Collectable
         PackageSystem packageSystem = collideObject.GetComponent<PackageSystem>();
         if (packageSystem == null) return;
         if (packageSystem.PackageAmount >= packageSystem.MaxPackages) return;
-
-        Debug.Log("waglgleoii");
-
         packageSystem.AddPackageData(_packageData);
+        _onCollect?.Invoke();
         DestroyObject();
     }
 }
@@ -27,9 +25,11 @@ public struct PackageData
 
     public int PackageWeight => _packageWeight;
     public int PackageScore => _packageScore;
+    public Color PackageColor => _packageVisualColor;
 
     #endregion
 
+    [SerializeField] private Color _packageVisualColor;
     [SerializeField] private int _packageWeight;
     [SerializeField] private int _packageScore;
 }
