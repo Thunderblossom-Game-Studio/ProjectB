@@ -16,6 +16,7 @@ public class PursuingCarController : AICarController
 
 
     [SerializeField] private float distanceToReset = 50f;
+    [SerializeField] private float distanceBetweenAgent = 30;
 
     
     [SerializeField] private float AttackRange;
@@ -49,8 +50,8 @@ public class PursuingCarController : AICarController
                 if (hit.transform.gameObject != gameObject && hit.transform.CompareTag("Player"))
                 {
 
-                    Target = hit.transform.gameObject;
-                    Debug.Log(hit.transform.gameObject.name);
+                    //Target = hit.transform.gameObject;
+                    //Debug.Log(hit.transform.gameObject.name);
 
                 }
             }
@@ -196,7 +197,7 @@ public class PursuingCarController : AICarController
             FollowAgent();
         }
 
-        if (Vector3.Distance(transform.position, agent.transform.position) > 30)
+        if (Vector3.Distance(transform.position, agent.transform.position) > distanceBetweenAgent)
         {
             agent.isStopped = true;
         }
@@ -236,6 +237,7 @@ public class PursuingCarController : AICarController
 
     private void Patrol()
     {
+        if (ListOfPatrolPoints.Length == 0) return;
 
         if (Vector3.Distance(transform.position, agent.transform.position) > distanceToReset)
         {
