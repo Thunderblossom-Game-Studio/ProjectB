@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3728933279248897929}
   - component: {fileID: 1509867425583885374}
   - component: {fileID: 3582217669255219919}
+  - component: {fileID: 9143869948711822397}
   m_Layer: 0
   m_Name: DefaultProjectile
   m_TagString: Untagged
@@ -113,8 +114,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScriptableObject: {fileID: 11400000, guid: 520a312cad417b34c85c282704840341, type: 2}
   ammoDecal: {fileID: 0}
-  projectileSpeed: 20
-  timeToDestroy: 2
 --- !u!54 &3582217669255219919
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -131,3 +130,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &9143869948711822397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895822255032944273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 013bce30a2c58514995c2a3b01f19d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  _damageAmount: 2
+  _criticalDamagePercentage: 0
+  _criticalChance: 0
+  _duration: 0
+  _tickRate: 0
+  _damageType: 0

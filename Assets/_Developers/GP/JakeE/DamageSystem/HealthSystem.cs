@@ -65,8 +65,8 @@ namespace JE.DamageSystem
         if (_isImmune) return;
 
         _currentHealth -= reduceAmount;
-        StartCoroutine(HurtFlash());
-        UpdateHealth();
+        //StartCoroutine(HurtFlash());
+        //UpdateHealth();
         _onReduceHealth?.Invoke();
         
         if (!(_currentHealth <= _minimumHealth)) return;

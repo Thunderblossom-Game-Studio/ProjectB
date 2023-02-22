@@ -144,7 +144,7 @@ public class TimedHazard : MonoBehaviour
     {
         targetObject.SetActive(isEnabled);
         targetObject.transform.position = new Vector3(transform.position.x, transform.position.y + _warningYOffset, transform.position.z);
-        targetObject.transform.eulerAngles = new Vector3(90, 0, 0);
+        targetObject.transform.eulerAngles = new Vector3(0, 0, 0);
     }
 
     private void UpdateSpawnPosition(GameObject instance)
