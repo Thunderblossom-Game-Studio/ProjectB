@@ -8,11 +8,11 @@ using UnityEngine;
 public class DeliveryZone : MonoBehaviour
 {
     [SerializeField] private LayerMask _detectedLayers;
-    public static Action OnDeliver;
-    
+
     private void OnTriggerEnter(Collider objectCollider)
     {
         if (!_detectedLayers.ContainsLayer(objectCollider.gameObject.layer)) return;
-        OnDeliver?.Invoke();
+        if (!objectCollider.TryGetComponent(out PackageSystem packageSystem)) return;
+        packageSystem.DeliverPackages();
     }
 }
