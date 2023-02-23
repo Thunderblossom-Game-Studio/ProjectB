@@ -5490,34 +5490,34 @@ MonoBehaviour:
   driveDividePower: 3
   gears:
   - ratio: -3.5
-    minRPM: -1400.8922
+    minRPM: -1263.9629
     maxRPM: 0
   - ratio: 0
     minRPM: 0
     maxRPM: 0
   - ratio: 3
     minRPM: 0
-    maxRPM: 1634.3743
+    maxRPM: 1474.6233
   - ratio: 2
-    minRPM: 1225.7808
-    maxRPM: 2451.5615
+    minRPM: 1105.9675
+    maxRPM: 2211.935
   - ratio: 1.6
-    minRPM: 2145.1162
-    maxRPM: 3064.452
+    minRPM: 1935.4431
+    maxRPM: 2764.9187
   - ratio: 1.2
-    minRPM: 2553.7097
-    maxRPM: 4085.9355
+    minRPM: 2304.099
+    maxRPM: 3686.5583
   - ratio: 0.9
-    minRPM: 3404.946
-    maxRPM: 5447.9146
+    minRPM: 3072.1316
+    maxRPM: 4915.411
   - ratio: 0.7
-    minRPM: 4669.6406
-    maxRPM: 7004.4614
-  startGear: 8
+    minRPM: 4213.21
+    maxRPM: 6319.8145
+  startGear: 2
   skipNeutral: 1
   autoCalculateRpmRanges: 1
-  shiftDelay: 0
-  shiftThreshold: 2
+  shiftDelay: 20
+  shiftThreshold: 4
 --- !u!114 &402070610405036908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11208,7 +11208,7 @@ MonoBehaviour:
   axleFriction: 0
   frictionSmoothness: 0.5
   forwardFriction: 4
-  sidewaysFriction: 4
+  sidewaysFriction: 3
   forwardRimFriction: 1
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
@@ -11457,7 +11457,7 @@ MonoBehaviour:
   axleFriction: 0
   frictionSmoothness: 0.5
   forwardFriction: 4
-  sidewaysFriction: 4
+  sidewaysFriction: 3
   forwardRimFriction: 1
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
@@ -12168,8 +12168,8 @@ MonoBehaviour:
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 1
@@ -12177,8 +12177,8 @@ MonoBehaviour:
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -12225,8 +12225,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.067028046
-      value: 0.82511646
+      time: 0
+      value: 0.869695
       inSlope: 0.061536875
       outSlope: 0.061536875
       tangentMode: 0
@@ -12234,8 +12234,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 3.3426528
-      value: 0.9968983
+      time: 4.180513
+      value: 0.99924433
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -12243,8 +12243,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 8.914768
-      value: 0.009196028
+      time: 8.0434
+      value: 0.004496321
       inSlope: -0.3291178
       outSlope: -0.3291178
       tangentMode: 0
@@ -12254,7 +12254,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  inertia: 0.5
+  inertia: 0.8
   canReverse: 0
   outputDrives:
   - {fileID: 402070610405036908}
@@ -12753,8 +12753,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 29.25
-      value: 0.4931319
+      time: 30
+      value: 0.19808796
       inSlope: -0.0024225756
       outSlope: -0.0024225756
       tangentMode: 0
