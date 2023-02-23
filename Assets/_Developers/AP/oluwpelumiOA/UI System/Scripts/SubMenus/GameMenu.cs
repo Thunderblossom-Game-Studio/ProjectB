@@ -49,11 +49,8 @@ public class GameMenu : BaseMenu<GameMenu>
     public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
     {
         yield return Juicer.DoFloat(null, 0, (pos) => buttonHolder.alpha = pos, new JuicerFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
-
-        InputManager.Instance.SwithControlMode(InputManager.ControlMode.Gameplay);
-        
+        InputManager.Instance.SwithControlMode(InputManager.ControlMode.Gameplay);     
         InputManager.Instance.OnPauseAction += Instance_OnPauseAction;
-
         yield return base.OpenMenuRoutine(OnComplected);
     }
 
@@ -61,7 +58,6 @@ public class GameMenu : BaseMenu<GameMenu>
     {
         yield return Juicer.DoFloat(null, buttonHolder.alpha, (pos) => buttonHolder.alpha = pos, new JuicerFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
         InputManager.Instance.OnPauseAction -= Instance_OnPauseAction;
-
         yield return base.CloseMenuRoutine(OnComplected);
     }
 
@@ -99,6 +95,7 @@ public class GameMenu : BaseMenu<GameMenu>
     {
         ammoText.text = (value as int[])[0].ToString();
         maxAmmoText.text = (value as int[])[1].ToString();
+        StartCoroutine(Juicer.DoVector3(null, Vector3.zero, (pos) => ammoText.transform.localScale = pos, _packageUIProperties, null));
     }
 
     private void OnReload(Component arg1, object value)
@@ -120,5 +117,10 @@ public class GameMenu : BaseMenu<GameMenu>
     {
         _onPickUp.Unregister(OnPickUp);
         _onDeliver.Unregister(OnDeliver);
+
+        _onOnAmmoChanged.Unregister(OnAmmoChanged);
+        _onReloading.Unregister(OnReload);
+        _onReloadStart.Unregister(OnReloadStart);
+        _onReloadEnd.Unregister(OnReloadEnd);
     }
 }

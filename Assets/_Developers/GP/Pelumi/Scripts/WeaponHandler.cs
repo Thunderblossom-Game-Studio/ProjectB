@@ -41,8 +41,7 @@ public class WeaponHandler : MonoBehaviour
     public event EventHandler OnReloadEnd;
 
     private Vector3 aimPoint;
-    public void SetAim(Vector3 AimPosition)  =>  aimPoint = AimPosition;
-
+    public void SetAim(Vector3 AimPosition) => aimPoint = AimPosition;
     public int CurrentAmmo => currentAmmo;
     public int MaxAmmo => weaponSO.maxAmmo;
 
@@ -89,7 +88,7 @@ public class WeaponHandler : MonoBehaviour
     
     public void TryShootProjectile()
     {
-        if (currentAmmo > 0) ShootProjectile();  else if (weaponState != WeaponState.Reloading) StartCoroutine(Reload());
+        if (currentAmmo > 0) ShootProjectile(); else if (weaponState != WeaponState.Reloading) StartCoroutine(Reload());
     }
 
     public void ShootProjectile()

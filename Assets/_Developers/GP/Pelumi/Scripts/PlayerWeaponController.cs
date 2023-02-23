@@ -47,25 +47,14 @@ public class PlayerWeaponController : MonoBehaviour
 
     void Update()
     {
-        if (debugMode) DebugMouse();
-        
+        if (debugMode) DebugMouse();       
         weaponHandler.SetAim(Camera.main.transform.forward * 200.0f);
-
-        if (InputManager.Instance.HandleFireInput().IsPressed())
-        {
-            weaponHandler.Shoot();
-        }
+        if (InputManager.Instance.HandleFireInput().IsPressed()) weaponHandler.Shoot();
     }
 
     void DebugMouse()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else if (Input.GetMouseButtonDown(0))
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
+        if (Input.GetKeyDown(KeyCode.Escape)) Cursor.lockState = CursorLockMode.None;
+        else if (Input.GetMouseButtonDown(0)) Cursor.lockState = CursorLockMode.Locked;
     }
 }
