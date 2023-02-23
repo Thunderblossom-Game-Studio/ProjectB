@@ -10,6 +10,7 @@ public class PlayerWeaponController : MonoBehaviour
     [SerializeField] private GameEvent _onReloadStart;
     [SerializeField] private GameEvent _onReloading;
     [SerializeField] private GameEvent _onReloadEnd;
+    
     private WeaponHandler weaponHandler;
 
     private void Awake()

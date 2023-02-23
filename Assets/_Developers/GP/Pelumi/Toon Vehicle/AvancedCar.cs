@@ -231,15 +231,6 @@ public class AvancedCar : MonoBehaviour
 
     public void HandleInput()
     {
-        //if (InputManager.Instance.HandleMoveInput().IsPressed())
-        //{
-
-        //}
-        //else
-        //{
-        //    steeringInput = 0;
-        //}
-
         steeringInput = InputManager.Instance.HandleMoveInput().ReadValue<Vector2>().x;
 
         if (InputManager.Instance.HandleAccelerateInput().IsPressed())
@@ -291,7 +282,7 @@ public class AvancedCar : MonoBehaviour
             RecoverTraction();
         }
 
-        if ((!InputManager.Instance.HandleAccelerateInput().IsPressed() && !InputManager.Instance.HandleDecelerateInput().IsPressed()))
+        if (!InputManager.Instance.HandleAccelerateInput().IsPressed() && !InputManager.Instance.HandleDecelerateInput().IsPressed())
         {
             ThrottleOff();
         }
@@ -301,7 +292,8 @@ public class AvancedCar : MonoBehaviour
             if (decelerateRoroutine == null) decelerateRoroutine = StartCoroutine(DecelerateCarRoutine());
             deceleratingCar = true;
         }
-        if (!InputManager.Instance.HandleMoveInput().IsPressed() && steeringAxis != 0f)
+        
+        if (!InputManager.Instance.HandleMoveInput().IsPressed())
         {
             ResetSteeringAngle();
         }

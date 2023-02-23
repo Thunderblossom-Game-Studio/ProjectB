@@ -9,6 +9,22 @@ namespace Pelumi.Juicer
 {
     public static class Juicer
     {
+        public static IEnumerator DoMove(Transform objectToMove, Vector3 startPos, Vector3 endPos, float angle, Action OnFinished = null)
+        {
+            float count = 0.0f;
+            Vector3 midPoint = startPos + (endPos + -startPos) / 2 + Vector3.up * angle;
+            while (count < 1.0f)
+            {
+                count += 1.0f * Time.deltaTime;
+                Vector3 start = Vector3.Lerp(startPos, midPoint, count);
+                Vector3 end = Vector3.Lerp(midPoint, endPos, count);
+                objectToMove.position = Vector3.Lerp(start, end, count);
+                yield return null;
+            }
+
+            if (OnFinished != null) OnFinished();
+        }
+        
         public static IEnumerator DoMutipleChangeColor(Renderer renderer, List<JuicerColorProperties> colorProperties, bool loop = false, Action OnFinished = null)
         {
             foreach (JuicerColorProperties colourProperty in colorProperties)
