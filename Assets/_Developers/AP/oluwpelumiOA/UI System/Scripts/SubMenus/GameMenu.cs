@@ -17,16 +17,35 @@ public class GameMenu : BaseMenu<GameMenu>
     [SerializeField] private TextMeshProUGUI maxPackageText;
     [SerializeField] private TextMeshProUGUI scoreText;
 
-    [Header("Events")]
+    [Header("Combat UI")]
+    [SerializeField] private TextMeshProUGUI ammoText;
+    [SerializeField] private TextMeshProUGUI maxAmmoText;
+    [SerializeField] private Image reloadImage;
+
+    [Header("Package Events")]
     [SerializeField] private GameEvent _onPickUp;
     [SerializeField] private GameEvent _onDeliver;
+
+    [Header("Combat Events")]
+    [SerializeField] private List<JuicerVector3Properties> _reloadingEffect;
+    [SerializeField] private GameEvent _onOnAmmoChanged;
+    [SerializeField] private GameEvent _onReloadStart;
+    [SerializeField] private GameEvent _onReloading;
+    [SerializeField] private GameEvent _onReloadEnd;
+
+    private Coroutine reloadRoutine;
 
     private void OnEnable()
     {
         _onPickUp.Register(OnPickUp);
         _onDeliver.Register(OnDeliver);
-    }
 
+        _onOnAmmoChanged.Register(OnAmmoChanged);
+        _onReloading.Register(OnReload);
+        _onReloadStart.Register(OnReloadStart);
+        _onReloadEnd.Register(OnReloadEnd);
+    }
+    
     public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
     {
         yield return Juicer.DoFloat(null, 0, (pos) => buttonHolder.alpha = pos, new JuicerFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
@@ -74,6 +93,27 @@ public class GameMenu : BaseMenu<GameMenu>
         currentPackageText.text = "0";
         scoreText.text = ((int)arg2) + " Points";
         StartCoroutine(Juicer.DoVector3(null, Vector3.zero, (pos) => scoreText.transform.localScale = pos, _packageUIProperties, null));
+    }
+
+    private void OnAmmoChanged(Component arg1, object value)
+    {
+        ammoText.text = (value as int[])[0].ToString();
+        maxAmmoText.text = (value as int[])[1].ToString();
+    }
+
+    private void OnReload(Component arg1, object value)
+    {
+        reloadImage.fillAmount = (float)value;
+    }
+
+    private void OnReloadStart(Component arg1, object value)
+    {
+        reloadRoutine = StartCoroutine(Juicer.DoMultipleVector3(null, Vector3.zero, (pos) => reloadImage.transform.localScale = pos, _reloadingEffect, 0, true));
+    }
+
+    private void OnReloadEnd(Component arg1, object value)
+    {
+        StopCoroutine(reloadRoutine);
     }
 
     private void OnDisable()

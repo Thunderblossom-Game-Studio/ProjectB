@@ -53,6 +53,7 @@ namespace Pelumi.Juicer
             if (loop) yield return DoMultipleVector3(OnBegin, starValue, valueToModify, feelVector3Properties, delay, loop, OnEachFinished, OnRoundFinished);
         }
 
+
         public static IEnumerator DoVector3(Action OnBegin, Vector3 startingValue, Action<Vector3> valueToModify, JuicerVector3Properties feelVector3Properties, Action OnFinished = null)
         {
             OnBegin?.Invoke();
@@ -68,7 +69,7 @@ namespace Pelumi.Juicer
 
             if (OnFinished != null) OnFinished();
         }
-
+        
         public static IEnumerator DoFloat(Action OnBegin, float startingValue, Action<float> valueToModify, JuicerFloatProperties feelFloatProperties, Action OnFinished = null)
         {
             OnBegin?.Invoke();

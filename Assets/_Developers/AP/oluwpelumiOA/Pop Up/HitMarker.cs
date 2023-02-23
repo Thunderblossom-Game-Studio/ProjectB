@@ -7,9 +7,17 @@ public class HitMarker : PoolObject
     [Header("HitMarker")]
     [SerializeField] private JuicerVector3Properties scaleEffect;
     
+    private Vector3 spawnPosition;
+    
     protected override void OnEnable()
     {
         Effect();
+        spawnPosition = transform.position;
+    }
+
+    private void Update()
+    {
+        transform.position = spawnPosition;
     }
 
     public void Effect()
