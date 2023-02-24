@@ -27,7 +27,6 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField] private float turrentTurnSpeed;
 
     [Header("Shooting")]
-    [SerializeField] private LayerMask detectMask;
     [SerializeField] private WeaponSO weaponSO;
     [SerializeField] private Transform firePoint;
 
@@ -74,27 +73,27 @@ public class WeaponHandler : MonoBehaviour
         turretBarrel.localRotation = Quaternion.RotateTowards(turretBarrel.localRotation, whereToRotate, turrentTurnSpeed * Time.deltaTime);
     }
 
-    public void Shoot()
+    public void Shoot(Vector3 targetPos)
     {
         if (weaponState == WeaponState.Reloading) return;
         
         if (timer <= 0)
         {
-            TryShootProjectile();
+            TryShootProjectile(targetPos);
             timer = weaponSO.fireRate;
         }
         else timer -= Time.deltaTime;
     }
     
-    public void TryShootProjectile()
+    public void TryShootProjectile(Vector3 targetPos)
     {
-        if (currentAmmo > 0) ShootProjectile(); else if (weaponState != WeaponState.Reloading) StartCoroutine(Reload());
+        if (currentAmmo > 0) ShootProjectile(targetPos); else if (weaponState != WeaponState.Reloading) StartCoroutine(Reload());
     }
 
-    public void ShootProjectile()
+    public void ShootProjectile(Vector3 targetPos)
     {
         weaponState = WeaponState.Firing;
-        Vector3 aimDirection = (GetWorldMousePosition() - firePoint.position).normalized;
+        Vector3 aimDirection = (targetPos - firePoint.position).normalized;
         Projectile projectile = Instantiate(weaponSO.projectile, firePoint.position, Quaternion.LookRotation(aimDirection, Vector3.up));
         ModifyAmmo(currentAmmo - 1);
     }
@@ -119,13 +118,6 @@ public class WeaponHandler : MonoBehaviour
         ModifyAmmo(weaponSO.maxAmmo);
         weaponState = WeaponState.Idle;
         OnReloadEnd?.Invoke(this, EventArgs.Empty);
-    }
-
-    public Vector3 GetWorldMousePosition()
-    {
-        Vector3 worldMousePosition = Vector3.zero;
-        Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
-        if (Physics.Raycast(ray, out RaycastHit hit, 999f, detectMask)) worldMousePosition = hit.point; else worldMousePosition = ray.GetPoint(200.0f); return worldMousePosition;
     }
     
     private void OnDrawGizmos()

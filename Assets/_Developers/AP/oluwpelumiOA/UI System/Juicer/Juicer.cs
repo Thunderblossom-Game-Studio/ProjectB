@@ -24,7 +24,24 @@ namespace Pelumi.Juicer
 
             if (OnFinished != null) OnFinished();
         }
-        
+
+        public static IEnumerator DoMoveSmooth(Transform objectToMove, Vector3 startPos, Vector3 endPos, float angle, float duration, Action OnFinished = null)
+        {
+            float i = 0.0f;
+            float rate = 1.0f / duration;
+            Vector3 midPoint = startPos + (endPos + -startPos) / 2 + Vector3.up * angle;
+            while (i < 1.0f)
+            {
+                i += Time.unscaledDeltaTime * rate;
+                Vector3 start = Vector3.Lerp(startPos, midPoint, i);
+                Vector3 end = Vector3.Lerp(midPoint, endPos, i);
+                objectToMove.position = Vector3.Lerp(start, end, i);
+                yield return null;
+            }
+
+            if (OnFinished != null) OnFinished();
+        }
+
         public static IEnumerator DoMutipleChangeColor(Renderer renderer, List<JuicerColorProperties> colorProperties, bool loop = false, Action OnFinished = null)
         {
             foreach (JuicerColorProperties colourProperty in colorProperties)

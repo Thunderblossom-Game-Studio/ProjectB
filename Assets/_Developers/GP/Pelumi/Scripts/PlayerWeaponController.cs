@@ -10,7 +10,8 @@ public class PlayerWeaponController : MonoBehaviour
     [SerializeField] private GameEvent _onReloadStart;
     [SerializeField] private GameEvent _onReloading;
     [SerializeField] private GameEvent _onReloadEnd;
-    
+
+    [SerializeField] private LayerMask detectMask;
     private WeaponHandler weaponHandler;
 
     private void Awake()
@@ -50,12 +51,19 @@ public class PlayerWeaponController : MonoBehaviour
     {
         if (debugMode) DebugMouse();       
         weaponHandler.SetAim(Camera.main.transform.forward * 200.0f);
-        if (InputManager.Instance.HandleFireInput().IsPressed()) weaponHandler.Shoot();
+        if (InputManager.Instance.HandleFireInput().IsPressed()) weaponHandler.Shoot(GetWorldMousePosition());
     }
 
     void DebugMouse()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) Cursor.lockState = CursorLockMode.None;
         else if (Input.GetMouseButtonDown(0)) Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public Vector3 GetWorldMousePosition()
+    {
+        Vector3 worldMousePosition = Vector3.zero;
+        Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
+        if (Physics.Raycast(ray, out RaycastHit hit, 999f, detectMask)) worldMousePosition = hit.point; else worldMousePosition = ray.GetPoint(200.0f); return worldMousePosition;
     }
 }
