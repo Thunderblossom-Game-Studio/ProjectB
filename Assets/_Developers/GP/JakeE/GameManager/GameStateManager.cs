@@ -19,21 +19,19 @@ public class GameStateManager : Singleton<GameStateManager>
         base.Awake();
         _gameTimer.GetComponent<GameTimer>();
         _teamManager.GetComponent<TeamManager>();
-        StartCoroutine(GameLoop());
     }
 
-    private IEnumerator GameLoop()
+    private void Start()
     {
-        yield return StartState();
-        yield return UpdateState();
-        yield return CompleteState();
+        _gameTimer.OnGameComplete += StartCompleteState; 
+        StartCoroutine(StartState());
     }
 
     private IEnumerator StartState()
     {
         OnStart?.Invoke();
         _gameTimer.GameStart();
-        yield return null;
+        yield return UpdateState();
     }
     
     private IEnumerator UpdateState()
@@ -41,7 +39,8 @@ public class GameStateManager : Singleton<GameStateManager>
         OnUpdate?.Invoke();
         yield return null;
     }
-    
+
+    private void StartCompleteState() => StartCoroutine(CompleteState());
     private IEnumerator CompleteState()
     {
         OnComplete?.Invoke();

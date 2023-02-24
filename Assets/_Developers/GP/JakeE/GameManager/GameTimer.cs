@@ -11,8 +11,8 @@ public class GameTimer : MonoBehaviour
     [Viewable] [SerializeField] private float _debugTimer;
     private Timer _gameTimer;
 
-    private UnityEvent _gameBegin;
-    private UnityEvent _gameComplete;
+    public Action OnGameBegin;
+    public Action OnGameComplete;
 
     public void GameStart()
     {
@@ -22,6 +22,6 @@ public class GameTimer : MonoBehaviour
 
     private void Update() => _debugTimer = _gameTimer.GetRemainingTime();
 
-    private void GameBegin() => _gameBegin.Invoke();
-    private void GameComplete() => _gameComplete.Invoke();
+    private void GameBegin() => OnGameBegin?.Invoke();
+    private void GameComplete() => OnGameComplete?.Invoke();
 }
