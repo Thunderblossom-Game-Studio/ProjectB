@@ -10,6 +10,7 @@ public class Volcano : MonoBehaviour
     public Transform origin;
     public Transform target;
     public float speed;
+    public float randomDeviation;
     public float angle;
     public float waitTime;
     public float attackRate;
@@ -43,14 +44,19 @@ public class Volcano : MonoBehaviour
     private void Warn()
     {
         if (target == null) return;
-        Instantiate(warning, target.position, Quaternion.identity);
-        tempTarget = target.position;
+        tempTarget = RandomVector(target.position);
+        Instantiate(warning, tempTarget, Quaternion.identity);
     }
 
     private void Attack()
     {
-        if (target != null) { tempTarget = target.position; }
         GameObject proj = Instantiate(projectile, origin.position, Quaternion.identity);
         StartCoroutine(Curve.TransformCurve(proj, speed, angle, origin.position, tempTarget));
+    }
+
+    private Vector3 RandomVector(Vector3 vector)
+    {
+        vector += new Vector3(UnityEngine.Random.Range(-randomDeviation, randomDeviation), 0, UnityEngine.Random.Range(-randomDeviation, randomDeviation));
+        return vector;
     }
 }
