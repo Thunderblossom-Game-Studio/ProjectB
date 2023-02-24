@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 
@@ -23,14 +24,14 @@ namespace JE.DamageSystem
         [Range(0, 100)] [SerializeField] protected float _duration;
         [Range(0, 100)] [SerializeField] protected float _tickRate;
     
-        private Action _onDamage;
+        public UnityEvent<float> _onDamage;
 
         protected void DamageEntity(GameObject damageObject)
         {
             IDamageable healthSystem = damageObject.GetComponent<IDamageable>();
             if (healthSystem == null) return;
             healthSystem.ReduceHealth(IsCritical ? CriticalDamage : _damageAmount);
-            _onDamage?.Invoke();
+            _onDamage?.Invoke(IsCritical ? CriticalDamage : _damageAmount);
         }
 
         protected void DamageEntityDuration(GameObject damageObject)
@@ -38,7 +39,7 @@ namespace JE.DamageSystem
             IDamageable healthSystem = damageObject.GetComponent<IDamageable>();
             if (healthSystem == null) return;
             healthSystem.ReduceHealthDuration(IsCritical ? CriticalDamage : _damageAmount, _duration, _tickRate);
-            _onDamage?.Invoke();
+            _onDamage?.Invoke(IsCritical ? CriticalDamage : _damageAmount);
         }
     }
 

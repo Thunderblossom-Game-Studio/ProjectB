@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
-    private GameObject wheelMeshes, wheelColliders;
-    private WheelCollider[] wheels = new WheelCollider[4];
-    private GameObject[] wheelMesh = new GameObject[4];
+    [SerializeField] private GameObject wheelMeshes, wheelColliders;
+    [SerializeField] private WheelCollider[] wheels = new WheelCollider[4];
+    [SerializeField] private GameObject[] wheelMesh = new GameObject[4];
     private Rigidbody rigidBody;
-    private GameObject centerOfMass;
+    [SerializeField] private GameObject centerOfMass;
     internal enum DriveType
     {
         FrontWheelDrive,
@@ -196,13 +196,13 @@ public class CarController : MonoBehaviour
 
     private void GetGameObjects()
     {
-        wheelMeshes = GameObject.Find("Wheel_Meshes");
+        //wheelMeshes = GameObject.Find("Wheel_Meshes");
         for (int i = 0; i < wheelMeshes.transform.childCount; i++)
         {
             wheelMesh[i] = wheelMeshes.transform.GetChild(i).gameObject;
         }
 
-        wheelColliders = GameObject.Find("Wheel_Colliders");
+        //wheelColliders = GameObject.Find("Wheel_Colliders");
         for (int i = 0; i < wheelColliders.transform.childCount; i++)
         {
             wheels[i] = wheelColliders.transform.GetChild(i).GetComponent<WheelCollider>();
@@ -210,7 +210,7 @@ public class CarController : MonoBehaviour
 
         rigidBody = GetComponent<Rigidbody>();
         
-        centerOfMass = GameObject.Find("Center_Of_Mass");
+        //centerOfMass = GameObject.Find("Center_Of_Mass");
 
     }
     

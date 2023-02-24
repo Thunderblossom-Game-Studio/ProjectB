@@ -273,6 +273,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7107115453569018000}
     m_Modifications:
+    - target: {fileID: 413860697, guid: 5385fffbeacea004e918e0c07e43451d, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1706928550936786387, guid: 5385fffbeacea004e918e0c07e43451d, type: 3}
       propertyPath: m_Name
       value: Car
@@ -280,6 +284,10 @@ PrefabInstance:
     - target: {fileID: 1706928550936786387, guid: 5385fffbeacea004e918e0c07e43451d, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1706928550936786387, guid: 5385fffbeacea004e918e0c07e43451d, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1706928550936786397, guid: 5385fffbeacea004e918e0c07e43451d, type: 3}
       propertyPath: m_RootOrder
@@ -328,6 +336,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 1706928550936786393, guid: 5385fffbeacea004e918e0c07e43451d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5385fffbeacea004e918e0c07e43451d, type: 3}
+--- !u!1 &8163660549286954969 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1706928550709148074, guid: 5385fffbeacea004e918e0c07e43451d, type: 3}
+  m_PrefabInstance: {fileID: 7420556135878573683}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8163660549459807136 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1706928550936786387, guid: 5385fffbeacea004e918e0c07e43451d, type: 3}
@@ -368,6 +381,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4df60984ef420d4694cc2f9795c7c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wheelMeshes: {fileID: 8163660550053242420}
+  wheelColliders: {fileID: 8163660549286954969}
+  centerOfMass: {fileID: 8163660550275955347}
   driveType: 2
   brakeType: 1
   topSpeed: 100
@@ -394,35 +410,34 @@ MonoBehaviour:
   turnmultiplier: 5
   brakeSensitivity: 40
   angle: 20
-  stopDistance: 0
+  stopDistance: 15
   NextState: 4
   PreventionCollision: {fileID: 1790488923463133250}
   Target: {fileID: 0}
   packageSpawner: {fileID: 0}
   PackageSystem: {fileID: 288890687}
   distanceToReset: 150
+  distanceBetweenAgent: 20
   AttackRange: 0
   AggroRange: 20
   Car:
     serializedVersion: 2
     m_Bits: 8
-  ListOfPatrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  ListOfPatrolPoints: []
   DeliveryPoint: {fileID: 0}
   DistanceFromPatrolPoint: 20
 --- !u!4 &8163660549459807150 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1706928550936786397, guid: 5385fffbeacea004e918e0c07e43451d, type: 3}
+  m_PrefabInstance: {fileID: 7420556135878573683}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8163660550053242420 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1706928550443489351, guid: 5385fffbeacea004e918e0c07e43451d, type: 3}
+  m_PrefabInstance: {fileID: 7420556135878573683}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8163660550275955347 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1706928550624511200, guid: 5385fffbeacea004e918e0c07e43451d, type: 3}
   m_PrefabInstance: {fileID: 7420556135878573683}
   m_PrefabAsset: {fileID: 0}

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
-//Code added by Paul lines 39-44, 67-68, 80-93
 namespace JE.DamageSystem
 {
     public class HealthSystem : MonoBehaviour, IDamageable 
@@ -37,13 +36,6 @@ namespace JE.DamageSystem
     [SerializeField] private float _maximumHealth;
     [SerializeField] private float _minimumHealth;
 
-    [Header("Add the desired 'hurt' indicator image here")]
-    [SerializeField] private Image hurtImage = null;
-
-    [Header("Image that flashes when hurt")]
-    [SerializeField] private Image flashImage = null;
-    [SerializeField] private float flashTimer = 0.1f;
-
     [SerializeField] private UnityEvent _onReduceHealth;
     [SerializeField] private UnityEvent _onRestoreHealth;
     [SerializeField] private UnityEvent _onDeath;
@@ -65,8 +57,6 @@ namespace JE.DamageSystem
         if (_isImmune) return;
 
         _currentHealth -= reduceAmount;
-        StartCoroutine(HurtFlash());
-        UpdateHealth();
         _onReduceHealth?.Invoke();
         
         if (!(_currentHealth <= _minimumHealth)) return;
@@ -76,20 +66,6 @@ namespace JE.DamageSystem
 
         if (_reduceHealthRoutine == null) return;
         StopCoroutine(_reduceHealthRoutine);
-    }
-
-    public void UpdateHealth()
-    {
-        Color hurtAlpha = hurtImage.color;
-        hurtAlpha.a = 1 - (CurrentHealth / MaximumHealth);
-        hurtImage.color = hurtAlpha;
-    }
-
-    IEnumerator HurtFlash()
-    {
-        flashImage.enabled = true;
-        yield return new WaitForSeconds(flashTimer);
-        flashImage.enabled = false;
     }
 
     public void RestoreHealth(float restoreAmount)

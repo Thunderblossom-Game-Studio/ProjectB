@@ -68,7 +68,8 @@ public class PortalEnter : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             //carTransform.rotation = Quaternion.Euler(Quaternion.identity.x, ExitPortal[0].transform.rotation.y, Quaternion.identity.z);
-            carTransform.rotation = ExitPortal[0].transform.rotation.normalized;
+            //carTransform.rotation = ExitPortal[0].transform.rotation;
+            carTransform.rotation = Quaternion.Euler(0, -ExitPortal[0].transform.rotation.y, 0);
             carTransform.position = ExitPortal[0].position;
         }
     }
