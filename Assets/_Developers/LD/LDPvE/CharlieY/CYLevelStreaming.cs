@@ -16,6 +16,9 @@ public class CYLevelStreaming : MonoBehaviour
         {
             SceneManager.LoadScene("PvELevel1Part1", LoadSceneMode.Additive);
             SceneManager.LoadScene("PvELevel1Part2", LoadSceneMode.Additive);
+            SceneManager.LoadScene("AD_PvEBlockout", LoadSceneMode.Additive);
+            SceneManager.LoadScene("AI_PvEBlockout", LoadSceneMode.Additive);
+            SceneManager.LoadScene("GP_PvEBlockout", LoadSceneMode.Additive);
         }
         else
         {
