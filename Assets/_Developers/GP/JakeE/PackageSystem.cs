@@ -10,64 +10,66 @@ public class PackageSystem : MonoBehaviour
     public int PackageScore => _packageScore;
     public int MaxPackages => _maxPackages;
     public int PackageAmount => _currentPackages.Count;
+    public Action OnPickUp { get => _onPickUp; set => _onPickUp = value; }
+    public Action OnDeliver { get => _onDeliver; set => _onDeliver = value; }
 
     #endregion
 
     [Header("Debug")]
     [Viewable] [SerializeField] private int _packageScore;
-    [Viewable] [SerializeField] private int _packageAmount;
 
     [Header("Settings")]
     [SerializeField] private int _maxPackages;
-    [SerializeField] private GameEvent _onPickUp;
-    [SerializeField] private GameEvent _onDeliver;
-
-    [Header("Visual")] 
-    [SerializeField] private GameObject _packageObject;
+    [SerializeField] private GameObject _packageObjectVisual;
     [SerializeField] private List<Vector3> _packageSpawns;
     [SerializeField] private UnityEvent _onDeliverEvent;
 
     private readonly List<GameObject> _currentPackageObjects = new List<GameObject>();
     private readonly List<PackageData> _currentPackages = new List<PackageData>();
-
-    private void OnEnable() => DeliveryZone.OnDeliver += OnDeliver;
-    private void OnDisable() => DeliveryZone.OnDeliver -= OnDeliver;
-    private void Start() => _onPickUp.Raise(this, new int[] { _currentPackages.Count, _maxPackages });
+    private Action _onPickUp;
+    private Action _onDeliver;
+    
+    private void Start() => _onPickUp.Invoke();
 
     public void AddPackageData(PackageData packageData)
     {
         _currentPackages.Add(packageData);
-        _onPickUp.Raise(this, new int[] { _currentPackages.Count, _maxPackages });
+        OnPickUp?.Invoke();
         AddPackageVisual();
-        _packageAmount = PackageAmount;
     }
     
     public void RemovePackageData(PackageData packageData)
     {
         _currentPackages.Remove(packageData);
-        _onPickUp.Raise(this, new int[] { _currentPackages.Count, _maxPackages });
+        _onPickUp?.Invoke();
     }
 
     public void ClearPackageData()
     {
         _currentPackages.Clear();
-        _packageAmount = PackageAmount;
         ClearPackageVisuals();
     } 
 
-    private void OnDeliver()
+    public void DeliverPackages()
     {
-        foreach (PackageData package in _currentPackages) { _packageScore += package.PackageScore; }
+        int totalScore = 0;
+        foreach (PackageData package in _currentPackages) { totalScore += package.PackageScore; }
         ClearPackageData();
-        _onDeliver.Raise(this, _packageScore);
+        _onDeliver?.Invoke();
         _onDeliverEvent?.Invoke();
+        
+        //To Change >>>
+        _packageScore += totalScore;
+        if (!TryGetComponent(out GamePlayer gamePlayer)) return;
+        gamePlayer.PlayerTeamData.AddScore(totalScore);
+        //To Change <<<
     }
 
     private void AddPackageVisual()
     {
         if (!(_packageSpawns.Count >= _currentPackages.Count)) return;
         GameObject packageObject = Instantiate
-            (_packageObject,transform.position + _packageSpawns[_currentPackages.Count - 1], Quaternion.identity);
+            (_packageObjectVisual,transform.position + _packageSpawns[_currentPackages.Count - 1], Quaternion.identity);
         _currentPackageObjects.Add(packageObject);
         packageObject.transform.SetParent(transform);
         packageObject.transform.GetChild(0).GetComponent<MeshRenderer>().material.color =
@@ -87,7 +89,7 @@ public class PackageSystem : MonoBehaviour
         foreach (Vector3 packageLocation in _packageSpawns)
         {
             Gizmos.color = Color.grey;
-            Gizmos.DrawCube(transform.position + packageLocation, _packageObject.transform.localScale);
+            Gizmos.DrawCube(transform.position + packageLocation, _packageObjectVisual.transform.localScale);
         }
     }
 }

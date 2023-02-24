@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,6 +10,14 @@ public class EntitySpawner : MonoBehaviour
     public List<SpawnableObject> SpawnedObjects => _spawnedObjects;
 
     #endregion
+    
+    private enum SpawnMode
+    {
+        Random,
+        All
+    }
+
+    [SerializeField] private SpawnMode _spawnMode;
 
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private Color _spawnZoneColor;
@@ -18,13 +27,37 @@ public class EntitySpawner : MonoBehaviour
 
     public void Spawn()
     {
-        if (_spawnZones.Count <= 0 || _objectTypes.Count <= 0) return;
+        if (IsSetup()) return;
+        switch (_spawnMode)
+        {
+            case SpawnMode.Random:
+                SpawnRandom();
+                break;
+            case SpawnMode.All:
+                SpawnAll();
+                break;
+        }
+    }
+
+    private void SpawnRandom()
+    {
         Zone randomZone = _spawnZones[Random.Range(0, _spawnZones.Count)];
         Vector3 randomPosition = GetRandomPosition(randomZone);
         Vector3 spawnPosition = ConvertToGroundPosition(randomZone, randomPosition);
         GameObject spawnedObject = Instantiate(GetObject().Object, spawnPosition, Quaternion.identity);
         spawnedObject.AddComponent<SpawnableObject>().Initialise(this);
     }
+
+    private void SpawnAll()
+    {
+        foreach (GameObject spawnedObject in from spawnZone in _spawnZones let randomPosition 
+                     = GetRandomPosition(spawnZone) select ConvertToGroundPosition(spawnZone, randomPosition) 
+                 into spawnPosition select Instantiate(GetObject().Object, spawnPosition, Quaternion.identity))
+        {
+            spawnedObject.AddComponent<SpawnableObject>().Initialise(this);
+        }
+    }
+    
     private Vector3 GetRandomPosition(Zone randomZone)
     {
         return new Vector3(randomZone.Position.x + Random.Range(-randomZone.Size.x / 2, randomZone.Size.x / 2),
@@ -76,6 +109,7 @@ public class EntitySpawner : MonoBehaviour
             Gizmos.DrawWireCube(spawnZone.Position, spawnZone.Size);
         }
     }
+    private bool IsSetup() => _spawnZones.Count <= 0 || _objectTypes.Count <= 0;
 }
 
 
