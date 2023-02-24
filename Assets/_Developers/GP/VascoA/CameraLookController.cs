@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraLookController : MonoBehaviour
 {
+    private static CameraLookController _instance { get; set; }
     float mouseX;
     float mouseY;
     public float rotationPower;
@@ -20,15 +21,15 @@ public class CameraLookController : MonoBehaviour
         //Rotate cameraFollow
         transform.localEulerAngles = new Vector3(-mouseY, mouseX, 0);
 
-        //Lock mouse
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else if (Input.GetMouseButtonDown(0))
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
+        ////Lock mouse
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    Cursor.lockState = CursorLockMode.None;
+        //}
+        //else if (Input.GetMouseButtonDown(0))
+        //{
+        //    Cursor.lockState = CursorLockMode.Locked;
+        //}
 
     }
 }

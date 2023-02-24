@@ -9,6 +9,39 @@ namespace Pelumi.Juicer
 {
     public static class Juicer
     {
+        public static IEnumerator DoMove(Transform objectToMove, Vector3 startPos, Vector3 endPos, float angle, Action OnFinished = null)
+        {
+            float count = 0.0f;
+            Vector3 midPoint = startPos + (endPos + -startPos) / 2 + Vector3.up * angle;
+            while (count < 1.0f)
+            {
+                count += 1.0f * Time.deltaTime;
+                Vector3 start = Vector3.Lerp(startPos, midPoint, count);
+                Vector3 end = Vector3.Lerp(midPoint, endPos, count);
+                objectToMove.position = Vector3.Lerp(start, end, count);
+                yield return null;
+            }
+
+            if (OnFinished != null) OnFinished();
+        }
+
+        public static IEnumerator DoMoveSmooth(Transform objectToMove, Vector3 startPos, Vector3 endPos, float angle, float duration, Action OnFinished = null)
+        {
+            float i = 0.0f;
+            float rate = 1.0f / duration;
+            Vector3 midPoint = startPos + (endPos + -startPos) / 2 + Vector3.up * angle;
+            while (i < 1.0f)
+            {
+                i += Time.unscaledDeltaTime * rate;
+                Vector3 start = Vector3.Lerp(startPos, midPoint, i);
+                Vector3 end = Vector3.Lerp(midPoint, endPos, i);
+                objectToMove.position = Vector3.Lerp(start, end, i);
+                yield return null;
+            }
+
+            if (OnFinished != null) OnFinished();
+        }
+
         public static IEnumerator DoMutipleChangeColor(Renderer renderer, List<JuicerColorProperties> colorProperties, bool loop = false, Action OnFinished = null)
         {
             foreach (JuicerColorProperties colourProperty in colorProperties)
@@ -53,6 +86,7 @@ namespace Pelumi.Juicer
             if (loop) yield return DoMultipleVector3(OnBegin, starValue, valueToModify, feelVector3Properties, delay, loop, OnEachFinished, OnRoundFinished);
         }
 
+
         public static IEnumerator DoVector3(Action OnBegin, Vector3 startingValue, Action<Vector3> valueToModify, JuicerVector3Properties feelVector3Properties, Action OnFinished = null)
         {
             OnBegin?.Invoke();
@@ -68,7 +102,7 @@ namespace Pelumi.Juicer
 
             if (OnFinished != null) OnFinished();
         }
-
+        
         public static IEnumerator DoFloat(Action OnBegin, float startingValue, Action<float> valueToModify, JuicerFloatProperties feelFloatProperties, Action OnFinished = null)
         {
             OnBegin?.Invoke();
