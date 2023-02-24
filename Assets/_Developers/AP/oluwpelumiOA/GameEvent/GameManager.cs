@@ -7,7 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [SerializeField] private List<GameEvent> gameEvents = new List<GameEvent>();
+    
+    [SerializeField] private List<GameEvent> _gameEvents = new List<GameEvent>();
 
     private void Awake()
     {
@@ -22,11 +23,11 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        CleartAllGameEvents();
+        ClearAllGameEvents();
     }
 
-    public void CleartAllGameEvents()
+    public void ClearAllGameEvents()
     {
-        gameEvents.ForEach((gameEvent) => gameEvent.Clear());
+        _gameEvents.ForEach((gameEvent) => gameEvent.Clear());
     }
 }

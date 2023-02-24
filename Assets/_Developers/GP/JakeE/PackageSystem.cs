@@ -52,10 +52,17 @@ public class PackageSystem : MonoBehaviour
 
     public void DeliverPackages()
     {
-        foreach (PackageData package in _currentPackages) { _packageScore += package.PackageScore; }
+        int totalScore = 0;
+        foreach (PackageData package in _currentPackages) { totalScore += package.PackageScore; }
         ClearPackageData();
         _onDeliver?.Invoke();
         _onDeliverEvent?.Invoke();
+        
+        //To Change >>>
+        _packageScore += totalScore;
+        if (!TryGetComponent(out GamePlayer gamePlayer)) return;
+        gamePlayer.PlayerTeamData.AddScore(totalScore);
+        //To Change <<<
     }
 
     private void AddPackageVisual()
