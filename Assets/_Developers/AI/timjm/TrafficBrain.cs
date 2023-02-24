@@ -37,6 +37,13 @@ public class TrafficBrain : MonoBehaviour
     bool PanicForever;
     float SecondsToWait;
 
+    [Header("Health")]
+    public float Health;
+
+    [Header("Donuts")]
+    public bool ActivateDonut;
+    public GameObject ObjectToDonut;
+    public int SpinY;
 
     void Start()
     {
@@ -115,6 +122,22 @@ public class TrafficBrain : MonoBehaviour
             SecondsToWait = 1;
         }
 
+        
+
+        if (Health <= 0)
+        {
+            panic = false;
+            CarmageddonMode = false;
+            PanicForever = false;
+            Explode();
+        }
+
+        if (ActivateDonut == true)
+        {
+            Donuts();
+        }
+
+
     }
 
 
@@ -168,7 +191,20 @@ public class TrafficBrain : MonoBehaviour
         goal = savegoal;
         agent.autoBraking = true;
     }
+
+
     
+   void Donuts()
+    {
+        agent.isStopped = true;
+        ObjectToDonut.transform.Rotate(new Vector3(0, SpinY, 0));
+  
+    }
+    
+    void Explode()
+    {
+      //insert explosion effects here
+    }
 
 
 }
