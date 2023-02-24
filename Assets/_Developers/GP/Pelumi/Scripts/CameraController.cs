@@ -12,7 +12,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float TopClamp = 70.0f;
     [SerializeField] private float BottomClamp = -30.0f;   
     [SerializeField] private float CameraAngleOverride = 0.0f;
-    [SerializeField] private bool LockCameraPosition = false;
     
     private float cinemachineTargetYaw;
     private float cinemachineTargetPitch;
@@ -25,7 +24,7 @@ public class CameraController : MonoBehaviour
 
     private void TPSCameraRotation()
     {
-        if (InputManager.Instance.HandleLookInput().ReadValue<Vector2>().sqrMagnitude >= threshold && !LockCameraPosition)
+        if (InputManager.Instance.HandleLookInput().ReadValue<Vector2>().sqrMagnitude >= threshold)
         {
             float deltaTimeMultiplier = (InputManager.Instance.GetCurrentDeviceType() == InputManager.DeviceType.KeyboardAndMouse) ? 1.0f : Time.deltaTime;
 
