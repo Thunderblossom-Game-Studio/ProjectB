@@ -78,6 +78,11 @@ public class PackageSystem : MonoBehaviour
         packageObject.transform.localPosition = _packageSpawns[_currentPackages.Count - 1];
     }
 
+    private void DropPackages()
+    {
+        //TODO DROP PACKAGES
+    }
+
     private void ClearPackageVisuals()
     {
         foreach (GameObject packageObject in _currentPackageObjects) { Destroy(packageObject); }
@@ -86,6 +91,7 @@ public class PackageSystem : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (_packageSpawns.Count < 1) return;
         foreach (Vector3 packageLocation in _packageSpawns)
         {
             Gizmos.color = Color.grey;
