@@ -686,13 +686,28 @@ MonoBehaviour:
   pointy: {fileID: 122882153777161177}
   PointyTheSequel: {fileID: 4960384603844348745}
   ShowPanic: 0
+  CarmageddonMode: 0
   DistanceForwardIncrease: 5
   RPast: 0
   R: 0
-  CarmageddonMode: 0
   CarSpeed: 2
   PanicCarSpeed: 100
-  DistanceBetweenPanicPoints: 5
+  Health: 0
+  MaxHealth: 100
+  TrunkCollider: {fileID: 459697462880015680}
+  TrunkRenderer: {fileID: 5768396249510161639}
+  CubeRenderer: {fileID: 7036452392324143288}
+  CylinderRenderer: {fileID: 6000578309079142432}
+  AITrafficRenderer: {fileID: 5475045901213736022}
+  AITrafficCollider: {fileID: 6528334323293607357}
+  PointerRenderer: {fileID: 8049887535164363494}
+  Pointer1Renderer: {fileID: 5695862068664435554}
+  Cylinder1Renderer: {fileID: 1770878021038618442}
+  RespawnPoint: {fileID: 0}
+  ThisGameObject: {fileID: 926617803036837812}
+  ActivateDonut: 0
+  ObjectToDonut: {fileID: 6825392363378918832}
+  SpinY: 5
 --- !u!54 &3581327450439052059
 Rigidbody:
   m_ObjectHideFlags: 0
