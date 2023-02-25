@@ -41,7 +41,7 @@ public class TrafficBrain : MonoBehaviour
     public float Health;
     public float MaxHealth;
 
-    [Header("Death")]
+    [Header("Disable On Death")]
 
     //UPDATE THESE TO FIT NEW CAR MODEL:
     public BoxCollider TrunkCollider;
@@ -54,6 +54,7 @@ public class TrafficBrain : MonoBehaviour
     public MeshRenderer Pointer1Renderer;
     public MeshRenderer Cylinder1Renderer;
 
+    [Header("Respawn")]
     public GameObject RespawnPoint;
     public GameObject ThisGameObject;
 
