@@ -29,6 +29,7 @@ public class WeaponHandler : MonoBehaviour
     [Header("Shooting")]
     [SerializeField] private WeaponSO weaponSO;
     [SerializeField] private Transform firePoint;
+    [SerializeField] private float vertialAimOffset;
 
     [Viewable] [SerializeField] private int currentAmmo;
     [Viewable] [SerializeField] private WeaponState weaponState;
@@ -51,8 +52,15 @@ public class WeaponHandler : MonoBehaviour
     
     private void Update()
     {
-        HandleHorizontalRotation();
-        HandleVerticalRotation();
+        HandleHorizontalAndVerticalRotation();
+    }
+
+    private void HandleHorizontalAndVerticalRotation()
+    {
+        Vector3 targetPositionInLocalSpace = aimPoint;
+        Vector3 limitedRotation = Vector3.RotateTowards(Vector3.forward, targetPositionInLocalSpace, (targetPositionInLocalSpace.x >= 0.0f) ? Mathf.Deg2Rad * rightRotationLimit : Mathf.Deg2Rad * leftRotationLimit, float.MaxValue);
+        Quaternion whereToRotate = Quaternion.LookRotation(limitedRotation);
+        turretBase.rotation = Quaternion.RotateTowards(turretBase.rotation, whereToRotate, baseTurnSpeed * Time.deltaTime);
     }
 
     private void HandleHorizontalRotation()
