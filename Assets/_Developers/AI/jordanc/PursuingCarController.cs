@@ -7,18 +7,15 @@ public class PursuingCarController : AICarController
 {
     protected enum State { PURSUE, PATROL, ATTACK, FLEE, PICKUP, SEARCHING, DELIVERY, TURNLEFT, TURNRIGHT, BRAKE }
     [SerializeField] protected State NextState;
-    private AITestCar CurrentCar;
     public CollisionPrevention PreventionCollision;
     public GameObject Target;
 
     [SerializeField] private EntitySpawner packageSpawner;
     [SerializeField] private PackageSystem PackageSystem;
 
-
     [SerializeField] private float distanceToReset = 50f;
     [SerializeField] private float distanceBetweenAgent = 30;
 
-    
     [SerializeField] private float AttackRange;
 
     [Header("Aggro Range")]
@@ -33,8 +30,21 @@ public class PursuingCarController : AICarController
 
     protected override void Start()
     {
+        if (AIDirector.Instance)
+        {
+            AIDirector.Instance.bots.Add(this);
+        }
+
         base.Start();
-        CurrentCar = GetComponent<AITestCar>();
+    }
+
+    private void OnDestroy()
+    {
+        if (AIDirector.Instance)
+        {
+            AIDirector.Instance.bots.Remove(this);
+        }
+
     }
 
     protected override void Evaluate()
@@ -148,8 +158,6 @@ public class PursuingCarController : AICarController
 
     }
 
-
-
     protected override void SwapState()
     {
 
@@ -188,8 +196,6 @@ public class PursuingCarController : AICarController
         }
     }
 
-
-
     protected override void Act()
     {
         if (!(NextState == State.TURNLEFT || NextState == State.TURNRIGHT || NextState == State.BRAKE))
@@ -214,7 +220,6 @@ public class PursuingCarController : AICarController
 
         SwapState();
     }
-
 
     private void Pursue()
     {
@@ -307,7 +312,6 @@ public class PursuingCarController : AICarController
     {
         Debug.Log("Pickup");
     }
-
 
     protected override void OnDrawGizmos()
     {
