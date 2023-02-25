@@ -851,6 +851,7 @@ MonoBehaviour:
   turningRadius: 6
   downForceValue: 50
   currentSpeed: 0
+  carSpeedEvent: {fileID: 11400000, guid: 1f749768af895ef45b79d6fb1a1f8770, type: 2}
 --- !u!114 &1487459267730450024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -894,11 +895,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _packageScore: 0
-  _packageAmount: 0
   _maxPackages: 2
-  _onPickUp: {fileID: 11400000, guid: 4b1759fe418d4464da69da8ce2ab9dde, type: 2}
-  _onDeliver: {fileID: 11400000, guid: e94fc5f98f5aaf34ba76062f76667d49, type: 2}
-  _packageObject: {fileID: 5676333477140487690, guid: c273e1d1bba822c448ad29ab53a3e576, type: 3}
+  _packageObjectVisual: {fileID: 0}
   _packageSpawns:
   - {x: -0.43, y: 0.9, z: -1.68}
   - {x: 0.43, y: 0.9, z: -1.68}
@@ -934,9 +932,6 @@ MonoBehaviour:
   _spawnHealth: 100
   _maximumHealth: 100
   _minimumHealth: 0
-  hurtImage: {fileID: 0}
-  flashImage: {fileID: 0}
-  flashTimer: 0.1
   _onReduceHealth:
     m_PersistentCalls:
       m_Calls:
@@ -976,11 +971,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CinemachineCameraTarget: {fileID: 1487459268291640843}
-  sensitivity: 0.5
+  sensitivity: 0.05
   TopClamp: 70
   BottomClamp: -30
   CameraAngleOverride: 0
-  LockCameraPosition: 0
 --- !u!114 &222011377555273587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1022,7 +1016,7 @@ MonoBehaviour:
   baseTurnSpeed: 300
   turrentTurnSpeed: 150
   weaponSO: {fileID: 11400000, guid: db7b7786ca0cc244086dbc3df2a828b0, type: 2}
-  firePoint: {fileID: 1743148871351649401}
+  firePoint: {fileID: 5732100078973443558}
   currentAmmo: 0
   weaponState: 0
   timer: 0
@@ -1261,6 +1255,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 222011377555245198}
     m_Modifications:
+    - target: {fileID: 3887159750319370563, guid: 3ad560af84f63bd498275eb16e0816bf, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887159750319370563, guid: 3ad560af84f63bd498275eb16e0816bf, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3887159750319370563, guid: 3ad560af84f63bd498275eb16e0816bf, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7083490678423496052, guid: 3ad560af84f63bd498275eb16e0816bf, type: 3}
       propertyPath: m_Name
       value: Gun
@@ -1311,11 +1317,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ad560af84f63bd498275eb16e0816bf, type: 3}
---- !u!4 &1743148871351649401 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7083490678356961500, guid: 3ad560af84f63bd498275eb16e0816bf, type: 3}
-  m_PrefabInstance: {fileID: 8826340124419173541}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1743148871559743966 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7083490678423496059, guid: 3ad560af84f63bd498275eb16e0816bf, type: 3}
@@ -1324,5 +1325,10 @@ Transform:
 --- !u!4 &1743148871971806561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7083490676897788356, guid: 3ad560af84f63bd498275eb16e0816bf, type: 3}
+  m_PrefabInstance: {fileID: 8826340124419173541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5732100078973443558 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3887159750319370563, guid: 3ad560af84f63bd498275eb16e0816bf, type: 3}
   m_PrefabInstance: {fileID: 8826340124419173541}
   m_PrefabAsset: {fileID: 0}

@@ -293,8 +293,9 @@ public class AvancedCar : MonoBehaviour
             deceleratingCar = true;
         }
         
-        if (!InputManager.Instance.HandleMoveInput().IsPressed())
+        if (steeringInput == 0)
         {
+            Debug.Log("reset");
             ResetSteeringAngle();
         }
     }
