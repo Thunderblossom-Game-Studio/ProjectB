@@ -52,19 +52,19 @@ namespace JE.Utilities
             _onComplete -= unSubscribedMethod;
         }
 
-        public string GetRemainingTime(bool convertToString)
-        {
-            return (_timerDuration - _currentTime).ToString(CultureInfo.InvariantCulture); 
-        }
-
-        public string GetRemainingNormalized(bool convertToString)
-        {
-            return (_currentTime / _timerDuration).ToString(CultureInfo.InvariantCulture);
-        }
-
         public float GetRemainingTime()
         {
             return _timerDuration - _currentTime;
+        }
+
+        public float GetElapsedTime()
+        {
+            return _currentTime;
+        }
+
+        public float GetElapsedTimeNormalized()
+        {
+            return _currentTime / _timerDuration;
         }
 
         public float GetRemainingNormalized()
