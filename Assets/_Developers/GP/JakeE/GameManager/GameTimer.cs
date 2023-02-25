@@ -19,7 +19,10 @@ public class GameTimer : MonoBehaviour
     public Action OnGameBegin;
     public Action OnGameComplete;
 
-    private void Update() => _gameTimer?.Tick(Time.deltaTime);
+    private void Update()
+    {
+        _gameTimer?.Tick(Time.deltaTime);
+    } 
     
     public void GameStart()
     {

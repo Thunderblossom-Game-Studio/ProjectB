@@ -46,6 +46,8 @@ public class GameStateManager : Singleton<GameStateManager>
     private IEnumerator CompleteState()
     {
         OnComplete?.Invoke();
+        TeamData winningTeam =  _teamManager.GetWinningTeam();
+        _gameSequencer.GameCompleteSequence(winningTeam);
         yield return null;
     }
 
