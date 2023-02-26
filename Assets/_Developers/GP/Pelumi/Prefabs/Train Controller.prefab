@@ -1299,7 +1299,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72dec8280f6e2ae4c88c5246c51cb2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMove: 1
+  moveOnRoute: 0
+  rotateOnRoute: 0
   moveSpeed: 70
   rotateSpeed: 50
   routes: {fileID: 5390911508582820893}
@@ -2240,6 +2241,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5390911508582820892}
   - component: {fileID: 5390911508582820893}
+  - component: {fileID: 8670259685022756619}
   m_Layer: 0
   m_Name: Train Controller
   m_TagString: Untagged
@@ -2278,7 +2280,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownerID: Train
-  trainRouteDebugSize: 20
+  trainRouteTextDebugSize: 20
+  trainRouteCircleDebugSize: 5
   route:
   - {x: -43.71, y: 2.1, z: 46.4}
   - {x: 42.2, y: 2.1, z: 46.4}
@@ -2292,6 +2295,22 @@ MonoBehaviour:
   - {x: 1, y: 14.9, z: 220.12}
   - {x: -0.9, y: 2.5, z: 155.2}
   - {x: -0.9, y: 2.5, z: 60.3}
+--- !u!114 &8670259685022756619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5390911508582821346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96ec93624ef49f4ea8f3b853d6854f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trainParts:
+  - {fileID: 5390911508844911627}
+  - {fileID: 5390911508645812779}
+  - {fileID: 5390911507789231253}
 --- !u!1 &5390911508645812776
 GameObject:
   m_ObjectHideFlags: 0
@@ -2345,7 +2364,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72dec8280f6e2ae4c88c5246c51cb2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMove: 1
+  moveOnRoute: 0
+  rotateOnRoute: 0
   moveSpeed: 70
   rotateSpeed: 50
   routes: {fileID: 5390911508582820893}
@@ -2702,7 +2722,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72dec8280f6e2ae4c88c5246c51cb2f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMove: 1
+  moveOnRoute: 0
+  rotateOnRoute: 0
   moveSpeed: 70
   rotateSpeed: 50
   routes: {fileID: 5390911508582820893}

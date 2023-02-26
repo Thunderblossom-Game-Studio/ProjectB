@@ -3,54 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RouteUser : MonoBehaviour
-{ 
-    [SerializeField] private bool canMove;
+{
+    [Header("Configuration")]
+    [SerializeField] private bool moveOnRoute = true;
+    [SerializeField] private bool rotateOnRoute = true;
+
+    [Header("Properties")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float rotateSpeed;
     [SerializeField] private Routes routes;
     [SerializeField] private Vector3 nextTrainRoute;
 
-    public bool CanMove => canMove;
+    public float MoveSpeed => moveSpeed;
+
+    public void Activate(int startIndex, bool canMove = true, bool canRotate = true)
+    {
+        nextTrainRoute = routes.GetRoutes()[startIndex];
+        moveOnRoute = canMove;
+        rotateOnRoute = canRotate;
+    }
 
     public void Update()
     {
-        if (!canMove) return;
-        Move(moveSpeed, rotateSpeed);
+        if (moveOnRoute) MoveToRoute();
+        if (rotateOnRoute) RotateToFaceTarget();
+        if (moveOnRoute || rotateOnRoute) HandleRouteChange();
     }
 
-    public void Activate()
+    public void MoveToRoute()
     {
-        nextTrainRoute = routes.GetRoutes()[0];
-        canMove = true;
+        transform.position = Vector3.MoveTowards(transform.position, nextTrainRoute, moveSpeed * Time.deltaTime);
     }
 
-    public void Move(float moveSpeed, float rotateSpeed)
-    {
-        MoveToRoute(moveSpeed);
-        RotateToFaceTarget(rotateSpeed);
-        CheckDistanceToWayPoint();
-    }
-
-    public void MoveToRoute(float speed)
-    {
-        transform.position = Vector3.MoveTowards(transform.position, nextTrainRoute, speed * Time.deltaTime);
-    }
-
-    public void RotateToFaceTarget(float speed)
+    public void RotateToFaceTarget()
     {
         Quaternion rotation = Quaternion.LookRotation(transform.position - nextTrainRoute);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * speed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * moveSpeed);
     }
 
-    public void CheckDistanceToWayPoint()
+    public void HandleRouteChange()
     {
-        if (Vector3.Distance(transform.position, nextTrainRoute) <= 0.2f)
+        if (ReachedNextRoute())
         {
             nextTrainRoute = routes.GetRoutes()[(nextTrainRoute == routes.GetRoutes()[^1]) ? 0 : routes.GetRoutes().IndexOf(nextTrainRoute) + 1];
         }
     }
 
-    public void EnableMovement() => canMove = true;
+    public bool ReachedNextRoute() => (Vector3.Distance(transform.position, nextTrainRoute) <= 0.2f);
 
-    public void DisableMovement() => canMove = false;
+    public void ToggleMovement(bool state) => moveOnRoute = state;
+
+    public void ToggleRotation(bool state) => rotateOnRoute = state;
 }
