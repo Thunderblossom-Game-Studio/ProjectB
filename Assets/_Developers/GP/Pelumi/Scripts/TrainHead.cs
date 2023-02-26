@@ -8,9 +8,9 @@ public class TrainHead : MonoBehaviour
 
     private void Start()
     {
-        //for (int i = 0; i < trainParts.Count; i++) trainParts[i].Activate(0);
+        for (int i = 0; i < trainParts.Count; i++) trainParts[i].Activate(0);
 
-        StartCoroutine(ActivateTrain());
+       // StartCoroutine(ActivateTrain());
     }
 
     public IEnumerator ActivateTrain()
@@ -19,7 +19,7 @@ public class TrainHead : MonoBehaviour
         for (int i = 0; i < trainParts.Count; i++)
         {
             trainParts[i].Activate(0);
-            yield return null;
+            yield return new WaitForSecondsRealtime(.001f);
         }
     }
 }
