@@ -7,7 +7,6 @@ public class Blimp : MonoBehaviour
     public enum State { Moving, Attacking, Cooldown }
     [SerializeField] private GameObject droppableObject;
     [SerializeField] private GameObject spawnIndicator;
-    private GameObject spawnIndicatorInst;
     [SerializeField] private Transform dropPoint;
     [SerializeField] private float dropRate = 0.1f;
     [SerializeField] private RouteUser ru;
@@ -15,24 +14,16 @@ public class Blimp : MonoBehaviour
     [SerializeField] private State state;
     [SerializeField] private float cooldownTime;
 
-
-    private float interpolateAmount;
-
-    private bool blimpIsMoving;
-    private bool playerDetected;
     [SerializeField] private float nextTimeToAttack = 1f;
 
     private float timer;
 
     [SerializeField] private float detectionHeight;
 
-    private bool indicatorActive;
 
     private void Start()
     {
         ru.Activate(0);
-        blimpIsMoving = true;
-        playerDetected = false;
     }
 
     private void Update()
@@ -89,7 +80,6 @@ public class Blimp : MonoBehaviour
             if (timer >= nextTimeToAttack)
             {
                 state = State.Cooldown;
-                ru.Activate(0, false);
                 timer = 0;
                 DropBomb();
                 ru.ToggleMovement(true);
