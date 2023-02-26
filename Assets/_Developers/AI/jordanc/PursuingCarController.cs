@@ -1,3 +1,4 @@
+using JE.DamageSystem;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Mail;
@@ -12,6 +13,14 @@ public class PursuingCarController : AICarController
 
     [SerializeField] private EntitySpawner packageSpawner;
     [SerializeField] private PackageSystem PackageSystem;
+    [SerializeField] private HealthSystem Health;
+
+    public GameObject[] AllObjects;
+    public GameObject NearSpawn;
+    public GameObject NearBank;
+    public GameObject NearPackage;
+    float Distance;
+    float NearestDistance = 10000;
 
     [SerializeField] private float distanceToReset = 50f;
     [SerializeField] private float distanceBetweenAgent = 30;
@@ -26,6 +35,7 @@ public class PursuingCarController : AICarController
     [SerializeField] Transform[] ListOfPatrolPoints;
     int NextPatrolPoint;
     [SerializeField] Transform DeliveryPoint;
+    [SerializeField] Transform SpawnZonePoint;
     [SerializeField] float DistanceFromPatrolPoint;
 
     protected override void Start()
@@ -34,6 +44,10 @@ public class PursuingCarController : AICarController
         {
             AIDirector.Instance.bots.Add(this);
         }
+
+        AllObjects = GameObject.FindGameObjectsWithTag("SpawnPoint");
+
+        
 
         base.Start();
     }
@@ -156,6 +170,24 @@ public class PursuingCarController : AICarController
             NextState = State.BRAKE;
         }
 
+        if(Health.HealthPercentage <= 0.3f)
+        {
+            NextState = State.FLEE;
+        }
+
+        for (int i = 0; i < AllObjects.Length; i++)
+        {
+            Distance = Vector3.Distance(this.transform.position, AllObjects[i].transform.position);
+
+            if (Distance < NearestDistance)
+            {
+                NearSpawn = AllObjects[i];
+                NearestDistance = Distance;
+            }
+
+        }
+
+
     }
 
     protected override void SwapState()
@@ -196,6 +228,8 @@ public class PursuingCarController : AICarController
         }
     }
 
+
+
     protected override void Act()
     {
         if (!(NextState == State.TURNLEFT || NextState == State.TURNRIGHT || NextState == State.BRAKE))
@@ -214,11 +248,15 @@ public class PursuingCarController : AICarController
 
         State c = NextState;
 
+
         Evaluate();       
 
         if (c != NextState) newState = true;
 
         SwapState();
+
+
+
     }
 
     private void Pursue()
@@ -280,6 +318,16 @@ public class PursuingCarController : AICarController
     private void Flee()
     {
         Debug.Log("Fleeing");
+
+        if (PackageSystem.PackageAmount >= 1)
+        {
+            agent.SetDestination(DeliveryPoint.position);
+        }
+        else if (PackageSystem.PackageAmount == 0)
+        {
+            agent.SetDestination(NearSpawn.transform.position);
+        }
+
     }
 
     private void Pickup()
