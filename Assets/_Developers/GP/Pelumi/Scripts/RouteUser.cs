@@ -14,11 +14,13 @@ public class RouteUser : MonoBehaviour
     [SerializeField] private Routes routes;
     [SerializeField] private Vector3 nextTrainRoute;
 
+    private int currentRouteIndex = 0;
     public float MoveSpeed => moveSpeed;
 
     public void Activate(int startIndex, bool canMove = true, bool canRotate = true)
     {
-        nextTrainRoute = routes.GetRoutes()[startIndex];
+        currentRouteIndex = startIndex;
+        nextTrainRoute = routes.GetRoute(currentRouteIndex);
         moveOnRoute = canMove;
         rotateOnRoute = canRotate;
     }
@@ -45,7 +47,8 @@ public class RouteUser : MonoBehaviour
     {
         if (ReachedNextRoute())
         {
-            nextTrainRoute = routes.GetRoutes()[(nextTrainRoute == routes.GetRoutes()[^1]) ? 0 : routes.GetRoutes().IndexOf(nextTrainRoute) + 1];
+            currentRouteIndex = currentRouteIndex == routes.GetRoutes().Count - 1 ? 0 : ++currentRouteIndex;
+            nextTrainRoute = routes.GetRoute(currentRouteIndex);
         }
     }
 
