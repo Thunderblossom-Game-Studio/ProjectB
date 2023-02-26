@@ -10,6 +10,8 @@ public class RouteUser : MonoBehaviour
     [SerializeField] private Routes routes;
     [SerializeField] private Vector3 nextTrainRoute;
 
+    public bool CanMove => canMove;
+
     public void Update()
     {
         if (!canMove) return;
@@ -18,8 +20,7 @@ public class RouteUser : MonoBehaviour
 
     public void Activate()
     {
-        transform.position = routes.GetRoutes()[0];
-        nextTrainRoute = routes.GetRoutes()[1];
+        nextTrainRoute = routes.GetRoutes()[0];
         canMove = true;
     }
 
