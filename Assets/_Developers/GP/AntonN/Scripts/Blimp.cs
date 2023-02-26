@@ -4,18 +4,25 @@ using UnityEngine;
 
 public class Blimp : MonoBehaviour
 {
+    public enum State { Moving, Attacking, Cooldown }
     [SerializeField] private GameObject droppableObject;
     [SerializeField] private GameObject spawnIndicator;
     private GameObject spawnIndicatorInst;
     [SerializeField] private Transform dropPoint;
     [SerializeField] private float dropRate = 0.1f;
     [SerializeField] private RouteUser ru;
+    [SerializeField] private LayerMask detectLayer;
+    [SerializeField] private State state;
+    [SerializeField] private float cooldownTime;
+
 
     private float interpolateAmount;
 
     private bool blimpIsMoving;
     private bool playerDetected;
-    private float nextTimeToAttack = 6f;
+    [SerializeField] private float nextTimeToAttack = 1f;
+
+    private float timer;
 
     [SerializeField] private float detectionHeight;
 
@@ -30,54 +37,83 @@ public class Blimp : MonoBehaviour
 
     private void Update()
     {
-        CheckForPlayer();
+        BlimpBehaviour();
     }
 
-    private void FixedUpdate()
+    private void BlimpBehaviour()
     {
-        int layerMask = 1 << 3; //"Car" layer
+        switch (state)
+        {
+            case State.Moving:
+                if(DetectTarget())
+                {
+                    OnTargetDetected();
+                }
+                break;
+            case State.Attacking:
+                AttackTarget();
+                break;
+
+            case State.Cooldown:
+                Cooldown();
+                break;
+        }
+    }
+
+    private void OnTargetDetected()
+    {
+        state = State.Attacking;
+        ActivateIndicator();
+        ru.ToggleMovement(false);
+    }
+
+    private bool DetectTarget()
+    {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerMask))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, detectLayer))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hit.distance, Color.red);
 
-            playerDetected = true;
-            blimpIsMoving = false;
-
-            if(indicatorActive == false)
-            {
-                ActivateIndicator();
-            }
+            return true;
         }
         else
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * detectionHeight, Color.blue);
-            playerDetected = false;
-            blimpIsMoving = true;
-            ru.ToggleMovement(true);
 
-            if(indicatorActive == true)
-            {
-                DeactivateIndicator();
-            }
-            
+            return false;
         }
     }
 
-    private void CheckForPlayer()
+    private void AttackTarget()
     {
-       if(playerDetected)
-        {
-
-            if (Time.time > nextTimeToAttack)
+            if (timer >= nextTimeToAttack)
             {
+                state = State.Cooldown;
                 ru.Activate(0, false);
-                nextTimeToAttack = Time.time + 1 / dropRate;
+                timer = 0;
                 DropBomb();
+                ru.ToggleMovement(true);
             }
-        }
+            else
+            {
+                timer += Time.deltaTime;
+            }
     }
     
+    private void Cooldown()
+    {
+        if (timer >= cooldownTime)
+        {
+            
+            state = State.Moving;
+            timer = 0;
+        }
+        else
+        {
+            timer += Time.deltaTime;
+        }
+    }
+
     private void DropBomb()
     {
         DeactivateIndicator();
@@ -88,12 +124,10 @@ public class Blimp : MonoBehaviour
     private void ActivateIndicator()
     {
         spawnIndicator.SetActive(true);
-        indicatorActive = true;
     }
 
     private void DeactivateIndicator()
     {
         spawnIndicator.SetActive(false);
-        indicatorActive = false;
     }
 }
