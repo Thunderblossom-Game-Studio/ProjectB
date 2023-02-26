@@ -47,7 +47,7 @@ public class RouteUser : MonoBehaviour
     {
         if (ReachedNextRoute())
         {
-            currentRouteIndex = currentRouteIndex == routes.GetRoutes().Count - 1 ? 0 : ++currentRouteIndex;
+            currentRouteIndex = currentRouteIndex == routes.GetRoutes.Count - 1 ? 0 : ++currentRouteIndex;
             nextTrainRoute = routes.GetRoute(currentRouteIndex);
         }
     }

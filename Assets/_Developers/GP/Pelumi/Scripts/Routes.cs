@@ -5,25 +5,28 @@ using UnityEngine;
 
 public class Routes : MonoBehaviour
 {
-    [Header("Debug")]
     [SerializeField] private string ownerID;
-    [SerializeField] private bool islocal;
+    [SerializeField] private bool isLocal;
     [SerializeField] private List<Vector3> route;
-  
-    [Header("Debug")]
     [SerializeField] private int debugTextSize = 20;
     [SerializeField] private int debugCircleSize = 5;
 
     public string OwnerID => ownerID;
-    public bool IsLoacl => islocal;
+    public bool IsLoacl => isLocal;
     public int DebugTextSize => debugTextSize;
     public int DebugCircleSize => debugCircleSize;
 
-    public List<Vector3> GetRoutes() => route;
+    public List<Vector3> GetRoutes => route;
 
     public Vector3 GetRoute(int index)
     {
-        return islocal ? route[index] + transform.position : route[index];
+        return isLocal ? route[index] + transform.position : route[index];
+    }
+
+    public void AddNewRoute()
+    {
+        Vector3 newRoute = (route.Count == 0) ? transform.position + (Vector3.forward * 5) : route[^1] + (Vector3.forward * 5);
+        route.Add(newRoute);
     }
 
     public void ClearRoutes()
@@ -34,6 +37,11 @@ public class Routes : MonoBehaviour
     public void RemoveLastRoutes()
     {
         if (route.Count > 0)  route.RemoveAt(route.Count - 1);
+    }
+
+    public void RemoveRouteAtIndex(int index)
+    {
+        route.RemoveAt(index);
     }
 
     private void OnDrawGizmos()
