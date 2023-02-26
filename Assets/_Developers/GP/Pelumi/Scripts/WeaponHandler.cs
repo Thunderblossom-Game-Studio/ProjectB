@@ -28,6 +28,8 @@ public class WeaponHandler : MonoBehaviour
 
     [Header("Shooting")]
     [SerializeField] private WeaponSO weaponSO;
+    [SerializeField] private LayerMask shootingLayer;
+    [SerializeField] private ParticleSystem testParticle;
     [SerializeField] private Transform[] firePoint;
 
     [Viewable] [SerializeField] private int currentAmmo;
@@ -95,6 +97,8 @@ public class WeaponHandler : MonoBehaviour
     public void TryShootProjectile(Vector3 targetPos)
     {
         if (currentAmmo > 0) ShootProjectile(targetPos); else if (weaponState != WeaponState.Reloading) StartCoroutine(Reload());
+
+        ShootHitScan();
     }
 
     public void ShootProjectile(Vector3 targetPos)
@@ -106,6 +110,34 @@ public class WeaponHandler : MonoBehaviour
             Vector3 aimDirection = (targetPos - firePoint[i].position).normalized;
             Projectile projectile = Instantiate(weaponSO.projectile, firePoint[i].position, Quaternion.LookRotation(aimDirection, Vector3.up));
             ModifyAmmo(currentAmmo - 1);
+        }
+    }
+
+    public void ShootHitScan()
+    {
+        for (int i = 0; i < firePoint.Length; i++)
+        {
+            DetectHit();
+        }
+    }
+
+    public Ray GetRay(Vector3 startPos, Vector3 direction)
+    {
+        return new Ray(startPos, direction);
+    }
+
+    public void DetectHit()
+    {
+        Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, 999, shootingLayer))
+        {
+            Instantiate(testParticle, raycastHit.point, Quaternion.identity);
+        }
+        else
+        {
+            // If we did not hit anything
+          //  ShotBulletTrail(currentWeapon.weaponMuzzle, (Camera.main.transform.forward * currentWeapon.weaponSO.weaponRange));
         }
     }
 
