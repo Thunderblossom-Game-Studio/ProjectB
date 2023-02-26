@@ -23,8 +23,6 @@ public class PelumiTester : MonoBehaviour
     [SerializeField] private float trainRotateSpeed = 10;
     [SerializeField] private Transform trainHead;
     [SerializeField] private List<Transform> trainParts;
-    [SerializeField] private float trainPartMoveSpeed = 10;
-    [SerializeField] private float trainPartRotateSpeed = 10;
     [SerializeField] private int partDistance = 1;
     [SerializeField] private List<Vector3> trainRoute;
 
@@ -87,8 +85,8 @@ public class PelumiTester : MonoBehaviour
             Transform currentPart = trainParts[i];
             Transform previousPart = trainParts[i - 1];
             Vector3 targetPosition = previousPart.position + previousPart.forward * partDistance;
-            currentPart.position = Vector3.Slerp(currentPart.position, targetPosition, trainPartMoveSpeed * Time.deltaTime);
-            RotateToFaceTarget(currentPart, previousPart.position, trainPartRotateSpeed);
+            currentPart.position = Vector3.Slerp(currentPart.position, targetPosition, trainMoveSpeed * Time.deltaTime);
+            RotateToFaceTarget(currentPart, previousPart.position, trainRotateSpeed);
         }
     }
 

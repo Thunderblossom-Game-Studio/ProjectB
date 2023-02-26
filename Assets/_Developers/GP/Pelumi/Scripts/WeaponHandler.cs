@@ -28,8 +28,7 @@ public class WeaponHandler : MonoBehaviour
 
     [Header("Shooting")]
     [SerializeField] private WeaponSO weaponSO;
-    [SerializeField] private Transform firePoint;
-    [SerializeField] private float vertialAimOffset;
+    [SerializeField] private Transform[] firePoint;
 
     [Viewable] [SerializeField] private int currentAmmo;
     [Viewable] [SerializeField] private WeaponState weaponState;
@@ -101,9 +100,13 @@ public class WeaponHandler : MonoBehaviour
     public void ShootProjectile(Vector3 targetPos)
     {
         weaponState = WeaponState.Firing;
-        Vector3 aimDirection = (targetPos - firePoint.position).normalized;
-        Projectile projectile = Instantiate(weaponSO.projectile, firePoint.position, Quaternion.LookRotation(aimDirection, Vector3.up));
-        ModifyAmmo(currentAmmo - 1);
+
+        for (int i = 0; i < firePoint.Length; i++)
+        {
+            Vector3 aimDirection = (targetPos - firePoint[i].position).normalized;
+            Projectile projectile = Instantiate(weaponSO.projectile, firePoint[i].position, Quaternion.LookRotation(aimDirection, Vector3.up));
+            ModifyAmmo(currentAmmo - 1);
+        }
     }
 
     public void ModifyAmmo(int newValue)
@@ -131,6 +134,9 @@ public class WeaponHandler : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        if (turretBarrel != null) Gizmos.DrawLine(firePoint.position, firePoint.position + firePoint.forward * 200.0f);
+        for (int i = 0; i < firePoint.Length; i++)
+        {
+            Gizmos.DrawLine(firePoint[i].position, firePoint[i].position + firePoint[i].forward * 200.0f);
+        }
     }
 }

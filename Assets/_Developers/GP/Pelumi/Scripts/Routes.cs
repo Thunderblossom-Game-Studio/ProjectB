@@ -6,7 +6,8 @@ using UnityEngine;
 public class Routes : MonoBehaviour
 {
     [SerializeField] private string ownerID;
-    [SerializeField] private int trainRouteDebugSize = 20;
+    [SerializeField] private int trainRouteTextDebugSize = 20;
+    [SerializeField] private int trainRouteCircleDebugSize = 5;
     [SerializeField] private List<Vector3> route;
 
     public List<Vector3> GetRoutes() => route;
@@ -15,11 +16,11 @@ public class Routes : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         GUIStyle gUIStyle = new GUIStyle();
-        gUIStyle.fontSize = trainRouteDebugSize;
+        gUIStyle.fontSize = trainRouteTextDebugSize;
 
         for (int i = 0; i < route.Count; i++)
         {
-            Gizmos.DrawWireSphere(route[i], .2f);
+            Gizmos.DrawWireSphere(route[i], trainRouteCircleDebugSize);
             Handles.Label(route[i], ownerID + " Route" + (i + 1), gUIStyle);
         }
 
