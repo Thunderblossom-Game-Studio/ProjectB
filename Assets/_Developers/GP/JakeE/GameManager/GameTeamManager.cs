@@ -33,7 +33,6 @@ public class GameTeamManager : MonoBehaviour
         return _redTeamData.TeamPoints > _blueTeamData.TeamPoints
             ? _blueTeamData : _redTeamData;
     }
-    
 }
 
 [Serializable]
@@ -64,7 +63,6 @@ public class TeamData
         _teamPoints += score;
         OnScoreUpdate?.Invoke(score);
     }
-
     public void RemoveScore(int score)
     {
         _teamPoints -= score;

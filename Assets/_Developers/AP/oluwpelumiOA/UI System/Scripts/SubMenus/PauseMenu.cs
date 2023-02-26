@@ -25,18 +25,18 @@ public class PauseMenu : BaseMenu<PauseMenu>
         quitButton.onClick.AddListener(QuitButton);
     }
 
-    public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
+    public override IEnumerator OpenMenuRoutine(Action onCompleted = null)
     {
         yield return Juicer.DoFloat(() => buttonHolder.interactable = true, buttonHolder.alpha, (v) => buttonHolder.alpha = v, new JuicerFloatProperties(1, .5f, animationCurveType: AnimationCurveType.EaseInOut));
         InputManager.Instance.SwithControlMode(InputManager.ControlMode.UI);
 
-        yield return base.OpenMenuRoutine(OnComplected);
+        yield return base.OpenMenuRoutine(onCompleted);
     }
 
-    public override IEnumerator CloseMenuRoutine(Action OnComplected = null)
+    public override IEnumerator CloseMenuRoutine(Action onCompleted = null)
     {
         yield return Juicer.DoFloat(() => buttonHolder.interactable = false, buttonHolder.alpha, (v) => buttonHolder.alpha = v, new JuicerFloatProperties(0, .5f, animationCurveType: AnimationCurveType.EaseInOut));
-        yield return base.CloseMenuRoutine(OnComplected);
+        yield return base.CloseMenuRoutine(onCompleted);
     }
 
     public void RestartButton()

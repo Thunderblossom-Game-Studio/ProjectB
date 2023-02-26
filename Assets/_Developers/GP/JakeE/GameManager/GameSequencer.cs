@@ -1,46 +1,46 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameSequencer : MonoBehaviour
 {
     [SerializeField] private GameSettings _gameSettings;
-    [SerializeField] private GameEvent _countDownSequenceUI;
-
-    public void CountDownSequence() => StartCoroutine(CountDownSequenceRoutine());
-    public void GameLoseSequence() => StartCoroutine(CountDownSequenceRoutine());
-    public void GameWinSequence() => StartCoroutine(CountDownSequenceRoutine());
-    public void GameCompleteSequence(TeamData winningTeam) => StartCoroutine(CompleteGameSequenceRoutine(winningTeam));
     
-    private IEnumerator CountDownSequenceRoutine()
+    [Header("Game Events")]
+    [SerializeField] private GameEvent _onCentreTextUpdate;
+
+    public void GameCompleteSequence(TeamData winningTeam) => StartCoroutine(CompleteGameSequence(winningTeam));
+    
+    public IEnumerator CountDownSequence()
     {
         GameUtilities.PauseGame();
-        for (int i = 0; i < _gameSettings._beginSequenceCount; i++)
+        yield return new WaitForSeconds(1);
+        for (int i = 0; i < _gameSettings._beginSequenceText.Length; i++)
         {
-            //_countDownSequenceUI.Raise(this, $"Game Starting In {i}...");
-            Debug.Log( $"Game Starting In {i+1}");
+            _onCentreTextUpdate.Raise(this, new object[] {_gameSettings._beginSequenceText[i], i, _gameSettings._beginSequenceText.Length} );
             yield return new WaitForSeconds(1);
         }
-        Debug.Log("Game is Starting!!");
+        _onCentreTextUpdate.Raise(this, new object[] {"Hide", int.MaxValue, int.MaxValue});
         GameUtilities.ResumeGame();
     }
 
-    private IEnumerator CompleteGameSequenceRoutine(TeamData winningTeam)
+    public IEnumerator CompleteGameSequence(TeamData winningTeam)
     {
         GameUtilities.SlowMotion(true);
-        Debug.Log("Game Has Ended!");
-        Debug.Log($"Winning Team {winningTeam.TeamName}");
-        yield return new WaitForSeconds(3);
+        for (int i = 0; i < _gameSettings._completeSequenceText.Length; i++)
+        {
+            _onCentreTextUpdate.Raise(this, new object[] {_gameSettings._completeSequenceText[i], i, _gameSettings._completeSequenceText.Length} );
+            yield return new WaitForSeconds(1);
+        }
+        _onCentreTextUpdate.Raise(this, new object[] {"Hide", int.MaxValue, int.MaxValue});
         GameUtilities.SlowMotion(false);
     }
 
-    private IEnumerator GameLoseSequenceRoutine()
+    public IEnumerator GameLoseSequence()
     {
         yield break;
     }
 
-    private IEnumerator GameWinSequenceRoutine()
+    public IEnumerator GameWinSequence()
     {
         yield break;
     }

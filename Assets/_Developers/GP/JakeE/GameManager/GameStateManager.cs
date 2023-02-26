@@ -30,9 +30,10 @@ public class GameStateManager : Singleton<GameStateManager>
 
     private IEnumerator StartState()
     {
-        _gameTimer.GameStart();
         _teamManager.InitialiseTeams();
-        _gameSequencer.CountDownSequence();
+        yield return _gameSequencer.CountDownSequence();
+        _gameTimer.GameStart();
+        
         OnStart?.Invoke();
         yield return UpdateState();
     }

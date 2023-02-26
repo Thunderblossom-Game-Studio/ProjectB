@@ -56,15 +56,15 @@ public abstract class Menu : MonoBehaviour
         openCloseRoutine = StartCoroutine(CloseMenuRoutine(OnComplected));
     }
 
-    public virtual IEnumerator OpenMenuRoutine(Action OnComplected = null)
+    public virtual IEnumerator OpenMenuRoutine(Action onCompleted = null)
     {
         openCloseRoutine = null;
         yield return null;
     }
 
-    public virtual IEnumerator CloseMenuRoutine(Action OnComplected = null)
+    public virtual IEnumerator CloseMenuRoutine(Action onCompleted = null)
     {
-        if (OnComplected != null) OnComplected();
+        if (onCompleted != null) onCompleted();
         OnMenuClosed();
         yield return null;
     }
