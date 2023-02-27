@@ -1,3 +1,4 @@
+using JE.DamageSystem;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Mail;
@@ -5,20 +6,28 @@ using UnityEngine;
 
 public class PursuingCarController : AICarController
 {
+    public PursuingCarController other;
+
     protected enum State { PURSUE, PATROL, ATTACK, FLEE, PICKUP, SEARCHING, DELIVERY, TURNLEFT, TURNRIGHT, BRAKE }
     [SerializeField] protected State NextState;
-    private AITestCar CurrentCar;
     public CollisionPrevention PreventionCollision;
-    public GameObject Target;
+    public GameObject MoveTarget;
+    public GameObject ShootTarget;
 
     [SerializeField] private EntitySpawner packageSpawner;
     [SerializeField] private PackageSystem PackageSystem;
+    [SerializeField] private HealthSystem Health;
 
+    public GameObject[] AllObjects;
+    public Vector3 SpawnPoint;
+    public GameObject NearBank;
+    public GameObject NearPackage;
+    float Distance;
+    float NearestDistance = 10000;
 
     [SerializeField] private float distanceToReset = 50f;
     [SerializeField] private float distanceBetweenAgent = 30;
 
-    
     [SerializeField] private float AttackRange;
 
     [Header("Aggro Range")]
@@ -28,18 +37,51 @@ public class PursuingCarController : AICarController
     [Header("Patrol Points")]
     [SerializeField] Transform[] ListOfPatrolPoints;
     int NextPatrolPoint;
-    [SerializeField] Transform DeliveryPoint;
+
+    [SerializeField] Transform SpawnZonePoint;
     [SerializeField] float DistanceFromPatrolPoint;
 
+    private WeaponHandler weaponHandler;
+
+    [Viewable] private Transform DeliveryPoint;
+    
     protected override void Start()
     {
+        if (AIDirector.Instance)
+        {
+            AIDirector.Instance.bots.Add(this);
+
+            int numOfDeliveryZones = AIDirector.Instance.deliveryZones.Count;
+
+            if (numOfDeliveryZones > 0)
+                DeliveryPoint = AIDirector.Instance.deliveryZones[Random.Range(0, numOfDeliveryZones)].t;
+            else
+                Debug.LogWarning("No delivery points allocated in AI Director.");
+        }
+        else Debug.LogWarning("No AI Director found in scene.");
+
+        weaponHandler = GetComponent<WeaponHandler>();
+
+        AllObjects = GameObject.FindGameObjectsWithTag("SpawnPoint");
+
+        SpawnPoint = transform.position;
+
         base.Start();
-        CurrentCar = GetComponent<AITestCar>();
+    }
+
+    private void OnDestroy()
+    {
+        if (AIDirector.Instance)
+        {
+            AIDirector.Instance.bots.Remove(this);
+        }
+
     }
 
     protected override void Evaluate()
     {
         newState = false;
+        ShootTarget = null;
 
         RaycastHit[] Hits = Physics.SphereCastAll(transform.position, AggroRange, Vector3.forward, 0, Car);
 
@@ -50,46 +92,31 @@ public class PursuingCarController : AICarController
                 if (hit.transform.gameObject != gameObject && hit.transform.CompareTag("Player"))
                 {
 
-                    //Target = hit.transform.gameObject;
-                    //Debug.Log(hit.transform.gameObject.name);
+                    ShootTarget = hit.transform.gameObject;
 
                 }
             }
 
-            if (Target == null && NextState != State.PICKUP)
+            if (MoveTarget == null && NextState != State.PICKUP)
             {
                 NextState = State.PATROL;
             }
-            
-            
-
         }
 
-        if (Target != null)
+        if (MoveTarget != null)
         {
-            // Pursue
-            if (Vector3.Distance(agent.transform.position, Target.transform.position) <= AggroRange)
+            if (ShootTarget)
             {
-                NextState = State.PURSUE;
-            }
-
-            // Patrol
-            else
-            {
-                if (NextState != State.PICKUP)
+                // Pursue
+                if (Vector3.Distance(agent.transform.position, ShootTarget.transform.position) <= AggroRange)
                 {
-                    NextState = State.PATROL;
+                    NextState = State.PURSUE;
                 }
-
-                
-         
+                else
+                {
+                }
             }
 
-            // Attack
-            if (Vector3.Distance(transform.position, Target.transform.position) <= AttackRange)
-            {
-                NextState = State.ATTACK;
-            }
 
             // Flee
 
@@ -105,12 +132,12 @@ public class PursuingCarController : AICarController
             // Delivery
 
             // IF hasPackage
-                // Deliever
+            // Deliever
 
             // Reset Target
             if (NextState == State.PATROL)
             {
-                Target = null;
+                MoveTarget = null;
             }
 
             // Searching
@@ -146,9 +173,13 @@ public class PursuingCarController : AICarController
             NextState = State.BRAKE;
         }
 
+        if (Health.HealthPercentage <= 0.3f)
+        {
+            NextState = State.FLEE;
+        }
+
+
     }
-
-
 
     protected override void SwapState()
     {
@@ -188,8 +219,6 @@ public class PursuingCarController : AICarController
         }
     }
 
-
-
     protected override void Act()
     {
         if (!(NextState == State.TURNLEFT || NextState == State.TURNRIGHT || NextState == State.BRAKE))
@@ -208,19 +237,46 @@ public class PursuingCarController : AICarController
 
         State c = NextState;
 
+
         Evaluate();       
 
         if (c != NextState) newState = true;
 
-        SwapState();
-    }
+        
+        if (ShootTarget)
+        {
 
+            // Attack
+            if (Vector3.Distance(transform.position, ShootTarget.transform.position) <= AttackRange)
+            {
+                if (ShootTarget.TryGetComponent<HealthSystem>(out HealthSystem hs))
+                {
+                    Attack();
+                }
+            }
+
+        }
+
+        if (ShootTarget)
+        {
+            if (Vector3.Distance(agent.transform.position, ShootTarget.transform.position) <= 15)
+            {
+                ShootTarget = null;
+            }
+        }
+
+        SwapState();
+
+
+
+    }
 
     private void Pursue()
     {
-        if (Target != null)
+        if (ShootTarget != null)
         {
-            agent.SetDestination(Target.transform.position);
+            agent.SetDestination(ShootTarget.transform.position);
+
         }
 
     }
@@ -269,12 +325,26 @@ public class PursuingCarController : AICarController
 
     private void Attack()
     {
-        Debug.Log("Attacked");
+        if (!ShootTarget) return;
+        Debug.Log("Attack");
+        weaponHandler.SetAim((ShootTarget.transform.position - transform.position).normalized);
+        weaponHandler.Shoot(ShootTarget.transform.position);
+
     }
 
     private void Flee()
     {
         Debug.Log("Fleeing");
+
+        if (PackageSystem.PackageAmount >= 1)
+        {
+            Delivery();
+        }
+        else if (PackageSystem.PackageAmount == 0)
+        {
+            agent.SetDestination(SpawnPoint);
+        }
+
     }
 
     private void Pickup()
@@ -283,12 +353,12 @@ public class PursuingCarController : AICarController
         
         if (newState)
         {
-            Target = packageSpawner.SpawnedObjects[Random.Range(0, packageSpawner.SpawnedObjects.Count)].gameObject;
+            MoveTarget = packageSpawner.SpawnedObjects[Random.Range(0, packageSpawner.SpawnedObjects.Count)].gameObject;
         }
 
-        if (Target)
+        if (MoveTarget)
         {
-            agent.SetDestination(Target.transform.position);
+            agent.SetDestination(MoveTarget.transform.position);
         }
         else
         {
@@ -299,21 +369,18 @@ public class PursuingCarController : AICarController
 
     private void Delivery()
     {
-        Debug.Log("Pickup");
+        if (AIDirector.Instance)
+        {
+            DeliveryPoint = AIDirector.Instance.FindClosestDeliveryZone(transform.position);
+        }
+
+        Debug.Log("Delivery");
         agent.SetDestination(DeliveryPoint.position);
     }
 
     private void Searching()
     {
-        Debug.Log("Pickup");
+        Debug.Log("Searching");
     }
 
-
-    protected override void OnDrawGizmos()
-    {
-        Gizmos.color = new Color(255, 0, 0, 255);
-        Gizmos.DrawSphere(transform.position, AggroRange);
-
-        base.OnDrawGizmos();
-    }
 }
