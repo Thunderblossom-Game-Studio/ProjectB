@@ -13,6 +13,8 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField] private Transform turretBarrel;
 
     [Header("Rotation settings")]
+
+    [SerializeField] private bool rotateVertical;
     [Range(0, 180)]
     [SerializeField] private float rightRotationLimit;
     [Range(0, 180)]
@@ -46,6 +48,8 @@ public class WeaponHandler : MonoBehaviour
     public int CurrentAmmo => currentAmmo;
     public int MaxAmmo => weaponSO.maxAmmo;
 
+    private Vector3 hitPoint;
+
     private void Start()
     {
         ModifyAmmo(weaponSO.maxAmmo);
@@ -59,27 +63,10 @@ public class WeaponHandler : MonoBehaviour
     private void HandleHorizontalAndVerticalRotation()
     {
         Vector3 targetPositionInLocalSpace = aimPoint;
-        Vector3 limitedRotation = Vector3.RotateTowards(Vector3.forward, targetPositionInLocalSpace, (targetPositionInLocalSpace.x >= 0.0f) ? Mathf.Deg2Rad * rightRotationLimit : Mathf.Deg2Rad * leftRotationLimit, float.MaxValue);
+        if(!rotateVertical) targetPositionInLocalSpace.y = 0;
+         Vector3 limitedRotation = Vector3.RotateTowards(Vector3.forward, targetPositionInLocalSpace, (targetPositionInLocalSpace.x >= 0.0f) ? Mathf.Deg2Rad * rightRotationLimit : Mathf.Deg2Rad * leftRotationLimit, float.MaxValue);
         Quaternion whereToRotate = Quaternion.LookRotation(limitedRotation);
         turretBase.rotation = Quaternion.RotateTowards(turretBase.rotation, whereToRotate, baseTurnSpeed * Time.deltaTime);
-    }
-
-    private void HandleHorizontalRotation()
-    {
-        Vector3 targetPositionInLocalSpace = aimPoint;
-        targetPositionInLocalSpace.y = 0.0f;
-        Vector3 limitedRotation = Vector3.RotateTowards(Vector3.forward, targetPositionInLocalSpace, (targetPositionInLocalSpace.x >= 0.0f) ?  Mathf.Deg2Rad * rightRotationLimit : Mathf.Deg2Rad * leftRotationLimit, float.MaxValue);
-        Quaternion whereToRotate = Quaternion.LookRotation(limitedRotation);    
-        turretBase.rotation = Quaternion.RotateTowards(turretBase.rotation, whereToRotate, baseTurnSpeed * Time.deltaTime);
-    }
-
-    private void HandleVerticalRotation()
-    {
-        Vector3 targetPositionInLocalSpace = aimPoint;
-        targetPositionInLocalSpace.x = 0.0f;
-        Vector3 limitedRotation = Vector3.RotateTowards(Vector3.forward, targetPositionInLocalSpace, (targetPositionInLocalSpace.y >= 0.0f) ? Mathf.Deg2Rad * elevationRotationLimit : Mathf.Deg2Rad * depressionRotationLimit, float.MaxValue);
-        Quaternion whereToRotate = Quaternion.LookRotation(limitedRotation);
-        turretBarrel.localRotation = Quaternion.RotateTowards(turretBarrel.localRotation, whereToRotate, turrentTurnSpeed * Time.deltaTime);
     }
 
     public void Shoot(Vector3 targetPos)
@@ -168,7 +155,29 @@ public class WeaponHandler : MonoBehaviour
         Gizmos.color = Color.red;
         for (int i = 0; i < firePoint.Length; i++)
         {
-            Gizmos.DrawLine(firePoint[i].position, firePoint[i].position + firePoint[i].forward * 200.0f);
+        //    Gizmos.DrawLine(firePoint[i].position, firePoint[i].position + firePoint[i].forward * 200.0f);
         }
+
+        Gizmos.DrawWireSphere(hitPoint, .5f);
     }
+
+    #region OldCode
+    private void HandleHorizontalRotation()
+    {
+        Vector3 targetPositionInLocalSpace = aimPoint;
+        targetPositionInLocalSpace.y = 0.0f;
+        Vector3 limitedRotation = Vector3.RotateTowards(Vector3.forward, targetPositionInLocalSpace, (targetPositionInLocalSpace.x >= 0.0f) ? Mathf.Deg2Rad * rightRotationLimit : Mathf.Deg2Rad * leftRotationLimit, float.MaxValue);
+        Quaternion whereToRotate = Quaternion.LookRotation(limitedRotation);
+        turretBase.rotation = Quaternion.RotateTowards(turretBase.rotation, whereToRotate, baseTurnSpeed * Time.deltaTime);
+    }
+
+    private void HandleVerticalRotation()
+    {
+        Vector3 targetPositionInLocalSpace = aimPoint;
+        targetPositionInLocalSpace.x = 0.0f;
+        Vector3 limitedRotation = Vector3.RotateTowards(Vector3.forward, targetPositionInLocalSpace, (targetPositionInLocalSpace.y >= 0.0f) ? Mathf.Deg2Rad * elevationRotationLimit : Mathf.Deg2Rad * depressionRotationLimit, float.MaxValue);
+        Quaternion whereToRotate = Quaternion.LookRotation(limitedRotation);
+        turretBarrel.localRotation = Quaternion.RotateTowards(turretBarrel.localRotation, whereToRotate, turrentTurnSpeed * Time.deltaTime);
+    }
+    #endregion
 }
