@@ -25,9 +25,17 @@ public class GameMenu : BaseMenu<GameMenu>
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private TextMeshProUGUI _centreScreenText;
 
+    [Header("Team UI")] 
+    [SerializeField] private TextMeshProUGUI _bluePackages;
+    [SerializeField] private TextMeshProUGUI _redPackages;
+    [SerializeField] private TextMeshProUGUI _blueScore;
+    [SerializeField] private TextMeshProUGUI _redScore;
+    
     [Header("Package Events")]
     [SerializeField] private GameEvent _onPickUp;
     [SerializeField] private GameEvent _onDeliver;
+    [SerializeField] private GameEvent _onBlueTeamScore;
+    [SerializeField] private GameEvent _onRedTeamScore;
 
     [Header("Combat Events")]
     [SerializeField] private List<JuicerVector3Properties> _reloadingEffect;
@@ -46,6 +54,8 @@ public class GameMenu : BaseMenu<GameMenu>
     {
         _onPickUp.Register(OnPickUp);
         _onDeliver.Register(OnDeliver);
+        _onBlueTeamScore.Register(OnUpdateBlueTeam);
+        _onRedTeamScore.Register(OnUpdateRedTeam);
 
         _onOnAmmoChanged.Register(OnAmmoChanged);
         _onReloading.Register(OnReload);
@@ -139,10 +149,24 @@ public class GameMenu : BaseMenu<GameMenu>
         _centreScreenText.text = displayText;
     }
 
+    private void OnUpdateBlueTeam(Component arg1, object value)
+    {
+        _blueScore.text = ((int[])value)[0].ToString();
+        _bluePackages.text = ((int[])value)[1].ToString();
+    }
+
+    private void OnUpdateRedTeam(Component arg1, object value)
+    {
+        _redScore.text = ((int[])value)[0].ToString();
+        _redPackages.text = ((int[])value)[1].ToString();
+    }
+
     private void OnDisable()
     {
         _onPickUp.Unregister(OnPickUp);
         _onDeliver.Unregister(OnDeliver);
+        _onBlueTeamScore.Unregister(OnUpdateBlueTeam);
+        _onRedTeamScore.Unregister(OnUpdateRedTeam);
 
         _onOnAmmoChanged.Unregister(OnAmmoChanged);
         _onReloading.Unregister(OnReload);
@@ -151,5 +175,6 @@ public class GameMenu : BaseMenu<GameMenu>
         
         _onTimerUpdate.Unregister(OnTimerUpdate);
         _onCountDown.Unregister(OnCentreTextUpdate);
+        
     }
 }

@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class GameStateManager : Singleton<GameStateManager>
 {
-    private GameTeamManager _teamManager;
-    private GameTimer _gameTimer;
-    private GameSequencer _gameSequencer;
+    public GameTeamManager TeamManager { get; private set; }
+    public GameTimer GameTimer { get; private set; }
+    public GameSequencer GameSequencer { get; private set; }
 
     public event Action OnStart;
     public event Action OnUpdate;
@@ -17,22 +17,22 @@ public class GameStateManager : Singleton<GameStateManager>
     protected override void Awake()
     {
         base.Awake();
-        _gameTimer = GetComponent<GameTimer>();
-        _teamManager = GetComponent<GameTeamManager>();
-        _gameSequencer = GetComponent<GameSequencer>();
+        GameTimer = GetComponent<GameTimer>();
+        TeamManager = GetComponent<GameTeamManager>();
+        GameSequencer = GetComponent<GameSequencer>();
     }
 
     private void Start()
     {
-        _gameTimer.OnGameComplete += StartCompleteState; 
+        GameTimer.OnGameComplete += StartCompleteState; 
         StartBeginState();
     }
 
     private IEnumerator StartState()
     {
-        _teamManager.InitialiseTeams();
-        yield return _gameSequencer.CountDownSequence();
-        _gameTimer.GameStart();
+        TeamManager.InitialiseTeams();
+        yield return GameSequencer.CountDownSequence();
+        GameTimer.GameStart();
         
         OnStart?.Invoke();
         yield return UpdateState();
@@ -47,8 +47,8 @@ public class GameStateManager : Singleton<GameStateManager>
     private IEnumerator CompleteState()
     {
         OnComplete?.Invoke();
-        TeamData winningTeam =  _teamManager.GetWinningTeam();
-        _gameSequencer.GameCompleteSequence(winningTeam);
+        TeamData winningTeam =  TeamManager.GetWinningTeam();
+        GameSequencer.GameCompleteSequence(winningTeam);
         yield return null;
     }
 

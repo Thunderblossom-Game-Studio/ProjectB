@@ -13,6 +13,8 @@ public class DeliveryZone : MonoBehaviour
     {
         if (!_detectedLayers.ContainsLayer(objectCollider.gameObject.layer)) return;
         if (!objectCollider.TryGetComponent(out PackageSystem packageSystem)) return;
+        if (packageSystem.PackageAmount < 1) return;
+        
         packageSystem.DeliverPackages();
     }
 }
