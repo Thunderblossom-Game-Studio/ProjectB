@@ -39,6 +39,24 @@ public class TrafficBrain : MonoBehaviour
 
     [Header("Health")]
     public float Health;
+    public float MaxHealth;
+
+    [Header("Disable On Death")]
+
+    //UPDATE THESE TO FIT NEW CAR MODEL:
+    public BoxCollider TrunkCollider;
+    public MeshRenderer TrunkRenderer;
+    public MeshRenderer CubeRenderer;
+    public MeshRenderer CylinderRenderer;
+    public MeshRenderer AITrafficRenderer;
+    public CapsuleCollider AITrafficCollider;
+    public MeshRenderer PointerRenderer;
+    public MeshRenderer Pointer1Renderer;
+    public MeshRenderer Cylinder1Renderer;
+
+    [Header("Respawn")]
+    public GameObject RespawnPoint;
+    public GameObject ThisGameObject;
 
     [Header("Donuts")]
     public bool ActivateDonut;
@@ -51,6 +69,7 @@ public class TrafficBrain : MonoBehaviour
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         agent.destination = goal.position;
         DefaultSpeed = CarSpeed;
+        Health = MaxHealth;
     }
 
     // Update is called once per frame
@@ -203,8 +222,44 @@ public class TrafficBrain : MonoBehaviour
     
     void Explode()
     {
-      //insert explosion effects here
-    }
 
+        //insert explosion effects here
+        TrunkCollider.enabled = false;
+        TrunkRenderer.enabled = false;
+        CubeRenderer.enabled = false;
+        CylinderRenderer.enabled = false;
+        AITrafficRenderer.enabled = false;
+        AITrafficCollider.enabled = false;
+        PointerRenderer.enabled = false;
+        Cylinder1Renderer.enabled = false;
+        StartCoroutine(Respawn());
+
+}
+
+    Vector3 RespawnPointVector;
+    IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(5);
+       
+        //transform.position = RespawnPoint.transform.position;
+        RespawnPointVector = RespawnPoint.transform.position;
+
+        transform.position = RespawnPointVector;
+        ThisGameObject.transform.position = RespawnPointVector;
+
+
+        Health = MaxHealth;
+        goal = RespawnPoint.transform;
+        agent.SetDestination(goal.position);
+        TrunkCollider.enabled = true;
+        TrunkRenderer.enabled = true;
+        CubeRenderer.enabled = true;
+        CylinderRenderer.enabled = true;
+        AITrafficRenderer.enabled = true;
+        AITrafficCollider.enabled = true;
+        PointerRenderer.enabled = true;
+        Cylinder1Renderer.enabled = true;
+
+    }
 
 }
