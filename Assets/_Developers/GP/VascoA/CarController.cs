@@ -34,6 +34,9 @@ public class CarController : MonoBehaviour
     [Viewable] [SerializeField] private float downForceValue;
     [Viewable] [SerializeField] private float currentSpeed;
 
+    [Header("Car Events")]
+    [SerializeField] private GameEvent carSpeedEvent;
+
     private float topSpeedDrag, idleDrag = 50f;
 
 
@@ -98,7 +101,7 @@ public class CarController : MonoBehaviour
 
         currentSpeed = rigidBody.velocity.magnitude * 3.6f;
 
-
+        carSpeedEvent.Raise(this, currentSpeed);
 
         //Boost
         if (boostInput)
@@ -231,22 +234,22 @@ public class CarController : MonoBehaviour
 
     private void OnGUI()
     {
-        //Change gui color
-        GUI.color = Color.black;
-        //Change gui size
-        GUI.skin.label.fontSize = 15;
-        //Show speed on screen
-        GUI.Label(new Rect(10, 10, 150, 100), "Speed: " + currentSpeed.ToString("0") + " KPH");
+        ////Change gui color
+        //GUI.color = Color.black;
+        ////Change gui size
+        //GUI.skin.label.fontSize = 15;
+        ////Show speed on screen
+        //GUI.Label(new Rect(10, 10, 150, 100), "Speed: " + currentSpeed.ToString("0") + " KPH");
 
-        float avgRpm = 0;
+        //float avgRpm = 0;
         
-        //Show wheel rpm
-        foreach (WheelCollider wheel in wheels)
-        {
-            avgRpm = wheel.rpm;
-        }
+        ////Show wheel rpm
+        //foreach (WheelCollider wheel in wheels)
+        //{
+        //    avgRpm = wheel.rpm;
+        //}
 
-        GUI.Label(new Rect(10, 30, 150, 100), "RPM: " + avgRpm.ToString("0") + " RPM");
+        //GUI.Label(new Rect(10, 30, 150, 100), "RPM: " + avgRpm.ToString("0") + " RPM");
     }
 
 }

@@ -37,18 +37,18 @@ public class SceneSelectMenu : BaseMenu<SceneSelectMenu>
         CloseButton();
     }
 
-    public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
+    public override IEnumerator OpenMenuRoutine(Action onCompleted = null)
     {
         yield return Juicer.DoFloat(null, buttonHolder.alpha, (v) => buttonHolder.alpha = v, new JuicerFloatProperties(1, .5f, animationCurveType: AnimationCurveType.EaseInOut));
 
-        yield return base.OpenMenuRoutine(OnComplected);
+        yield return base.OpenMenuRoutine(onCompleted);
     }
 
-    public override IEnumerator CloseMenuRoutine(Action OnComplected = null)
+    public override IEnumerator CloseMenuRoutine(Action onCompleted = null)
     {
         yield return Juicer.DoFloat(null, buttonHolder.alpha, (v) => buttonHolder.alpha = v, new JuicerFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut));
 
-        yield return base.CloseMenuRoutine(OnComplected);
+        yield return base.CloseMenuRoutine(onCompleted);
     }
 
     protected override void ResetUI()

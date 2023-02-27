@@ -7,9 +7,21 @@ public class SpeedDial : MonoBehaviour
 {
     [SerializeField] private float _maximumSpeed = 160;
     [SerializeField] private float _highestAngle = 180;
-    [SerializeField] private CarController _carController;
-
     [SerializeField] private RectTransform _needleCentre;
+
+    [SerializeField] private GameEvent carSpeedEvent;
+
+    private void OnEnable()
+    {
+        carSpeedEvent.Register(CarSpeedEvent);
+    }
+
+    private void CarSpeedEvent(Component arg1, object arg2)
+    {
+        float currentSpeed = (float)arg2;
+        float needleAngle = ReturnNeedleAngle(currentSpeed, false);
+        _needleCentre.rotation = Quaternion.Euler(0f, 0f, needleAngle);
+    }
 
     public float ReturnNeedleAngle(float currentSpeed, bool antiClockwise)
     {
@@ -18,10 +30,8 @@ public class SpeedDial : MonoBehaviour
         return antiClockwise ? needleAngle : -needleAngle;
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        float currentSpeed = _carController.GetSpeed();
-        float needleAngle = ReturnNeedleAngle(currentSpeed, false);
-        _needleCentre.rotation = Quaternion.Euler(0f, 0f, needleAngle);
+        carSpeedEvent.Unregister(CarSpeedEvent);
     }
 }
