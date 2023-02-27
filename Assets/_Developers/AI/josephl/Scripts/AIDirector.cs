@@ -17,13 +17,45 @@ public class AIDirector : Singleton<AIDirector>
     [SerializeField] private DifficultySetting tierThree;
 
     [Header("Scene Settings")]
+
     [Tooltip("All package spawners in the scene.")]
     public List<EntitySpawner> packageSpawners;
+
     [Tooltip("All delivery zones in the scene.")]
     public List<DeliveryPoint> deliveryZones;
+
     [Tooltip("All bots currently in the scene.")]
     public List<PursuingCarController> bots;
     #endregion
+
+    public Transform FindClosestDeliveryZone(Vector3 car)
+    {
+        if (deliveryZones.Count <= 0) return null;
+
+        Transform NearestPoint = null;
+
+        float Distance;
+
+        float NearestDistance = Vector3.Distance(car, deliveryZones[0].t.position);
+        NearestPoint = deliveryZones[0].t;
+
+        for (int i = 0; i < deliveryZones.Count; i++)
+        {
+            Distance = Vector3.Distance(car, deliveryZones[i].t.position);
+
+            if (Distance < NearestDistance)
+            {
+                // Bleh
+                NearestPoint = deliveryZones[i].t;
+                NearestDistance = Distance;
+            }
+
+        }
+
+        Debug.Log(NearestPoint);
+
+        return NearestPoint;
+    }
 
     #region Struct Definition
     private enum Difficulty { EASY, MEDIUM, HARD }
@@ -52,7 +84,7 @@ public class AIDirector : Singleton<AIDirector>
         public Team team;
 
         [Tooltip("The transform position of the delivery point.")]
-        public Transform position;
+        public Transform t;
     }
     #endregion
 }
