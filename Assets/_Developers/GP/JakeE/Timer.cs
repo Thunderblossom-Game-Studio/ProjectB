@@ -5,9 +5,13 @@ namespace JE.Utilities
 {
     public class Timer
     {
+        private readonly float _timerDuration;
+        private readonly float _defaultTime;
+        private readonly bool _isLooping;
+        
+        private bool _isEnabled = true;
+
         private float _currentTime;
-        private float _timerDuration;
-        private float _defaultTime;
         private Action _onComplete;
 
         public Timer(float timerDuration, float defaultTime, Action onComplete)
@@ -18,14 +22,17 @@ namespace JE.Utilities
             _currentTime = defaultTime;
         }
 
-        public Timer(float timerDuration, Action onComplete)
+        public Timer(float timerDuration, Action onComplete, bool isLooping = true)
         {
             _timerDuration = timerDuration;
             _onComplete += onComplete;
+            _isLooping = isLooping;
         }
 
         public void Tick(float deltaTime)
         {
+            if (!_isEnabled) return;
+            
             _currentTime += deltaTime;
             if (!(_currentTime >= _timerDuration)) return;
             _currentTime = 0;
@@ -72,9 +79,16 @@ namespace JE.Utilities
             return _currentTime / _timerDuration;
         }
 
+        public void EnableTimer(bool status)
+        {
+            _isEnabled = status;
+        }
+
         private void OnComplete()
         {
             _onComplete?.Invoke();
+            if (_isLooping) return;
+            _isEnabled = false;
         }
     }
 }

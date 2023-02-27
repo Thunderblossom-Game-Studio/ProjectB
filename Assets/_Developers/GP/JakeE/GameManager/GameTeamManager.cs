@@ -1,9 +1,15 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.iOS;
 
 public class GameTeamManager : MonoBehaviour
 {
+    [Header("Game Events")]
+    [SerializeField] private GameEvent _onBlueTeamScore;
+    [SerializeField] private GameEvent _onRedTeamScore;
+    
+    [Header("Team Data")]
     [SerializeField] private TeamData _blueTeamData;
     [SerializeField] private TeamData _redTeamData;
     [SerializeField] private List<GamePlayer> _gamePlayers;
@@ -33,6 +39,22 @@ public class GameTeamManager : MonoBehaviour
         return _redTeamData.TeamPoints > _blueTeamData.TeamPoints
             ? _blueTeamData : _redTeamData;
     }
+
+    public void AddScore(TeamData teamData, int addScore, int addPackage)
+    {
+        if (teamData == _blueTeamData)
+        {
+            _blueTeamData.AddScore(addScore);
+            _blueTeamData.AddPackage(addPackage);
+            _onBlueTeamScore.Raise(this, new int[] {_blueTeamData.TeamPoints, _blueTeamData.TeamPackages} );
+        }
+        else
+        {
+            _redTeamData.AddScore(addScore);
+            _redTeamData.AddPackage(addPackage);
+            _onRedTeamScore.Raise(this, new int[] { _redTeamData.TeamPoints, _redTeamData.TeamPackages } );
+        }
+    }
     
 }
 
@@ -45,12 +67,13 @@ public class TeamData
     public List<Vector3> SpawnPoints => _spawnPoints;
     public List<GamePlayer> TeamPlayers => _teamPlayers;
     public string TeamName => _teamName;
+    public int TeamPackages => _teamPackages;
 
     #endregion
-
-    public Action<int> OnScoreUpdate;
+    
     [SerializeField] private string _teamName;
     [SerializeField] private int _teamPoints;
+    [SerializeField] private int _teamPackages;
     [SerializeField] private List<Vector3> _spawnPoints;
     [SerializeField] private List<GamePlayer> _teamPlayers = new List<GamePlayer>();
     
@@ -58,16 +81,8 @@ public class TeamData
     public void RemovePlayer(GamePlayer gamePlayer) => _teamPlayers.Remove(gamePlayer);
     public bool ContainsPlayer(GamePlayer gamePlayer) => _teamPlayers.Contains(gamePlayer);
     public void AddSpawn(Vector3 spawnPosition) => _spawnPoints.Add(spawnPosition);
-    
-    public void AddScore(int score)
-    {
-        _teamPoints += score;
-        OnScoreUpdate?.Invoke(score);
-    }
-
-    public void RemoveScore(int score)
-    {
-        _teamPoints -= score;
-        OnScoreUpdate?.Invoke(score);
-    }
+    public void AddScore(int score) => _teamPoints += score;
+    public void RemoveScore(int score) => _teamPoints -= score;
+    public void AddPackage(int package) => _teamPackages += package;
+    public void RemovePackage(int package) => _teamPackages -= package;
 }

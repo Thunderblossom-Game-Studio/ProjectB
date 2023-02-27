@@ -13,19 +13,19 @@ public class ConfirmWindow : BaseMenu<ConfirmWindow>
     private Action onConfirmAction;
     private Action onDeclineAction;
 
-    public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
+    public override IEnumerator OpenMenuRoutine(Action onCompleted = null)
     {
         yield return Juicer.DoFloat(null, 0, (pos) => content.alpha = pos, new JuicerFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut), () => ToggleLoadingContent(true));
 
 
-        yield return base.OpenMenuRoutine(OnComplected);
+        yield return base.OpenMenuRoutine(onCompleted);
     }
 
-    public override IEnumerator CloseMenuRoutine(Action OnComplected = null)
+    public override IEnumerator CloseMenuRoutine(Action onCompleted = null)
     {
         yield return Juicer.DoFloat(null, content.alpha, (pos) => content.alpha = pos, new JuicerFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut), () => ToggleLoadingContent(false));
   
-        yield return base.CloseMenuRoutine(OnComplected);
+        yield return base.CloseMenuRoutine(onCompleted);
     }
 
     public void MenuButtonPressed()

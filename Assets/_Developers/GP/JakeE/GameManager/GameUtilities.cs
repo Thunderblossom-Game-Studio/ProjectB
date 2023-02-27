@@ -9,15 +9,18 @@ public class GameUtilities : MonoBehaviour
     public static void PauseGame()
     {
         GamePaused = true;
+        Time.timeScale = 0;
     }
 
     public static void ResumeGame()
     {
         GamePaused = false;
+        Time.timeScale = 1;
     }
 
     public static void SlowMotion(bool status)
     {
-        //TODO Game SlowMotion
+        if (status) Time.timeScale = 0.5f;
+        else Time.timeScale = 1;
     }
 }

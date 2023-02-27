@@ -51,16 +51,16 @@ public class CarSelectMenu : BaseMenu<CarSelectMenu>
         SwithMode(SelectMode.Car);
     }
 
-    public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
+    public override IEnumerator OpenMenuRoutine(Action onCompleted = null)
     {
         yield return Juicer.DoFloat(null, 0, (pos) => buttonHolder.alpha = pos, new JuicerFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
-        yield return base.OpenMenuRoutine(OnComplected);
+        yield return base.OpenMenuRoutine(onCompleted);
     }
 
-    public override IEnumerator CloseMenuRoutine(Action OnComplected = null)
+    public override IEnumerator CloseMenuRoutine(Action onCompleted = null)
     {
         yield return Juicer.DoFloat(null, buttonHolder.alpha, (pos) => buttonHolder.alpha = pos, new JuicerFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
-        yield return base.CloseMenuRoutine(OnComplected);
+        yield return base.CloseMenuRoutine(onCompleted);
     }
 
     protected override void Instance_OnTabLeftAction(object sender, EventArgs e)

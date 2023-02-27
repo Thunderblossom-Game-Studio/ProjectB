@@ -5,9 +5,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameSettings", menuName = "Game/GameSettings")]
 public class GameSettings : ScriptableObject
 {
+    [Header("Game Settings")]
     public float _gameDuration;
     public float _winCondition;
     
-    [Header("Begin Sequence Settings")]
-    public float _beginSequenceCount;
+    [Header("Sequence Settings")]
+    public string[] _beginSequenceText;
+    public string[] _completeSequenceText;
+
+    [Header("Team Settings")] 
+    public Vector3[] _blueTeamSpawns;
+    public Vector3[] _redTeamSpawns;
 }

@@ -30,21 +30,21 @@ public class MainMenu : BaseMenu<MainMenu>
         quitButton.onClick.AddListener(QuitButton);
     }
 
-    public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
+    public override IEnumerator OpenMenuRoutine(Action onCompleted = null)
     {
         yield return Juicer.DoVector3(null, Vector3.zero, (pos) => view1.transform.localScale = pos,  view1OpenTransition, null);
         yield return Juicer.DoFloat(null, 0, (pos) => buttonHolder.alpha = pos, new JuicerFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
 
-        yield return base.OpenMenuRoutine(OnComplected);
+        yield return base.OpenMenuRoutine(onCompleted);
     }
 
-    public override IEnumerator CloseMenuRoutine(Action OnComplected = null)
+    public override IEnumerator CloseMenuRoutine(Action onCompleted = null)
     {
 
         yield return Juicer.DoFloat(null, buttonHolder.alpha, (pos) => buttonHolder.alpha = pos, new JuicerFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
         yield return Juicer.DoVector3(null, view1.transform.localScale, (pos) => view1.transform.localScale = pos, view1CloseTransition, null);
 
-        yield return base.CloseMenuRoutine(OnComplected);
+        yield return base.CloseMenuRoutine(onCompleted);
     }
 
     protected override void ResetUI()
