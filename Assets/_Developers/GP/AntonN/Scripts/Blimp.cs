@@ -8,18 +8,14 @@ public class Blimp : MonoBehaviour
     [SerializeField] private GameObject droppableObject;
     [SerializeField] private GameObject spawnIndicator;
     [SerializeField] private Transform dropPoint;
-    [SerializeField] private float dropRate = 0.1f;
     [SerializeField] private RouteUser ru;
     [SerializeField] private LayerMask detectLayer;
     [SerializeField] private State state;
-    [SerializeField] private float cooldownTime;
-
+    [SerializeField] private float dropRate = 0.1f;
     [SerializeField] private float nextTimeToAttack = 1f;
-
-    private float timer;
-
+    [SerializeField] private float cooldownTime;
     [SerializeField] private float detectionHeight;
-
+    private float timer;
 
     private void Start()
     {
@@ -77,24 +73,23 @@ public class Blimp : MonoBehaviour
 
     private void AttackTarget()
     {
-            if (timer >= nextTimeToAttack)
-            {
-                state = State.Cooldown;
-                timer = 0;
-                DropBomb();
-                ru.ToggleMovement(true);
-            }
-            else
-            {
-                timer += Time.deltaTime;
-            }
+        if (timer >= nextTimeToAttack)
+        {
+            state = State.Cooldown;
+            timer = 0;
+            DropBomb();
+            ru.ToggleMovement(true);
+        }
+        else
+        {
+            timer += Time.deltaTime;
+        }
     }
     
     private void Cooldown()
     {
         if (timer >= cooldownTime)
         {
-            
             state = State.Moving;
             timer = 0;
         }
@@ -107,7 +102,6 @@ public class Blimp : MonoBehaviour
     private void DropBomb()
     {
         DeactivateIndicator();
-        Debug.Log("Bomb!");
         Instantiate(droppableObject, dropPoint.position, Quaternion.identity);
     }
 

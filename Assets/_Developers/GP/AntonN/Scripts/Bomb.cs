@@ -26,6 +26,7 @@ public class Bomb : MonoBehaviour
 
     private void Explosion()
     {
+        //Actual explosion logic not implemented but would go here
         Debug.Log("BOOM!");
         Destroy(gameObject);
     }
