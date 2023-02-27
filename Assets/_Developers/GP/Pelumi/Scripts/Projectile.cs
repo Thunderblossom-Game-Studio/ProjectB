@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float lifeTime;
     [SerializeField] private GameEvent hitEvent;
+    [SerializeField] private GameObject testParticle;
     private Rigidbody rb;
 
     private void Awake()
@@ -28,12 +29,18 @@ public class Projectile : MonoBehaviour
     {
         hitEvent.Raise(this, new HitMarkInfo(Color.red,transform.position));
         PopUpManager.Instance.PopUpAtTextPosition(transform.position + Vector3.up * .5f, Vector3.zero, "Hit", Color.red);
-        Destroy(gameObject);
+        DestroyProjectile();
     }
 
     private IEnumerator DestoryOnDelay()
     {
         yield return new WaitForSeconds(lifeTime);
+        Destroy(gameObject);
+    }
+
+    public void DestroyProjectile()
+    {
+        Instantiate(testParticle, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }
