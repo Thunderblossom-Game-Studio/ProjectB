@@ -34,21 +34,29 @@ public class PursuingCarController : AICarController
     [Header("Patrol Points")]
     [SerializeField] Transform[] ListOfPatrolPoints;
     int NextPatrolPoint;
-    [SerializeField] Transform DeliveryPoint;
+
     [SerializeField] Transform SpawnZonePoint;
     [SerializeField] float DistanceFromPatrolPoint;
 
+    [Viewable] private Transform DeliveryPoint;
+    
     protected override void Start()
     {
         if (AIDirector.Instance)
         {
             AIDirector.Instance.bots.Add(this);
+
+            int numOfDeliveryZones = AIDirector.Instance.deliveryZones.Count;
+
+            if (numOfDeliveryZones > 0)
+                DeliveryPoint = AIDirector.Instance.deliveryZones[Random.Range(0, numOfDeliveryZones)].position;
+            else
+                Debug.LogWarning("No delivery points allocated in AI Director.");
         }
+        else Debug.LogWarning("No AI Director found in scene.");
 
         AllObjects = GameObject.FindGameObjectsWithTag("SpawnPoint");
-
         
-
         base.Start();
     }
 
@@ -60,6 +68,7 @@ public class PursuingCarController : AICarController
         }
 
     }
+
 
     protected override void Evaluate()
     {
@@ -312,7 +321,7 @@ public class PursuingCarController : AICarController
 
     private void Attack()
     {
-        Debug.Log("Attacked");
+        Debug.Log("Attack");
     }
 
     private void Flee()
@@ -352,20 +361,13 @@ public class PursuingCarController : AICarController
 
     private void Delivery()
     {
-        Debug.Log("Pickup");
+        Debug.Log("Delivery");
         agent.SetDestination(DeliveryPoint.position);
     }
 
     private void Searching()
     {
-        Debug.Log("Pickup");
+        Debug.Log("Searching");
     }
 
-    protected override void OnDrawGizmos()
-    {
-        Gizmos.color = new Color(255, 0, 0, 255);
-        Gizmos.DrawSphere(transform.position, AggroRange);
-
-        base.OnDrawGizmos();
-    }
 }

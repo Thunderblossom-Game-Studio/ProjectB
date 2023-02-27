@@ -6,7 +6,7 @@ using UnityEngine;
 public class AIDirector : Singleton<AIDirector>
 {
     #region Inspector
-    [Header("Difficulty Settings")]
+    [Header("Bot Difficulty Settings")]
     [SerializeField] private Difficulty botDifficulty;
     
     [Tooltip("The lowest difficult tier of the multiplayer bot.")]
@@ -20,22 +20,10 @@ public class AIDirector : Singleton<AIDirector>
     [Tooltip("All package spawners in the scene.")]
     public List<EntitySpawner> packageSpawners;
     [Tooltip("All delivery zones in the scene.")]
-    public List<Transform> deliveryZones;
+    public List<DeliveryPoint> deliveryZones;
     [Tooltip("All bots currently in the scene.")]
     public List<PursuingCarController> bots;
     #endregion
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     #region Struct Definition
     private enum Difficulty { EASY, MEDIUM, HARD }
@@ -43,12 +31,28 @@ public class AIDirector : Singleton<AIDirector>
     [Serializable]
     private struct DifficultySetting
     {
-        public float packageThreshold;
-
+        [Header("Health Settings")]
         public float healthThreshold;
 
+        [Header("Package Collection/Delivery Settings")]
+        public float packageThreshold;
+
+        [Header("Attack Settings")]
         public float aggroRange;
         public float attackRange;
+    }
+
+
+    [Serializable]
+    public struct DeliveryPoint
+    {
+        public enum Team { RED, BLUE, BOTH }
+
+        [Tooltip("The team that delivers to this point.")]
+        public Team team;
+
+        [Tooltip("The transform position of the delivery point.")]
+        public Transform position;
     }
     #endregion
 }

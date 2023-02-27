@@ -359,11 +359,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _packageScore: 0
-  _packageAmount: 0
   _maxPackages: 5
-  _onPickUp: {fileID: 11400000, guid: 4b1759fe418d4464da69da8ce2ab9dde, type: 2}
-  _onDeliver: {fileID: 11400000, guid: e94fc5f98f5aaf34ba76062f76667d49, type: 2}
-  _packageObject: {fileID: 5676333477140487690, guid: c273e1d1bba822c448ad29ab53a3e576, type: 3}
+  _packageObjectVisual: {fileID: 0}
   _packageSpawns:
   - {x: 0, y: 1, z: 0}
   _onDeliverEvent:
@@ -416,6 +413,11 @@ MonoBehaviour:
   Target: {fileID: 0}
   packageSpawner: {fileID: 0}
   PackageSystem: {fileID: 288890687}
+  Health: {fileID: 4619309946822765953}
+  AllObjects: []
+  NearSpawn: {fileID: 0}
+  NearBank: {fileID: 0}
+  NearPackage: {fileID: 0}
   distanceToReset: 150
   distanceBetweenAgent: 20
   AttackRange: 0
@@ -424,8 +426,38 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   ListOfPatrolPoints: []
-  DeliveryPoint: {fileID: 0}
+  SpawnZonePoint: {fileID: 0}
   DistanceFromPatrolPoint: 20
+--- !u!114 &4619309946822765953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8163660549459807136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fcea8360c8a4ae43803b3b0d73648f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isImmune: 0
+  _currentHealth: 0
+  _spawnHealth: 20
+  _maximumHealth: 20
+  _minimumHealth: 0
+  _onReduceHealth:
+    m_PersistentCalls:
+      m_Calls: []
+  _onRestoreHealth:
+    m_PersistentCalls:
+      m_Calls: []
+  _onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  _onReachFullHealth:
+    m_PersistentCalls:
+      m_Calls: []
+  _respawnPoints: []
 --- !u!4 &8163660549459807150 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1706928550936786397, guid: 5385fffbeacea004e918e0c07e43451d, type: 3}
