@@ -104,6 +104,7 @@ public class PackageSystem : MonoBehaviour
         _currentPackageObjects.Clear();
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         if (_packageSpawns.Count < 1) return;
@@ -113,5 +114,6 @@ public class PackageSystem : MonoBehaviour
             Gizmos.DrawCube(transform.position + packageLocation, _packageObjectVisual.transform.localScale);
         }
     }
+#endif
 }
 

@@ -94,10 +94,16 @@ public class RouteEditor : Editor
 
         List<Vector3> routePositions = routes.GetRoutes;
 
+        Gizmos.color = Color.yellow;
+        GUIStyle gUIStyle = new GUIStyle();
+        gUIStyle.fontSize = routes.DebugTextSize;
+
         if (routePositions != null && routePositions.Count > 0)
         {
             for (int i = 0; i < routePositions.Count; i++)
             {
+                Handles.Label(routes.GetRoute(i), routes.OwnerID + " Route" + (i + 1), gUIStyle);
+
                 EditorGUI.BeginChangeCheck();
                 Vector3 newPosition = Handles.PositionHandle(routes.GetRoute(i), Quaternion.identity);
 
