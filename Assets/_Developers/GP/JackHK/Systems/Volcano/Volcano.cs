@@ -5,53 +5,58 @@ using UnityEngine;
 
 public class Volcano : MonoBehaviour
 {
-    [Header("Settings")]
-    [Tooltip("If true, uses range detection. If false, it will use a timer")]
-    public bool _usesRangeDetection = true;
-    
-    //
     public GameObject projectile;
+    public GameObject warning;
+    public Transform origin;
     public Transform target;
-    public Transform spawn;
     public float speed;
+    public float randomDeviation;
     public float angle;
+    public float waitTime;
+    public float attackRate;
 
-    [Space(10)]
-    [SerializeField] private string PlayerTagName = "Player";
-    [SerializeField] private EntityAutoSpawner _spawner;
-    [SerializeField] private GameObject _lavaPool;
-
-    private bool _playerInRange = false;
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (_usesRangeDetection)
-        {
-            if (other.tag == PlayerTagName) { _playerInRange = true; }
-            else { _playerInRange = false; }
-            if (other == null) { _playerInRange = false; }
-        }
-
-    }
-    
+    private float timer;
+    private Vector3 tempTarget;
+        
     private void Update()
     {
-        if (_usesRangeDetection)
+        if (target == null) return;
+        if (timer > attackRate)
         {
-            if (_playerInRange) _spawner.enabled = true;
-            else _spawner.enabled = false;
+            StartCoroutine(FireVolcano());
+            timer = 0;
         }
-
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            GameObject GO = Instantiate(projectile, spawn.transform.position, Quaternion.identity);
-            float calcSpeed = (speed / 16) * Vector2.Distance(spawn.transform.position, target.transform.position);
-            StartCoroutine(Curve.TransformCurve(GO, calcSpeed, angle, spawn.transform.position, target.transform.position));
-        }
+        else { timer += Time.deltaTime; }
     }
 
-    public void CreateSplatter(GameObject sender)
+    public void SetTarget(Transform newTarget)
     {
-        Instantiate(_lavaPool, sender.transform.position, Quaternion.identity);
+        target = newTarget;
+    }
+    
+    private IEnumerator FireVolcano()
+    {
+        Warn();
+        yield return new WaitForSeconds(waitTime);
+        Attack();
+    }
+    
+    private void Warn()
+    {
+        if (target == null) return;
+        tempTarget = RandomVector(target.position);
+        Instantiate(warning, tempTarget, Quaternion.identity);
+    }
+
+    private void Attack()
+    {
+        GameObject proj = Instantiate(projectile, origin.position, Quaternion.identity);
+        StartCoroutine(Curve.TransformCurve(proj, speed, angle, origin.position, tempTarget));
+    }
+
+    private Vector3 RandomVector(Vector3 vector)
+    {
+        vector += new Vector3(UnityEngine.Random.Range(-randomDeviation, randomDeviation), 0, UnityEngine.Random.Range(-randomDeviation, randomDeviation));
+        return vector;
     }
 }

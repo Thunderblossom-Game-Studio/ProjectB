@@ -18,9 +18,10 @@ public class PackageSystem : MonoBehaviour
     [Header("Debug")]
     [Viewable] [SerializeField] private int _packageScore;
 
-    [Header("Settings")]
-    [SerializeField] private int _maxPackages;
+    [Header("Settings")] 
+    [SerializeField] private GameObject _packageDrop;
     [SerializeField] private GameObject _packageObjectVisual;
+    [SerializeField] private int _maxPackages;
     [SerializeField] private List<Vector3> _packageSpawns;
     [SerializeField] private UnityEvent _onDeliverEvent;
 
@@ -53,16 +54,26 @@ public class PackageSystem : MonoBehaviour
     public void DeliverPackages()
     {
         int totalScore = 0;
-        foreach (PackageData package in _currentPackages) { totalScore += package.PackageScore; }
-        ClearPackageData();
-        _onDeliver?.Invoke();
-        _onDeliverEvent?.Invoke();
-        
+        int totalPackage = 0;
+
+        foreach (PackageData package in _currentPackages)
+        {
+            totalScore += package.PackageScore;
+            totalPackage++;
+        }
+
         //To Change >>>
         _packageScore += totalScore;
         if (!TryGetComponent(out GamePlayer gamePlayer)) return;
-        gamePlayer.PlayerTeamData.AddScore(totalScore);
+        if (GameStateManager.Instance)
+        {
+            GameStateManager.Instance.TeamManager.AddScore(gamePlayer.PlayerTeamData, totalScore, totalPackage);
+        }
         //To Change <<<
+        
+        ClearPackageData();
+        _onDeliver?.Invoke();
+        _onDeliverEvent?.Invoke();
     }
 
     private void AddPackageVisual()
@@ -78,19 +89,31 @@ public class PackageSystem : MonoBehaviour
         packageObject.transform.localPosition = _packageSpawns[_currentPackages.Count - 1];
     }
 
+    private void DropPackages()
+    {
+        foreach (PackageData package in _currentPackages)
+        {
+            GameObject droppedPackage =
+                Instantiate(_packageDrop, transform.position + (Vector3.up * 2), Quaternion.identity);
+        }
+    }
+
     private void ClearPackageVisuals()
     {
         foreach (GameObject packageObject in _currentPackageObjects) { Destroy(packageObject); }
         _currentPackageObjects.Clear();
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
+        if (_packageSpawns.Count < 1) return;
         foreach (Vector3 packageLocation in _packageSpawns)
         {
             Gizmos.color = Color.grey;
             Gizmos.DrawCube(transform.position + packageLocation, _packageObjectVisual.transform.localScale);
         }
     }
+#endif
 }
 

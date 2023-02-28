@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class JunctionControl : MonoBehaviour
 {
+    [Header("2 Way Junction Waypoints")]
     public GameObject EastToNorth;
     public GameObject EastToWest;
     public GameObject EastToSouth;
@@ -20,7 +21,22 @@ public class JunctionControl : MonoBehaviour
     public GameObject SouthToWest;
     public GameObject SouthToEast;
 
+    [Header("4 Way Junction Waypoints")]
+    public GameObject EastLeft;
+    public GameObject EastRight;
+
+    public GameObject WestLeft;
+    public GameObject WestRight;
+
+    public GameObject NorthLeft;
+    public GameObject NorthRight;
+
+    public GameObject SouthLeft;
+    public GameObject SouthRight;
+
+    [Header("Controls")]
     public bool Change;
+    public bool FourWayJunction;
     public int Sequence;
 
     // Update is called once per frame
@@ -28,14 +44,24 @@ public class JunctionControl : MonoBehaviour
     {
         if (Change == true)
         {
-            StartCoroutine("Swap");
-            Change = false;
+            if (FourWayJunction == false)
+            {
+                StartCoroutine("Swap");
+                Change = false;
+            }
+
+            if (FourWayJunction == true)
+            {
+                StartCoroutine("FourWaySwap");
+                Change = false;
+            }
+
         }
     }
 
     IEnumerator Swap()
     {
-        Sequence = Random.Range(0, 7);
+        Sequence = Random.Range(0, 7);  //shouldn't this be a 6 not a 7?
         if (Sequence == 0)
         {
             EastToNorth.GetComponent<WaypointControl>().Red = true;
@@ -126,6 +152,44 @@ public class JunctionControl : MonoBehaviour
             SouthToWest.GetComponent<WaypointControl>().Red = true;
             SouthToEast.GetComponent<WaypointControl>().Red = true;
         }
+        yield return new WaitForSeconds(5);
+        Change = true;
+    }
+
+
+
+
+    IEnumerator FourWaySwap()
+    {
+        Sequence = Random.Range(0, 2);
+
+        if (Sequence == 0)
+        {
+            EastLeft.GetComponent<WaypointControl>().Red = true;
+            EastRight.GetComponent<WaypointControl>().Red = true;
+            WestLeft.GetComponent<WaypointControl>().Red = true;
+            WestRight.GetComponent<WaypointControl>().Red = true;
+
+            NorthLeft.GetComponent<WaypointControl>().Red = false;
+            NorthRight.GetComponent<WaypointControl>().Red = false;
+            SouthLeft.GetComponent<WaypointControl>().Red = false;
+            SouthRight.GetComponent<WaypointControl>().Red = false;
+        }
+
+        if (Sequence == 1)
+        {
+            EastLeft.GetComponent<WaypointControl>().Red = false;
+            EastRight.GetComponent<WaypointControl>().Red = false;
+            WestLeft.GetComponent<WaypointControl>().Red = false;
+            WestRight.GetComponent<WaypointControl>().Red = false;
+
+            NorthLeft.GetComponent<WaypointControl>().Red = true;
+            NorthRight.GetComponent<WaypointControl>().Red = true;
+            SouthLeft.GetComponent<WaypointControl>().Red = true;
+            SouthRight.GetComponent<WaypointControl>().Red = true;
+        }
+
+
         yield return new WaitForSeconds(5);
         Change = true;
     }

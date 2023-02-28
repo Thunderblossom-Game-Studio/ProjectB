@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,7 +31,7 @@ public class HazzardWarning : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1) && images.Count > 0)
         {
-            ToggleImageDisplay(0);
+            EnableImageDisplay(0);
         }
         //else if (Input.GetKeyDown(KeyCode.Alpha2) && images.Count > 1)
         //{
@@ -50,10 +51,9 @@ public class HazzardWarning : MonoBehaviour
         //}
     }
 
-  public void ToggleImageDisplay(int index)
+    public void EnableImageDisplay(int index)
     {
-        isImageDisplayed[index] = !isImageDisplayed[index];
-        images[index].enabled = isImageDisplayed[index];
+        images[index].enabled = true;
 
         int displayedImagesCount = 0;
         int displayedImageIndex = -1;
@@ -93,7 +93,10 @@ public class HazzardWarning : MonoBehaviour
             }
         }
     }
-
+    
+    public void DisableImageDisplay(int index)
+    {
+        images[index].enabled = false;
+    }
 }
-
 

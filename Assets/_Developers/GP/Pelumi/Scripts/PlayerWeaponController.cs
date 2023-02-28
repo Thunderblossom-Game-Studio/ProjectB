@@ -12,24 +12,19 @@ public class PlayerWeaponController : MonoBehaviour
     [SerializeField] private GameEvent _onReloadEnd;
 
     [SerializeField] private LayerMask detectMask;
-    private WeaponHandler weaponHandler;
-
-    private void Awake()
-    {
-        weaponHandler = GetComponent<WeaponHandler>();
-    }
+    [SerializeField] private Weapon weapon;
 
     private void OnEnable()
     {
-        weaponHandler.OnAmmoChanged += WeaponHandler_OnAmmoChanged;
-        weaponHandler.OnReloadStart += WeaponHandler_OnReloadStart;
-        weaponHandler.OnReloading += WeaponHandler_OnReloadDuration;
-        weaponHandler.OnReloadEnd += WeaponHandler_OnReloadEnd;
+        weapon.OnAmmoChanged += WeaponHandler_OnAmmoChanged;
+        weapon.OnReloadStart += WeaponHandler_OnReloadStart;
+        weapon.OnReloading += WeaponHandler_OnReloadDuration;
+        weapon.OnReloadEnd += WeaponHandler_OnReloadEnd;
     }
 
     private void WeaponHandler_OnAmmoChanged(object sender, System.EventArgs e)
     {
-        _onOnAmmoChanged.Raise(this, new int[] { weaponHandler.CurrentAmmo, weaponHandler.MaxAmmo });
+        _onOnAmmoChanged.Raise(this, new int[] { weapon.CurrentAmmo, weapon.MaxAmmo });
     }
 
     private void WeaponHandler_OnReloadStart(object sender, System.EventArgs e)
@@ -49,9 +44,9 @@ public class PlayerWeaponController : MonoBehaviour
 
     void Update()
     {
-        if (debugMode) DebugMouse();       
-        weaponHandler.SetAim(Camera.main.transform.forward * 200.0f);
-        if (InputManager.Instance.HandleFireInput().IsPressed()) weaponHandler.Shoot(GetWorldMousePosition());
+        if (debugMode) DebugMouse();
+        weapon.SetAim(Camera.main.transform.forward * 200.0f);
+        if (InputManager.Instance.HandleFireInput().IsPressed()) weapon.Shoot(GetWorldMousePosition());
     }
 
     void DebugMouse()
@@ -62,8 +57,7 @@ public class PlayerWeaponController : MonoBehaviour
 
     public Vector3 GetWorldMousePosition()
     {
-        Vector3 worldMousePosition = Vector3.zero;
         Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
-        if (Physics.Raycast(ray, out RaycastHit hit, 999f, detectMask)) worldMousePosition = hit.point; else worldMousePosition = ray.GetPoint(200.0f); return worldMousePosition;
+        if (Physics.Raycast(ray, out RaycastHit hit, 999f, detectMask)) return hit.point; else return ray.GetPoint(300.0f);
     }
 }

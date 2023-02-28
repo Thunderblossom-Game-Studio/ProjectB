@@ -81,7 +81,7 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
         tabUI.SelectRight();
     }
     
-    public override IEnumerator OpenMenuRoutine(Action OnComplected = null)
+    public override IEnumerator OpenMenuRoutine(Action onCompleted = null)
     {
         StartCoroutine(Juicer.DoVector3(null, Vector3.zero, (pos) => title.transform.localScale = pos, 
             new JuicerVector3Properties(new Vector3(1, 1, 1), .1f, animationCurveType: AnimationCurveType.EaseInOut), null));
@@ -89,10 +89,10 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
         yield return Juicer.DoFloat(null, -1177, (v) => view2.anchoredPosition =  new Vector2(v, view2.anchoredPosition.y), new JuicerFloatProperties(0, .25f, animationCurveType: AnimationCurveType.EaseInOut));
         yield return Juicer.DoFloat(null, buttonHolder.alpha,(v) => buttonHolder.alpha = v, new JuicerFloatProperties(1, .5f, animationCurveType: AnimationCurveType.EaseInOut));
 
-        yield return base.OpenMenuRoutine(OnComplected);
+        yield return base.OpenMenuRoutine(onCompleted);
     }
 
-    public override IEnumerator CloseMenuRoutine(Action OnComplected = null)
+    public override IEnumerator CloseMenuRoutine(Action onCompleted = null)
     {
         yield return Juicer.DoFloat(null, buttonHolder.alpha, (v) => buttonHolder.alpha = v, new JuicerFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut));
         yield return Juicer.DoFloat(null, 0, (v) => view2.anchoredPosition = new Vector2(v, view2.anchoredPosition.y), new JuicerFloatProperties(-1177, .25f, animationCurveType: AnimationCurveType.EaseInOut));
@@ -100,7 +100,7 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
         StartCoroutine(Juicer.DoVector3(null, title.transform.localScale, (pos) => title.transform.localScale = pos,
     new JuicerVector3Properties(Vector3.zero, .1f, animationCurveType: AnimationCurveType.EaseInOut), null));
 
-        yield return base.CloseMenuRoutine(OnComplected);
+        yield return base.CloseMenuRoutine(onCompleted);
     }
     
     protected override void ResetUI()
