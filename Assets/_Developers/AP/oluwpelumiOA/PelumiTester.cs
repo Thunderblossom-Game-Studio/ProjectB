@@ -113,7 +113,10 @@ public class PelumiTester : MonoBehaviour
         for (int i = 0; i < trainRoute.Count; i++)
         {
             Gizmos.DrawWireSphere(trainRoute[i], .2f);
+
+            #if UNITY_EDITOR
             Handles.Label(trainRoute[i], "Route" + (i + 1), gUIStyle);
+            #endif
         } 
 
         Gizmos.color = Color.green;

@@ -49,16 +49,9 @@ public class Routes : MonoBehaviour
         if (route == null || route.Count == 0) return;
 
         Gizmos.color = Color.yellow;
-        GUIStyle gUIStyle = new GUIStyle();
-        gUIStyle.fontSize = debugTextSize;
-
         Vector3 startPos1 = GetRoute(0);
 
-        for (int i = 0; i < route.Count; i++)
-        {
-            Gizmos.DrawWireSphere(GetRoute(i), debugCircleSize);
-            Handles.Label(GetRoute(i), ownerID + " Route" + (i + 1), gUIStyle);
-        }
+        for (int i = 0; i < route.Count; i++) Gizmos.DrawWireSphere(GetRoute(i), debugCircleSize);
 
         Gizmos.color = Color.green;
 
