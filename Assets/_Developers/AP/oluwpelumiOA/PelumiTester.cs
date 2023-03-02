@@ -49,7 +49,7 @@ public class PelumiTester : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            StartCoroutine(Juicer.DoMoveSmooth(debugObject.transform, transform.position, landPosition.transform.position , speed,  45f));
+            StartCoroutine(PathUtil.DoMove(debugObject.transform, transform.position, landPosition.transform.position ,  45f));
         }
 
         Train();

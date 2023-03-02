@@ -9,49 +9,17 @@ namespace Pelumi.Juicer
 {
     public static class Juicer
     {
-        public static IEnumerator DoMove(Transform objectToMove, Vector3 startPos, Vector3 endPos, float angle, Action OnFinished = null)
-        {
-            float count = 0.0f;
-            Vector3 midPoint = startPos + (endPos + -startPos) / 2 + Vector3.up * angle;
-            while (count < 1.0f)
-            {
-                count += 1.0f * Time.deltaTime;
-                Vector3 start = Vector3.Lerp(startPos, midPoint, count);
-                Vector3 end = Vector3.Lerp(midPoint, endPos, count);
-                objectToMove.position = Vector3.Lerp(start, end, count);
-                yield return null;
-            }
-
-            if (OnFinished != null) OnFinished();
-        }
-
-        public static IEnumerator DoMoveSmooth(Transform objectToMove, Vector3 startPos, Vector3 endPos, float angle, float duration, Action OnFinished = null)
-        {
-            float i = 0.0f;
-            float rate = 1.0f / duration;
-            Vector3 midPoint = startPos + (endPos + -startPos) / 2 + Vector3.up * angle;
-            while (i < 1.0f)
-            {
-                i += Time.unscaledDeltaTime * rate;
-                Vector3 start = Vector3.Lerp(startPos, midPoint, i);
-                Vector3 end = Vector3.Lerp(midPoint, endPos, i);
-                objectToMove.position = Vector3.Lerp(start, end, i);
-                yield return null;
-            }
-
-            if (OnFinished != null) OnFinished();
-        }
-
         public static IEnumerator DoMutipleChangeColor(Renderer renderer, List<JuicerColorProperties> colorProperties, bool loop = false, Action OnFinished = null)
         {
-            foreach (JuicerColorProperties colourProperty in colorProperties)
+            do
             {
-                yield return DoChangeColor(renderer, colourProperty, OnFinished);
+                foreach (JuicerColorProperties colourProperty in colorProperties)
+                {
+                    yield return DoChangeColor(renderer, colourProperty, OnFinished);
+                }
+                if (OnFinished != null) OnFinished();
             }
-
-            if (OnFinished != null) OnFinished();
-
-            if (loop) yield return DoMutipleChangeColor(renderer, colorProperties, loop, OnFinished);
+            while (loop);
         }
 
         public static IEnumerator DoChangeColor(Renderer renderer, JuicerColorProperties colorProperties, Action OnFinished = null)
@@ -74,16 +42,18 @@ namespace Pelumi.Juicer
         {
             OnBegin?.Invoke();
             Vector3 starValue = startingValue;
-            for (int i = 0; i < feelVector3Properties.Count; i++)
+            do
             {
-                yield return DoVector3(null, starValue, valueToModify, feelVector3Properties[i], null);
-                starValue = feelVector3Properties[i].destination;
-                OnEachFinished?.Invoke();
-                yield return new WaitForSecondsRealtime(delay);
+                for (int i = 0; i < feelVector3Properties.Count; i++)
+                {
+                    yield return DoVector3(null, starValue, valueToModify, feelVector3Properties[i], null);
+                    starValue = feelVector3Properties[i].destination;
+                    OnEachFinished?.Invoke();
+                    yield return new WaitForSecondsRealtime(delay);
+                }
+                if (OnRoundFinished != null) OnRoundFinished();
             }
-
-            if (OnRoundFinished != null) OnRoundFinished();
-            if (loop) yield return DoMultipleVector3(OnBegin, starValue, valueToModify, feelVector3Properties, delay, loop, OnEachFinished, OnRoundFinished);
+            while (loop);
         }
 
 

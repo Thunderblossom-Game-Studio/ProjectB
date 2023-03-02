@@ -37,12 +37,12 @@ public abstract class Weapon : MonoBehaviour
     public int CurrentAmmo => currentAmmo;
     public int MaxAmmo => weaponSO.maxAmmo;
 
-    private void Start()
+    protected virtual void Start()
     {
         ModifyAmmo(weaponSO.maxAmmo);
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         HandleHorizontalAndVerticalRotation();
     }
@@ -70,7 +70,7 @@ public abstract class Weapon : MonoBehaviour
 
     public void TryShootProjectile(Vector3 targetPos)
     {
-        if (currentAmmo > 0) ShootProjectile(targetPos); else if (weaponState != WeaponState.Reloading) StartCoroutine(Reload());
+        if (currentAmmo > 0) ShootProjectile(targetPos); else if (weaponState != WeaponState.Reloading) Reload();
     }
 
     public virtual void ShootProjectile(Vector3 targetPos)
@@ -82,9 +82,18 @@ public abstract class Weapon : MonoBehaviour
     {
         currentAmmo = newValue;
         OnAmmoChanged?.Invoke(this, EventArgs.Empty);
+
+        if(currentAmmo <= 0) Reload();
     }
 
-    public IEnumerator Reload()
+    public void Reload()
+    {
+        if (weaponState == WeaponState.Reloading) return;
+        weaponState = WeaponState.Reloading;
+        StartCoroutine(ReloadRoutine());
+    }
+
+    public IEnumerator ReloadRoutine()
     {
         OnReloadStart?.Invoke(this, EventArgs.Empty);
         float reloadTime = weaponSO.reloadTime;
