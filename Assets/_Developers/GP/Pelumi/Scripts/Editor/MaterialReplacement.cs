@@ -5,17 +5,13 @@ using UnityEngine;
 
 public class MaterialReplacement : EditorWindow
 {
-    private int selection = 0;
-    private float polygonCount;
-    public Material materialInUse;
+    private Material materialInUse;
+    private GUIContent materialContent;
 
-
- [MenuItem("Window/Custom Tools/MaterialReplacer")]
+    [MenuItem("Window/Custom Tools/MaterialReplacer")]
     public static void ShowWindow()
     {
         GetWindow(typeof(MaterialReplacement));
-
-     
     }
 
     void OnInspectorUpdate()
@@ -35,33 +31,26 @@ public class MaterialReplacement : EditorWindow
         GUILayout.Label("Selected GameObject : " + Selection.gameObjects.Length);
         GUILayout.EndHorizontal();
 
-        //SerializedObject serializedObject = new SerializedObject(materialInUse);
-        //EditorGUILayout.PropertyField(serializedObject.FindProperty("materialInUse"));
+        materialInUse = (Material)EditorGUILayout.ObjectField(new GUIContent("Material", "Material to assign to all objects and children"), materialInUse, typeof(Material), false);
 
-        if (Selection.objects.Length != selection)
+        if (Selection.gameObjects.Length > 0)
         {
-            selection = Selection.objects.Length;
-        }
-
-        for (int i = 0; i < Selection.objects.Length; i++)
-        {
-            GUILayout.BeginHorizontal("box");
-            GUILayout.Label(Selection.objects[i].name);
-            GUILayout.EndHorizontal();
+            GUI.backgroundColor = Color.red;
+            GUILayout.BeginVertical("box");
+            for (int i = 0; i < Selection.objects.Length; i++)
+            {
+                GUILayout.Label(Selection.objects[i].name);
+            }
+            GUI.backgroundColor = Color.white;
+            GUILayout.EndVertical();
         }
 
         GUILayout.Space(5);
         GUILayout.BeginHorizontal("box");
 
-        GameObject[] selectedGameobjects = Selection.gameObjects;
-
-
         if(GUILayout.Button("ReplaceAllMaterials"))
         {
-            if (selectedGameobjects.Length > 0)
-            {
-                ReplaceAllMaterials(materialInUse, selectedGameobjects);
-            }
+            if (Selection.gameObjects.Length > 0) ReplaceAllMaterials(materialInUse, Selection.gameObjects);
         }
 
         GUILayout.EndHorizontal();
