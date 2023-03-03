@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1960606152865783511, guid: a3e8c4067bd30f946802561869ae3383, type: 3}
+  - {fileID: 2100000, guid: 3ffb3282a9a96ff4fba0c2c077350840, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -147,7 +147,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 3530426321784168972, guid: a3e8c4067bd30f946802561869ae3383, type: 3}
+  - {fileID: 2100000, guid: 3ffb3282a9a96ff4fba0c2c077350840, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -212,9 +212,10 @@ GameObject:
   - component: {fileID: 8934833153066333670}
   - component: {fileID: 1917288091438944690}
   - component: {fileID: 3100151052400385853}
+  - component: {fileID: 5737200625090577786}
   m_Layer: 0
   m_Name: BlimpSmallPropeller 002
-  m_TagString: Untagged
+  m_TagString: SecondPropeller
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -262,7 +263,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -831166812831301297, guid: a3e8c4067bd30f946802561869ae3383, type: 3}
+  - {fileID: 2100000, guid: 3ffb3282a9a96ff4fba0c2c077350840, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -284,6 +285,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5737200625090577786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355528138929178245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c13d1996cc14a41b6d02c45a0224c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 0
 --- !u!1 &2080846134844297587
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,9 +309,10 @@ GameObject:
   - component: {fileID: 1967107589883068100}
   - component: {fileID: 1044914507775233564}
   - component: {fileID: 3408075519626026874}
+  - component: {fileID: 1814388817924637044}
   m_Layer: 0
   m_Name: BlimpLargePropellerSecond001
-  m_TagString: Untagged
+  m_TagString: SecondPropeller
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -345,7 +360,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8758064739636956044, guid: a3e8c4067bd30f946802561869ae3383, type: 3}
+  - {fileID: 2100000, guid: 3ffb3282a9a96ff4fba0c2c077350840, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -367,6 +382,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1814388817924637044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080846134844297587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c13d1996cc14a41b6d02c45a0224c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 0
 --- !u!1 &2082697264084659879
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,7 +457,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 3530426321784168972, guid: a3e8c4067bd30f946802561869ae3383, type: 3}
+  - {fileID: 2100000, guid: 3ffb3282a9a96ff4fba0c2c077350840, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -462,9 +490,10 @@ GameObject:
   - component: {fileID: 938948251684492376}
   - component: {fileID: 2239374511430950698}
   - component: {fileID: 8472476919029140500}
+  - component: {fileID: 6348426562093779201}
   m_Layer: 0
   m_Name: BlimpLargePropellerSecond
-  m_TagString: Untagged
+  m_TagString: SecondPropeller
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -512,7 +541,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8758064739636956044, guid: a3e8c4067bd30f946802561869ae3383, type: 3}
+  - {fileID: 2100000, guid: 3ffb3282a9a96ff4fba0c2c077350840, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -534,6 +563,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6348426562093779201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2454183455892780895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c13d1996cc14a41b6d02c45a0224c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 0
 --- !u!1 &2946358760675709241
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,7 +638,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 3530426321784168972, guid: a3e8c4067bd30f946802561869ae3383, type: 3}
+  - {fileID: 2100000, guid: 3ffb3282a9a96ff4fba0c2c077350840, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -629,9 +671,10 @@ GameObject:
   - component: {fileID: 2760363713453338242}
   - component: {fileID: 7396940968089885819}
   - component: {fileID: 3940223895725790573}
+  - component: {fileID: 4010294853927024256}
   m_Layer: 0
   m_Name: BlimpSmallPropeller 001
-  m_TagString: Untagged
+  m_TagString: SecondPropeller
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -679,7 +722,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -831166812831301297, guid: a3e8c4067bd30f946802561869ae3383, type: 3}
+  - {fileID: 2100000, guid: 3ffb3282a9a96ff4fba0c2c077350840, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -701,6 +744,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4010294853927024256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2991550435227600717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c13d1996cc14a41b6d02c45a0224c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 0
 --- !u!1 &3661711942395362179
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,9 +768,10 @@ GameObject:
   - component: {fileID: 396192949203621158}
   - component: {fileID: 7192569702276731825}
   - component: {fileID: 7853071565027245072}
+  - component: {fileID: 6891540559385403875}
   m_Layer: 0
   m_Name: BlimpLargePropellerFirst001
-  m_TagString: Untagged
+  m_TagString: FirstPropeller
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -762,7 +819,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 848767063955237296, guid: a3e8c4067bd30f946802561869ae3383, type: 3}
+  - {fileID: 2100000, guid: 3ffb3282a9a96ff4fba0c2c077350840, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -784,6 +841,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6891540559385403875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3661711942395362179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c13d1996cc14a41b6d02c45a0224c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 0
 --- !u!1 &3711058267192833310
 GameObject:
   m_ObjectHideFlags: 0
@@ -847,7 +917,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1960606152865783511, guid: a3e8c4067bd30f946802561869ae3383, type: 3}
+  - {fileID: 2100000, guid: 3ffb3282a9a96ff4fba0c2c077350840, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -880,9 +950,10 @@ GameObject:
   - component: {fileID: 2579220702580938846}
   - component: {fileID: 5067323356345621758}
   - component: {fileID: 2103639066259751528}
+  - component: {fileID: 6685077617419993412}
   m_Layer: 0
   m_Name: BlimpSmallPropeller 003
-  m_TagString: Untagged
+  m_TagString: FirstPropeller
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -930,7 +1001,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -831166812831301297, guid: a3e8c4067bd30f946802561869ae3383, type: 3}
+  - {fileID: 2100000, guid: 3ffb3282a9a96ff4fba0c2c077350840, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -952,6 +1023,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6685077617419993412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3889782058782258310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c13d1996cc14a41b6d02c45a0224c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 0
 --- !u!1 &4562610326513097282
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,9 +1047,10 @@ GameObject:
   - component: {fileID: 1930355633487439746}
   - component: {fileID: 7352000616920998374}
   - component: {fileID: 3318359232187070717}
+  - component: {fileID: 441692106358742641}
   m_Layer: 0
   m_Name: BlimpLargePropellerFirst
-  m_TagString: Untagged
+  m_TagString: FirstPropeller
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1013,7 +1098,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 848767063955237296, guid: a3e8c4067bd30f946802561869ae3383, type: 3}
+  - {fileID: 2100000, guid: 3ffb3282a9a96ff4fba0c2c077350840, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1035,6 +1120,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &441692106358742641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4562610326513097282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c13d1996cc14a41b6d02c45a0224c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 0
 --- !u!1 &5439067682394634009
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,6 +1144,8 @@ GameObject:
   - component: {fileID: 5439067682394634008}
   - component: {fileID: 1544437016144784253}
   - component: {fileID: 1544437016144784252}
+  - component: {fileID: 1522747671}
+  - component: {fileID: 4849237403694302222}
   m_Layer: 0
   m_Name: Blimp
   m_TagString: Untagged
@@ -1110,8 +1210,57 @@ MonoBehaviour:
   rotateOnRoute: 1
   moveSpeed: 20
   rotateSpeed: 100
-  routes: {fileID: 0}
+  routes: {fileID: 1522747671}
   nextTrainRoute: {x: 0, y: 0, z: 0}
+--- !u!114 &1522747671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5439067682394634009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdc9b464297dcf240b157e369de03795, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerID: Blimp
+  isLocal: 0
+  route:
+  - {x: -82, y: 200, z: 118.3}
+  - {x: -226.17427, y: 200, z: 123.3}
+  - {x: -192.39886, y: 200, z: -197.56598}
+  - {x: 3.012951, y: 200, z: -192.56598}
+  - {x: 186.00467, y: 200, z: -187.56598}
+  - {x: 205.27585, y: 200, z: 5.178589}
+  - {x: -22.399567, y: 200, z: 10.178589}
+  - {x: -22.399567, y: 200, z: 217.64404}
+  - {x: 208.00032, y: 200, z: 222.64404}
+  debugTextSize: 20
+  debugCircleSize: 5
+--- !u!114 &4849237403694302222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5439067682394634009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f040b0440216a8e4799f083a7a99c6e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugSpeedAtRunTime: 0
+  speed: 30
+  speedContainer:
+  - {fileID: 441692106358742641}
+  - {fileID: 6348426562093779201}
+  - {fileID: 6891540559385403875}
+  - {fileID: 1814388817924637044}
+  - {fileID: 3778343861521473341}
+  - {fileID: 6685077617419993412}
+  - {fileID: 4010294853927024256}
+  - {fileID: 5737200625090577786}
 --- !u!1 &5952326325797653223
 GameObject:
   m_ObjectHideFlags: 0
@@ -1179,7 +1328,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5520297619899580414, guid: a3e8c4067bd30f946802561869ae3383, type: 3}
+  - {fileID: 2100000, guid: 3ffb3282a9a96ff4fba0c2c077350840, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1263,7 +1412,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 3530426321784168972, guid: a3e8c4067bd30f946802561869ae3383, type: 3}
+  - {fileID: 2100000, guid: 3ffb3282a9a96ff4fba0c2c077350840, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1296,9 +1445,10 @@ GameObject:
   - component: {fileID: 7787429466798388991}
   - component: {fileID: 8750395754755945766}
   - component: {fileID: 6779823058507616446}
+  - component: {fileID: 3778343861521473341}
   m_Layer: 0
   m_Name: BlimpSmallPropeller 004
-  m_TagString: Untagged
+  m_TagString: FirstPropeller
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1346,7 +1496,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -831166812831301297, guid: a3e8c4067bd30f946802561869ae3383, type: 3}
+  - {fileID: 2100000, guid: 3ffb3282a9a96ff4fba0c2c077350840, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1368,6 +1518,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3778343861521473341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7151830868519437407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c13d1996cc14a41b6d02c45a0224c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: 0
 --- !u!1 &7763541108278593091
 GameObject:
   m_ObjectHideFlags: 0

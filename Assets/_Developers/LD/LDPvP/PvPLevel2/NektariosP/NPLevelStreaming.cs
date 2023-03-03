@@ -15,6 +15,12 @@ public class NPLevelStreaming : MonoBehaviour
         if (sceneName == "PvPLevel2Part1")
         {
             SceneManager.LoadScene("PvPLevel2Part2", LoadSceneMode.Additive);
+            SceneManager.LoadScene("PvPLevel2ND", LoadSceneMode.Additive);
+            SceneManager.LoadScene("PvPLevel2UX", LoadSceneMode.Additive);
+            SceneManager.LoadScene("PvPLevel2AI", LoadSceneMode.Additive);
+            SceneManager.LoadScene("PvPLevel2GP", LoadSceneMode.Additive);
+            SceneManager.LoadScene("PvPLevel2GD", LoadSceneMode.Additive);
+            SceneManager.LoadScene("PvPLevel2AD", LoadSceneMode.Additive);
         }
         else
         {

@@ -5,20 +5,75 @@ using UnityEngine;
 
 public class Catapult : Weapon
 {
+    public enum State { Reload, Fire }
+
+    [Space(5)]
+
+    [Header("Ref")]
     [SerializeField] private Transform thrower;
-    [SerializeField] private JuicerVector3Properties juicerVector3Properties;
+    [SerializeField] private LineRenderer lineRenderer;
+
+    [Header("Properties")]
+    [SerializeField] private List<JuicerVector3Properties> throwProperties;
+    [SerializeField] private float throwerResetDelay;
+    [SerializeField] private float range;
+    [SerializeField] private float minAngle;
+    [SerializeField] private float maxAngle;
+    [SerializeField] private int vertextCount;
+
+    [Header("Test")]
+    [Viewable] [SerializeField] private float angle;
+    [Viewable] [SerializeField] private State state;
+    [Viewable] [SerializeField] private LayerMask layerMask;
+    [Viewable] [SerializeField] private CatapultProjectile loadedProjectile;
+    [Viewable] [SerializeField] private bool inAction;
+    [Viewable] [SerializeField] private Vector3 targetPos;
+
+    protected override void Start()
+    {
+        base.Start();
+        SwitchState(State.Reload);
+    }
 
     public override void ShootProjectile(Vector3 targetPos)
     {
+        if (inAction) return;
         base.ShootProjectile(targetPos);
+        inAction = true;
+        StartCoroutine(Juicer.DoMultipleVector3(null, Vector3.zero, (rotation) => thrower.localEulerAngles = rotation, throwProperties, throwerResetDelay, false, HandleState, null));
+    }
 
-        StartCoroutine(Juicer.DoVector3(null, Vector3.zero,  (rotation) => thrower.localEulerAngles = rotation, juicerVector3Properties, null));
+    public void DrawPath(Vector3 _targetPos)
+    {
+        targetPos = _targetPos;
+        PathUtil.CalculateAngle(firePoint[0].position, targetPos, minAngle, maxAngle);
+        PathUtil.DrawPath(lineRenderer, firePoint[0].position, targetPos, angle, vertextCount);
+    }
 
-        //for (int i = 0; i < firePoint.Length; i++)
-        //{
-        //    Projectile projectile = Instantiate(weaponSO.projectile, firePoint[i].position, Quaternion.identity);
-        //    StartCoroutine(Juicer.DoMove(projectile.transform, firePoint[i].position, targetPos, 45));
-        //    ModifyAmmo(currentAmmo - 1);
-        //}
+    public void HandleState()
+    {
+        switch (state)
+        {
+            case State.Reload: SwitchState(State.Fire); break;
+            case State.Fire: SwitchState(State.Reload); break;
+        }
+    }
+
+    public void SwitchState(State _state)
+    {
+        state = _state;
+        switch (state)
+        {
+            case State.Reload:
+                loadedProjectile = Instantiate(weaponSO.projectile, firePoint[0].position, Quaternion.identity) as CatapultProjectile;
+                loadedProjectile.transform.SetParent(firePoint[0]);
+                inAction = false;
+                break;
+            case State.Fire:
+                ModifyAmmo(currentAmmo - 1);
+                loadedProjectile.transform.SetParent(null);
+                loadedProjectile.SetUp(targetPos, weaponSO.projectileSpeed, angle);
+                break;
+        }
     }
 }

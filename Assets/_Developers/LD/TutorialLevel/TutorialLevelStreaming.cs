@@ -19,6 +19,9 @@ public class TutorialLevelStreaming : MonoBehaviour
             SceneManager.LoadScene("TutorialLevelND", LoadSceneMode.Additive);
             SceneManager.LoadScene("TutorialLevelAP", LoadSceneMode.Additive);
             SceneManager.LoadScene("TutorialLevelGP", LoadSceneMode.Additive);
+            SceneManager.LoadScene("TutorialLevelGD", LoadSceneMode.Additive);
+            SceneManager.LoadScene("TutorialLevelAD", LoadSceneMode.Additive);
+            SceneManager.LoadScene("TutorialLevelUX", LoadSceneMode.Additive);
         }
         else
         {

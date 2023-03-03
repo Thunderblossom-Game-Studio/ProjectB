@@ -40,7 +40,7 @@ public class RouteUser : MonoBehaviour
     public void RotateToFaceTarget()
     {
         Quaternion rotation = Quaternion.LookRotation(transform.position - nextTrainRoute);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * moveSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotateSpeed);
     }
 
     public void HandleRouteChange()
