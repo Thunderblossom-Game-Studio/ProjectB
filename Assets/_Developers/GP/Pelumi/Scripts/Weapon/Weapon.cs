@@ -16,6 +16,10 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected float rightRotationLimit = 180f;
     [Range(0, 180)]
     [SerializeField] protected float leftRotationLimit = 180f;
+    [Range(0, 180)]
+    [SerializeField] protected float upRotationLimit = 180f;
+    [Range(0, 180)]
+    [SerializeField] protected float downRotationLimit = 180f;
     [Range(0, 300)]
     [SerializeField] protected float turnSpeed = 300f;
 
@@ -36,6 +40,7 @@ public abstract class Weapon : MonoBehaviour
     public void SetAim(Vector3 AimPosition) => aimPoint = AimPosition;
     public int CurrentAmmo => currentAmmo;
     public int MaxAmmo => weaponSO.maxAmmo;
+    public float Range => weaponSO.range;
 
     protected virtual void Start()
     {
@@ -44,7 +49,7 @@ public abstract class Weapon : MonoBehaviour
 
     protected virtual void Update()
     {
-        HandleHorizontalAndVerticalRotation();
+        NewHandleHorizontalAndVerticalRotation();
     }
 
     private void HandleHorizontalAndVerticalRotation()
@@ -52,6 +57,16 @@ public abstract class Weapon : MonoBehaviour
         Vector3 targetPositionInLocalSpace = aimPoint;
         if (!rotateVertical) targetPositionInLocalSpace.y = 0;
         Vector3 limitedRotation = Vector3.RotateTowards(Vector3.forward, targetPositionInLocalSpace, (targetPositionInLocalSpace.x >= 0.0f) ? Mathf.Deg2Rad * rightRotationLimit : Mathf.Deg2Rad * leftRotationLimit, float.MaxValue);
+        Quaternion whereToRotate = Quaternion.LookRotation(limitedRotation);
+        content.rotation = Quaternion.RotateTowards(content.rotation, whereToRotate, turnSpeed * Time.deltaTime);
+    }
+
+    private void NewHandleHorizontalAndVerticalRotation()
+    {
+        Vector3 targetPositionInLocalSpace = aimPoint;
+        targetPositionInLocalSpace.y = rotateVertical ? Mathf.Clamp(targetPositionInLocalSpace.y, -upRotationLimit, downRotationLimit) : 0;
+        targetPositionInLocalSpace.x = Mathf.Clamp(targetPositionInLocalSpace.x, -leftRotationLimit, rightRotationLimit);
+        Vector3 limitedRotation = Vector3.RotateTowards(Vector3.forward, targetPositionInLocalSpace, float.MaxValue, float.MaxValue);
         Quaternion whereToRotate = Quaternion.LookRotation(limitedRotation);
         content.rotation = Quaternion.RotateTowards(content.rotation, whereToRotate, turnSpeed * Time.deltaTime);
     }

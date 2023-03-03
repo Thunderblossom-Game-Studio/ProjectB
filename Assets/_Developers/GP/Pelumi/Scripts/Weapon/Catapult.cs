@@ -15,7 +15,7 @@ public class Catapult : Weapon
 
     [Header("Properties")]
     [SerializeField] private List<JuicerVector3Properties> throwProperties;
-    [SerializeField] private float throwerResetdelay;
+    [SerializeField] private float throwerResetDelay;
     [SerializeField] private float range;
     [SerializeField] private float minAngle;
     [SerializeField] private float maxAngle;
@@ -27,6 +27,7 @@ public class Catapult : Weapon
     [Viewable] [SerializeField] private LayerMask layerMask;
     [Viewable] [SerializeField] private CatapultProjectile loadedProjectile;
     [Viewable] [SerializeField] private bool inAction;
+    [Viewable] [SerializeField] private Vector3 targetPos;
 
     protected override void Start()
     {
@@ -34,29 +35,19 @@ public class Catapult : Weapon
         SwitchState(State.Reload);
     }
 
-    protected override void Update()
-    {
-        base.Update();
-        DrawLine();
-
-        if(IsRayHitting(firePoint[0].position, layerMask, out RaycastHit raycastHit))
-        {
-            Debug.DrawLine(firePoint[0].position, raycastHit.point, Color.red);
-        }
-    }
-
     public override void ShootProjectile(Vector3 targetPos)
     {
         if (inAction) return;
         base.ShootProjectile(targetPos);
         inAction = true;
-        StartCoroutine(Juicer.DoMultipleVector3(null, Vector3.zero, (rotation) => thrower.localEulerAngles = rotation, throwProperties, throwerResetdelay, false, HandleState, null));
+        StartCoroutine(Juicer.DoMultipleVector3(null, Vector3.zero, (rotation) => thrower.localEulerAngles = rotation, throwProperties, throwerResetDelay, false, HandleState, null));
     }
 
-    public void DrawLine()
+    public void DrawPath(Vector3 _targetPos)
     {
-        angle = PathUtil.CalculateAngle(firePoint[0].position, GetWorldMousePosition(), minAngle, maxAngle);
-        PathUtil.DrawPath(lineRenderer, firePoint[0].position, GetWorldMousePosition(), angle, vertextCount);
+        targetPos = _targetPos;
+        PathUtil.CalculateAngle(firePoint[0].position, targetPos, minAngle, maxAngle);
+        PathUtil.DrawPath(lineRenderer, firePoint[0].position, targetPos, angle, vertextCount);
     }
 
     public void HandleState()
@@ -81,20 +72,8 @@ public class Catapult : Weapon
             case State.Fire:
                 ModifyAmmo(currentAmmo - 1);
                 loadedProjectile.transform.SetParent(null);
-                loadedProjectile.SetUp(GetWorldMousePosition(), weaponSO.projectileSpeed, angle);
+                loadedProjectile.SetUp(targetPos, weaponSO.projectileSpeed, angle);
                 break;
         }
-    }
-
-    public Vector3 GetWorldMousePosition()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
-        if (Physics.Raycast(ray, out RaycastHit hit, range)) return hit.point; else return ray.GetPoint(range);
-    }
-
-    public bool IsRayHitting(Vector3 startPos, LayerMask layer, out RaycastHit hit)
-    {
-        Ray ray = new Ray(startPos, Camera.main.transform.forward);
-        return Physics.Raycast(ray, out hit, 999, layer);
     }
 }

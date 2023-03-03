@@ -30,7 +30,7 @@ Transform:
   m_Children:
   - {fileID: 1665368923633710178}
   m_Father: {fileID: 222011377555245198}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &563089458
 GameObject:
@@ -998,6 +998,7 @@ Transform:
   - {fileID: 222011377783382636}
   - {fileID: 222011377235786160}
   - {fileID: 1487459268291640842}
+  - {fileID: 5047025105616816970}
   - {fileID: 5194796041742375819}
   - {fileID: 5733070058452694552}
   - {fileID: 21841370}
@@ -1193,6 +1194,7 @@ MonoBehaviour:
   detectMask:
     serializedVersion: 2
     m_Bits: 0
+  gunSocket: {fileID: 5047025105616816970}
   currentWeapon: {fileID: 0}
 --- !u!114 &6072171635748174370
 MonoBehaviour:
@@ -1923,14 +1925,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4853842281458336049}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.21, z: -0.51}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.21, z: -0.51000214}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7528026940915235095}
   m_Father: {fileID: 222011377555245198}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6576015827697148110
 MonoBehaviour:
@@ -1948,6 +1950,8 @@ MonoBehaviour:
   rotateVertical: 1
   rightRotationLimit: 180
   leftRotationLimit: 180
+  upRotationLimit: 180
+  downRotationLimit: 180
   turnSpeed: 150
   weaponSO: {fileID: 11400000, guid: db7b7786ca0cc244086dbc3df2a828b0, type: 2}
   firePoint:
@@ -1987,7 +1991,7 @@ Transform:
   m_Children:
   - {fileID: 1150673510770787008}
   m_Father: {fileID: 222011377555245198}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8105017850151874527
 MonoBehaviour:
@@ -2005,6 +2009,8 @@ MonoBehaviour:
   rotateVertical: 0
   rightRotationLimit: 180
   leftRotationLimit: 180
+  upRotationLimit: 180
+  downRotationLimit: 180
   turnSpeed: 300
   weaponSO: {fileID: 11400000, guid: 430526edd0f905646982879f60bbc628, type: 2}
   firePoint:
@@ -2067,7 +2073,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  throwerResetdelay: 0
+  throwerResetDelay: 0
   range: 20
   minAngle: 5
   maxAngle: 15
@@ -2558,4 +2564,35 @@ Transform:
   - {fileID: 700140123941156735}
   m_Father: {fileID: 5194796041742375819}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8990243394908960813
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5047025105616816970}
+  m_Layer: 0
+  m_Name: GunSocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5047025105616816970
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8990243394908960813}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.347, z: -0.51000214}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 222011377555245198}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

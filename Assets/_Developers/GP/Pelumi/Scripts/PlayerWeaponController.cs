@@ -12,6 +12,7 @@ public class PlayerWeaponController : MonoBehaviour
     [SerializeField] private GameEvent _onReloading;
     [SerializeField] private GameEvent _onReloadEnd;
     [SerializeField] private LayerMask detectMask;
+    [SerializeField] private Transform gunSocket;
 
     [Viewable] [SerializeField] private Weapon currentWeapon;
 
@@ -66,7 +67,8 @@ public class PlayerWeaponController : MonoBehaviour
         }
 
         currentWeapon.SetAim(Camera.main.transform.forward * 200.0f);
-        if (InputManager.Instance.HandleFireInput().IsPressed()) currentWeapon.Shoot(GetWorldMousePosition());
+        if (currentWeapon is Catapult catapult) catapult.DrawPath(GetTargetPos(currentWeapon.Range));
+        if (InputManager.Instance.HandleFireInput().IsPressed()) currentWeapon.Shoot(GetTargetPos(currentWeapon.Range));
     }
 
     public void DebugSwitchWeapons()
@@ -86,9 +88,27 @@ public class PlayerWeaponController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)) Cursor.lockState = CursorLockMode.None;  else if (Input.GetMouseButtonDown(0)) Cursor.lockState = CursorLockMode.Locked;
     }
 
-    public Vector3 GetWorldMousePosition()
+    public Vector3 GetTargetPos(float range)
     {
         Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
-        if (Physics.Raycast(ray, out RaycastHit hit, 999f, detectMask)) return hit.point; else return ray.GetPoint(300.0f);
+
+        if (Physics.Linecast(Camera.main.transform.position, gunSocket.position))
+        {
+            Debug.Log("Obstructed");
+            return ray.GetPoint(range);
+        }
+        else
+        {
+            if (Physics.Raycast(ray, out RaycastHit hit, range))
+            {
+                Debug.DrawLine(ray.origin, hit.point, Color.magenta);
+                return hit.point;
+            }
+            else
+            {
+                Debug.DrawRay(ray.origin, ray.direction, Color.magenta);
+                return ray.GetPoint(range);
+            }
+        }
     }
 }
