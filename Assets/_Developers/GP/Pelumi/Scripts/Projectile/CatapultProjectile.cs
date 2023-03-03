@@ -8,10 +8,10 @@ using JE.DamageSystem;
 public class CatapultProjectile : Projectile
 {
     [SerializeField] private GameObject explosionParticle;
-    [SerializeField] private Vector3 targetPostion;
     [SerializeField] private LayerMask detectLayer;
     [SerializeField] protected float explosionTime;
 
+    private Vector3 targetPostion;
     private SphereDamager sphereDamager;
     private Coroutine moveRoutine;
     private bool hasHit;
@@ -35,9 +35,20 @@ public class CatapultProjectile : Projectile
         if (!launched || !detectLayer.ContainsLayer(other.gameObject.layer) || hasHit) return;
         hasHit = true;
         if (moveRoutine != null) StopCoroutine(moveRoutine);
+
+        transform.position = other.ClosestPoint(transform.position);
         transform.SetParent(other.transform);
         OnHit();
         Debug.Log(other.transform);
+    }
+
+    public void DetectTargets()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit))
+        {
+            Debug.Log("Point of contact: " + hit.point);
+        }
     }
 
     public void OnHit()

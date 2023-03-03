@@ -17,8 +17,8 @@ public class Projectile : MonoBehaviour
 
     public virtual void OnDamage(float damageValue)
     {
-        PopUpManager.Instance.PopUpAtTextPosition(transform.position + Vector3.up * .5f, Vector3.zero, damageValue.ToString(), Color.red);
-        DestroyProjectile();
+        if (playerBullet) hitEvent.Raise(this, new HitMarkInfo(Color.red, transform.position));
+        PopUpManager.Instance.PopUpAtTextPosition(transform.position + Vector3.up * .5f, Vector3.zero, "Hit", Color.red);
     }
 
     protected virtual void DestroyProjectile()

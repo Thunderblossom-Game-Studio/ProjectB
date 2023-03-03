@@ -21,10 +21,9 @@ public class DartProjectile : Projectile
         speed = _speed;
     }
 
-    public void OnHit(float damageValue)
+    public override void OnDamage(float damageValue)
     {
-        if (playerBullet) hitEvent.Raise(this, new HitMarkInfo(Color.red, transform.position));
-        PopUpManager.Instance.PopUpAtTextPosition(transform.position + Vector3.up * .5f, Vector3.zero, "Hit", Color.red);
+        base.OnDamage(damageValue);
         DestroyProjectile();
     }
 

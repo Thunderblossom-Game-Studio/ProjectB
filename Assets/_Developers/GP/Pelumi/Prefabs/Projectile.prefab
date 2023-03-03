@@ -140,8 +140,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2532410576275774344}
-        m_TargetAssemblyTypeName: DartProjectile, Assembly-CSharp
-        m_MethodName: OnHit
+        m_TargetAssemblyTypeName: Projectile, Assembly-CSharp
+        m_MethodName: OnDamage
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -167,5 +167,5 @@ MonoBehaviour:
   playerBullet: 0
   hitEvent: {fileID: 11400000, guid: 6e64ab4c64e4fec47868435545a105fb, type: 2}
   impactParticle: {fileID: 1894376261830645168, guid: 0681e849e3837b24bb11e851afe115c5, type: 3}
-  lifeTime: 5
   speed: 0
+  destroyTime: 10

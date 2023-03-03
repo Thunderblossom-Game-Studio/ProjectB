@@ -21,7 +21,6 @@ public class Catapult : Weapon
     [SerializeField] private float maxAngle;
     [SerializeField] private int vertextCount;
 
-
     [Header("Test")]
     [Viewable] [SerializeField] private float angle;
     [Viewable] [SerializeField] private State state;
