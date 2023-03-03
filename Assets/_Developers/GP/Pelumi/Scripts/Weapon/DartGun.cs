@@ -11,7 +11,8 @@ public class DartGun : Weapon
         for (int i = 0; i < firePoint.Length; i++)
         {
             Vector3 aimDirection = (targetPos - firePoint[i].position).normalized;
-            Projectile projectile = Instantiate(weaponSO.projectile, firePoint[i].position, Quaternion.LookRotation(aimDirection, Vector3.up));
+            DartProjectile projectile = Instantiate(weaponSO.projectile, firePoint[i].position, Quaternion.LookRotation(aimDirection, Vector3.up)) as DartProjectile;
+            if (projectile) projectile.SetUp(weaponSO.projectileSpeed);
             ModifyAmmo(currentAmmo - 1);
         }
     }
