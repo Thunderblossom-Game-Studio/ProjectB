@@ -60,11 +60,9 @@ public class PlayerWeaponController : MonoBehaviour
 
     void Update()
     {
-        if (debugMode)
-        {
-            DebugMouse();
-            DebugSwitchWeapons();
-        }
+        DebugSwitchWeapons();
+
+        if (debugMode) DebugMouse();
 
         currentWeapon.SetAim(Camera.main.transform.forward * 200.0f);
         if (currentWeapon is Catapult catapult) catapult.DrawPath(GetTargetPos(currentWeapon.Range));
@@ -92,11 +90,7 @@ public class PlayerWeaponController : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
 
-        if (Physics.Linecast(Camera.main.transform.position, gunSocket.position))
-        {
-            Debug.Log("Obstructed");
-            return ray.GetPoint(range);
-        }
+        if (Physics.Linecast(Camera.main.transform.position, gunSocket.position)) return ray.GetPoint(range);
         else
         {
             if (Physics.Raycast(ray, out RaycastHit hit, range))
