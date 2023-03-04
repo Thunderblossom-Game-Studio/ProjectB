@@ -54,16 +54,16 @@ public class TrafficBrain : MonoBehaviour
     [Header("Disable On Death")]
 
 
-    //UPDATE THESE TO FIT NEW CAR MODEL:
-    public BoxCollider TrunkCollider;
-    public MeshRenderer TrunkRenderer;
-    public MeshRenderer CubeRenderer;
-    public MeshRenderer CylinderRenderer;
-    public MeshRenderer AITrafficRenderer;
-    public CapsuleCollider AITrafficCollider;
-    public MeshRenderer PointerRenderer;
-    public MeshRenderer Pointer1Renderer;
-    public MeshRenderer Cylinder1Renderer;
+    ////UPDATE THESE TO FIT NEW CAR MODEL:
+    //public BoxCollider TrunkCollider;
+    //public MeshRenderer TrunkRenderer;
+    //public MeshRenderer CubeRenderer;
+    //public MeshRenderer CylinderRenderer;
+    //public MeshRenderer AITrafficRenderer;
+    //public CapsuleCollider AITrafficCollider;
+    //public MeshRenderer PointerRenderer;
+    //public MeshRenderer Pointer1Renderer;
+    //public MeshRenderer Cylinder1Renderer;
 
     [Header("Respawn")]
     public GameObject RespawnPoint;
@@ -73,6 +73,12 @@ public class TrafficBrain : MonoBehaviour
     public bool ActivateDonut;
     public GameObject ObjectToDonut;
     public int SpinY;
+
+    public GameObject FrontLeft;
+    public GameObject FrontRight;
+    public GameObject RearLeft;
+    public GameObject RearRight;
+    public float turnSpeed = 50f;
 
     void Start()
     {
@@ -157,7 +163,7 @@ public class TrafficBrain : MonoBehaviour
             panic = false;
             ExtendedPanic = false;
             PanicForever = false;
-            Explode();
+           //. Explode();
         }
 
         if (ActivateDonut == true)
@@ -165,7 +171,10 @@ public class TrafficBrain : MonoBehaviour
             Donuts();
         }
 
-
+        FrontLeft.transform.Rotate(Vector3.back, turnSpeed * Time.deltaTime);
+        FrontRight.transform.Rotate(Vector3.forward, turnSpeed * Time.deltaTime);
+        RearLeft.transform.Rotate(Vector3.back, turnSpeed * Time.deltaTime);
+        RearRight.transform.Rotate(Vector3.forward, turnSpeed * Time.deltaTime);
     }
 
 
@@ -228,108 +237,108 @@ public class TrafficBrain : MonoBehaviour
   
     }
     
-    void Explode()
-    {
+//    void Explode()
+//    {
 
-        //insert explosion effects here
-        TrunkCollider.enabled = false;
-        TrunkRenderer.enabled = false;
-        CubeRenderer.enabled = false;
-        CylinderRenderer.enabled = false;
-        AITrafficRenderer.enabled = false;
-        AITrafficCollider.enabled = false;
-        PointerRenderer.enabled = false;
-        Cylinder1Renderer.enabled = false;
-        StartCoroutine(Respawn());
+//        //insert explosion effects here
+//        TrunkCollider.enabled = false;
+//        TrunkRenderer.enabled = false;
+//        CubeRenderer.enabled = false;
+//        CylinderRenderer.enabled = false;
+//        AITrafficRenderer.enabled = false;
+//        AITrafficCollider.enabled = false;
+//        PointerRenderer.enabled = false;
+//        Cylinder1Renderer.enabled = false;
+//        StartCoroutine(Respawn());
 
-}
+//}
 
-    Vector3 RespawnPointVector;
-    IEnumerator Respawn()
-    {
-        yield return new WaitForSeconds(5);
+    //Vector3 RespawnPointVector;
+    //IEnumerator Respawn()
+    //{
+    //    yield return new WaitForSeconds(5);
        
-        RespawnPointVector = RespawnPoint.transform.position;
+    //    RespawnPointVector = RespawnPoint.transform.position;
 
-        transform.position = RespawnPointVector;
-        ThisGameObject.transform.position = RespawnPointVector;
+    //    transform.position = RespawnPointVector;
+    //    ThisGameObject.transform.position = RespawnPointVector;
 
 
-        Health = MaxHealth;
-        goal = RespawnPoint.transform;
-        agent.SetDestination(goal.position);
-        TrunkCollider.enabled = true;
-        TrunkRenderer.enabled = true;
-        CubeRenderer.enabled = true;
-        CylinderRenderer.enabled = true;
-        AITrafficRenderer.enabled = true;
-        AITrafficCollider.enabled = true;
-        PointerRenderer.enabled = true;
-        Cylinder1Renderer.enabled = true;
+    //    Health = MaxHealth;
+    //    goal = RespawnPoint.transform;
+    //    agent.SetDestination(goal.position);
+    //    TrunkCollider.enabled = true;
+    //    TrunkRenderer.enabled = true;
+    //    CubeRenderer.enabled = true;
+    //    CylinderRenderer.enabled = true;
+    //    AITrafficRenderer.enabled = true;
+    //    AITrafficCollider.enabled = true;
+    //    PointerRenderer.enabled = true;
+    //    Cylinder1Renderer.enabled = true;
 
-    }
+    //}
 
 }
 
 
-[CustomEditor(typeof(TrafficBrain))]
-public class TrafficStatEditor : Editor
-{
-    // The various categories the editor will display the variables in 
-    public enum DisplayCategory
-    {
-        Basic, Panic, Health
-    }
+//[CustomEditor(typeof(TrafficBrain))]
+//public class TrafficStatEditor : Editor
+//{
+//    // The various categories the editor will display the variables in 
+//    public enum DisplayCategory
+//    {
+//        Basic, Panic, Health
+//    }
 
-    // The enum field that will determine what variables to display in the Inspector
-    public DisplayCategory categoryToDisplay;
+//    // The enum field that will determine what variables to display in the Inspector
+//    public DisplayCategory categoryToDisplay;
 
-    // The function that makes the custom editor work
-    public override void OnInspectorGUI()
-    {
-        // Display the enum popup in the inspector
-        categoryToDisplay = (DisplayCategory)EditorGUILayout.EnumPopup("Display", categoryToDisplay);
+//    // The function that makes the custom editor work
+//    public override void OnInspectorGUI()
+//    {
+//        // Display the enum popup in the inspector
+//        categoryToDisplay = (DisplayCategory)EditorGUILayout.EnumPopup("Display", categoryToDisplay);
 
-        // Create a space to separate this enum popup from other variables 
-        EditorGUILayout.Space();
+//        // Create a space to separate this enum popup from other variables 
+//        EditorGUILayout.Space();
 
-        // Switch statement to handle what happens for each category
-        switch (categoryToDisplay)
-        {
-            case DisplayCategory.Basic:
-                DisplayBasicInfo();
-                break;
+//        // Switch statement to handle what happens for each category
+//        switch (categoryToDisplay)
+//        {
+//            case DisplayCategory.Basic:
+//                DisplayBasicInfo();
+//                break;
 
-            case DisplayCategory.Panic:
-                DisplayPanicInfo();
-                break;
+//            case DisplayCategory.Panic:
+//                DisplayPanicInfo();
+//                break;
 
-            case DisplayCategory.Health:
-                DisplayHealthInfo();
-                break;
+//            case DisplayCategory.Health:
+//                DisplayHealthInfo();
+//                break;
 
-        }
-        serializedObject.ApplyModifiedProperties();
-    }
+//        }
+//        serializedObject.ApplyModifiedProperties();
+//    }
 
-    // When the categoryToDisplay enum is at "Basic"
-    void DisplayBasicInfo()
-    {
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("goal"));
-    }
+//    // When the categoryToDisplay enum is at "Basic"
+//    void DisplayBasicInfo()
+//    {
+//        EditorGUILayout.PropertyField(serializedObject.FindProperty("goal"));
+//    }
 
-    // When the categoryToDisplay enum is at "Panic"
-    void DisplayPanicInfo()
-    {
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("panic"));
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("CarmageddonMode"));
-    }
+//    // When the categoryToDisplay enum is at "Panic"
+//    void DisplayPanicInfo()
+//    {
+//        EditorGUILayout.PropertyField(serializedObject.FindProperty("panic"));
+//        EditorGUILayout.PropertyField(serializedObject.FindProperty("CarmageddonMode"));
+//    }
 
-    // When the categoryToDisplay enum is at "Health"
-    void DisplayHealthInfo()
-    {
+//    // When the categoryToDisplay enum is at "Health"
+//    void DisplayHealthInfo()
+//    {
 
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("Health"));
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("MaxHealth"));
-    }
-}
+//        EditorGUILayout.PropertyField(serializedObject.FindProperty("Health"));
+//        EditorGUILayout.PropertyField(serializedObject.FindProperty("MaxHealth"));
+//    }
+//}

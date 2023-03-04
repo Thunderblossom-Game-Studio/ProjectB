@@ -190,6 +190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7579156045399426608}
   - component: {fileID: 5565941751483311172}
+  - component: {fileID: 5050548762134027401}
   m_Layer: 0
   m_Name: AITraffic
   m_TagString: Untagged
@@ -230,6 +231,20 @@ MonoBehaviour:
   Point: {fileID: 7586499937093929798}
   Base: {fileID: 1419491193033794302}
   step: 0.01
+--- !u!114 &5050548762134027401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926617803036837812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16b6b374602ad6c479bdb45b84bacc12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connect: {fileID: 0}
+  child: {fileID: 6825392363378918832}
 --- !u!1 &1419491193033794302
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,7 +869,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6825392363378918832}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -905,32 +920,26 @@ MonoBehaviour:
   panicgoal: {fileID: 6038396599628694417}
   savegoal: {fileID: 0}
   KeepX: 0
-  pointy: {fileID: 122882153777161177}
-  PointyTheSequel: {fileID: 4960384603844348745}
+  LeftRayCast: {fileID: 122882153777161177}
+  RightRayCast: {fileID: 4960384603844348745}
   panic: 0
   ShowPanic: 0
-  CarmageddonMode: 0
+  ExtendedPanic: 0
   DistanceForwardIncrease: 5
-  RPast: 0
-  R: 0
-  CarSpeed: 2
-  PanicCarSpeed: 100
+  PastPanicAxis: 0
+  PanicAxis: 0
+  RayCastInt: 0
   Health: 0
   MaxHealth: 100
-  TrunkCollider: {fileID: 459697462880015680}
-  TrunkRenderer: {fileID: 5768396249510161639}
-  CubeRenderer: {fileID: 0}
-  CylinderRenderer: {fileID: 0}
-  AITrafficRenderer: {fileID: 5475045901213736022}
-  AITrafficCollider: {fileID: 6528334323293607357}
-  PointerRenderer: {fileID: 8049887535164363494}
-  Pointer1Renderer: {fileID: 5695862068664435554}
-  Cylinder1Renderer: {fileID: 0}
   RespawnPoint: {fileID: 0}
   ThisGameObject: {fileID: 926617803036837812}
   ActivateDonut: 0
   ObjectToDonut: {fileID: 6825392363378918832}
   SpinY: 5
+  FrontLeft: {fileID: 316287180885428805}
+  FrontRight: {fileID: 3574830104928499472}
+  RearLeft: {fileID: 3847423473718545084}
+  RearRight: {fileID: 1657287716529583639}
 --- !u!54 &3581327450439052059
 Rigidbody:
   m_ObjectHideFlags: 0
