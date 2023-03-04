@@ -132,6 +132,8 @@ public class InputManager : MonoBehaviour
     
     public InputAction HandleBrakeInput() => playerInputActions.Player.Brake;
 
+    public InputAction HandleBoostInput() => playerInputActions.Player.Boost;
+
     public string GetCurrentDevice() => currentDeviceType == DeviceType.KeyboardAndMouse ? "Keyboard" : "Gamepad";
 
     public enum Binding

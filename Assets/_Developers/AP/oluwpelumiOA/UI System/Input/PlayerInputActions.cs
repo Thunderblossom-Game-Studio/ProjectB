@@ -83,8 +83,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Brake"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""a2f7331e-9ae1-4a63-8364-c7525e1a01fa"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Boost"",
+                    ""type"": ""Button"",
+                    ""id"": ""f9193cdd-9aff-437f-a832-397e65a6444f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -331,6 +340,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Brake"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e0410a4a-b3e9-4220-b1ca-64bc0ed98775"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Boost"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""51f43c47-127c-409b-a483-be5735b0c1d1"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Boost"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -991,6 +1022,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Accelerate = m_Player.FindAction("Accelerate", throwIfNotFound: true);
         m_Player_Decelerate = m_Player.FindAction("Decelerate", throwIfNotFound: true);
         m_Player_Brake = m_Player.FindAction("Brake", throwIfNotFound: true);
+        m_Player_Boost = m_Player.FindAction("Boost", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1075,6 +1107,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Accelerate;
     private readonly InputAction m_Player_Decelerate;
     private readonly InputAction m_Player_Brake;
+    private readonly InputAction m_Player_Boost;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1086,6 +1119,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Accelerate => m_Wrapper.m_Player_Accelerate;
         public InputAction @Decelerate => m_Wrapper.m_Player_Decelerate;
         public InputAction @Brake => m_Wrapper.m_Player_Brake;
+        public InputAction @Boost => m_Wrapper.m_Player_Boost;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1116,6 +1150,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Brake.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBrake;
                 @Brake.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBrake;
                 @Brake.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBrake;
+                @Boost.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBoost;
+                @Boost.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBoost;
+                @Boost.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBoost;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1141,6 +1178,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Brake.started += instance.OnBrake;
                 @Brake.performed += instance.OnBrake;
                 @Brake.canceled += instance.OnBrake;
+                @Boost.started += instance.OnBoost;
+                @Boost.performed += instance.OnBoost;
+                @Boost.canceled += instance.OnBoost;
             }
         }
     }
@@ -1334,6 +1374,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnAccelerate(InputAction.CallbackContext context);
         void OnDecelerate(InputAction.CallbackContext context);
         void OnBrake(InputAction.CallbackContext context);
+        void OnBoost(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

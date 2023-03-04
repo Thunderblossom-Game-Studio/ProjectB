@@ -70,32 +70,38 @@ namespace RVP
             // Get constant inputs
             if (!string.IsNullOrEmpty(accelAxis))
             {
-                md.AccelInput = Input.GetAxis(accelAxis);
+                //md.AccelInput = Input.GetAxis(accelAxis);
+                md.AccelInput = InputManager.Instance.HandleAccelerateInput().ReadValue<float>();
             }
 
             if (!string.IsNullOrEmpty(brakeAxis))
             {
-                md.BrakeInput = Input.GetAxis(brakeAxis);
+               // md.BrakeInput = Input.GetAxis(brakeAxis);
+                md.BrakeInput = InputManager.Instance.HandleDecelerateInput().ReadValue<float>();
             }
 
             if (!string.IsNullOrEmpty(steerAxis))
             {
-                md.SteerInput = Input.GetAxis(steerAxis);
+               // md.SteerInput = Input.GetAxis(steerAxis);
+                md.SteerInput = InputManager.Instance.HandleMoveInput().ReadValue<Vector2>().x;
             }
 
             if (!string.IsNullOrEmpty(ebrakeAxis))
             {
-                md.EbrakeInput = Input.GetAxis(ebrakeAxis);
+               // md.EbrakeInput = Input.GetAxis(ebrakeAxis);
+                md.EbrakeInput = InputManager.Instance.HandleBrakeInput().ReadValue<float>();
             }
 
             if (!string.IsNullOrEmpty(boostButton))
             {
-                md.BoostButton = Input.GetButton(boostButton);
+                // md.BoostButton = Input.GetButton(boostButton);
+                md.BoostButton = InputManager.Instance.HandleBrakeInput().IsPressed();
             }
 
             if (!string.IsNullOrEmpty(pitchAxis))
             {
-                md.PitchInput = Input.GetAxis(pitchAxis);
+               // md.PitchInput = Input.GetAxis(pitchAxis);
+                md.PitchInput = InputManager.Instance.HandleMoveInput().ReadValue<Vector2>().y;
             }
 
             if (!string.IsNullOrEmpty(yawAxis))
