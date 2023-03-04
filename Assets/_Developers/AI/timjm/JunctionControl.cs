@@ -61,7 +61,7 @@ public class JunctionControl : MonoBehaviour
 
     IEnumerator Swap()
     {
-        Sequence = Random.Range(0, 7);  //shouldn't this be a 6 not a 7?
+        Sequence = Random.Range(0, 6);  
         if (Sequence == 0)
         {
             EastToNorth.GetComponent<WaypointControl>().Red = true;

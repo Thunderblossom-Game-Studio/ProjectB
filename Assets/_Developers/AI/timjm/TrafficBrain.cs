@@ -5,44 +5,54 @@ using UnityEditor;
 
 public class TrafficBrain : MonoBehaviour
 {
+
     [Header("Waypoint Targets")]
+
+    [Tooltip("Traffic Car's Next Target Waypoint/Movement")]
     public Transform goal;
+
     public Transform panicgoal;
     public Transform savegoal;
     public float KeepX;
-    public GameObject pointy;
+    public GameObject LeftRayCast;
 
     int ForLoopLength = 3;
 
-    public GameObject PointyTheSequel;
-    //Vector3 paniclocation;
+    public GameObject RightRayCast;
     UnityEngine.AI.NavMeshAgent agent;
 
     [Header("Panic States")]
+
+    [Tooltip("If This Is Ticked, The Traffic Car Will Start To Panic And Drive Frantically.")]
     public bool panic;
     public bool ShowPanic;
-    public bool CarmageddonMode;
-    [SerializeField] int DistanceForwardIncrease = 2;
-    //int DistanceForward = 0;
-    public int RPast;
-    public int R;
+
+    [Tooltip("If This Is Ticked, The Traffic Car Will Panic Forever.")]
+
+    public bool ExtendedPanic;
+    [SerializeField] int DistanceForwardIncrease;
+    public int PastPanicAxis;  
+    public int PanicAxis;  
 
 
     
     bool IgnoreRaycasts;
 
     [Header("Car Speed")]
-    [SerializeField] float CarSpeed;
-    float DefaultSpeed;
-    [SerializeField] float PanicCarSpeed;
+    [SerializeField] float RayCastInt;
     bool PanicForever;
     float SecondsToWait;
 
     [Header("Health")]
+
+    [Tooltip("The Traffic Car's Current Health.")]
     public float Health;
+
+    [Tooltip("The Maximum Health Of The Traffic Car.")]
     public float MaxHealth;
 
     [Header("Disable On Death")]
+
 
     //UPDATE THESE TO FIT NEW CAR MODEL:
     public BoxCollider TrunkCollider;
@@ -59,7 +69,7 @@ public class TrafficBrain : MonoBehaviour
     public GameObject RespawnPoint;
     public GameObject ThisGameObject;
 
-    [Header("Donuts")]
+    [Header("SpinOut")]
     public bool ActivateDonut;
     public GameObject ObjectToDonut;
     public int SpinY;
@@ -69,7 +79,6 @@ public class TrafficBrain : MonoBehaviour
         panic = ShowPanic;
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         agent.destination = goal.position;
-        DefaultSpeed = CarSpeed;
         Health = MaxHealth;
     }
 
@@ -84,8 +93,8 @@ public class TrafficBrain : MonoBehaviour
             agent.destination = goal.position;
         }
         RaycastHit hit;
-        Vector3 forward = pointy.transform.TransformDirection(Vector3.forward) * CarSpeed;
-        if (Physics.Raycast(pointy.transform.position, forward, out hit, 5.0f))
+        Vector3 forward = LeftRayCast.transform.TransformDirection(Vector3.forward) * RayCastInt;
+        if (Physics.Raycast(LeftRayCast.transform.position, forward, out hit, 5.0f))
         {
             if (hit.rigidbody != null && IgnoreRaycasts == false)
             {
@@ -104,8 +113,8 @@ public class TrafficBrain : MonoBehaviour
             agent.destination = goal.position;
         }
         RaycastHit AnotherHit;
-        Vector3 MovingForward = PointyTheSequel.transform.TransformDirection(Vector3.forward) * CarSpeed;
-        if (Physics.Raycast(PointyTheSequel.transform.position, MovingForward, out AnotherHit, 5.0f))
+        Vector3 MovingForward = RightRayCast.transform.TransformDirection(Vector3.forward) * RayCastInt;
+        if (Physics.Raycast(RightRayCast.transform.position, MovingForward, out AnotherHit, 5.0f))
         {
             if (AnotherHit.rigidbody != null && IgnoreRaycasts == false)
             {
@@ -118,19 +127,18 @@ public class TrafficBrain : MonoBehaviour
         }
         #endregion
 
-        if(panic == true && CarmageddonMode == false)
+        if(panic == true && ExtendedPanic == false)
         {
             StartCoroutine(PanicMode());
             panic = false;
         }
 
-        if(CarmageddonMode == true)
+        if(ExtendedPanic == true)
         {
             IgnoreRaycasts = true;
-            CarSpeed = PanicCarSpeed;
             PanicForever = true;
             StartCoroutine(PanicMode());
-            CarmageddonMode= false;
+            ExtendedPanic= false;
         }
 
         if (PanicForever == true)
@@ -147,7 +155,7 @@ public class TrafficBrain : MonoBehaviour
         if (Health <= 0)
         {
             panic = false;
-            CarmageddonMode = false;
+            ExtendedPanic = false;
             PanicForever = false;
             Explode();
         }
@@ -177,14 +185,13 @@ public class TrafficBrain : MonoBehaviour
         savegoal = goal;
         KeepX = transform.position.x;
         agent.autoBraking = false;
-        R = 0;
+        PanicAxis = 0;
         for (int i = 0; i < ForLoopLength; i++)
         {
-            RPast = R;
-            R = Random.Range(0, 7);
-            //panicgoal.position = new Vector3((KeepX + (Random.Range(0, 7))), transform.position.y, (transform.position.z + DistanceForward));
+            PastPanicAxis = PanicAxis;
+            PanicAxis = Random.Range(0, 7);
             panicgoal.transform.position = transform.position;
-            panicgoal.transform.localPosition = new Vector3((R - RPast), 0, 4);
+            panicgoal.transform.localPosition = new Vector3((PanicAxis - PastPanicAxis), 0, 4);
             goal = panicgoal;
             agent.isStopped = true;
             agent.ResetPath();
@@ -242,7 +249,6 @@ public class TrafficBrain : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
        
-        //transform.position = RespawnPoint.transform.position;
         RespawnPointVector = RespawnPoint.transform.position;
 
         transform.position = RespawnPointVector;
@@ -312,14 +318,14 @@ public class TrafficStatEditor : Editor
         EditorGUILayout.PropertyField(serializedObject.FindProperty("goal"));
     }
 
-    // When the categoryToDisplay enum is at "Combat"
+    // When the categoryToDisplay enum is at "Panic"
     void DisplayPanicInfo()
     {
         EditorGUILayout.PropertyField(serializedObject.FindProperty("panic"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("CarmageddonMode"));
     }
 
-    // When the categoryToDisplay enum is at "Magic"
+    // When the categoryToDisplay enum is at "Health"
     void DisplayHealthInfo()
     {
 
