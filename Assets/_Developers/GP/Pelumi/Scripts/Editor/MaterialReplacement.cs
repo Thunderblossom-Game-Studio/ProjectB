@@ -6,7 +6,6 @@ using UnityEngine;
 public class MaterialReplacement : EditorWindow
 {
     private Material materialInUse;
-    private GUIContent materialContent;
 
     [MenuItem("Window/Custom Tools/MaterialReplacer")]
     public static void ShowWindow()

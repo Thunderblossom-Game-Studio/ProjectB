@@ -8,7 +8,6 @@ using JE.DamageSystem;
 public class CatapultProjectile : Projectile
 {
     [SerializeField] private GameObject explosionParticle;
-    [SerializeField] private LayerMask detectLayer;
     [SerializeField] protected float explosionTime;
 
     private Vector3 targetPostion;

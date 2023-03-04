@@ -75,7 +75,7 @@ public class PlayerWeaponController : MonoBehaviour
         {
             currentWeapon.transform.GetChild(0).gameObject.SetActive(false);
             UnSubscribeWeaponEvent();
-            currentWeapon = allWeapon[ allWeapon.IndexOf(currentWeapon) == 0 ? 1 : 0];
+            currentWeapon = allWeapon[ allWeapon.IndexOf(currentWeapon)  == allWeapon.Count  - 1 ? 1 : allWeapon.IndexOf(currentWeapon) + 1];
             currentWeapon.transform.GetChild(0).gameObject.SetActive(true);
             SubscribeWeaponEvent();
         }

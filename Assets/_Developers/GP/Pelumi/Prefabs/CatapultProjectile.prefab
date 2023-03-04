@@ -114,12 +114,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerBullet: 1
   hitEvent: {fileID: 11400000, guid: 6e64ab4c64e4fec47868435545a105fb, type: 2}
+  detectLayer:
+    serializedVersion: 2
+    m_Bits: 32763
   impactParticle: {fileID: 1894376261830645168, guid: 0681e849e3837b24bb11e851afe115c5, type: 3}
   speed: 0
   explosionParticle: {fileID: 187952, guid: 1acb6116de08d644183b37a4e3e2660b, type: 3}
-  detectLayer:
-    serializedVersion: 2
-    m_Bits: 2147483647
   explosionTime: 2
 --- !u!114 &2330946739643637859
 MonoBehaviour:
