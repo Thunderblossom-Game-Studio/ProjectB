@@ -13,23 +13,33 @@ MonoBehaviour:
   m_Name: Music Bank
   m_EditorClassIdentifier: 
   audioClips:
-  - ID: Menu
-    audioClip: {fileID: 8300000, guid: b7283dd5233d22946be30441ebc62007, type: 3}
-    info: 
+  - ID: MMTheme
+    audioClip: {fileID: 8300000, guid: 22a1d09217231d74385f383b22512725, type: 3}
+    info: Main Menu Theme
     similarAudioClips:
     - {fileID: 0}
-  - ID: Menufff
-    audioClip: {fileID: 8300000, guid: d749d2d10b5d3b9469cc8d45a83525b7, type: 3}
-    info: 
+  - ID: TuneT
+    audioClip: {fileID: 8300000, guid: 6ae464f7a0e9e6b45bbbb908ad7e5522, type: 3}
+    info: TutorialTheme
     similarAudioClips:
     - {fileID: 0}
-  - ID: Background
-    audioClip: {fileID: 8300000, guid: d749d2d10b5d3b9469cc8d45a83525b7, type: 3}
-    info: 
+  - ID: TuneL1
+    audioClip: {fileID: 8300000, guid: e54a25d1dec936e459e0b2330a17b13e, type: 3}
+    info: Level1 Theme
     similarAudioClips:
     - {fileID: 0}
-  - ID: HornSound
-    audioClip: {fileID: 8300000, guid: 3a630448788f0d34f853bb46b13dd45b, type: 3}
-    info: 'Meek Meek soudn for horn, attach to player '
+  - ID: TuneL2
+    audioClip: {fileID: 8300000, guid: d3f51f01bfdd9ed4d8302704f404bba0, type: 3}
+    info: Level2 Theme
+    similarAudioClips:
+    - {fileID: 0}
+  - ID: CutceneTheme
+    audioClip: {fileID: 8300000, guid: c06cf96534c16814c9d328352b255b11, type: 3}
+    info: Cutscene Theme
+    similarAudioClips:
+    - {fileID: 0}
+  - ID: EMTheme
+    audioClip: {fileID: 8300000, guid: 2f3184da04cbfd04c9a75d402cafc24b, type: 3}
+    info: Exit Menu Theme
     similarAudioClips:
     - {fileID: 0}
