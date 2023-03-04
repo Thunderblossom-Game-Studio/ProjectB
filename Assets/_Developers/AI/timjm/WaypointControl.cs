@@ -26,7 +26,7 @@ public class WaypointControl : MonoBehaviour
 
         else if (ActivatePanic == true)
         {
-            TrafficBrain.panic = true;
+            Car.GetComponent<TrafficBrain>().panic = true;
             ActivatePanic = false;
         }
 

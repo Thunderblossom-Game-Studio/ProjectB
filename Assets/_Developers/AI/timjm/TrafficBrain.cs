@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class TrafficBrain : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class TrafficBrain : MonoBehaviour
     UnityEngine.AI.NavMeshAgent agent;
 
     [Header("Panic States")]
-    public static bool panic;
+    public bool panic;
     public bool ShowPanic;
     public bool CarmageddonMode;
     [SerializeField] int DistanceForwardIncrease = 2;
@@ -28,7 +29,7 @@ public class TrafficBrain : MonoBehaviour
 
 
     
-    private bool IgnoreRaycasts;
+    bool IgnoreRaycasts;
 
     [Header("Car Speed")]
     [SerializeField] float CarSpeed;
@@ -262,4 +263,67 @@ public class TrafficBrain : MonoBehaviour
 
     }
 
+}
+
+
+[CustomEditor(typeof(TrafficBrain))]
+public class TrafficStatEditor : Editor
+{
+    // The various categories the editor will display the variables in 
+    public enum DisplayCategory
+    {
+        Basic, Panic, Health
+    }
+
+    // The enum field that will determine what variables to display in the Inspector
+    public DisplayCategory categoryToDisplay;
+
+    // The function that makes the custom editor work
+    public override void OnInspectorGUI()
+    {
+        // Display the enum popup in the inspector
+        categoryToDisplay = (DisplayCategory)EditorGUILayout.EnumPopup("Display", categoryToDisplay);
+
+        // Create a space to separate this enum popup from other variables 
+        EditorGUILayout.Space();
+
+        // Switch statement to handle what happens for each category
+        switch (categoryToDisplay)
+        {
+            case DisplayCategory.Basic:
+                DisplayBasicInfo();
+                break;
+
+            case DisplayCategory.Panic:
+                DisplayPanicInfo();
+                break;
+
+            case DisplayCategory.Health:
+                DisplayHealthInfo();
+                break;
+
+        }
+        serializedObject.ApplyModifiedProperties();
+    }
+
+    // When the categoryToDisplay enum is at "Basic"
+    void DisplayBasicInfo()
+    {
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("goal"));
+    }
+
+    // When the categoryToDisplay enum is at "Combat"
+    void DisplayPanicInfo()
+    {
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("panic"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("CarmageddonMode"));
+    }
+
+    // When the categoryToDisplay enum is at "Magic"
+    void DisplayHealthInfo()
+    {
+
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("Health"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("MaxHealth"));
+    }
 }
