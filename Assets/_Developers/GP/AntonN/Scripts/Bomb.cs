@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    [SerializeField] private float explosionTime = 3f;
+    [SerializeField] private float explosionTime = 6f;
 
     private float timer;
     bool exploded = false;

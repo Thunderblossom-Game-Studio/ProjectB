@@ -11,15 +11,19 @@ public class Blimp : MonoBehaviour
     [SerializeField] private RouteUser ru;
     [SerializeField] private LayerMask detectLayer;
     [SerializeField] private State state;
-    [SerializeField] private float dropRate = 0.1f;
-    [SerializeField] private float nextTimeToAttack = 1f;
-    [SerializeField] private float cooldownTime;
-    [SerializeField] private float detectionHeight;
+    [SerializeField] private float secondsToDropBomb = 1f;
+    [SerializeField] private float cooldownTime = 1f;
+    [SerializeField] private float detectionHeight = 100f;
+    [SerializeField] private float boxSize = 20f;
     private float timer;
+    private bool GizmosActive;
+    [SerializeField] private int dropAmount = 1;
+    RaycastHit hit;
 
     private void Start()
     {
         ru.Activate(0);
+        GizmosActive = false;
     }
 
     private void Update()
@@ -35,6 +39,10 @@ public class Blimp : MonoBehaviour
                 if(DetectTarget())
                 {
                     OnTargetDetected();
+                }
+                else if(!DetectTarget())
+                {
+                    ru.ToggleMovement(true);
                 }
                 break;
             case State.Attacking:
@@ -54,31 +62,44 @@ public class Blimp : MonoBehaviour
         ru.ToggleMovement(false);
     }
 
+    void OnDrawGizmos()
+    {
+        if (GizmosActive == true)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hit.distance);
+            Gizmos.DrawWireCube(transform.position + transform.TransformDirection(Vector3.down) * detectionHeight, transform.localScale * boxSize);
+        }
+        else
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * detectionHeight);
+            Gizmos.DrawWireCube(transform.position + transform.TransformDirection(Vector3.down) * detectionHeight, transform.localScale * boxSize);
+        }
+    }
+
     private bool DetectTarget()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, detectLayer))
+        if(Physics.BoxCast(transform.position, transform.localScale * boxSize, transform.TransformDirection(Vector3.down), out hit, transform.rotation, detectionHeight, detectLayer))
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hit.distance, Color.red);
-
+            Debug.Log("PLAYER DETECTED");
+            GizmosActive = true;
             return true;
         }
         else
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * detectionHeight, Color.blue);
-
+            GizmosActive = false;
             return false;
         }
     }
 
     private void AttackTarget()
     {
-        if (timer >= nextTimeToAttack)
+        if (timer >= secondsToDropBomb)
         {
             state = State.Cooldown;
             timer = 0;
             DropBomb();
-            ru.ToggleMovement(true);
         }
         else
         {
@@ -102,7 +123,10 @@ public class Blimp : MonoBehaviour
     private void DropBomb()
     {
         DeactivateIndicator();
-        Instantiate(droppableObject, dropPoint.position, Quaternion.identity);
+        for (int i = 0; i < dropAmount; i++)
+        {
+            Instantiate(droppableObject, dropPoint.position, Quaternion.Euler(new Vector3 (Random.Range(0,360), Random.Range(0, 360), Random.Range(0, 360))));
+        }
     }
 
     private void ActivateIndicator()
