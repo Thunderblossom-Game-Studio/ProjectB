@@ -6,22 +6,21 @@ using UnityEngine;
 
 public class PursuingCarController : AICarController
 {
-    protected enum State { PURSUE, PATROL, ATTACK, FLEE, PICKUP, DELIVERY, TURNLEFT, TURNRIGHT, BRAKE }
+    protected enum State { PURSUE, PATROL, ATTACK, FLEE, PICKUP, DELIVERY }
     [SerializeField] protected State NextState;
 
     private GameObject MoveTarget;
     private GameObject ShootTarget;
 
     [Header("Systems")]
-    public CollisionPrevention PreventionCollision;
-    
+   
     [SerializeField] private EntitySpawner packageSpawner;
     [SerializeField] private PackageSystem PackageSystem;
     [SerializeField] private HealthSystem Health;
 
-    private GameObject[] AllObjects; //don't know if we need
     private Vector3 SpawnPoint;
- 
+
+    [SerializeField] private BackTriggerCheck backTriggerCheck;
 
     [SerializeField] private float distanceToReset = 50f;
     [SerializeField] private float distanceBetweenAgent = 30;
@@ -45,8 +44,9 @@ public class PursuingCarController : AICarController
 
     [SerializeField] private Weapon weaponHandler;
 
-    [Viewable] private Transform DeliveryPoint;
-    
+    [Viewable] private Transform DeliveryPoint;        
+    [Viewable] private float agentSpawnWeight = 1;
+
     protected override void Start()
     {
         if (AIDirector.Instance)
@@ -61,8 +61,6 @@ public class PursuingCarController : AICarController
                 Debug.LogWarning("No delivery points allocated in AI Director.");
         }
         else Debug.LogWarning("No AI Director found in scene.");
-
-        AllObjects = GameObject.FindGameObjectsWithTag("SpawnPoint");
 
         SpawnPoint = transform.position;
 
@@ -141,20 +139,6 @@ public class PursuingCarController : AICarController
             NextState = State.DELIVERY;
         }
 
-
-        if (PreventionCollision.TurnLeftBoolPass == true)
-        {
-            NextState = State.TURNLEFT;
-        }
-        if (PreventionCollision.TurnRightBoolPass == true)
-        {
-            NextState = State.TURNRIGHT;
-        }
-        if (PreventionCollision.BrakeBoolPass == true)
-        {
-            NextState = State.BRAKE;
-        }
-
         if (Health.HealthPercentage <= 0.3f)
         {
             NextState = State.FLEE;
@@ -194,31 +178,21 @@ public class PursuingCarController : AICarController
             case State.DELIVERY:
                 Delivery();
                 break;
-
-            case State.TURNLEFT:
-                TurnLeft();
-                break;
-                   
-            case State.TURNRIGHT:
-                TurnRight();
-                break;
-
-            case State.BRAKE:
-                CourseCorrect();
-                break;
         }
     }
 
     protected override void Act()
     {
-        if (!(NextState == State.TURNLEFT || NextState == State.TURNRIGHT || NextState == State.BRAKE))
-        {
-            FollowAgent();
-        }
+        FollowAgent();
 
-        if (Vector3.Distance(transform.position, agent.transform.position) > distanceBetweenAgent * 1.2f)
+        if (backTriggerCheck.active) agentSpawnWeight = 1;
+        else agentSpawnWeight = -1;
+
+        if (Vector3.Distance(transform.position, agent.transform.position) > distanceBetweenAgent * 1.1f)
         {
-            agent.transform.position = transform.position;
+            Vector3 pos = transform.position;// get pos
+            pos += transform.forward * agentSpawnWeight; // finding behind
+            agent.transform.position = pos;
         }
 
         if (Vector3.Distance(transform.position, agent.transform.position) > distanceBetweenAgent)

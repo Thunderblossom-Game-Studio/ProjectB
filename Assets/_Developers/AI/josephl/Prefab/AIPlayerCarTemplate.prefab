@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &454426795223992815
+--- !u!1 &5066209933722009257
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,136 +8,56 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7789027003874454634}
+  - component: {fileID: 1839091032736169100}
+  - component: {fileID: 7325224563161437245}
+  - component: {fileID: 666629236538970752}
   m_Layer: 0
-  m_Name: RightRayCast
+  m_Name: BackTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7789027003874454634
+--- !u!4 &1839091032736169100
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 454426795223992815}
+  m_GameObject: {fileID: 5066209933722009257}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.52000046, y: 0.11500001, z: 2.5180016}
-  m_LocalScale: {x: 1, y: 1, z: 4.63751}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7651979918987682054}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4172483732622818482
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6741962463741815061}
-  - component: {fileID: 7504305590562125366}
-  - component: {fileID: 880522047884406576}
-  m_Layer: 6
-  m_Name: OtherCarCollision
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6741962463741815061
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4172483732622818482}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5799999, z: -2.7270012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7651979918987682054}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &7504305590562125366
-SphereCollider:
+--- !u!65 &7325224563161437245
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4172483732622818482}
+  m_GameObject: {fileID: 5066209933722009257}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.1
+  m_Size: {x: 2, y: 1.54, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &880522047884406576
+--- !u!114 &666629236538970752
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4172483732622818482}
+  m_GameObject: {fileID: 5066209933722009257}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6f187bf49b2ff45951ea863d9f0c98, type: 3}
+  m_Script: {fileID: 11500000, guid: 67baeeac4eba9394a89b3e8374420ef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minAccSpeed: 0
-  maxAccSpeed: 30
-  moveMulit: 100
-  rotSpeed: 0.3
-  HitDetection: 0
-  RayCastFireOne: 0
-  RayCastFireTwo: 0
-  RayCastLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  LeftRayCast: {fileID: 7229537424004606977}
-  RightRayCast: {fileID: 454426795223992815}
-  TurnLeft: 0
-  TurnLeftBoolPass: 0
-  TurnRight: 0
-  TurnRightBoolPass: 0
-  Brake: 0
-  BrakeBoolPass: 0
---- !u!1 &7229537424004606977
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 948881838692253883}
-  m_Layer: 0
-  m_Name: LeftRayCast
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &948881838692253883
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7229537424004606977}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.52000046, y: 0.11500001, z: 2.5180016}
-  m_LocalScale: {x: 1, y: 1, z: 4.63751}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7651979918987682054}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8764265262410545688
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,18 +288,12 @@ MonoBehaviour:
   turnmultiplier: 5
   brakeSensitivity: 40
   angle: 20
-  stopDistance: 15
+  stopDistance: 20
   NextState: 4
-  PreventionCollision: {fileID: 880522047884406576}
-  MoveTarget: {fileID: 0}
-  ShootTarget: {fileID: 0}
   packageSpawner: {fileID: 0}
   PackageSystem: {fileID: 9043634083372453858}
   Health: {fileID: 9043634083372453861}
-  AllObjects: []
-  SpawnPoint: {x: 0, y: 0, z: 0}
-  NearBank: {fileID: 0}
-  NearPackage: {fileID: 0}
+  backTriggerCheck: {fileID: 666629236538970752}
   distanceToReset: 150
   distanceBetweenAgent: 20
   AttackRange: 50
