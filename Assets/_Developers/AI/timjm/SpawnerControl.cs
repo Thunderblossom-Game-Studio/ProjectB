@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpawnerControl : MonoBehaviour
 {
     public GameObject Traffic;
+    public GameObject SpawnerReference;
     GameObject Clone;
     public GameObject RoadConnect;
     public int limit;
@@ -23,8 +24,11 @@ public class SpawnerControl : MonoBehaviour
     IEnumerator Spawn()
     {
         Clone = Instantiate(Traffic, transform.position, Quaternion.identity);
-        Clone.GetComponent<PassOn>().connect = RoadConnect.transform;
-        Clone.GetComponent<PassOn>().Pass();
+       
+        Clone.GetComponent<PassOn>().connect = RoadConnect.transform;       
+        Clone.GetComponent<PassOn>().Controller = SpawnerReference;
+        Clone.GetComponent<PassOn>().Pass(); 
+
         count += 1;
         yield return new WaitForSeconds(3);
         ready = true;

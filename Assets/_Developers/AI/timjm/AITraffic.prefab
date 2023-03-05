@@ -245,6 +245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connect: {fileID: 0}
   child: {fileID: 6825392363378918832}
+  Controller: {fileID: 0}
 --- !u!1 &1419491193033794302
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,13 +934,18 @@ MonoBehaviour:
   MaxHealth: 100
   RespawnPoint: {fileID: 0}
   ThisGameObject: {fileID: 926617803036837812}
-  ActivateDonut: 0
-  ObjectToDonut: {fileID: 6825392363378918832}
+  ActivateSpinOut: 0
+  ObjectToSpinOut: {fileID: 6825392363378918832}
   SpinY: 5
   FrontLeft: {fileID: 316287180885428805}
   FrontRight: {fileID: 3574830104928499472}
   RearLeft: {fileID: 3847423473718545084}
   RearRight: {fileID: 1657287716529583639}
+  turnSpeed: 50
+  NavMeshSwitch: {fileID: 0}
+  TurnPhyicsOff: {fileID: 0}
+  SpawnStation: {fileID: 0}
+  Itself: {fileID: 926617803036837812}
 --- !u!54 &3581327450439052059
 Rigidbody:
   m_ObjectHideFlags: 0

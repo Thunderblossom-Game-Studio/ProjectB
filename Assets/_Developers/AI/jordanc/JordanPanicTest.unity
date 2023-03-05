@@ -1197,9 +1197,37 @@ PrefabInstance:
       propertyPath: turnSpeed
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 3512849336716236233, guid: bcd1317504e24d543b75223f0cead7b6, type: 3}
+      propertyPath: Controller
+      value: 
+      objectReference: {fileID: 2074453405}
+    - target: {fileID: 3512849336716236233, guid: bcd1317504e24d543b75223f0cead7b6, type: 3}
+      propertyPath: NavMeshSwitch
+      value: 
+      objectReference: {fileID: 1300263703}
+    - target: {fileID: 3512849336716236233, guid: bcd1317504e24d543b75223f0cead7b6, type: 3}
+      propertyPath: TurnPhyicsOff
+      value: 
+      objectReference: {fileID: 1300263699}
+    - target: {fileID: 3512849336716236233, guid: bcd1317504e24d543b75223f0cead7b6, type: 3}
+      propertyPath: SpawnerCounter
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3512849336716236233, guid: bcd1317504e24d543b75223f0cead7b6, type: 3}
+      propertyPath: ObjectToSpinOut
+      value: 
+      objectReference: {fileID: 1300263697}
+    - target: {fileID: 5050548762134027401, guid: bcd1317504e24d543b75223f0cead7b6, type: 3}
+      propertyPath: connect
+      value: 
+      objectReference: {fileID: 1010857769}
+    - target: {fileID: 5050548762134027401, guid: bcd1317504e24d543b75223f0cead7b6, type: 3}
+      propertyPath: SpawnerReference
+      value: 
+      objectReference: {fileID: 2074453405}
     - target: {fileID: 7579156045399426608, guid: bcd1317504e24d543b75223f0cead7b6, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7579156045399426608, guid: bcd1317504e24d543b75223f0cead7b6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2214,23 +2242,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3151364586823896298, guid: be8640af9601fa8418eabbae6068bfa8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4320188797295590052, guid: be8640af9601fa8418eabbae6068bfa8, type: 3}
       propertyPath: limit
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4320188797295590052, guid: be8640af9601fa8418eabbae6068bfa8, type: 3}
       propertyPath: RoadConnect
       value: 
       objectReference: {fileID: 1010857768}
+    - target: {fileID: 4320188797295590052, guid: be8640af9601fa8418eabbae6068bfa8, type: 3}
+      propertyPath: SpawnerReference
+      value: 
+      objectReference: {fileID: 2074453405}
     - target: {fileID: 7437685859801738178, guid: be8640af9601fa8418eabbae6068bfa8, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7437685859801738178, guid: be8640af9601fa8418eabbae6068bfa8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -29.792198
+      value: -35.5
       objectReference: {fileID: 0}
     - target: {fileID: 7437685859801738178, guid: be8640af9601fa8418eabbae6068bfa8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3342,6 +3374,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2165258942793733593, guid: 849a0a55e3417e94bb6f570fdf626252, type: 3}
   m_PrefabInstance: {fileID: 1262029833}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1300263697 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6825392363378918832, guid: bcd1317504e24d543b75223f0cead7b6, type: 3}
+  m_PrefabInstance: {fileID: 440261407}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1300263699 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 3581327450439052059, guid: bcd1317504e24d543b75223f0cead7b6, type: 3}
+  m_PrefabInstance: {fileID: 440261407}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &1300263703 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 3417901745644499743, guid: bcd1317504e24d543b75223f0cead7b6, type: 3}
+  m_PrefabInstance: {fileID: 440261407}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1414686284
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4353,6 +4400,11 @@ GameObject:
 Transform:
   m_CorrespondingSourceObject: {fileID: 2165258942793733593, guid: 849a0a55e3417e94bb6f570fdf626252, type: 3}
   m_PrefabInstance: {fileID: 2049898717}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2074453405 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3151364586823896298, guid: be8640af9601fa8418eabbae6068bfa8, type: 3}
+  m_PrefabInstance: {fileID: 772671333}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2092336177
 PrefabInstance:

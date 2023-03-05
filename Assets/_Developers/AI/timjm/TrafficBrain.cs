@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.AI;
 
 public class TrafficBrain : MonoBehaviour
 {
@@ -51,27 +52,10 @@ public class TrafficBrain : MonoBehaviour
     [Tooltip("The Maximum Health Of The Traffic Car.")]
     public float MaxHealth;
 
-    [Header("Disable On Death")]
-
-
-    ////UPDATE THESE TO FIT NEW CAR MODEL:
-    //public BoxCollider TrunkCollider;
-    //public MeshRenderer TrunkRenderer;
-    //public MeshRenderer CubeRenderer;
-    //public MeshRenderer CylinderRenderer;
-    //public MeshRenderer AITrafficRenderer;
-    //public CapsuleCollider AITrafficCollider;
-    //public MeshRenderer PointerRenderer;
-    //public MeshRenderer Pointer1Renderer;
-    //public MeshRenderer Cylinder1Renderer;
-
-    [Header("Respawn")]
-    public GameObject RespawnPoint;
-    public GameObject ThisGameObject;
 
     [Header("SpinOut")]
-    public bool ActivateDonut;
-    public GameObject ObjectToDonut;
+    public bool ActivateSpinOut;
+    public GameObject ObjectToSpinOut;
     public int SpinY;
 
     public GameObject FrontLeft;
@@ -79,6 +63,11 @@ public class TrafficBrain : MonoBehaviour
     public GameObject RearLeft;
     public GameObject RearRight;
     public float turnSpeed = 50f;
+
+
+    [Header("Death")]
+    public GameObject SpawnStation;
+    public GameObject Itself;
 
     void Start()
     {
@@ -163,12 +152,12 @@ public class TrafficBrain : MonoBehaviour
             panic = false;
             ExtendedPanic = false;
             PanicForever = false;
-           //. Explode();
+            ActivateSpinOut = true;
         }
 
-        if (ActivateDonut == true)
+        if (ActivateSpinOut == true)
         {
-            Donuts();
+            SpinOut();
         }
 
         FrontLeft.transform.Rotate(Vector3.back, turnSpeed * Time.deltaTime);
@@ -229,29 +218,36 @@ public class TrafficBrain : MonoBehaviour
     }
 
 
-    
-   void Donuts()
+    void SpinOut()
     {
-        agent.isStopped = true;
-        ObjectToDonut.transform.Rotate(new Vector3(0, SpinY, 0));
-  
+       // agent.isStopped = true;
+        ObjectToSpinOut.transform.Rotate(new Vector3(0, SpinY, 0));
+        StartCoroutine(Explode());
+        //agent.isStopped = true;
+        //NavMeshSwitch.enabled = false;
+        //ObjectToDonut.transform.Rotate(new Vector3(0, SpinY, 0));
     }
-    
-//    void Explode()
-//    {
 
-//        //insert explosion effects here
-//        TrunkCollider.enabled = false;
-//        TrunkRenderer.enabled = false;
-//        CubeRenderer.enabled = false;
-//        CylinderRenderer.enabled = false;
-//        AITrafficRenderer.enabled = false;
-//        AITrafficCollider.enabled = false;
-//        PointerRenderer.enabled = false;
-//        Cylinder1Renderer.enabled = false;
-//        StartCoroutine(Respawn());
 
-//}
+ 
+
+     IEnumerator Explode()
+    {
+        yield return new WaitForSeconds(3);
+        //Insert Explosion/Particle Effects Here
+        SpawnStation.GetComponent<SpawnerControl>().count = SpawnStation.GetComponent<SpawnerControl>().count - 1;
+        Destroy(Itself);
+    }
+
+
+
+
+
+
+
+    }
+
+   
 
     //Vector3 RespawnPointVector;
     //IEnumerator Respawn()
@@ -278,7 +274,7 @@ public class TrafficBrain : MonoBehaviour
 
     //}
 
-}
+//}
 
 
 //[CustomEditor(typeof(TrafficBrain))]
