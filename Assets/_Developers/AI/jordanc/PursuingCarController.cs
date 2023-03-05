@@ -6,30 +6,34 @@ using UnityEngine;
 
 public class PursuingCarController : AICarController
 {
-    protected enum State { PURSUE, PATROL, ATTACK, FLEE, PICKUP, SEARCHING, DELIVERY, TURNLEFT, TURNRIGHT, BRAKE }
+    protected enum State { PURSUE, PATROL, ATTACK, FLEE, PICKUP, DELIVERY, TURNLEFT, TURNRIGHT, BRAKE }
     [SerializeField] protected State NextState;
-    public CollisionPrevention PreventionCollision;
-    public GameObject MoveTarget;
-    public GameObject ShootTarget;
 
+    private GameObject MoveTarget;
+    private GameObject ShootTarget;
+
+    [Header("Systems")]
+    public CollisionPrevention PreventionCollision;
+    
     [SerializeField] private EntitySpawner packageSpawner;
     [SerializeField] private PackageSystem PackageSystem;
     [SerializeField] private HealthSystem Health;
 
-    public GameObject[] AllObjects;
-    public Vector3 SpawnPoint;
-    public GameObject NearBank;
-    public GameObject NearPackage;
-    float Distance;
-    float NearestDistance = 10000;
+    private GameObject[] AllObjects; //don't know if we need
+    private Vector3 SpawnPoint;
+ 
 
     [SerializeField] private float distanceToReset = 50f;
     [SerializeField] private float distanceBetweenAgent = 30;
 
+    [Header("Attack Range")]
+    [Tooltip("This will change the range in which the bots can attack from")]
     [SerializeField] private float AttackRange;
 
     [Header("Aggro Range")]
+    [Tooltip("This is the range the boss can see and chase after the player from")]
     [SerializeField] float AggroRange;
+    [Tooltip("Layer which the AIBots will chase after/interact with")]
     [SerializeField] LayerMask Car;
 
     [Header("Patrol Points")]
@@ -74,6 +78,7 @@ public class PursuingCarController : AICarController
 
     }
 
+    
     protected override void Evaluate()
     {
         newState = false;
@@ -114,22 +119,6 @@ public class PursuingCarController : AICarController
             }
 
 
-            // Flee
-
-            // IF health < threshold || ammo < threshold
-
-            // Pickup
-
-            if (NextState == State.SEARCHING)
-            {
-                // Add heuristics
-            }
-
-            // Delivery
-
-            // IF hasPackage
-            // Deliever
-
             // Reset Target
             if (NextState == State.PATROL)
             {
@@ -142,12 +131,9 @@ public class PursuingCarController : AICarController
 
         }
 
-        if (packageSpawner)
+        if (packageSpawner && packageSpawner.SpawnedObjects.Count > 0)
         {
-            if (packageSpawner.SpawnedObjects.Count > 0)
-            {
                 NextState = State.PICKUP;
-            }
         }
 
         if (PackageSystem.PackageAmount == PackageSystem.MaxPackages)
@@ -177,6 +163,9 @@ public class PursuingCarController : AICarController
 
     }
 
+    /// <summary>
+    /// This method allows for the AIBot to swap to different states.
+    /// </summary>
     protected override void SwapState()
     {
 
@@ -185,30 +174,35 @@ public class PursuingCarController : AICarController
             case State.PURSUE:
                 Pursue();
                 break;
+
             case State.PATROL:
                 Patrol();
                 break;
+
             case State.ATTACK:
                 Attack();
                 break;
+
             case State.FLEE:
                 Flee();
                 break;
+
             case State.PICKUP:
                 Pickup();
                 break;
+
             case State.DELIVERY:
                 Delivery();
                 break;
-            case State.SEARCHING:
-                Searching();
-                break;
+
             case State.TURNLEFT:
                 TurnLeft();
                 break;
+                   
             case State.TURNRIGHT:
                 TurnRight();
                 break;
+
             case State.BRAKE:
                 CourseCorrect();
                 break;
@@ -236,12 +230,12 @@ public class PursuingCarController : AICarController
             agent.isStopped = false;
         }
 
-        State c = NextState;
+        State next = NextState;
 
 
         Evaluate();       
 
-        if (c != NextState) newState = true;
+        if (next != NextState) newState = true;
 
         
         if (ShootTarget)
@@ -284,14 +278,15 @@ public class PursuingCarController : AICarController
 
     private void TurnLeft()
     {
-        car.HandleInput(1, -1, true);
+        car.HandleInput(1, -1, true); //this system probably doesn't work due to different car system
     }
 
     private void TurnRight()
     {
-        car.HandleInput(1, 1, true);
+        car.HandleInput(1, 1, true); //this system probably doesn't work due to different car system
     }
 
+  
     private void Patrol()
     {
         if (ListOfPatrolPoints.Length == 0) return;
@@ -324,6 +319,7 @@ public class PursuingCarController : AICarController
 
     }
 
+    
     private void Attack()
     {
         if (!ShootTarget) return;
@@ -333,6 +329,9 @@ public class PursuingCarController : AICarController
 
     }
 
+    /// <summary>
+    /// This method is the code for the flee state. If the AIBot has packages on them it will go to a delivery zone, if not it will flee to a spawn zone.
+    /// </summary>
     private void Flee()
     {
         Debug.Log("Fleeing");
@@ -348,6 +347,9 @@ public class PursuingCarController : AICarController
 
     }
 
+    /// <summary>
+    /// This method is the code for the pickup state. It finds a random package on the map and then sets the agent destination to that package.
+    /// </summary>
     private void Pickup()
     {
         Debug.Log("Pickup");
@@ -368,6 +370,9 @@ public class PursuingCarController : AICarController
 
     }
 
+    /// <summary>
+    /// This method is the code for the delivery state. It finds the close delivery zone and then sets the agents destination to that delivery zone 
+    /// </summary>
     private void Delivery()
     {
         if (AIDirector.Instance)
@@ -379,9 +384,6 @@ public class PursuingCarController : AICarController
         agent.SetDestination(DeliveryPoint.position);
     }
 
-    private void Searching()
-    {
-        Debug.Log("Searching");
-    }
+
 
 }
