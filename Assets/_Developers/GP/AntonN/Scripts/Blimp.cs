@@ -10,15 +10,20 @@ public class Blimp : MonoBehaviour
     [SerializeField] private Transform dropPoint;
     [SerializeField] private RouteUser ru;
     [SerializeField] private LayerMask detectLayer;
+    [SerializeField] private LayerMask raycastLayer;
     [SerializeField] private State state;
     [SerializeField] private float secondsToDropBomb = 1f;
     [SerializeField] private float cooldownTime = 1f;
     [SerializeField] private float detectionHeight = 100f;
-    [SerializeField] private float boxSize = 20f;
+    [SerializeField] private float sphereSize;
     private float timer;
     private bool GizmosActive;
     [SerializeField] private int dropAmount = 1;
     RaycastHit hit;
+
+    [SerializeField] private float raycastDistance;
+
+    private Vector3 hitPoint;
 
     private void Start()
     {
@@ -64,33 +69,40 @@ public class Blimp : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        if (GizmosActive == true)
+        if (GizmosActive)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hit.distance);
-            Gizmos.DrawWireCube(transform.position + transform.TransformDirection(Vector3.down) * detectionHeight, transform.localScale * boxSize);
+            Gizmos.DrawWireSphere(hitPoint, sphereSize);
         }
         else
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * detectionHeight);
-            Gizmos.DrawWireCube(transform.position + transform.TransformDirection(Vector3.down) * detectionHeight, transform.localScale * boxSize);
+            Gizmos.DrawWireSphere(hitPoint, sphereSize);
         }
     }
 
     private bool DetectTarget()
     {
-        if(Physics.BoxCast(transform.position, transform.localScale * boxSize, transform.TransformDirection(Vector3.down), out hit, transform.rotation, detectionHeight, detectLayer))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out RaycastHit groundHit, raycastDistance, raycastLayer))
         {
-            Debug.Log("PLAYER DETECTED");
-            GizmosActive = true;
-            return true;
+            hitPoint = groundHit.point;
+            Debug.DrawLine(transform.position, hitPoint, Color.red);
+
+            Collider[] hitColliders = Physics.OverlapSphere(hitPoint, sphereSize, detectLayer);
+
+            if (hitColliders.Length != 0)
+            {
+                Debug.Log("PLAYER DETECTED");
+                GizmosActive = true;
+                return true;
+            }
+            else
+            {
+                GizmosActive = false;
+                return false;
+            }
         }
-        else
-        {
-            GizmosActive = false;
-            return false;
-        }
+        return false;
     }
 
     private void AttackTarget()

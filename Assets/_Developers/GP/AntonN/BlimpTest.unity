@@ -438,7 +438,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 555146593}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -337.5, y: -6.4, z: -75.2}
+  m_LocalPosition: {x: -244.2, y: -6.4, z: -17.7}
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -637,6 +637,38 @@ PrefabInstance:
       propertyPath: routes
       value: 
       objectReference: {fileID: 73523238}
+    - target: {fileID: 4474671496006274125, guid: 89c3d4a2a8e8c924386730e4d7c61001, type: 3}
+      propertyPath: boxSize
+      value: 27.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4474671496006274125, guid: 89c3d4a2a8e8c924386730e4d7c61001, type: 3}
+      propertyPath: boxSize.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4474671496006274125, guid: 89c3d4a2a8e8c924386730e4d7c61001, type: 3}
+      propertyPath: boxSize.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4474671496006274125, guid: 89c3d4a2a8e8c924386730e4d7c61001, type: 3}
+      propertyPath: boxSize.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4474671496006274125, guid: 89c3d4a2a8e8c924386730e4d7c61001, type: 3}
+      propertyPath: dropAmount
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4474671496006274125, guid: 89c3d4a2a8e8c924386730e4d7c61001, type: 3}
+      propertyPath: sphereSize
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4474671496006274125, guid: 89c3d4a2a8e8c924386730e4d7c61001, type: 3}
+      propertyPath: raycastDistance
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4474671496006274125, guid: 89c3d4a2a8e8c924386730e4d7c61001, type: 3}
+      propertyPath: raycastLayer.m_Bits
+      value: 72
+      objectReference: {fileID: 0}
     - target: {fileID: 6921109524396068904, guid: 89c3d4a2a8e8c924386730e4d7c61001, type: 3}
       propertyPath: m_RootOrder
       value: 4
