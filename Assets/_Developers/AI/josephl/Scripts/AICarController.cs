@@ -105,14 +105,25 @@ public class AICarController : MonoBehaviour
     {
         Vector3 dir = (agent.transform.position - transform.position).normalized;
 
-        float direction = Vector3.Dot(dir, transform.forward);
+        //float direction = Vector3.Dot(dir, transform.forward);
 
         float distance = Vector3.Distance(transform.position, agent.transform.position);
 
         float v = 0;
         float h = 0;
 
+        float i = 1;
+
         float direction2 = Vector3.SignedAngle(transform.forward, dir, Vector3.up);
+
+        if ((direction2 < -90) || (direction2 > 90))
+        {
+            v = -1;
+        }
+        else
+        {
+            v = 1 * forwardmultiplier;
+        }
 
         if (direction2 < -angle / 2)
         {
@@ -123,20 +134,12 @@ public class AICarController : MonoBehaviour
             h = 1;
         }
 
-        if (direction < -0.3f)
-        {
-            v = -1;
-        }
-        else if (direction > 0.3f)
-        {
-            v = 1 * forwardmultiplier;
-        }
-
-        //v -= Mathf.Abs(h) * turnmultiplier;
-
         bool b = false;
 
-        if ((h != 0 && car.GetSpeed() > brakeSensitivity) || (Vector3.Distance(transform.position, agent.transform.position) < stopDistance && car.GetSpeed() > brakeSensitivity) || (car.GetSpeed() > brakeSensitivity * 1.8))
+        if ((h != 0 && car.GetSpeed() > brakeSensitivity) || 
+            (Vector3.Distance(transform.position, agent.transform.position) < stopDistance && 
+            car.GetSpeed() > brakeSensitivity) || 
+            (car.GetSpeed() > brakeSensitivity * 1.8))
         {
             b = true;
         }

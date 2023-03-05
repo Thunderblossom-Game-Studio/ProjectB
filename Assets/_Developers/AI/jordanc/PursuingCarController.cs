@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class PursuingCarController : AICarController
 {
-    public PursuingCarController other;
-
     protected enum State { PURSUE, PATROL, ATTACK, FLEE, PICKUP, SEARCHING, DELIVERY, TURNLEFT, TURNRIGHT, BRAKE }
     [SerializeField] protected State NextState;
     public CollisionPrevention PreventionCollision;
@@ -41,7 +39,7 @@ public class PursuingCarController : AICarController
     [SerializeField] Transform SpawnZonePoint;
     [SerializeField] float DistanceFromPatrolPoint;
 
-    private WeaponHandler weaponHandler;
+    [SerializeField] private Weapon weaponHandler;
 
     [Viewable] private Transform DeliveryPoint;
     
@@ -59,8 +57,6 @@ public class PursuingCarController : AICarController
                 Debug.LogWarning("No delivery points allocated in AI Director.");
         }
         else Debug.LogWarning("No AI Director found in scene.");
-
-        weaponHandler = GetComponent<WeaponHandler>();
 
         AllObjects = GameObject.FindGameObjectsWithTag("SpawnPoint");
 
@@ -224,6 +220,11 @@ public class PursuingCarController : AICarController
         if (!(NextState == State.TURNLEFT || NextState == State.TURNRIGHT || NextState == State.BRAKE))
         {
             FollowAgent();
+        }
+
+        if (Vector3.Distance(transform.position, agent.transform.position) > distanceBetweenAgent * 1.2f)
+        {
+            agent.transform.position = transform.position;
         }
 
         if (Vector3.Distance(transform.position, agent.transform.position) > distanceBetweenAgent)
