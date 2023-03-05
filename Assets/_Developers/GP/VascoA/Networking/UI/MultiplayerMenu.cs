@@ -1,6 +1,7 @@
 using FishNet;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class MultiplayerMenu : MonoBehaviour
 {
     [SerializeField] private Button _hostButton;
