@@ -1,12 +1,14 @@
+using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrafficBrainAINETTEST : MonoBehaviour
+public class TrafficBrainAINETTEST : NetworkBehaviour
 {
 
     [Header("Waypoint Targets")]
-    public Transform goal;
+    [SyncVar] public Transform goal;
     public Transform panicgoal;
     public Transform savegoal;
     public float KeepX;
@@ -32,7 +34,7 @@ public class TrafficBrainAINETTEST : MonoBehaviour
     private bool IgnoreRaycasts;
 
     [Header("Car Speed")]
-    [SerializeField] float CarSpeed;
+    [SyncVar][SerializeField] float CarSpeed;
     float DefaultSpeed;
     [SerializeField] float PanicCarSpeed;
     bool PanicForever;
@@ -46,26 +48,34 @@ public class TrafficBrainAINETTEST : MonoBehaviour
     public GameObject ObjectToDonut;
     public int SpinY;
 
-    void Start()
+    public override void OnStartServer()
     {
+        base.OnStartServer();
+
+        if (!base.IsServer)
+            return;
+        
         panic = ShowPanic;
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         agent.destination = goal.position;
         DefaultSpeed = CarSpeed;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (!base.IsServer)
+            return;
+
         #region
         if (Vector3.Distance(transform.position, goal.transform.position) < 1)
         {
-            goal.GetComponent<WaypointControlAINETTEST>().Car = this.gameObject;
-            goal.GetComponent<WaypointControlAINETTEST>().Lane();
+            goal.GetComponent<WaypointControlAINETTEST>().Lane(this);
             agent.destination = goal.position;
         }
         RaycastHit hit;
+        
         Vector3 forward = pointy.transform.TransformDirection(Vector3.forward) * CarSpeed;
+        
         if (Physics.Raycast(pointy.transform.position, forward, out hit, 5.0f))
         {
             if (hit.rigidbody != null && IgnoreRaycasts == false)
@@ -84,12 +94,13 @@ public class TrafficBrainAINETTEST : MonoBehaviour
 
         if (Vector3.Distance(transform.position, sortedgoal) <= .1f)
         {
-            goal.GetComponent<WaypointControlAINETTEST>().Car = this.gameObject;
-            goal.GetComponent<WaypointControlAINETTEST>().Lane();
+            goal.GetComponent<WaypointControlAINETTEST>().Lane(this);
             agent.destination = goal.position;
         }
-        RaycastHit AnotherHit;
+        
         Vector3 MovingForward = PointyTheSequel.transform.TransformDirection(Vector3.forward) * CarSpeed;
+        RaycastHit AnotherHit;
+        
         if (Physics.Raycast(PointyTheSequel.transform.position, MovingForward, out AnotherHit, 5.0f))
         {
             if (AnotherHit.rigidbody != null && IgnoreRaycasts == false)
@@ -112,7 +123,8 @@ public class TrafficBrainAINETTEST : MonoBehaviour
         if (CarmageddonMode == true)
         {
             IgnoreRaycasts = true;
-            CarSpeed = PanicCarSpeed;
+            //CarSpeed = PanicCarSpeed;
+            SetSpeed(PanicCarSpeed);
             PanicForever = true;
             StartCoroutine(PanicMode());
             CarmageddonMode = false;
@@ -143,6 +155,13 @@ public class TrafficBrainAINETTEST : MonoBehaviour
         }
 
 
+    }
+
+    [ServerRpc (RequireOwnership = false)]
+    private void SetSpeed(float speed)
+    {
+        Debug.Log("Speed changed");
+        CarSpeed = speed;
     }
 
 
