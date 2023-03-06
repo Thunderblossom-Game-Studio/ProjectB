@@ -8,66 +8,67 @@ public class TrafficBrain : MonoBehaviour
 {
 
     [Header("Waypoint Targets")]
-
+    #region References
     [Tooltip("Traffic Car's Next Target Waypoint/Movement")]
     public Transform goal;
-
     public Transform panicgoal;
-    public Transform savegoal;
-    public float KeepX;
-    public GameObject LeftRayCast;
-
-    int ForLoopLength = 3;
-
-    public GameObject RightRayCast;
-    UnityEngine.AI.NavMeshAgent agent;
+    Transform savegoal;
+    #endregion
 
     [Header("Panic States")]
-
+    #region
+    int ForLoopLength = 3;
     [Tooltip("If This Is Ticked, The Traffic Car Will Start To Panic And Drive Frantically.")]
     public bool panic;
     public bool ShowPanic;
-
     [Tooltip("If This Is Ticked, The Traffic Car Will Panic Forever.")]
-
     public bool ExtendedPanic;
     [SerializeField] int DistanceForwardIncrease;
     public int PastPanicAxis;  
-    public int PanicAxis;  
-
-
-    
-    bool IgnoreRaycasts;
-
-    [Header("Car Speed")]
-    [SerializeField] float RayCastInt;
+    public int PanicAxis;
     bool PanicForever;
+    #endregion
+
+    [Header("Unknown")]
+    #region
+    public float KeepX;
+    public GameObject LeftRayCast;
+    public GameObject RightRayCast;
+    UnityEngine.AI.NavMeshAgent agent;
+    bool IgnoreRaycasts;
+    [SerializeField] float RayCastInt;
     float SecondsToWait;
+    #endregion
 
     [Header("Health")]
-
+    #region
     [Tooltip("The Traffic Car's Current Health.")]
     public float Health;
-
     [Tooltip("The Maximum Health Of The Traffic Car.")]
     public float MaxHealth;
-
+    #endregion
 
     [Header("SpinOut")]
+    #region
     public bool ActivateSpinOut;
     public GameObject ObjectToSpinOut;
     public int SpinY;
+    #endregion
 
+    [Header("Wheels")]
+    #region
     public GameObject FrontLeft;
     public GameObject FrontRight;
     public GameObject RearLeft;
     public GameObject RearRight;
     public float turnSpeed = 50f;
-
+    #endregion
 
     [Header("Death")]
+    #region
     public GameObject SpawnStation;
     public GameObject Itself;
+    #endregion
 
     void Start()
     {
@@ -80,7 +81,7 @@ public class TrafficBrain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        #region
+        #region Raycast Code
         if (Vector3.Distance(transform.position, goal.transform.position) < 1)
         {
             goal.GetComponent<WaypointControl>().Car = this.gameObject;
@@ -120,7 +121,7 @@ public class TrafficBrain : MonoBehaviour
         {
             agent.isStopped = false;
         }
-        #endregion
+        #endregion 
 
         if(panic == true && ExtendedPanic == false)
         {
@@ -145,8 +146,6 @@ public class TrafficBrain : MonoBehaviour
             SecondsToWait = 1;
         }
 
-        
-
         if (Health <= 0)
         {
             panic = false;
@@ -166,7 +165,6 @@ public class TrafficBrain : MonoBehaviour
         RearRight.transform.Rotate(Vector3.forward, turnSpeed * Time.deltaTime);
     }
 
-
     private void OnCollisionEnter(Collision collision)
     {
         if(CompareTag("Player"))
@@ -175,7 +173,6 @@ public class TrafficBrain : MonoBehaviour
         }
     }
 
-    
     IEnumerator PanicMode()
     {
         //point based off rng local
@@ -217,7 +214,6 @@ public class TrafficBrain : MonoBehaviour
         agent.autoBraking = true;
     }
 
-
     void SpinOut()
     {
        // agent.isStopped = true;
@@ -228,26 +224,14 @@ public class TrafficBrain : MonoBehaviour
         //ObjectToDonut.transform.Rotate(new Vector3(0, SpinY, 0));
     }
 
-
- 
-
-     IEnumerator Explode()
+    IEnumerator Explode()
     {
         yield return new WaitForSeconds(3);
         //Insert Explosion/Particle Effects Here
         SpawnStation.GetComponent<SpawnerControl>().count = SpawnStation.GetComponent<SpawnerControl>().count - 1;
         Destroy(Itself);
     }
-
-
-
-
-
-
-
-    }
-
-   
+}
 
     //Vector3 RespawnPointVector;
     //IEnumerator Respawn()

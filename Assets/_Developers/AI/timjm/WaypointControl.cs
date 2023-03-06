@@ -21,7 +21,7 @@ public class WaypointControl : MonoBehaviour
         Next = Exits[NextMarker];
         if (Red == true)
         {
-            //StartCoroutine("Hold");
+
         }
 
         else if (ActivatePanic == true)
@@ -54,14 +54,5 @@ public class WaypointControl : MonoBehaviour
                 Gizmos.DrawLine(transform.position, exit.transform.position);
             }
         }
-    }
-
-    IEnumerator Hold()
-    {
-        while (!Red)
-        {
-            yield return null;
-        }
-        Car.GetComponent<TrafficBrain>().goal = Next.transform;
     }
 }

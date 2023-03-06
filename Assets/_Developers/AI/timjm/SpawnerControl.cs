@@ -24,7 +24,6 @@ public class SpawnerControl : MonoBehaviour
     IEnumerator Spawn()
     {
         Clone = Instantiate(Traffic, transform.position, Quaternion.identity);
-       
         Clone.GetComponent<PassOn>().connect = RoadConnect.transform;       
         Clone.GetComponent<PassOn>().Controller = SpawnerReference;
         Clone.GetComponent<PassOn>().Pass(); 

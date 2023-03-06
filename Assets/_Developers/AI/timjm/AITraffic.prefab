@@ -124,7 +124,7 @@ Transform:
   m_GameObject: {fileID: 316287180885428805}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0.531, y: 0.219, z: -0.011}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 9, y: 9, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7852339165979745815}
@@ -304,7 +304,7 @@ Transform:
   m_GameObject: {fileID: 1657287716529583639}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.531, y: -0.19066662, z: -1.0400001}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 9, y: 9, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7210620067524342436}
@@ -387,7 +387,7 @@ Transform:
   m_GameObject: {fileID: 3574830104928499472}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.531, y: 0.219, z: -0.011}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 9, y: 9, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7852339165979745815}
@@ -470,7 +470,7 @@ Transform:
   m_GameObject: {fileID: 3847423473718545084}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0.531, y: -0.19066662, z: -1.0400001}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 9, y: 9, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7210620067524342436}
@@ -537,6 +537,7 @@ GameObject:
   - component: {fileID: 7210620067524342436}
   - component: {fileID: 8312163950728645453}
   - component: {fileID: 5757789788533746374}
+  - component: {fileID: 3054919370460672940}
   m_Layer: 0
   m_Name: BodyCover
   m_TagString: Untagged
@@ -611,6 +612,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3054919370460672940
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4238849322737389121}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300010, guid: ab3d18e7f8353fd41aa491cf6d48aef6, type: 3}
 --- !u!1 &4960384603844348745
 GameObject:
   m_ObjectHideFlags: 0
@@ -919,21 +934,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goal: {fileID: 0}
   panicgoal: {fileID: 6038396599628694417}
-  savegoal: {fileID: 0}
-  KeepX: 0
-  LeftRayCast: {fileID: 122882153777161177}
-  RightRayCast: {fileID: 4960384603844348745}
   panic: 0
   ShowPanic: 0
   ExtendedPanic: 0
   DistanceForwardIncrease: 5
   PastPanicAxis: 0
   PanicAxis: 0
+  KeepX: 0
+  LeftRayCast: {fileID: 122882153777161177}
+  RightRayCast: {fileID: 4960384603844348745}
   RayCastInt: 0
   Health: 0
   MaxHealth: 100
-  RespawnPoint: {fileID: 0}
-  ThisGameObject: {fileID: 926617803036837812}
   ActivateSpinOut: 0
   ObjectToSpinOut: {fileID: 6825392363378918832}
   SpinY: 5
@@ -942,8 +954,6 @@ MonoBehaviour:
   RearLeft: {fileID: 3847423473718545084}
   RearRight: {fileID: 1657287716529583639}
   turnSpeed: 50
-  NavMeshSwitch: {fileID: 0}
-  TurnPhyicsOff: {fileID: 0}
   SpawnStation: {fileID: 0}
   Itself: {fileID: 926617803036837812}
 --- !u!54 &3581327450439052059
