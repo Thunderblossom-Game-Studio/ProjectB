@@ -91,5 +91,4 @@ public class MissionWaypointSystem : MonoBehaviour
         }
         return closestPackage.gameObject;
     }
-    
 }
