@@ -20,6 +20,7 @@ public class PursuingCarController : AICarController
 
     private Vector3 SpawnPoint;
 
+    [SerializeField] private BackTriggerCheck frontTriggerCheck;
     [SerializeField] private BackTriggerCheck backTriggerCheck;
 
     [SerializeField] private float distanceToReset = 50f;
@@ -47,11 +48,19 @@ public class PursuingCarController : AICarController
     [Viewable] private Transform DeliveryPoint;        
     [Viewable] private float agentSpawnWeight = 1;
 
+    [SerializeField] private GamePlayer gamePlayer;
+
+    internal float fleeThreshold;
+
+    public GamePlayer GetGamePlayer => gamePlayer;
+
     protected override void Start()
     {
         if (AIDirector.Instance)
         {
             AIDirector.Instance.bots.Add(this);
+
+            fleeThreshold = AIDirector.Instance.tierOne.healthThreshold/100;
 
             int numOfDeliveryZones = AIDirector.Instance.deliveryZones.Count;
 
@@ -116,16 +125,11 @@ public class PursuingCarController : AICarController
                 }
             }
 
-
             // Reset Target
             if (NextState == State.PATROL)
             {
                 MoveTarget = null;
             }
-
-            // Searching
-
-            // IF target == NULL || need pickup
 
         }
 
@@ -139,12 +143,18 @@ public class PursuingCarController : AICarController
             NextState = State.DELIVERY;
         }
 
-        if (Health.HealthPercentage <= 0.3f)
+        if (Health.HealthPercentage <= fleeThreshold)
         {
             NextState = State.FLEE;
         }
 
-
+        //if (GameStateManager.Instance)
+        //{
+        //    if (GameStateManager.Instance.GameTimer.Timer.GetRemainingTime() < 20f)
+        //    {
+        //        NextState = State.DELIVERY;
+        //    }
+        //}
     }
 
     /// <summary>
@@ -185,7 +195,8 @@ public class PursuingCarController : AICarController
     {
         FollowAgent();
 
-        if (backTriggerCheck.active) agentSpawnWeight = 1;
+        if (backTriggerCheck.active) agentSpawnWeight = 3;
+        else if (frontTriggerCheck.active) agentSpawnWeight = -3;
         else agentSpawnWeight = -1;
 
         if (Vector3.Distance(transform.position, agent.transform.position) > distanceBetweenAgent * 1.1f)
@@ -204,6 +215,11 @@ public class PursuingCarController : AICarController
             agent.isStopped = false;
         }
 
+        if (agent.isStopped && car.GetSpeed() <= 5 && NextState == State.PICKUP)
+        {
+
+        }
+
         State next = NextState;
 
 
@@ -211,10 +227,24 @@ public class PursuingCarController : AICarController
 
         if (next != NextState) newState = true;
 
-        
+        if (agent.isPathStale)
+        {
+            newState = true;
+        }
+
         if (ShootTarget)
         {
+            if (ShootTarget.TryGetComponent<GamePlayer>(out GamePlayer gp))
+            {
+                if (gamePlayer.PlayerTeamData.TeamName == gp.PlayerTeamData.TeamName)
+                {
+                    ShootTarget = null;
+                }
+            }
+        }
 
+        if (ShootTarget)
+        {
             // Attack
             if (Vector3.Distance(transform.position, ShootTarget.transform.position) <= AttackRange)
             {
@@ -224,20 +254,14 @@ public class PursuingCarController : AICarController
                 }
             }
 
-        }
-
-        if (ShootTarget)
-        {
             if (Vector3.Distance(agent.transform.position, ShootTarget.transform.position) <= 15)
             {
                 ShootTarget = null;
             }
+
         }
 
         SwapState();
-
-
-
     }
 
     private void Pursue()
@@ -250,17 +274,6 @@ public class PursuingCarController : AICarController
 
     }
 
-    private void TurnLeft()
-    {
-        car.HandleInput(1, -1, true); //this system probably doesn't work due to different car system
-    }
-
-    private void TurnRight()
-    {
-        car.HandleInput(1, 1, true); //this system probably doesn't work due to different car system
-    }
-
-  
     private void Patrol()
     {
         if (ListOfPatrolPoints.Length == 0) return;
