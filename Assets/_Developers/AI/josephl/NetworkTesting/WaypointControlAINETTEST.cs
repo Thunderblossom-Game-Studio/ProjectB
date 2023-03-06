@@ -13,16 +13,16 @@ public class WaypointControlAINETTEST : NetworkBehaviour
     [ServerRpc (RequireOwnership = false)]
     public void ChangeToNextGoal(TrafficBrainAINETTEST car)
     {
-        Debug.Log(Exits.Count + " exits found");
+        //Debug.Log(Exits.Count + " exits found");
         // Skip if no exits
         if (Exits.Count == 0) return;
 
         // Select next exit
         Next = Exits[Random.Range(0, Exits.Count)];
-        Debug.Log("Next exit: " + Next.name);
+        //Debug.Log("Next exit: " + Next.name);
 
         car.goal = Next.transform;
-        Debug.Log("Waypoint goal transform updated");
+        //Debug.Log("Waypoint goal transform updated");
     }
 
     private void OnDrawGizmos()

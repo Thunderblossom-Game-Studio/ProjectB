@@ -57,7 +57,7 @@ public class TrafficBrainAINETTEST : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void DistanceCheck()
     {
-        Debug.Log("Distance: " + Vector3.Distance(transform.position, goal.transform.position));
+        //Debug.Log("Distance: " + Vector3.Distance(transform.position, goal.transform.position));
         if (Vector3.Distance(transform.position, goal.transform.position) < 1)
         {
             ChangeDestination(this);
@@ -67,7 +67,7 @@ public class TrafficBrainAINETTEST : NetworkBehaviour
     [ServerRpc (RequireOwnership = false)]
     private void ChangeDestination(TrafficBrainAINETTEST car)
     {
-        Debug.Log("Attempting to set destination for " + car.name);
+        //Debug.Log("Attempting to set destination for " + car.name);
         goal.GetComponent<WaypointControlAINETTEST>().ChangeToNextGoal(this);
 
         // Updating destination to goal
