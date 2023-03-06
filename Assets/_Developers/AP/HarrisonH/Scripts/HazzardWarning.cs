@@ -33,17 +33,17 @@ public class HazzardWarning : MonoBehaviour
         {
             EnableImageDisplay(0);
         }
-        //else if (Input.GetKeyDown(KeyCode.Alpha2) && images.Count > 1)
-        //{
-        //    ToggleImageDisplay(1);
-        //}
+        else if (Input.GetKeyDown(KeyCode.Alpha2) && images.Count > 1)
+        {
+            EnableImageDisplay(1);
+        }
         //else if (Input.GetKeyDown(KeyCode.Alpha3) && images.Count > 2)
         //{
-        //    ToggleImageDisplay(2);
+        //    EnableImageDisplay(2);
         //}
         //else if (Input.GetKeyDown(KeyCode.Alpha4) && images.Count > 3)
         //{
-        //    ToggleImageDisplay(3);
+        //    EnableImageDisplay(3);
         //}
         //else if (Input.GetKeyDown(KeyCode.Alpha5) && images.Count > 4)
         //{

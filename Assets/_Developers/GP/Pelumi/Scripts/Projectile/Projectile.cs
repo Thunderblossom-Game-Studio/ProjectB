@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public abstract class Projectile : MonoBehaviour
 {
     [SerializeField] protected bool playerBullet;
     [SerializeField] protected GameEvent hitEvent;
+    [SerializeField] protected LayerMask detectLayer;
     [SerializeField] protected GameObject impactParticle;
     [Viewable] [SerializeField] protected float speed = 0;
     protected Rigidbody rb;
