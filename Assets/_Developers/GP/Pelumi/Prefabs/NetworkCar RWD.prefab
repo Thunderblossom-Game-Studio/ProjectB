@@ -1308,6 +1308,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &3928682706236961056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3317662892416309786}
+  m_Layer: 0
+  m_Name: CatapultPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3317662892416309786
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3928682706236961056}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.046, y: 1.653, z: -0.463}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8473416427403214849}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4157211652781703493
 GameObject:
   m_ObjectHideFlags: 0
@@ -15367,6 +15398,7 @@ Transform:
   m_Children:
   - {fileID: 7020946598105151904}
   - {fileID: 5885120062885390876}
+  - {fileID: 3317662892416309786}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15561,6 +15593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf92e57a9edd9af4caa9b9985e3a1453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useNewInput: 0
   accelAxis: Accel
   brakeAxis: Brake
   steerAxis: Horizontal
@@ -15639,6 +15672,7 @@ MonoBehaviour:
   vehicleVisualRootObject: {fileID: 5885120062885390876}
   vehicleScriptRootObject: {fileID: 579505014991545401}
   cameraFollowObject: {fileID: 8207651105966101343}
+  useNewSystem: 0
   smoothingDuration: 0.125
 --- !u!114 &2194871905372511393
 MonoBehaviour:
@@ -16205,6 +16239,14 @@ PrefabInstance:
       propertyPath: turnSpeed
       value: 300
       objectReference: {fileID: 0}
+    - target: {fileID: 2376095322783210712, guid: cef86d34be55c2a4c8b631bcac440ea9, type: 3}
+      propertyPath: rotateVertical
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2376095322783210712, guid: cef86d34be55c2a4c8b631bcac440ea9, type: 3}
+      propertyPath: downRotationLimit
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cef86d34be55c2a4c8b631bcac440ea9, type: 3}
 --- !u!114 &1779177204569633750 stripped
@@ -16230,6 +16272,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5885120062885390876}
     m_Modifications:
+    - target: {fileID: 1184847739930620968, guid: 888f58e9d2122fb48a96e651fc63c983, type: 3}
+      propertyPath: upRotationLimit
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2652486092779812693, guid: 888f58e9d2122fb48a96e651fc63c983, type: 3}
       propertyPath: m_Name
       value: Catapult
@@ -16248,7 +16294,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3423956865552068079, guid: 888f58e9d2122fb48a96e651fc63c983, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.078
+      value: 1.653
       objectReference: {fileID: 0}
     - target: {fileID: 3423956865552068079, guid: 888f58e9d2122fb48a96e651fc63c983, type: 3}
       propertyPath: m_LocalPosition.z
@@ -16297,6 +16343,10 @@ PrefabInstance:
     - target: {fileID: 6920803885620088158, guid: 888f58e9d2122fb48a96e651fc63c983, type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.035
+      objectReference: {fileID: 0}
+    - target: {fileID: 8066968383990290743, guid: 888f58e9d2122fb48a96e651fc63c983, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.642
       objectReference: {fileID: 0}
     - target: {fileID: 8373416939796025397, guid: 888f58e9d2122fb48a96e651fc63c983, type: 3}
       propertyPath: m_LocalScale.x

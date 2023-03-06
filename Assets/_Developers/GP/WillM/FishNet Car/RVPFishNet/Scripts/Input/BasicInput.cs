@@ -9,6 +9,9 @@ namespace RVP
     {
         // -=-=-=-= PUBLISHED STATE =-=-=-=-
 
+        [Tooltip("Use New Input")]
+        public bool useNewInput;
+
         [Tooltip("")]
         public string accelAxis;
 
@@ -71,37 +74,37 @@ namespace RVP
             if (!string.IsNullOrEmpty(accelAxis))
             {
                 //md.AccelInput = Input.GetAxis(accelAxis);
-                md.AccelInput = InputManager.Instance.HandleAccelerateInput().ReadValue<float>();
+                md.AccelInput = useNewInput ?  InputManager.Instance.HandleAccelerateInput().ReadValue<float>() : Input.GetAxis(accelAxis);
             }
 
             if (!string.IsNullOrEmpty(brakeAxis))
             {
                // md.BrakeInput = Input.GetAxis(brakeAxis);
-                md.BrakeInput = InputManager.Instance.HandleDecelerateInput().ReadValue<float>();
+                md.BrakeInput = useNewInput ? InputManager.Instance.HandleDecelerateInput().ReadValue<float>() : Input.GetAxis(brakeAxis);
             }
 
             if (!string.IsNullOrEmpty(steerAxis))
             {
                // md.SteerInput = Input.GetAxis(steerAxis);
-                md.SteerInput = InputManager.Instance.HandleMoveInput().ReadValue<Vector2>().x;
+                md.SteerInput = useNewInput ? InputManager.Instance.HandleMoveInput().ReadValue<Vector2>().x : Input.GetAxis(steerAxis);
             }
 
             if (!string.IsNullOrEmpty(ebrakeAxis))
             {
                // md.EbrakeInput = Input.GetAxis(ebrakeAxis);
-                md.EbrakeInput = InputManager.Instance.HandleBrakeInput().ReadValue<float>();
+                md.EbrakeInput = useNewInput ? InputManager.Instance.HandleBrakeInput().ReadValue<float>() : Input.GetAxis(ebrakeAxis);
             }
 
             if (!string.IsNullOrEmpty(boostButton))
             {
                 // md.BoostButton = Input.GetButton(boostButton);
-                md.BoostButton = InputManager.Instance.HandleBrakeInput().IsPressed();
+                md.BoostButton = useNewInput ? InputManager.Instance.HandleBrakeInput().IsPressed()  : Input.GetButton(boostButton);
             }
 
             if (!string.IsNullOrEmpty(pitchAxis))
             {
                // md.PitchInput = Input.GetAxis(pitchAxis);
-                md.PitchInput = InputManager.Instance.HandleMoveInput().ReadValue<Vector2>().y;
+                md.PitchInput = useNewInput ? InputManager.Instance.HandleMoveInput().ReadValue<Vector2>().y : Input.GetAxis(pitchAxis);
             }
 
             if (!string.IsNullOrEmpty(yawAxis))

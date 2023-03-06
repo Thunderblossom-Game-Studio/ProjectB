@@ -52,15 +52,6 @@ public abstract class Weapon : MonoBehaviour
         NewHandleHorizontalAndVerticalRotation();
     }
 
-    private void HandleHorizontalAndVerticalRotation()
-    {
-        Vector3 targetPositionInLocalSpace = aimPoint;
-        if (!rotateVertical) targetPositionInLocalSpace.y = 0;
-        Vector3 limitedRotation = Vector3.RotateTowards(Vector3.forward, targetPositionInLocalSpace, (targetPositionInLocalSpace.x >= 0.0f) ? Mathf.Deg2Rad * rightRotationLimit : Mathf.Deg2Rad * leftRotationLimit, float.MaxValue);
-        Quaternion whereToRotate = Quaternion.LookRotation(limitedRotation);
-        content.rotation = Quaternion.RotateTowards(content.rotation, whereToRotate, turnSpeed * Time.deltaTime);
-    }
-
     private void NewHandleHorizontalAndVerticalRotation()
     {
         Vector3 targetPositionInLocalSpace = aimPoint;

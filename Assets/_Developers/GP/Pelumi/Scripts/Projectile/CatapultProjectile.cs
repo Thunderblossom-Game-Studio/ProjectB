@@ -16,20 +16,10 @@ public class CatapultProjectile : Projectile
     private Coroutine moveRoutine;
     private bool hasHit;
     private bool launched;
-    private Vector3 startPos;
-    private float t;
-    private float duration;
-    private Vector3 midPoint;
 
     protected void Start()
     {
         sphereDamager = GetComponent<SphereDamager>();
-    }
-
-    private void Update()
-    {
-        if (!launched || hasHit) return;
-        MoveObjectAlongPath();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -48,13 +38,8 @@ public class CatapultProjectile : Projectile
     {
         targetPostion = targetPos;
         speed = _speed;
-        float dist = Vector3.Distance(transform.position, targetPostion);
-        duration = dist / speed;
-        t = 0.0f;
-        startPos = transform.position;
-        midPoint = startPos + (targetPostion - startPos) / 2 + Vector3.up * angle;
         launched = true;
-      //  moveRoutine = StartCoroutine(PathUtil.MoveObjectAlongPath(transform, transform.position, targetPostion, angle, speed, null));
+        moveRoutine = StartCoroutine(PathUtil.MoveObjectAlongPath(transform, transform.position, targetPostion, angle, speed, null));
     }
 
     public void DetectTargets()
@@ -80,26 +65,8 @@ public class CatapultProjectile : Projectile
 
     protected override void DestroyProjectile()
     {
-        Debug.Log("Damage");
         sphereDamager.Damage();
         Instantiate(explosionParticle, transform.position, Quaternion.identity);
         base.DestroyProjectile();
-    }
-
-    public void MoveObjectAlongPath()
-    {
-        if (t < duration)
-        {
-            t += Time.deltaTime;
-            float frac = t / duration;
-            Vector3 start = Vector3.Lerp(startPos, midPoint, frac);
-            Vector3 end = Vector3.Lerp(midPoint, targetPostion, frac);
-            transform.position = Vector3.Lerp(start, end, frac);
-            transform.rotation = Quaternion.LookRotation(end - start, Vector3.up);
-        }
-        else
-        {
-            transform.position += transform.forward * speed * Time.deltaTime;
-        }
     }
 }

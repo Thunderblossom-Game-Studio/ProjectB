@@ -46,7 +46,7 @@ public class Catapult : Weapon
     public void DrawPath(Vector3 _targetPos)
     {
         targetPos = _targetPos;
-        PathUtil.CalculateAngle(firePoint[0].position, targetPos, minAngle, maxAngle);
+        angle = PathUtil.CalculateAngle(firePoint[0].position, targetPos, minAngle, maxAngle);
         PathUtil.DrawPath(lineRenderer, firePoint[0].position, targetPos, angle, vertextCount);
     }
 

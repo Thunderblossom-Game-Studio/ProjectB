@@ -31,6 +31,9 @@ namespace RVP
         [Tooltip("Camera Follow")]
         public Transform cameraFollowObject;
 
+        [Tooltip("Use New System")]
+        public bool useNewSystem;
+
         [Tooltip("Duration to smooth desynchronizations over.")]
         [Range(0.01f, 0.5f)]
         public float smoothingDuration = 0.05f;
@@ -165,11 +168,15 @@ namespace RVP
             if (base.IsOwner)
             {
                 // client is controlling this - so setup camera
-                //TODO: Assign to camera.
-                //Pelumi disabled it removed it
-                // var cfl = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>();
-                // cfl.Initialize(vehicleVisualRootObject, _vp);
-                CameraManager.Instance?.FollowAndLootAt(cameraFollowObject);
+                if(useNewSystem)
+                {
+                    var cfl = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>();
+                    cfl.Initialize(vehicleVisualRootObject, _vp);
+                }
+                else
+                {
+                    CameraManager.Instance?.FollowAndLootAt(cameraFollowObject);
+                }
             }
         }
 

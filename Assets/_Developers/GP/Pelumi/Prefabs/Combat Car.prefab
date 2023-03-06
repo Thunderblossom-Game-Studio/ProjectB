@@ -488,6 +488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CinemachineCameraTarget: {fileID: 1053113273156046065}
+  invert: 0
   sensitivity: 0.05
   TopClamp: 70
   BottomClamp: -30
@@ -504,7 +505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d43d9b93f66256b499886061d14497c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugMode: 1
+  debugMode: 0
   allWeapon:
   - {fileID: 1889801707300910895}
   - {fileID: 4718469686678360628}
@@ -1427,8 +1428,25 @@ PrefabInstance:
       propertyPath: turnSpeed
       value: 300
       objectReference: {fileID: 0}
+    - target: {fileID: 2376095322783210712, guid: cef86d34be55c2a4c8b631bcac440ea9, type: 3}
+      propertyPath: turretBarrel
+      value: 
+      objectReference: {fileID: 1889801706746551439}
+    - target: {fileID: 2376095322783210712, guid: cef86d34be55c2a4c8b631bcac440ea9, type: 3}
+      propertyPath: rotateVertical
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2376095322783210712, guid: cef86d34be55c2a4c8b631bcac440ea9, type: 3}
+      propertyPath: upRotationLimit
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cef86d34be55c2a4c8b631bcac440ea9, type: 3}
+--- !u!4 &1889801706746551439 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2376095322261895032, guid: cef86d34be55c2a4c8b631bcac440ea9, type: 3}
+  m_PrefabInstance: {fileID: 4233518582592252919}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1889801707300910880 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2376095322783210711, guid: cef86d34be55c2a4c8b631bcac440ea9, type: 3}
