@@ -280,13 +280,14 @@ public class TrafficBrain : MonoBehaviour
 //    void DisplayBasicInfo()
 //    {
 //        EditorGUILayout.PropertyField(serializedObject.FindProperty("goal"));
+
 //    }
 
 //    // When the categoryToDisplay enum is at "Panic"
 //    void DisplayPanicInfo()
 //    {
 //        EditorGUILayout.PropertyField(serializedObject.FindProperty("panic"));
-//        EditorGUILayout.PropertyField(serializedObject.FindProperty("CarmageddonMode"));
+//        EditorGUILayout.PropertyField(serializedObject.FindProperty("ExtendedPanic"));
 //    }
 
 //    // When the categoryToDisplay enum is at "Health"
