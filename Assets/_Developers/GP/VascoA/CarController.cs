@@ -38,8 +38,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private GameEvent carSpeedEvent;
 
     private float topSpeedDrag, idleDrag = 50f;
-
-
+    
     private float horizontalInput;
     private float verticalInput;
     private bool handbrakeInput;
