@@ -22,12 +22,15 @@ public class MissionWaypointSystem : MonoBehaviour
 
     void Update()
     {
-        if (_entitySpawner.SpawnedObjects.Count > 0)
+        if (_entitySpawner)
         {
-            if (!targets[0])
-                targets[0] = GetClosestPackage(_carObject).transform;
-        }
-
+            if (_entitySpawner.SpawnedObjects.Count > 0)
+            {
+                if (!targets[0])
+                    targets[0] = GetClosestPackage(_carObject).transform;
+            } 
+        } 
+        
         for (int i = 0; i < targets.Count; i++) 
         {
             float minX = markers[i].GetPixelAdjustedRect().width / 2;
@@ -71,9 +74,8 @@ public class MissionWaypointSystem : MonoBehaviour
             markers[i].transform.position = pos;
             meters[i].text = ((int)Vector3.Distance(targets[i].position, transform.position)).ToString() + "M";
         }
-
     }
-
+    
     private GameObject GetClosestPackage(GameObject currentPosition)
     {
         SpawnableObject closestPackage = _entitySpawner.SpawnedObjects[0];
@@ -89,4 +91,5 @@ public class MissionWaypointSystem : MonoBehaviour
         }
         return closestPackage.gameObject;
     }
+    
 }
