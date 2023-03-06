@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class MissionWaypointSystem : MonoBehaviour
 {
-
     public Vector3 offset;
     public Vector3 textOffset;
 
@@ -18,9 +17,16 @@ public class MissionWaypointSystem : MonoBehaviour
     public float rotOffset = -90f;
     public float rotMult = 10f;
 
+    [SerializeField] private GameObject _carObject;
+    [SerializeField] private EntitySpawner _entitySpawner;
+
     void Update()
     {
-
+        if (_entitySpawner.SpawnedObjects.Count > 0)
+        {
+            if (!targets[0])
+                targets[0] = GetClosestPackage(_carObject).transform;
+        }
 
         for (int i = 0; i < targets.Count; i++) 
         {
@@ -37,7 +43,6 @@ public class MissionWaypointSystem : MonoBehaviour
 
             if (Vector3.Dot((targets[i].position - transform.position), transform.forward) < 0)
             {
-                // target is behind the player
                 if (pos.x < Screen.width / 2)
                 {
                     pos.x = maxX;
@@ -63,14 +68,25 @@ public class MissionWaypointSystem : MonoBehaviour
             pos.x = Mathf.Clamp(pos.x, minX, maxX);
             pos.y = Mathf.Clamp(pos.y, minY, maxY);
 
-
-        
-
             markers[i].transform.position = pos;
-
-        
             meters[i].text = ((int)Vector3.Distance(targets[i].position, transform.position)).ToString() + "M";
         }
 
+    }
+
+    private GameObject GetClosestPackage(GameObject currentPosition)
+    {
+        SpawnableObject closestPackage = _entitySpawner.SpawnedObjects[0];
+        foreach (SpawnableObject spawnableObject in _entitySpawner.SpawnedObjects)
+        {
+            float distanceBetween = Vector3.Distance(currentPosition.transform.position,
+                spawnableObject.transform.position);
+            float distanceBetweenOld = Vector3.Distance(currentPosition.transform.position,
+                closestPackage.transform.position);
+
+            if (distanceBetween < distanceBetweenOld)
+                closestPackage = spawnableObject;
+        }
+        return closestPackage.gameObject;
     }
 }
