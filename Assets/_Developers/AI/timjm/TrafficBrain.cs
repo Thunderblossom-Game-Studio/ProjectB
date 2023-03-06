@@ -16,8 +16,7 @@ public class TrafficBrain : MonoBehaviour
     #endregion
 
     [Header("Panic States")]
-    #region
-    int ForLoopLength = 3;
+    #region References
     [Tooltip("If This Is Ticked, The Traffic Car Will Start To Panic And Drive Frantically.")]
     public bool panic;
     public bool ShowPanic;
@@ -27,11 +26,12 @@ public class TrafficBrain : MonoBehaviour
     public int PastPanicAxis;  
     public int PanicAxis;
     bool PanicForever;
+    int ForLoopLength = 3;
+    float KeepX;
     #endregion
 
-    [Header("Unknown")]
+    [Header("Raycast")]
     #region
-    public float KeepX;
     public GameObject LeftRayCast;
     public GameObject RightRayCast;
     UnityEngine.AI.NavMeshAgent agent;
@@ -231,7 +231,7 @@ public class TrafficBrain : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         //Insert Explosion/Particle Effects Here
-        //SpawnStation.GetComponent<SpawnerControl>().count = SpawnStation.GetComponent<SpawnerControl>().count - 1;
+        SpawnStation.GetComponent<SpawnerControl>().count = SpawnStation.GetComponent<SpawnerControl>().count - 1;
         Destroy(Itself);
     }
 }
