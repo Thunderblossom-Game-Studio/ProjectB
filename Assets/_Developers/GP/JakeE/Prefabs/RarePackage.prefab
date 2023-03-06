@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 3088843504122015442}
   - component: {fileID: 891989213878638685}
   - component: {fileID: -7742407745346351206}
+  - component: {fileID: -8761244569821749649}
   m_Layer: 0
   m_Name: RarePackage
   m_TagString: Untagged
@@ -143,6 +144,18 @@ MonoBehaviour:
       - m_Target: {fileID: -7742407745346351206}
         m_TargetAssemblyTypeName: SpawnVFX, Assembly-CSharp
         m_MethodName: Spawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -8761244569821749649}
+        m_TargetAssemblyTypeName: PlaySoundEffect, Assembly-CSharp
+        m_MethodName: PlaySound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -213,6 +226,19 @@ MonoBehaviour:
   _vfxPrefab: {fileID: 162456, guid: aa67315846cbf1a4db925cced0c050da, type: 3}
   _positionOffset: {x: 0, y: 0, z: 0}
   _destroyDelay: 1.5
+--- !u!114 &-8761244569821749649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5676333477140487690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9771e6b49d6b90346a05348fe9a10e92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _soundID: CollectParcel
 --- !u!1 &8460345448610528262
 GameObject:
   m_ObjectHideFlags: 0
