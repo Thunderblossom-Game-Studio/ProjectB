@@ -41,7 +41,7 @@ public class PursuingCarController : AICarController
     [SerializeField] Transform SpawnZonePoint;
     [SerializeField] float DistanceFromPatrolPoint;
 
-    private WeaponHandler weaponHandler;
+    private OldWeaponHandler weaponHandler;
 
     [Viewable] private Transform DeliveryPoint;
     
@@ -60,7 +60,7 @@ public class PursuingCarController : AICarController
         }
         else Debug.LogWarning("No AI Director found in scene.");
 
-        weaponHandler = GetComponent<WeaponHandler>();
+        weaponHandler = GetComponent<OldWeaponHandler>();
 
         AllObjects = GameObject.FindGameObjectsWithTag("SpawnPoint");
 

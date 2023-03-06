@@ -24,6 +24,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected float turnSpeed = 300f;
 
     [Header("Shooting")]
+    [SerializeField] protected string fireSoundID;
     [SerializeField] protected WeaponSO weaponSO;
     [SerializeField] protected Transform[] firePoint;
 
@@ -42,6 +43,9 @@ public abstract class Weapon : MonoBehaviour
     public int MaxAmmo => weaponSO.maxAmmo;
     public float Range => weaponSO.range;
 
+
+    public string FireSoundID =>fireSoundID;
+
     protected virtual void Start()
     {
         ModifyAmmo(weaponSO.maxAmmo);
@@ -50,15 +54,6 @@ public abstract class Weapon : MonoBehaviour
     protected virtual void Update()
     {
         NewHandleHorizontalAndVerticalRotation();
-    }
-
-    private void HandleHorizontalAndVerticalRotation()
-    {
-        Vector3 targetPositionInLocalSpace = aimPoint;
-        if (!rotateVertical) targetPositionInLocalSpace.y = 0;
-        Vector3 limitedRotation = Vector3.RotateTowards(Vector3.forward, targetPositionInLocalSpace, (targetPositionInLocalSpace.x >= 0.0f) ? Mathf.Deg2Rad * rightRotationLimit : Mathf.Deg2Rad * leftRotationLimit, float.MaxValue);
-        Quaternion whereToRotate = Quaternion.LookRotation(limitedRotation);
-        content.rotation = Quaternion.RotateTowards(content.rotation, whereToRotate, turnSpeed * Time.deltaTime);
     }
 
     private void NewHandleHorizontalAndVerticalRotation()
@@ -71,26 +66,27 @@ public abstract class Weapon : MonoBehaviour
         content.rotation = Quaternion.RotateTowards(content.rotation, whereToRotate, turnSpeed * Time.deltaTime);
     }
 
-    public void Shoot(Vector3 targetPos)
+    public void Shoot(Vector3 targetPos, Action onFireSuccess = null)
     {
         if (weaponState == WeaponState.Reloading) return;
 
         if (timer <= 0)
         {
-            TryShootProjectile(targetPos);
+            TryShootProjectile(targetPos, onFireSuccess);
             timer = weaponSO.fireRate;
         }
         else timer -= Time.deltaTime;
     }
 
-    public void TryShootProjectile(Vector3 targetPos)
+    public void TryShootProjectile(Vector3 targetPos, Action onFireSuccess = null)
     {
-        if (currentAmmo > 0) ShootProjectile(targetPos); else if (weaponState != WeaponState.Reloading) Reload();
+        if (currentAmmo > 0) ShootProjectile(targetPos, onFireSuccess); else if (weaponState != WeaponState.Reloading) Reload();
     }
 
-    public virtual void ShootProjectile(Vector3 targetPos)
+    public virtual void ShootProjectile(Vector3 targetPos, Action onFireSuccess = null)
     {
         weaponState = WeaponState.Firing;
+        onFireSuccess?.Invoke();
     }
 
     public void ModifyAmmo(int newValue)

@@ -2,7 +2,7 @@ using System;
 using JE.Utilities;
 using UnityEngine;
 
-public class GameTimer : MonoBehaviour
+public class GameTimer : Singleton<GameTimer>
 {
     #region GET
     public Timer Timer => _gameTimer;

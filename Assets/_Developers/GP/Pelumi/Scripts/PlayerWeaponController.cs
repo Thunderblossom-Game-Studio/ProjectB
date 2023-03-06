@@ -66,7 +66,7 @@ public class PlayerWeaponController : MonoBehaviour
 
         currentWeapon.SetAim(Camera.main.transform.forward * 200.0f);
         if (currentWeapon is Catapult catapult) catapult.DrawPath(GetTargetPos(currentWeapon.Range));
-        if (InputManager.Instance.HandleFireInput().IsPressed()) currentWeapon.Shoot(GetTargetPos(currentWeapon.Range));
+        if (InputManager.Instance.HandleFireInput().IsPressed()) currentWeapon.Shoot(GetTargetPos(currentWeapon.Range), OnFireSuccess);
     }
 
     public void DebugSwitchWeapons()
@@ -75,10 +75,15 @@ public class PlayerWeaponController : MonoBehaviour
         {
             currentWeapon.transform.GetChild(0).gameObject.SetActive(false);
             UnSubscribeWeaponEvent();
-            currentWeapon = allWeapon[ allWeapon.IndexOf(currentWeapon) == 0 ? 1 : 0];
+            currentWeapon = allWeapon[ allWeapon.IndexOf(currentWeapon)  == allWeapon.Count  - 1 ? 0 : allWeapon.IndexOf(currentWeapon) + 1];
             currentWeapon.transform.GetChild(0).gameObject.SetActive(true);
             SubscribeWeaponEvent();
         }
+    }
+
+    public void OnFireSuccess()
+    {
+        AudioManager.PlaySoundEffect(currentWeapon.FireSoundID, true);
     }
 
     void DebugMouse()
@@ -90,10 +95,14 @@ public class PlayerWeaponController : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(new Vector2(Screen.width / 2, Screen.height / 2));
 
-        if (Physics.Linecast(Camera.main.transform.position, gunSocket.position)) return ray.GetPoint(range);
+        if (Physics.Linecast(Camera.main.transform.position, gunSocket.position, detectMask))
+        {
+            Debug.DrawLine(Camera.main.transform.position, gunSocket.position, Color.green);
+            return ray.GetPoint(range);
+        } 
         else
         {
-            if (Physics.Raycast(ray, out RaycastHit hit, range))
+            if (Physics.Raycast(ray, out RaycastHit hit, range, detectMask))
             {
                 Debug.DrawLine(ray.origin, hit.point, Color.magenta);
                 return hit.point;
