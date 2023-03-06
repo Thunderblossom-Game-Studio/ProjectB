@@ -5,15 +5,6 @@ using UnityEngine.UI;
 
 public class MissionWaypointSystem : MonoBehaviour
 {
-    //public Image img1;
-    //public Image img2;
-    //public Image img3;
-    //public Transform target1;
-    //public Transform target2;
-    //public Transform target3;
-    //public Text meter1;
-    //public Text meter2;
-    //public Text meter3;
     public Vector3 offset;
     public Vector3 textOffset;
 
@@ -28,24 +19,6 @@ public class MissionWaypointSystem : MonoBehaviour
 
     void Update()
     {
-        //float minX1 = img1.GetPixelAdjustedRect().width / 2;
-        //float maxX1 = Screen.width - minX1;
-
-        //float minY1 = img1.GetPixelAdjustedRect().height / 2;
-        //float maxY1 = Screen.height - minY1;
-
-        //float minX2 = img2.GetPixelAdjustedRect().width / 2;
-        //float maxX2 = Screen.width - minX2;
-
-        //float minY2 = img2.GetPixelAdjustedRect().height / 2;
-        //float maxY2 = Screen.height - minY2;
-
-        //float minX3 = img3.GetPixelAdjustedRect().width / 2;
-        //float maxX3 = Screen.width - minX3;
-
-        //float minY3 = img3.GetPixelAdjustedRect().height / 2;
-        //float maxY3 = Screen.height - minY3;
-
         for (int i = 0; i < targets.Count; i++) 
         {
             float minX = markers[i].GetPixelAdjustedRect().width / 2;

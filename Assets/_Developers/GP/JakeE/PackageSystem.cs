@@ -61,16 +61,14 @@ public class PackageSystem : MonoBehaviour
             totalScore += package.PackageScore;
             totalPackage++;
         }
-
-        //To Change >>>
+        
         _packageScore += totalScore;
         if (!TryGetComponent(out GamePlayer gamePlayer)) return;
-        if (GameStateManager.Instance)
-        {
-            GameStateManager.Instance.TeamManager.AddScore(gamePlayer.PlayerTeamData, totalScore, totalPackage);
-        }
-        //To Change <<<
         
+        if (GameTeamManager.Instance)
+            GameTeamManager.Instance.AddScore
+                (gamePlayer.PlayerTeamData, totalScore, totalPackage);
+
         ClearPackageData();
         _onDeliver?.Invoke();
         _onDeliverEvent?.Invoke();

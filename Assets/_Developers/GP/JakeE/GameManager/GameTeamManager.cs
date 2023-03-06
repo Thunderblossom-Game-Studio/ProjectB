@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using JE.General;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public class GameTeamManager : MonoBehaviour
+public class GameTeamManager : Singleton<GameTeamManager>
 {
     [Header("Game Events")]
     [SerializeField] private GameEvent _onBlueTeamScore;
@@ -54,7 +56,27 @@ public class GameTeamManager : MonoBehaviour
             _onRedTeamScore.Raise(this, new int[] { _redTeamData.TeamPoints, _redTeamData.TeamPackages } );
         }
     }
-    
+
+    private void OnDrawGizmos()
+    {
+        if (_blueTeamData.SpawnPoints.IsEmpty())
+            return;
+
+        foreach (Vector3 spawnPoint in _blueTeamData.SpawnPoints)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireCube(spawnPoint, new Vector3(0.5f, 0.5f, 0.5f));
+        }
+        
+        if (_redTeamData.SpawnPoints.IsEmpty())
+            return;
+        
+        foreach (Vector3 spawnPoint in _redTeamData.SpawnPoints)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(spawnPoint, new Vector3(0.5f, 0.5f, 0.5f));
+        }
+    }
 }
 
 [Serializable]
@@ -76,12 +98,28 @@ public class TeamData
     [SerializeField] private List<Vector3> _spawnPoints;
     [SerializeField] private List<GamePlayer> _teamPlayers = new List<GamePlayer>();
     
-    public void AddPlayer(GamePlayer gamePlayer) => _teamPlayers.Add(gamePlayer);
-    public void RemovePlayer(GamePlayer gamePlayer) => _teamPlayers.Remove(gamePlayer);
-    public bool ContainsPlayer(GamePlayer gamePlayer) => _teamPlayers.Contains(gamePlayer);
-    public void AddSpawn(Vector3 spawnPosition) => _spawnPoints.Add(spawnPosition);
-    public void AddScore(int score) => _teamPoints += score;
-    public void RemoveScore(int score) => _teamPoints -= score;
-    public void AddPackage(int package) => _teamPackages += package;
-    public void RemovePackage(int package) => _teamPackages -= package;
+    public void AddPlayer(GamePlayer gamePlayer) 
+        => _teamPlayers.Add(gamePlayer);
+    public void RemovePlayer(GamePlayer gamePlayer) 
+        => _teamPlayers.Remove(gamePlayer);
+    public bool ContainsPlayer(GamePlayer gamePlayer) 
+        => _teamPlayers.Contains(gamePlayer);
+    public void AddSpawn(Vector3 spawnPosition) 
+        => _spawnPoints.Add(spawnPosition);
+    public void AddScore(int score) 
+        => _teamPoints += score;
+    public void RemoveScore(int score) 
+        => _teamPoints -= score;
+    public void AddPackage(int package) 
+        => _teamPackages += package;
+    public void RemovePackage(int package) 
+        => _teamPackages -= package;
+
+    public Vector3 GetRandomSpawnPoint()
+    {
+        return _spawnPoints.IsEmpty() ? new Vector3(0, 0, 0) 
+            : _spawnPoints[Random.Range(0, _spawnPoints.Count)];
+    }
+    
+    
 }
