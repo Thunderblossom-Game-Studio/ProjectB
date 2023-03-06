@@ -52,7 +52,9 @@ public class TrafficBrain : MonoBehaviour
     #region
     public bool ActivateSpinOut;
     public GameObject ObjectToSpinOut;
+    public GameObject anchor;
     public int SpinY;
+    public float Thrust = 20f;
     #endregion
 
     [Header("Wheels")]
@@ -61,7 +63,7 @@ public class TrafficBrain : MonoBehaviour
     public GameObject FrontRight;
     public GameObject RearLeft;
     public GameObject RearRight;
-    public float turnSpeed = 50f;
+    public float turnSpeed = 100f;
     #endregion
 
     [Header("Death")]
@@ -179,7 +181,6 @@ public class TrafficBrain : MonoBehaviour
         //point based off current pos + rng values
         savegoal = goal;
         KeepX = transform.position.x;
-        agent.autoBraking = false;
         PanicAxis = 0;
         for (int i = 0; i < ForLoopLength; i++)
         {
@@ -211,55 +212,29 @@ public class TrafficBrain : MonoBehaviour
         agent.isStopped = false;
         agent.SetDestination(savegoal.position);
         goal = savegoal;
-        agent.autoBraking = true;
     }
 
     void SpinOut()
     {
-       // agent.isStopped = true;
+        agent.enabled = false;
+        Destroy(anchor);
+        LeftRayCast.SetActive(false);
+        RightRayCast.SetActive(false);
+        FrontLeft.SetActive(false);
+        FrontRight.SetActive(false);
+        ObjectToSpinOut.GetComponent<Rigidbody>().AddForce(transform.forward * Thrust);
         ObjectToSpinOut.transform.Rotate(new Vector3(0, SpinY, 0));
         StartCoroutine(Explode());
-        //agent.isStopped = true;
-        //NavMeshSwitch.enabled = false;
-        //ObjectToDonut.transform.Rotate(new Vector3(0, SpinY, 0));
     }
 
     IEnumerator Explode()
     {
         yield return new WaitForSeconds(3);
         //Insert Explosion/Particle Effects Here
-        SpawnStation.GetComponent<SpawnerControl>().count = SpawnStation.GetComponent<SpawnerControl>().count - 1;
+        //SpawnStation.GetComponent<SpawnerControl>().count = SpawnStation.GetComponent<SpawnerControl>().count - 1;
         Destroy(Itself);
     }
 }
-
-    //Vector3 RespawnPointVector;
-    //IEnumerator Respawn()
-    //{
-    //    yield return new WaitForSeconds(5);
-       
-    //    RespawnPointVector = RespawnPoint.transform.position;
-
-    //    transform.position = RespawnPointVector;
-    //    ThisGameObject.transform.position = RespawnPointVector;
-
-
-    //    Health = MaxHealth;
-    //    goal = RespawnPoint.transform;
-    //    agent.SetDestination(goal.position);
-    //    TrunkCollider.enabled = true;
-    //    TrunkRenderer.enabled = true;
-    //    CubeRenderer.enabled = true;
-    //    CylinderRenderer.enabled = true;
-    //    AITrafficRenderer.enabled = true;
-    //    AITrafficCollider.enabled = true;
-    //    PointerRenderer.enabled = true;
-    //    Cylinder1Renderer.enabled = true;
-
-    //}
-
-//}
-
 
 //[CustomEditor(typeof(TrafficBrain))]
 //public class TrafficStatEditor : Editor
