@@ -6,8 +6,7 @@ using Pelumi.Juicer;
 public class SceneSelectMenu : BaseMenu<SceneSelectMenu>
 {
     [Header("Buttons")]
-    [SerializeField] private AdvanceButton levelButton;
-    [SerializeField] private AdvanceButton leve2Button;
+    [SerializeField] private AdvanceButton tutorialButton;
     [SerializeField] private AdvanceButton mpButton;
     [SerializeField] private AdvanceButton backButton;
     
@@ -16,8 +15,7 @@ public class SceneSelectMenu : BaseMenu<SceneSelectMenu>
 
     private void Start()
     {
-        levelButton.onClick.AddListener(() => SwitchScene(SceneType.Level1));
-        leve2Button.onClick.AddListener(() => SwitchScene(SceneType.Level2));
+        tutorialButton.onClick.AddListener(() => SwitchScene(SceneType.Tutorial));
         mpButton.onClick.AddListener(() => SwitchScene(SceneType.Multiplayer));
         backButton.onClick.AddListener(CloseButton);
     }
@@ -70,7 +68,6 @@ public class SceneSelectMenu : BaseMenu<SceneSelectMenu>
 public enum SceneType
 {
     MainMenu = 0,
-    Level1 = 1,
-    Level2 = 2,
-    Multiplayer = 3
+    Tutorial = 1,
+    Multiplayer = 2
 }

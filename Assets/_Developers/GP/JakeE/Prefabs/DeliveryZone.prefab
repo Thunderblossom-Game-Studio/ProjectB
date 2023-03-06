@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -3711567061874918876}
   - component: {fileID: 7895970335462806092}
   - component: {fileID: 8568427875627284443}
+  - component: {fileID: 2303765441415295055}
   m_Layer: 0
   m_Name: DeliveryZone
   m_TagString: Untagged
@@ -113,3 +114,31 @@ MonoBehaviour:
   _detectedLayers:
     serializedVersion: 2
     m_Bits: 8
+  _onDeliver:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2303765441415295055}
+        m_TargetAssemblyTypeName: PlaySoundEffect, Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2303765441415295055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3738754516813699930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9771e6b49d6b90346a05348fe9a10e92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _soundID: DeliverParcel
