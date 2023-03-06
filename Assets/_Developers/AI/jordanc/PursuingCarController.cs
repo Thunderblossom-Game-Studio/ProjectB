@@ -71,9 +71,9 @@ public class PursuingCarController : AICarController
         }
         else Debug.LogWarning("No AI Director found in scene.");
 
-        weaponHandler = GetComponent<OldWeaponHandler>();
+        //weaponHandler = GetComponent<OldWeaponHandler>();
 
-        AllObjects = GameObject.FindGameObjectsWithTag("SpawnPoint");
+        //AllObjects = GameObject.FindGameObjectsWithTag("SpawnPoint");
 
         SpawnPoint = transform.position;
 
