@@ -1,12 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ConfettiCannon : Weapon
 {
-    public override void ShootProjectile(Vector3 targetPos)
+    public override void ShootProjectile(Vector3 targetPos, Action OnFireSuccess = null)
     {
-        base.ShootProjectile(targetPos);
+        base.ShootProjectile(targetPos, OnFireSuccess);
 
         for (int i = 0; i < firePoint.Length; i++)
         {

@@ -66,7 +66,7 @@ public class PlayerWeaponController : MonoBehaviour
 
         currentWeapon.SetAim(Camera.main.transform.forward * 200.0f);
         if (currentWeapon is Catapult catapult) catapult.DrawPath(GetTargetPos(currentWeapon.Range));
-        if (InputManager.Instance.HandleFireInput().IsPressed()) currentWeapon.Shoot(GetTargetPos(currentWeapon.Range));
+        if (InputManager.Instance.HandleFireInput().IsPressed()) currentWeapon.Shoot(GetTargetPos(currentWeapon.Range), OnFireSuccess);
     }
 
     public void DebugSwitchWeapons()
@@ -79,6 +79,11 @@ public class PlayerWeaponController : MonoBehaviour
             currentWeapon.transform.GetChild(0).gameObject.SetActive(true);
             SubscribeWeaponEvent();
         }
+    }
+
+    public void OnFireSuccess()
+    {
+        AudioManager.PlaySoundEffect(currentWeapon.FireSoundID, true);
     }
 
     void DebugMouse()
