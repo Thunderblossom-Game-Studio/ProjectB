@@ -1,3 +1,4 @@
+using JE.General;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,5 +38,11 @@ public class DartProjectile : Projectile
     {
         Instantiate(impactParticle, transform.position, Quaternion.identity);
         base.DestroyProjectile();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!detectLayer.ContainsLayer(other.gameObject.layer)) return;
+        DestroyProjectile();
     }
 }

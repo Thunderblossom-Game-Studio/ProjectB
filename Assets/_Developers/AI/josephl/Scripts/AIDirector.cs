@@ -10,7 +10,7 @@ public class AIDirector : Singleton<AIDirector>
     [SerializeField] private Difficulty botDifficulty;
     
     [Tooltip("The lowest difficult tier of the multiplayer bot.")]
-    [SerializeField] private DifficultySetting tierOne;
+    [SerializeField] internal DifficultySetting tierOne;
     [Tooltip("The mid difficult tier of the multiplayer bot.")]
     [SerializeField] private DifficultySetting tierTwo;
     [Tooltip("The highest difficult tier of the multiplayer bot.")]
@@ -61,10 +61,10 @@ public class AIDirector : Singleton<AIDirector>
     private enum Difficulty { EASY, MEDIUM, HARD }
 
     [Serializable]
-    private struct DifficultySetting
+    public struct DifficultySetting
     {
         [Header("Health Settings")]
-        public float healthThreshold;
+        [Range(0,100)] public float healthThreshold;
 
         [Header("Package Collection/Delivery Settings")]
         public float packageThreshold;

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class GameSequencer : MonoBehaviour
+public class GameSequencer : Singleton<GameSequencer>
 {
     [SerializeField] private GameSettings _gameSettings;
     
@@ -16,7 +16,8 @@ public class GameSequencer : MonoBehaviour
         yield return new WaitForSecondsRealtime(1);
         for (int i = 0; i < _gameSettings._beginSequenceText.Length; i++)
         {
-            _onCentreTextUpdate.Raise(this, new object[] {_gameSettings._beginSequenceText[i], i, _gameSettings._beginSequenceText.Length} );
+            _onCentreTextUpdate.Raise(this, new object[] 
+                {_gameSettings._beginSequenceText[i], i, _gameSettings._beginSequenceText.Length} );
             yield return new WaitForSecondsRealtime(1);
         }
         _onCentreTextUpdate.Raise(this, new object[] {"Hide", int.MaxValue, int.MaxValue});
@@ -28,21 +29,12 @@ public class GameSequencer : MonoBehaviour
         GameUtilities.SlowMotion(true);
         for (int i = 0; i < _gameSettings._completeSequenceText.Length; i++)
         {
-            _onCentreTextUpdate.Raise(this, new object[] {_gameSettings._completeSequenceText[i], i, _gameSettings._completeSequenceText.Length} );
+            _onCentreTextUpdate.Raise(this, new object[]
+                {_gameSettings._completeSequenceText[i], i, _gameSettings._completeSequenceText.Length} );
             yield return new WaitForSecondsRealtime(1);
         }
         _onCentreTextUpdate.Raise(this, new object[] {"Hide", int.MaxValue, int.MaxValue});
         GameUtilities.SlowMotion(false);
         GameUtilities.PauseGame();
-    }
-
-    public IEnumerator GameLoseSequence()
-    {
-        yield break;
-    }
-
-    public IEnumerator GameWinSequence()
-    {
-        yield break;
     }
 }

@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class RouteUser : MonoBehaviour
 {
+    public enum MoveType {Loop, Restart}
+
     [Header("Configuration")]
     [SerializeField] private bool moveOnRoute = true;
     [SerializeField] private bool rotateOnRoute = true;
+    [SerializeField] private MoveType moveType;
 
     [Header("Properties")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float rotateSpeed;
     [SerializeField] private Routes routes;
-    [SerializeField] private Vector3 nextTrainRoute;
+    [Viewable] [SerializeField] private Vector3 nextTrainRoute;
 
     private int currentRouteIndex = 0;
     public float MoveSpeed => moveSpeed;
@@ -47,7 +50,23 @@ public class RouteUser : MonoBehaviour
     {
         if (ReachedNextRoute())
         {
-            currentRouteIndex = currentRouteIndex == routes.GetRoutes.Count - 1 ? 0 : ++currentRouteIndex;
+            switch (moveType)
+            {
+                case MoveType.Loop:
+                    currentRouteIndex = currentRouteIndex == routes.GetRoutes.Count - 1 ? 0 : ++currentRouteIndex;
+                    break;
+                case MoveType.Restart:
+                    if(currentRouteIndex == routes.GetRoutes.Count - 1)
+                    {
+                        currentRouteIndex = 0;
+                        transform.position = routes.GetRoutes[currentRouteIndex];
+                    }
+                    else ++currentRouteIndex;
+                    break;
+                default:
+                    break;
+            }
+
             nextTrainRoute = routes.GetRoute(currentRouteIndex);
         }
     }

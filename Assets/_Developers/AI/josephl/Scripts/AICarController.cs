@@ -105,46 +105,63 @@ public class AICarController : MonoBehaviour
     {
         Vector3 dir = (agent.transform.position - transform.position).normalized;
 
-        float direction = Vector3.Dot(dir, transform.forward);
+        //float direction = Vector3.Dot(dir, transform.forward);
 
         float distance = Vector3.Distance(transform.position, agent.transform.position);
 
-        float v = 0;
-        float h = 0;
+        float direction = Vector3.SignedAngle(transform.forward, dir, Vector3.up);
 
-        float direction2 = Vector3.SignedAngle(transform.forward, dir, Vector3.up);
+        float forwardInput = 0;
+        float horizontalInput = 0;
 
-        if (direction2 < -angle / 2)
+        // acceleration/reversing
+        if ((direction < -90) || (direction > 90))
         {
-            h = -1;
+            forwardInput = -1;
         }
-        else if (direction2 > angle / 2)
+        else
         {
-            h = 1;
-        }
-
-        if (direction < -0.3f)
-        {
-            v = -1;
-        }
-        else if (direction > 0.3f)
-        {
-            v = 1 * forwardmultiplier;
+            forwardInput = 1 * forwardmultiplier;
         }
 
-        //v -= Mathf.Abs(h) * turnmultiplier;
+        // turning
+        if (direction < -angle / 2)
+        {
+            horizontalInput = -1;
+        }
+        else if (direction > angle / 2)
+        {
+            horizontalInput = 1;
+        }
 
+        // braking
         bool b = false;
 
-        if ((h != 0 && car.GetSpeed() > brakeSensitivity) || (Vector3.Distance(transform.position, agent.transform.position) < stopDistance && car.GetSpeed() > brakeSensitivity) || (car.GetSpeed() > brakeSensitivity * 1.8))
+        // brakesens
+        // stoppingdis
+
+        //Debug.Log(car.GetSpeed());
+
+        if (
+            // if not turning and speed is greater than brake sens
+            (horizontalInput != 0 && car.GetSpeed() > brakeSensitivity) || 
+            
+            // if in stopping distance and speed is greater than brake sens
+            (Vector3.Distance(transform.position, agent.transform.position) < stopDistance && 
+            car.GetSpeed() > brakeSensitivity) || 
+            
+            // if speed is greater than bleh
+            (car.GetSpeed() > brakeSensitivity * 1.8))
         {
             b = true;
         }
 
-        v = Mathf.Clamp(v, -1f, 1f);
-        h = Mathf.Clamp(h, -1f, 1f);
+        if (b) Debug.Log("braking");
 
-        car.HandleInput(v, h, b);
+        forwardInput = Mathf.Clamp(forwardInput, -1f, 1f);
+        horizontalInput = Mathf.Clamp(horizontalInput, -1f, 1f);
+
+        car.HandleInput(forwardInput, horizontalInput, b);
     }
 
     #endregion
