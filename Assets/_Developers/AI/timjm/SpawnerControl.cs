@@ -5,12 +5,18 @@ using UnityEngine;
 public class SpawnerControl : MonoBehaviour
 {
     public GameObject Traffic;
-    public GameObject SpawnerReference;
+    private GameObject SpawnerReference;
     GameObject Clone;
     public GameObject RoadConnect;
     public int limit;
     public int count;
     bool ready = true;
+
+    private void Awake()
+    {
+        SpawnerReference = gameObject;
+    }
+
     // Update is called once per frame
     void Update()
     {
