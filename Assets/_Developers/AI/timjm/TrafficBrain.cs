@@ -239,6 +239,8 @@ public class TrafficBrain : MonoBehaviour
     }
 }
 
+#if UNITY_EDITOR
+
 [CustomEditor(typeof(TrafficBrain))]
 public class TrafficStatEditor : Editor
 {
@@ -301,3 +303,5 @@ public class TrafficStatEditor : Editor
         EditorGUILayout.PropertyField(serializedObject.FindProperty("MaxHealth"));
     }
 }
+
+#endif

@@ -167,9 +167,16 @@ namespace RVP
 
             if (base.IsOwner)
             {
-                // client is controlling this - so setup camera
-                var cfl = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>();
-                cfl.Initialize(vehicleVisualRootObject, _vp);
+                if (useNewSystem)
+                {
+                    CameraManager.Instance?.FollowAndLootAt(cameraFollowObject);
+                }
+                else
+                {
+                    // client is controlling this - so setup camera
+                    var cfl = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>();
+                    cfl.Initialize(vehicleVisualRootObject, _vp);
+                }
             }
         }
 
