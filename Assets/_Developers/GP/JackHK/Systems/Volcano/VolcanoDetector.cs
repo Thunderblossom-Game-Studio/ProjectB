@@ -14,6 +14,8 @@ public class VolcanoDetector : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         ChangeDetectionState(other, other.transform);
+        AudioManager.PlaySoundEffect("Erruption");
+
     }
 
     private void OnTriggerExit(Collider other)
