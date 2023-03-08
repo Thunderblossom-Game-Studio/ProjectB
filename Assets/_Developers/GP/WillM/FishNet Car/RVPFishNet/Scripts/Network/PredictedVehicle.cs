@@ -164,18 +164,18 @@ namespace RVP
         public override void OnStartClient()
         {
             base.OnStartClient();
-            
+
             if (base.IsOwner)
             {
-                // client is controlling this - so setup camera
-                if(useNewSystem)
+                if (useNewSystem)
                 {
-                    var cfl = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>();
-                    cfl.Initialize(vehicleVisualRootObject, _vp);
+                    CameraManager.Instance?.FollowAndLootAt(cameraFollowObject);
                 }
                 else
                 {
-                    CameraManager.Instance?.FollowAndLootAt(cameraFollowObject);
+                    // client is controlling this - so setup camera
+                    var cfl = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>();
+                    cfl.Initialize(vehicleVisualRootObject, _vp);
                 }
             }
         }

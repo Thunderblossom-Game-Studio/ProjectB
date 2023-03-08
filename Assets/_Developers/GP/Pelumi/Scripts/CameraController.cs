@@ -7,7 +7,8 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private GameObject CinemachineCameraTarget;
 
-    [SerializeField] private bool invert;
+    [SerializeField] private bool invertVertical;
+    [SerializeField] private bool invertHorizontal;
 
     [Range(0.01f, 1.0f)]
     [SerializeField] private float sensitivity = 70.0f;
@@ -30,8 +31,10 @@ public class CameraController : MonoBehaviour
         {
             float deltaTimeMultiplier = (InputManager.Instance.GetCurrentDeviceType() == InputManager.DeviceType.KeyboardAndMouse) ? 1.0f : Time.deltaTime;
 
-            cinemachineTargetYaw += InputManager.Instance.HandleLookInput().ReadValue<Vector2>().x * deltaTimeMultiplier * sensitivity * (invert ? -1 : 1) ;
-            cinemachineTargetPitch += InputManager.Instance.HandleLookInput().ReadValue<Vector2>().y * deltaTimeMultiplier * sensitivity * (invert ? -1 : 1);
+            //Horizontal
+            cinemachineTargetYaw += InputManager.Instance.HandleLookInput().ReadValue<Vector2>().x * deltaTimeMultiplier * sensitivity * (invertHorizontal ? -1 : 1) ;
+            //Vertical
+            cinemachineTargetPitch += InputManager.Instance.HandleLookInput().ReadValue<Vector2>().y * deltaTimeMultiplier * sensitivity * (invertVertical ? 1 : -1);
         }
 
         cinemachineTargetYaw = ClampAngle(cinemachineTargetYaw, float.MinValue, float.MaxValue);

@@ -15593,7 +15593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf92e57a9edd9af4caa9b9985e3a1453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useNewInput: 0
+  useNewInput: 1
   accelAxis: Accel
   brakeAxis: Brake
   steerAxis: Horizontal
@@ -15672,7 +15672,7 @@ MonoBehaviour:
   vehicleVisualRootObject: {fileID: 5885120062885390876}
   vehicleScriptRootObject: {fileID: 579505014991545401}
   cameraFollowObject: {fileID: 8207651105966101343}
-  useNewSystem: 0
+  useNewSystem: 1
   smoothingDuration: 0.125
 --- !u!114 &2194871905372511393
 MonoBehaviour:
@@ -15702,6 +15702,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CinemachineCameraTarget: {fileID: 6750882142219544242}
+  invertVertical: 0
+  invertHorizontal: 0
   sensitivity: 0.05
   TopClamp: 70
   BottomClamp: -30
@@ -15718,7 +15720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d43d9b93f66256b499886061d14497c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugMode: 1
+  debugMode: 0
   allWeapon:
   - {fileID: 777322060499809674}
   - {fileID: 1779177204569633750}
@@ -16240,6 +16242,10 @@ PrefabInstance:
       value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 2376095322783210712, guid: cef86d34be55c2a4c8b631bcac440ea9, type: 3}
+      propertyPath: fireSoundID
+      value: NerfGunShot
+      objectReference: {fileID: 0}
+    - target: {fileID: 2376095322783210712, guid: cef86d34be55c2a4c8b631bcac440ea9, type: 3}
       propertyPath: rotateVertical
       value: 1
       objectReference: {fileID: 0}
@@ -16272,6 +16278,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5885120062885390876}
     m_Modifications:
+    - target: {fileID: 1184847739930620968, guid: 888f58e9d2122fb48a96e651fc63c983, type: 3}
+      propertyPath: fireSoundID
+      value: NerfGunShot
+      objectReference: {fileID: 0}
     - target: {fileID: 1184847739930620968, guid: 888f58e9d2122fb48a96e651fc63c983, type: 3}
       propertyPath: upRotationLimit
       value: 20
@@ -16440,6 +16450,10 @@ PrefabInstance:
     - target: {fileID: 6354641060412750092, guid: 935cc6196c761074795ea0df78deee9e, type: 3}
       propertyPath: turnSpeed
       value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 6354641060412750092, guid: 935cc6196c761074795ea0df78deee9e, type: 3}
+      propertyPath: fireSoundID
+      value: NerfGunShot
       objectReference: {fileID: 0}
     - target: {fileID: 8647653398787969649, guid: 935cc6196c761074795ea0df78deee9e, type: 3}
       propertyPath: m_IsActive

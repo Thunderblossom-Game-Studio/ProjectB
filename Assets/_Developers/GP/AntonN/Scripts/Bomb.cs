@@ -28,6 +28,7 @@ public class Bomb : MonoBehaviour
     {
         //Actual explosion logic not implemented but would go here
         Debug.Log("BOOM!");
+        AudioManager.PlaySoundEffect("BBExplode");
         Destroy(gameObject);
     }
 }

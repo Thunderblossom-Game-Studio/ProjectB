@@ -38,6 +38,7 @@ public class Blimp : MonoBehaviour
 
     private void BlimpBehaviour()
     {
+        AudioManager.PlaySoundEffect("BlimpFan");
         switch (state)
         {
             case State.Moving:

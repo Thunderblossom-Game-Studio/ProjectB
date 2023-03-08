@@ -11,7 +11,10 @@ public class AudioBank : ScriptableObject
     
     public AudioClip GetAudioByID(string ID)
     {
-        AudioWithID audioWithID = audioClips.FirstOrDefault(x => x.ID == ID);
+        AudioWithID audioWithID = audioClips.Find(x => x.ID == ID);
+
+        Debug.Log(audioWithID);
+
         if (audioWithID == null)
         {
             Debug.LogError("Audio with ID: " + ID + " not found in " + name);
