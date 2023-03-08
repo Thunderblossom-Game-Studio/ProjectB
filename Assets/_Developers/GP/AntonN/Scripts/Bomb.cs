@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    [SerializeField] private float explosionTime = 3f;
+    [SerializeField] private float explosionTime = 6f;
 
     private float timer;
     bool exploded = false;
@@ -28,6 +28,7 @@ public class Bomb : MonoBehaviour
     {
         //Actual explosion logic not implemented but would go here
         Debug.Log("BOOM!");
+        AudioManager.PlaySoundEffect("BBExplode");
         Destroy(gameObject);
     }
 }

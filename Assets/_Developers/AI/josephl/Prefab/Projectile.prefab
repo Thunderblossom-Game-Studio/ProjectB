@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2158425892378620387}
   - component: {fileID: 2305005301174971557}
   - component: {fileID: 5813615659223777879}
-  - component: {fileID: 589955896003353954}
+  - component: {fileID: 2532410576275774344}
   m_Layer: 13
   m_Name: Projectile
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 3748333741428973819}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.25077, y: 0.25077, z: 0.25077}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -131,7 +131,7 @@ MonoBehaviour:
   _damageLayers:
     serializedVersion: 2
     m_Bits: 520
-  _damageAmount: 2
+  _damageAmount: 10
   _criticalDamagePercentage: 0
   _criticalChance: 0
   _duration: 0
@@ -139,9 +139,9 @@ MonoBehaviour:
   _onDamage:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 589955896003353954}
+      - m_Target: {fileID: 2532410576275774344}
         m_TargetAssemblyTypeName: Projectile, Assembly-CSharp
-        m_MethodName: OnHit
+        m_MethodName: OnDamage
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -152,7 +152,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _damageType: 0
---- !u!114 &589955896003353954
+--- !u!114 &2532410576275774344
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -161,9 +161,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3748333741428973819}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a5c22a6227067f4db870e7303217171, type: 3}
+  m_Script: {fileID: 11500000, guid: eff9461c3414cd144a6057f9f84f55bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
-  lifeTime: 5
+  playerBullet: 1
   hitEvent: {fileID: 11400000, guid: 6e64ab4c64e4fec47868435545a105fb, type: 2}
+  impactParticle: {fileID: 1894376261830645168, guid: 0681e849e3837b24bb11e851afe115c5, type: 3}
+  speed: 0
+  destroyTime: 10

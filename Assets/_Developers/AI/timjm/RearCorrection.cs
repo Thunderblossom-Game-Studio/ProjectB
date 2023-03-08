@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class RearCorrection : MonoBehaviour
 {
-    public GameObject Point;
-    public GameObject Base;
+    public GameObject RovingPoint;
+    public GameObject ControlPoint;
     public float step = 1.0f;
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(Point.transform.position, Base.transform.position) < 1)
+        if (Vector3.Distance(RovingPoint.transform.position, ControlPoint.transform.position) < 1)
         {
-            Point.transform.position = Vector3.MoveTowards(Point.transform.position, Base.transform.position, step);
+            RovingPoint.transform.position = Vector3.MoveTowards(RovingPoint.transform.position, ControlPoint.transform.position, step);
         }
     }
     

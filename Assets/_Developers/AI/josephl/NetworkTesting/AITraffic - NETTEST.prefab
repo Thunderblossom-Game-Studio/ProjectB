@@ -10,6 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7054817159975659578}
   - component: {fileID: 3845866535754181158}
+  - component: {fileID: 7305188746234242283}
+  - component: {fileID: 5359456635704093076}
+  - component: {fileID: 3233100228799240455}
   m_Layer: 0
   m_Name: AITraffic - NETTEST
   m_TagString: Untagged
@@ -29,7 +32,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2643482486539884689}
   - {fileID: 1830917561833907568}
   - {fileID: 7219323315934490653}
   m_Father: {fileID: 0}
@@ -50,6 +52,94 @@ MonoBehaviour:
   Point: {fileID: 7026044156290377036}
   Base: {fileID: 1979938040855350516}
   step: 0.001
+--- !u!114 &7305188746234242283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294191291744659902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsNested>k__BackingField: 0
+  <ComponentIndex>k__BackingField: 0
+  <PredictedSpawn>k__BackingField: {fileID: 0}
+  _networkBehaviours:
+  - {fileID: 5359456635704093076}
+  - {fileID: 2692857308376416487}
+  <ParentNetworkObject>k__BackingField: {fileID: 0}
+  <ChildNetworkObjects>k__BackingField: []
+  _isNetworked: 1
+  _isGlobal: 0
+  _initializeOrder: 0
+  _defaultDespawnType: 0
+  NetworkObserver: {fileID: 0}
+  <PrefabId>k__BackingField: 0
+  <SpawnableCollectionId>k__BackingField: 0
+  _scenePathHash: 0
+  <SceneId>k__BackingField: 0
+  <AssetPathHash>k__BackingField: 4213864450741485812
+  _sceneNetworkObjects: []
+--- !u!114 &5359456635704093076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294191291744659902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2836e36774ca1c4bbbee976e17b649c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 7305188746234242283}
+  _networkObjectCache: {fileID: 7305188746234242283}
+  _synchronizeParent: 0
+  _packing:
+    Position: 1
+    Rotation: 1
+    Scale: 0
+  _interpolation: 2
+  _extrapolation: 2
+  _enableTeleport: 0
+  _teleportThreshold: 1
+  _clientAuthoritative: 1
+  _sendToOwner: 1
+  _interval: 1
+  _synchronizePosition: 1
+  _positionSnapping:
+    X: 0
+    Y: 0
+    Z: 0
+  _synchronizeRotation: 1
+  _rotationSnapping:
+    X: 0
+    Y: 0
+    Z: 0
+  _synchronizeScale: 0
+  _scaleSnapping:
+    X: 0
+    Y: 0
+    Z: 0
+--- !u!114 &3233100228799240455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294191291744659902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _overrideType: 3
+  _updateHostVisibility: 1
+  _observerConditions: []
 --- !u!1 &301963185286433525
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,7 +526,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7901421eb1b143e49b5b1d7eb8d2d9a8, type: 2}
+  - {fileID: 2100000, guid: 70dbb6b38f6773649b15a366db871a89, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -569,6 +659,7 @@ GameObject:
   - component: {fileID: 2692857308376416487}
   - component: {fileID: 4141696230778602769}
   - component: {fileID: 5931348367602072503}
+  - component: {fileID: 8137403586542809684}
   m_Layer: 0
   m_Name: AITraffic
   m_TagString: Untagged
@@ -592,8 +683,9 @@ Transform:
   - {fileID: 1152440890937646365}
   - {fileID: 7736201043711381721}
   - {fileID: 1174056835527088615}
+  - {fileID: 2643482486539884689}
   m_Father: {fileID: 7054817159975659578}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &2857532963690093845
 NavMeshAgent:
@@ -679,6 +771,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f6806460e42364094cbe411271b7af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 1
+  _addedNetworkObject: {fileID: 7305188746234242283}
+  _networkObjectCache: {fileID: 7305188746234242283}
   goal: {fileID: 0}
   panicgoal: {fileID: 6558821222043348379}
   savegoal: {fileID: 0}
@@ -726,6 +821,21 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &8137403586542809684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6228907787678198714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56b5054c38f49641944d50c1d89e941, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Point: {fileID: 7026044156290377036}
+  Base: {fileID: 1979938040855350516}
+  step: 0.001
 --- !u!1 &7026044156290377036
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,13 +864,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7026044156290377036}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.4166666, z: -1.435}
+  m_LocalPosition: {x: 0, y: 0.41666663, z: -1.4349995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3337541457810148248}
-  m_Father: {fileID: 7054817159975659578}
-  m_RootOrder: 0
+  m_Father: {fileID: 7219323315934490653}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2355128326302531479
 MeshFilter:
@@ -972,7 +1082,7 @@ Transform:
   m_Children:
   - {fileID: 6558821222043348379}
   m_Father: {fileID: 7054817159975659578}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &3813903979815276657
 Rigidbody:

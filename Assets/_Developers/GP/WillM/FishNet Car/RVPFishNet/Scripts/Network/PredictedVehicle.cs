@@ -28,6 +28,12 @@ namespace RVP
         [Tooltip("Root object holding all car scripting game objects")]
         public GameObject vehicleScriptRootObject;
 
+        [Tooltip("Camera Follow")]
+        public Transform cameraFollowObject;
+
+        [Tooltip("Use New System")]
+        public bool useNewSystem;
+
         [Tooltip("Duration to smooth desynchronizations over.")]
         [Range(0.01f, 0.5f)]
         public float smoothingDuration = 0.05f;
@@ -158,12 +164,19 @@ namespace RVP
         public override void OnStartClient()
         {
             base.OnStartClient();
-            
+
             if (base.IsOwner)
             {
-                // client is controlling this - so setup camera
-                var cfl = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>();
-                cfl.Initialize(vehicleVisualRootObject, _vp);
+                if (useNewSystem)
+                {
+                    CameraManager.Instance?.FollowAndLootAt(cameraFollowObject);
+                }
+                else
+                {
+                    // client is controlling this - so setup camera
+                    var cfl = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraControl>();
+                    cfl.Initialize(vehicleVisualRootObject, _vp);
+                }
             }
         }
 

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using JE.General;
 using JE.DamageSystem;
+using System;
 
 public class CatapultProjectile : Projectile
 {
     [SerializeField] private GameObject explosionParticle;
-    [SerializeField] private LayerMask detectLayer;
     [SerializeField] protected float explosionTime;
 
     private Vector3 targetPostion;
@@ -22,14 +22,6 @@ public class CatapultProjectile : Projectile
         sphereDamager = GetComponent<SphereDamager>();
     }
 
-    public void SetUp(Vector3 targetPos,float _speed, float angle)
-    {
-        launched = true;
-        targetPostion = targetPos;
-        speed = _speed;
-        moveRoutine = StartCoroutine(PathUtil.MoveObjectAlongPath(transform, transform.position, targetPostion, angle, speed, null));
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (!launched || !detectLayer.ContainsLayer(other.gameObject.layer) || hasHit) return;
@@ -40,6 +32,14 @@ public class CatapultProjectile : Projectile
         transform.SetParent(other.transform);
         OnHit();
         Debug.Log(other.transform);
+    }
+
+    public void SetUp(Vector3 targetPos, float _speed, float angle)
+    {
+        targetPostion = targetPos;
+        speed = _speed;
+        launched = true;
+        moveRoutine = StartCoroutine(PathUtil.MoveObjectAlongPath(transform, transform.position, targetPostion, angle, speed, null));
     }
 
     public void DetectTargets()
@@ -65,7 +65,6 @@ public class CatapultProjectile : Projectile
 
     protected override void DestroyProjectile()
     {
-        Debug.Log("Damage");
         sphereDamager.Damage();
         Instantiate(explosionParticle, transform.position, Quaternion.identity);
         base.DestroyProjectile();

@@ -41,8 +41,6 @@ namespace JE.DamageSystem
     [SerializeField] private UnityEvent _onDeath;
     [SerializeField] private UnityEvent _onReachFullHealth;
 
-    [SerializeField] private List<Vector3> _respawnPoints;
-
     private IEnumerator _reduceHealthRoutine;
     private IEnumerator _restoreHealthRoutine;
 
@@ -134,26 +132,19 @@ namespace JE.DamageSystem
     
     private void Respawn()
     {
-        if (_respawnPoints.Count <= 0) return;
-        int randomRespawnPoint = Random.Range(0, _respawnPoints.Count);
-        Vector3 respawnPoint = _respawnPoints[randomRespawnPoint];
-        transform.position = respawnPoint;
+        if (!gameObject.TryGetComponent(out GamePlayer gamePlayer))
+            return;
+
+        transform.position = gamePlayer.PlayerTeamData.GetRandomSpawnPoint();
         transform.rotation = Quaternion.identity;
         _currentHealth = _maximumHealth;
-        if (!gameObject.TryGetComponent(out Rigidbody currentBody)) return;
+        
+        if (!gameObject.TryGetComponent(out Rigidbody currentBody)) 
+            return;
+        
         currentBody.velocity = Vector3.zero;
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        if (_respawnPoints.Count <= 0) return;
-        foreach (Vector3 respawnPoint in _respawnPoints)
-        {
-            Gizmos.DrawWireSphere(respawnPoint, 0.5f);
-        }
-    }
-    
     }
 
 public interface IDamageable

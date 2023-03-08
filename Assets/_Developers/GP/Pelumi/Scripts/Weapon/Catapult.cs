@@ -1,4 +1,5 @@
 using Pelumi.Juicer;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,7 +36,7 @@ public class Catapult : Weapon
         SwitchState(State.Reload);
     }
 
-    public override void ShootProjectile(Vector3 targetPos)
+    public override void ShootProjectile(Vector3 targetPos, Action onFireSuccess = null )
     {
         if (inAction) return;
         base.ShootProjectile(targetPos);
@@ -46,7 +47,7 @@ public class Catapult : Weapon
     public void DrawPath(Vector3 _targetPos)
     {
         targetPos = _targetPos;
-        PathUtil.CalculateAngle(firePoint[0].position, targetPos, minAngle, maxAngle);
+        angle = PathUtil.CalculateAngle(firePoint[0].position, targetPos, minAngle, maxAngle);
         PathUtil.DrawPath(lineRenderer, firePoint[0].position, targetPos, angle, vertextCount);
     }
 

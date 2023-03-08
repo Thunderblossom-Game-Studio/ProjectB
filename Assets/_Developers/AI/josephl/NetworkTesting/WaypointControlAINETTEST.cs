@@ -1,42 +1,28 @@
+using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaypointControlAINETTEST : MonoBehaviour
+public class WaypointControlAINETTEST : NetworkBehaviour
 {
     public List<GameObject> Exits;
 
-    public int NextMarker;
-    public GameObject Next;
-    public bool Red;
-    public GameObject Car;
-    public bool ActivatePanic;
+    [SyncVar] public GameObject Next;
 
-    public void Lane()
+    [ServerRpc (RequireOwnership = false)]
+    public void ChangeToNextGoal(TrafficBrainAINETTEST car)
     {
+        //Debug.Log(Exits.Count + " exits found");
+        // Skip if no exits
         if (Exits.Count == 0) return;
 
-        NextMarker = Random.Range(0, Exits.Count);
+        // Select next exit
+        Next = Exits[Random.Range(0, Exits.Count)];
+        //Debug.Log("Next exit: " + Next.name);
 
-        Next = Exits[NextMarker];
-        if (Red == true)
-        {
-            //StartCoroutine("Hold");
-        }
-
-        else if (ActivatePanic == true)
-        {
-            TrafficBrainAINETTEST.panic = true;
-            ActivatePanic = false;
-        }
-
-        else
-        {
-            Car.GetComponent<TrafficBrainAINETTEST>().goal = Next.transform;
-        }
-
-
-
+        car.goal = Next.transform;
+        //Debug.Log("Waypoint goal transform updated");
     }
 
     private void OnDrawGizmos()
@@ -54,14 +40,5 @@ public class WaypointControlAINETTEST : MonoBehaviour
                 Gizmos.DrawLine(transform.position, exit.transform.position);
             }
         }
-    }
-
-    IEnumerator Hold()
-    {
-        while (!Red)
-        {
-            yield return null;
-        }
-        Car.GetComponent<TrafficBrainAINETTEST>().goal = Next.transform;
     }
 }

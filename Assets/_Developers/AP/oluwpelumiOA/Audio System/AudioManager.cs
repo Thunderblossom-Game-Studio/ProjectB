@@ -21,26 +21,23 @@ public class AudioManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    private void Start()
-    {
-        PlayMusic("Menu", true);
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("Space pressed");
-            Instance.StartCoroutine(ChangeMusicWithFadeRoutine(musicBank.GetRandomClip(), true));
-        }
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.buildIndex == 0)
+        SceneType loadedScene = (SceneType)scene.buildIndex;
+        switch (loadedScene)
         {
-            ChangeMusicWithFade("Menu", true);
+            case SceneType.MainMenu:
+                ChangeMusicWithFade("Menu", true);
+                break;
+            case SceneType.Tutorial: ChangeMusicWithFade("TuneL1", true); break;
+            case SceneType.Multiplayer: ChangeMusicWithFade("Menu", true); break;
+            default: break;
         }
     }
 
@@ -85,6 +82,8 @@ public class AudioManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(0.1f);
         }
 
+        Debug.Log(audioClip);
+
         musicPlayer.clip = audioClip;
         musicPlayer.loop = loop;
         musicPlayer.Play();
@@ -105,6 +104,8 @@ public class AudioManager : MonoBehaviour
     public static AudioClip GetMusicClip(string audioID)
     {
         if (!InstanceExists()) return null;
+        Debug.Log(InstanceExists());
+        Debug.Log(Instance.musicBank.GetAudioByID(audioID));
         return  Instance.musicBank.GetAudioByID(audioID);
     } 
     
