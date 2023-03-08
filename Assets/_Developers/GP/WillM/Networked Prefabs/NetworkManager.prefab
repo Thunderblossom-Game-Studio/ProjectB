@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7443408887813606050}
   - component: {fileID: 934570884}
   - component: {fileID: 7443408887813606060}
-  - component: {fileID: 577891078}
   - component: {fileID: 577891079}
   - component: {fileID: 577891080}
   m_Layer: 0
@@ -88,25 +87,6 @@ MonoBehaviour:
   _addToDefaultScene: 0
   Spawns:
   - {fileID: 0}
---- !u!114 &577891078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7443408887813606051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f48f002b825cbd45a19bd96d90f9edb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _unreliableMTU: 1023
-  _ipv4BindAddress: 
-  _ipv6BindAddress: 
-  _port: 10279
-  _maximumClients: 4095
-  _clientAddress: f20d6bda89de41aa9b7ea5361e4888a1-eu-west-studio.games.playflow.cloud
-  _timeout: 15
 --- !u!114 &577891079
 MonoBehaviour:
   m_ObjectHideFlags: 0
