@@ -1,17 +1,27 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialStateManager : MonoBehaviour
+public class TutorialStateManager : Singleton<TutorialStateManager>
 {
+    public enum TutorialAttribute
+    {
+        CollectPackage,
+        DeliverPackage,
+        ReachDestination
+    }
+
+    public bool _hasCollectPackage;
+    public bool _hasDeliverPackage;
+    public bool _hasReachedDestination;
+
     private IEnumerator Start() 
     { yield return RunTutorial(); }
 
     private IEnumerator RunTutorial()
     {
         yield return WelcomeState();
-        yield return LearnControlState();
+        yield return DrivingState();
         yield return CollectPackageState();
         yield return DeliverPackageState();
         yield return BattleEnemyState();
@@ -20,38 +30,68 @@ public class TutorialStateManager : MonoBehaviour
 
     private IEnumerator WelcomeState()
     {
+        yield return new WaitForSeconds(5f);
+        
         Debug.Log("Welcome State");
-        bool testValue = false;
-        yield return new WaitUntil((() => testValue == false));
+        
+        yield return HintManager.Instance.HintRoutine
+            (HintManager.Instance.WelcomeHint);
+        
+        Debug.Log("Welcome State Complete");
+        
     }
     
-    private IEnumerator LearnControlState()
+    private IEnumerator DrivingState()
     {
+        yield return new WaitForSeconds(5f);
+        
         Debug.Log("Learn Control State");
-        yield return null;
+
+        yield return HintManager.Instance.HintRoutine
+            (HintManager.Instance.DrivingHint);
+
+        yield return new WaitUntil(() => _hasCollectPackage == true);
+        
+        Debug.Log("Driving Hint Complete");
     }
 
     private IEnumerator CollectPackageState()
     {
+        yield return new WaitForSeconds(5f);
         Debug.Log("Collect Package State");
-        yield return null;
     }
 
     private IEnumerator DeliverPackageState()
     {
+        yield return new WaitForSeconds(5f);
         Debug.Log("Deliver Package State");
-        yield return null;
     }
 
     private IEnumerator BattleEnemyState()
     {
+        yield return new WaitForSeconds(5f);
         Debug.Log("Battle Enemy State");
-        yield return null;
     }
 
     private IEnumerator GoodbyeState()
     {
+        yield return new WaitForSeconds(5f);
         Debug.Log("Goodbye State");
-        yield return null;
+    }
+
+    public void CompleteAttribute(TutorialAttribute tutorialAttribute)
+    {
+        switch (tutorialAttribute)
+        {
+            case TutorialAttribute.CollectPackage:
+                _hasCollectPackage = true;
+                return;
+            case TutorialAttribute.DeliverPackage:
+                _hasDeliverPackage = true;
+                return;
+            case TutorialAttribute.ReachDestination:
+                _hasReachedDestination = true;
+                return;
+        }
     }
 }
