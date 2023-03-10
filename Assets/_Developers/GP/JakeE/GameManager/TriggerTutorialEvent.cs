@@ -1,6 +1,9 @@
+using JE.General;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TriggerTutorialEvent : MonoBehaviour
 {
@@ -11,3 +14,11 @@ public class TriggerTutorialEvent : MonoBehaviour
         TutorialStateManager.Instance.CompleteAttribute(_attributeToModify);
     }
 }
+
+public enum MyEnum
+{
+    Option1,
+    Option2,
+    Option3
+}
+

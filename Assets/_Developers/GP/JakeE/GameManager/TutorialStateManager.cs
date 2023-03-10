@@ -11,9 +11,22 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
         ReachDestination
     }
 
+    [SerializeField] private GameEvent infoEvent;
+
+    public bool _hasIntroCutSceneComplected;
+
+    public bool _hasDriveFoward;
+    public bool _hasTurnLeft;
+    public bool _hasTurnRight;
+    public bool _hasBreaked;
+
+    public bool _hasReachedDestination;
+
     public bool _hasCollectPackage;
     public bool _hasDeliverPackage;
-    public bool _hasReachedDestination;
+
+    public float buttonPressThresshold;
+    public float currentThreeshold;
 
     private IEnumerator Start() 
     { yield return RunTutorial(); }
@@ -21,43 +34,127 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     private IEnumerator RunTutorial()
     {
         yield return WelcomeState();
-        yield return DrivingState();
-        yield return CollectPackageState();
-        yield return DeliverPackageState();
-        yield return BattleEnemyState();
-        yield return GoodbyeState();
+        yield return DrivingControlState();
+        yield return PackageState();
+        //  yield return CollectPackageState();
+        //  yield return DeliverPackageState();
+        //  yield return BattleEnemyState();
+        //  yield return GoodbyeState();
+    }
+
+    private IEnumerator IntroCutSceneState()
+    {
+        yield return new WaitUntil(() => _hasIntroCutSceneComplected);
     }
 
     private IEnumerator WelcomeState()
     {
         yield return new WaitForSeconds(5f);
-        
-        Debug.Log("Welcome State");
-        
-        yield return HintManager.Instance.HintRoutine
-            (HintManager.Instance.WelcomeHint);
-        
-        Debug.Log("Welcome State Complete");
-        
+
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Welcome State" });
+
+        yield return new WaitForSeconds(2f);
+
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Welcome State Complete" });
     }
-    
-    private IEnumerator DrivingState()
+
+    private IEnumerator DrivingControlState()
     {
-        yield return new WaitForSeconds(5f);
-        
-        Debug.Log("Learn Control State");
+        currentThreeshold = 0;
 
-        yield return HintManager.Instance.HintRoutine
-            (HintManager.Instance.DrivingHint);
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Learn Control State " });
 
+        yield return new WaitForSeconds(2f);
+
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Drive Foward start " });
+
+        while (!_hasDriveFoward)
+        {
+            if (InputManager.Instance.HandleMoveInput().IsPressed())
+            {
+                currentThreeshold += Time.deltaTime;
+                if (currentThreeshold >= buttonPressThresshold)
+                {
+                    _hasDriveFoward = true;
+                    currentThreeshold = 0;
+                }
+            }
+
+            yield return null;
+        }
+
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Drive Foward Complete " });
+
+        yield return new WaitForSeconds(2f);
+
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Turn Left Start " });
+
+        while (!_hasTurnLeft)
+        {
+            if (InputManager.Instance.HandleMoveInput().ReadValue<Vector2>().x < 0)
+            {
+                currentThreeshold += Time.deltaTime;
+                if (currentThreeshold >= buttonPressThresshold)
+                {
+                    _hasTurnLeft = true;
+                    currentThreeshold = 0;
+                }
+            }
+            yield return null;
+        }
+
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Turn Left Complete " });
+
+        yield return new WaitForSeconds(2f);
+
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Turn Right Start" });
+
+        while (!_hasTurnRight)
+        {
+            if (InputManager.Instance.HandleMoveInput().ReadValue<Vector2>().x > 0)
+            {
+                currentThreeshold += Time.deltaTime;
+                if (currentThreeshold >= buttonPressThresshold)
+                {
+                    _hasTurnRight = true;
+                    currentThreeshold = 0;
+                }
+            }
+            yield return null;
+        }
+
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Turn Right Complete" });
+
+        yield return new WaitForSeconds(2f);
+
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Break Start" });
+
+        while (!_hasBreaked)
+        {
+            if (InputManager.Instance.HandleBrakeInput().IsPressed())
+            {
+                currentThreeshold += Time.deltaTime;
+                if (currentThreeshold >= buttonPressThresshold)
+                {
+                    _hasBreaked = true;
+                    currentThreeshold = 0;
+                }
+            }
+            yield return null;
+        }
+
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Break Complected" });
+    }
+
+    private IEnumerator PackageState()
+    {
         yield return new WaitUntil(() => _hasCollectPackage == true);
-        
-        Debug.Log("Driving Hint Complete");
+        Debug.Log("Collect Package State");
     }
 
     private IEnumerator CollectPackageState()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitUntil(() => _hasCollectPackage == true);
         Debug.Log("Collect Package State");
     }
 
