@@ -17,23 +17,40 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     [SerializeField] private CutSceneTrigger cutSceneTrigger;
     [SerializeField] private GameEvent infoEvent;
 
-    public bool _hasIntroCutSceneComplected;
+    [Header("Welcome Intructions")]
+    [SerializeField] private TutorialInstruction _welcomeText;
 
-    public bool _hasDriveFoward;
-    public bool _hasTurnLeft;
-    public bool _hasTurnRight;
-    public bool _hasBreaked;
+    [Header("Success Notifications")]
+    [SerializeField] private TutorialInstruction[] _successTexts;
 
-    public bool _hasReachedDestination;
+    [Header("Driving Intructions")]
+    [SerializeField] private TutorialInstruction _driveControlIntroText;
+    [SerializeField] private TutorialInstruction _driveForwardText;
+    [SerializeField] private TutorialInstruction _turnLeftText;
+    [SerializeField] private TutorialInstruction _turnRightText;
+    [SerializeField] private TutorialInstruction _breakText;
 
-    public bool _hasCollectPackage;
-    public bool _hasDeliverPackage;
+    [Header("Pakage Intructions")]
+    [SerializeField] private TutorialInstruction _collectPackageText;
+    [SerializeField] private TutorialInstruction _deliverPackageText;
 
-    public float buttonPressThresshold;
-    public float currentThreeshold;
+    [Viewable] private bool _hasIntroCutSceneComplected;
+
+    [Viewable] private bool _hasDriveFoward;
+    [Viewable] private bool _hasTurnLeft;
+    [Viewable] private bool _hasTurnRight;
+    [Viewable] private bool _hasBreaked;
+
+    [Viewable] private bool _hasReachedDestination;
+    [Viewable] private bool _hasCollectPackage;
+    [Viewable] private bool _hasDeliverPackage;
+    [Viewable] private float _buttonPressThresshold = 1;
+    [Viewable] private float _currentThreeshold;
 
     private IEnumerator Start() 
-    { yield return RunTutorial(); }
+    { 
+        yield return RunTutorial();
+    }
 
     private IEnumerator RunTutorial()
     {
@@ -53,37 +70,33 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
 
     private IEnumerator WelcomeState()
     {
-        yield return new WaitForSeconds(5f);
-
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Welcome State" });
-
         yield return new WaitForSeconds(2f);
 
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Welcome State Complete" });
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _welcomeText.Message });
+        AudioManager.PlaySoundEffect(_welcomeText.AudioID);
     }
 
     private IEnumerator DrivingControlState()
     {
-        currentThreeshold = 0;
-
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Learn Control State " });
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _driveControlIntroText.Message});
+        AudioManager.PlaySoundEffect( _driveControlIntroText.AudioID);
 
         yield return new WaitForSeconds(2f);
 
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Drive Foward start " });
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _driveForwardText.Message });
+        AudioManager.PlaySoundEffect(_driveForwardText.AudioID);
 
         while (!_hasDriveFoward)
         {
             InputConditionCheck(ref _hasDriveFoward, InputManager.Instance.HandleAccelerateInput().ReadValue<float>() > 0);
-
             yield return null;
         }
 
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Drive Foward Complete " });
+        DisplaySuccess();
 
         yield return new WaitForSeconds(2f);
 
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Turn Left Start " });
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _turnLeftText.Message });
 
         while (!_hasTurnLeft)
         {
@@ -91,11 +104,10 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
             yield return null;
         }
 
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Turn Left Complete " });
+        DisplaySuccess();
 
-        yield return new WaitForSeconds(2f);
-
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Turn Right Start" });
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _turnRightText.Message });
+        AudioManager.PlaySoundEffect(_turnRightText.AudioID);
 
         while (!_hasTurnRight)
         {
@@ -103,11 +115,11 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
             yield return null;
         }
 
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Turn Right Complete" });
+        DisplaySuccess();
 
         yield return new WaitForSeconds(2f);
 
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Break Start" });
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _breakText.Message });
 
         while (!_hasBreaked)
         {
@@ -115,7 +127,7 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
             yield return null;
         }
 
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Break Complected" });
+        DisplaySuccess();
 
         yield return new WaitForSeconds(2f);
 
@@ -124,15 +136,17 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
 
     private IEnumerator PackageState()
     {
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Pick up the Package" });
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _collectPackageText.Message });
+        AudioManager.PlaySoundEffect(_collectPackageText.AudioID);
 
         yield return new WaitUntil(() => _hasCollectPackage == true);
+        DisplaySuccess();
 
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Drop off the Package" });
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _deliverPackageText.Message});
+        AudioManager.PlaySoundEffect(_deliverPackageText.AudioID);
 
         yield return new WaitUntil(() => _hasDeliverPackage == true);
-
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Successful" });
+        DisplaySuccess();
     }
 
     private IEnumerator BattleEnemyState()
@@ -170,12 +184,26 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     {
         if (conditionToCheck)
         {
-            currentThreeshold += Time.deltaTime;
-            if (currentThreeshold >= buttonPressThresshold)
+            _currentThreeshold += Time.deltaTime;
+            if (_currentThreeshold >= _buttonPressThresshold)
             {
                 conditionToReset = true;
-                currentThreeshold = 0;
+                _currentThreeshold = 0;
             }
         }
     }
+
+    public void DisplaySuccess()
+    {
+        TutorialInstruction tutorialInstruction = _successTexts[UnityEngine.Random.Range(0, _successTexts.Length - 1)];
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = tutorialInstruction.Message });
+        AudioManager.PlaySoundEffect(tutorialInstruction.AudioID);
+    }
+}
+
+[System.Serializable]
+public class TutorialInstruction
+{
+    public string Message;
+    public string AudioID;
 }
