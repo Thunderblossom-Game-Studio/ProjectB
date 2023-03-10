@@ -9,7 +9,6 @@ public class Teleporter : MonoBehaviour
 {
     #region GET & SET
     public Vector3 TeleportLocation => transform.position + _teleportLocation;
-
     #endregion
 
     [SerializeField] private LayerMask _collideLayer;
@@ -17,21 +16,31 @@ public class Teleporter : MonoBehaviour
     [SerializeField] [Range(0, 10)] private float _teleportDelay;
     [SerializeField] private List<Teleporter> _teleportDestinations;
 
-    private void OnTriggerEnter(Collider objectCollider)
+    private IEnumerator OnTriggerEnter(Collider objectCollider)
     {
-        if (!_collideLayer.ContainsLayer(objectCollider.gameObject.layer)) return;
-        if (_teleportDestinations.Count < 1) return;
-        StartCoroutine(Teleport(objectCollider.gameObject));
+        if (!_collideLayer.ContainsLayer(objectCollider.gameObject.layer)) 
+            yield break;
+        
+        if (_teleportDestinations.Count < 1) 
+            yield break;
+        
+        yield return new WaitForSeconds(_teleportDelay);
+        yield return Teleport(objectCollider.gameObject);
     }
 
     private IEnumerator Teleport(GameObject collideObject)
     {
         yield return new WaitForSeconds(_teleportDelay);
         Teleporter randomTeleporter = GetRandomTeleporter();
-        Rigidbody objectBody = collideObject.GetComponent<Rigidbody>();
-        collideObject.transform.position = randomTeleporter.TeleportLocation;
-        collideObject.transform.forward = randomTeleporter.transform.forward;
-        objectBody.velocity = randomTeleporter.transform.forward * Mathf.Abs(SumVelocity(objectBody.velocity));
+        
+        Transform parentObject = collideObject.transform.root;
+        parentObject.position = randomTeleporter.TeleportLocation;
+        parentObject.forward = randomTeleporter.transform.forward;
+        
+        Rigidbody objectBody = collideObject.GetComponentInParent<Rigidbody>();
+        
+        if (objectBody)
+            objectBody.velocity = randomTeleporter.transform.forward * objectBody.velocity.magnitude;
     }
 
     private Teleporter GetRandomTeleporter()
@@ -40,10 +49,6 @@ public class Teleporter : MonoBehaviour
         return _teleportDestinations[index];
     }
 
-    private float SumVelocity(Vector3 velocity) => velocity.x + velocity.y + velocity.z;
-
-    private void OnDrawGizmos()
-    {
+    private void OnDrawGizmos() =>
         Gizmos.DrawWireCube(transform.position + _teleportLocation, new Vector3(0.3f, 0.3f, 0.3f));
-    }
 }
