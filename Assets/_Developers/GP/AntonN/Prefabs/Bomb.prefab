@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 255747738275138174}
   - component: {fileID: 2564550775676723326}
   - component: {fileID: 4430992407937817107}
+  - component: {fileID: -7998556890650140287}
   m_Layer: 15
   m_Name: Bomb
   m_TagString: Untagged
@@ -128,3 +129,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionTime: 6
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  environmentLayer:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &-7998556890650140287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255747738275138173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f34a5c0bcc6d446905c0e7e5e2e6fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  _damageAmount: 100
+  _criticalDamagePercentage: 100
+  _criticalChance: 0
+  _duration: 0
+  _tickRate: 0
+  _onDamage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _debugColor: {r: 1, g: 1, b: 1, a: 1}
+  _damageSpheres:
+  - _sphereOffset: {x: 0, y: 0, z: 0}
+    _sphereRadius: 10
+  _hitEntitiesMaximum: 10

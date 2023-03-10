@@ -9,7 +9,12 @@ public class GameEvent : ScriptableObject
     public void Raise(Component sender, object data) => response?.Invoke(sender, data);
 
     public void Register(Action<Component, object> action) => response += action;
-    
+
+    internal void Register(GameEvent infoEvent)
+    {
+        throw new NotImplementedException();
+    }
+
     public void Unregister(Action<Component, object> action) => response -= action;
 
     public void Clear() => response = new Action<Component, object>((sender, data) => { });
