@@ -8,14 +8,14 @@ using UnityEditor;
 
 public class PelumiTester : MonoBehaviour
 {
-    [SerializeField] private string testString = "Test";
+    //[SerializeField] private string testString = "Test";
     [SerializeField] private bool encrypt = false;
     [SerializeField] private TestClass testClass1;
     [SerializeField] private LayerMask detectLayer;
     [SerializeField] private GameObject debugObject;
     [SerializeField] private GameObject spawnPosition;
     [SerializeField] private GameObject landPosition;
-    [SerializeField] private float speed = 10;
+    //[SerializeField] private float speed = 10;
 
     [Header("Train")]
     [SerializeField] private int trainRouteDebugSize = 20;

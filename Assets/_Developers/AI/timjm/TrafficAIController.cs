@@ -12,7 +12,7 @@ public class TrafficAIController : AICarController
 
     [SerializeField] private float distanceToReset = 50f;
 
-    private int lookOffset = 1;
+    //private int lookOffset = 1;
 
     internal TrafficDirector td;
 
