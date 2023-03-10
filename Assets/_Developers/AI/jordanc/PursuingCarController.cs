@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Mail;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PursuingCarController : AICarController
 {
@@ -172,23 +173,18 @@ public class PursuingCarController : AICarController
             case State.PURSUE:
                 Pursue();
                 break;
-
             case State.PATROL:
                 Patrol();
                 break;
-
             case State.ATTACK:
                 Attack();
                 break;
-
             case State.FLEE:
                 Flee();
                 break;
-
             case State.PICKUP:
                 Pickup();
                 break;
-
             case State.DELIVERY:
                 Delivery();
                 break;
@@ -345,9 +341,21 @@ public class PursuingCarController : AICarController
     {
         Debug.Log("Pickup");
         
-        if (newState)
+        if ((newState || !MoveTarget) && packageSpawner.SpawnedObjects.Count > 0)
         {
-            MoveTarget = packageSpawner.SpawnedObjects[Random.Range(0, packageSpawner.SpawnedObjects.Count)].gameObject;
+            do
+            {
+                MoveTarget = packageSpawner.SpawnedObjects[Random.Range(0, packageSpawner.SpawnedObjects.Count)].gameObject;
+
+                NavMeshPath path = new NavMeshPath();
+
+                agent.CalculatePath(MoveTarget.transform.position, path);
+
+                if (path.status == NavMeshPathStatus.PathPartial || path.status == NavMeshPathStatus.PathInvalid)
+                {
+                    MoveTarget = null;
+                }
+            } while (!MoveTarget);
         }
 
         if (MoveTarget)
