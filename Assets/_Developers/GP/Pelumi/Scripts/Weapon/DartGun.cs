@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+AudioManager.GetSoundEffectClip("NerfGunShot");
 public class DartGun : Weapon
 {
     public override void ShootProjectile(Vector3 targetPos, Action OnFireSuccess = null)
     {
         base.ShootProjectile(targetPos, OnFireSuccess);
+        AudioManager.PlaySoundEffect("NerfGunShot");
 
         for (int i = 0; i < firePoint.Length; i++)
         {
