@@ -14,14 +14,12 @@ public class Blimp : MonoBehaviour
     [SerializeField] private State state;
     [SerializeField] private float secondsToDropBomb = 1f;
     [SerializeField] private float cooldownTime = 1f;
-    [SerializeField] private float detectionHeight = 100f;
     [SerializeField] private float sphereSize;
+    [SerializeField] private int dropAmount = 1;
+    [SerializeField] private float raycastDistance;
     private float timer;
     private bool GizmosActive;
-    [SerializeField] private int dropAmount = 1;
     RaycastHit hit;
-
-    [SerializeField] private float raycastDistance;
 
     private Vector3 hitPoint;
 

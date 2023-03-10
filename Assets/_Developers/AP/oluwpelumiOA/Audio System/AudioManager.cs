@@ -33,10 +33,14 @@ public class AudioManager : MonoBehaviour
         switch (loadedScene)
         {
             case SceneType.MainMenu:
-                ChangeMusicWithFade("Menu", true);
+                ChangeMusicWithFade("MMTheme", true);
                 break;
-            case SceneType.Tutorial: ChangeMusicWithFade("TuneL1", true); break;
-            case SceneType.Multiplayer: ChangeMusicWithFade("Menu", true); break;
+            case SceneType.Tutorial: ChangeMusicWithFade("TuneT", true); break;
+            case SceneType.Multiplayer: ChangeMusicWithFade("Multiplayer", true); break;
+            //case SceneType.Level1: ChangeMusicWithFade("TuneL1", true); break;
+            //case SceneType.Level2: ChangeMusicWithFade("TuneL2", true); break;
+            //case SceneType.Level3: ChangeMusicWithFade("TuneL3", true); break;
+            //case SceneType.Level4: ChangeMusicWithFade("TuneL4", true); break;
             default: break;
         }
     }

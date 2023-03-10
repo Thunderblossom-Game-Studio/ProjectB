@@ -17,8 +17,8 @@ public class EntitySpawner : MonoBehaviour
         All
     }
 
+    [SerializeField] private bool _isLocal;
     [SerializeField] private SpawnMode _spawnMode;
-
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private Color _spawnZoneColor;
     [SerializeField] private List<Zone> _spawnZones;
@@ -60,9 +60,14 @@ public class EntitySpawner : MonoBehaviour
     
     private Vector3 GetRandomPosition(Zone randomZone)
     {
-        return new Vector3(randomZone.Position.x + Random.Range(-randomZone.Size.x / 2, randomZone.Size.x / 2),
+        if (!_isLocal)
+            return new Vector3(randomZone.Position.x + Random.Range(-randomZone.Size.x / 2, randomZone.Size.x / 2),
             randomZone.Position.y + Random.Range(-randomZone.Size.y / 2, randomZone.Size.y / 2),
             randomZone.Position.z + Random.Range(-randomZone.Size.z / 2, randomZone.Size.z / 2));
+        
+        return new Vector3((randomZone.Position.x + transform.position.x) + Random.Range(-randomZone.Size.x / 2, randomZone.Size.x / 2),
+            (randomZone.Position.y + transform.position.y) + Random.Range(-randomZone.Size.y / 2, randomZone.Size.y / 2),
+            (randomZone.Position.z + transform.position.z) + Random.Range(-randomZone.Size.z / 2, randomZone.Size.z / 2));
     }
 
     private ObjectType GetObject()
@@ -104,10 +109,23 @@ public class EntitySpawner : MonoBehaviour
     {
         if (_spawnZones.Count <= 0) return;
         Gizmos.color = _spawnZoneColor;
-        foreach (Zone spawnZone in _spawnZones)
+
+        if (!_isLocal)
         {
-            Gizmos.DrawWireCube(spawnZone.Position, spawnZone.Size);
+            foreach (Zone spawnZone in _spawnZones)
+            {
+                Gizmos.DrawWireCube(spawnZone.Position, spawnZone.Size);
+            }
         }
+
+        else
+        {
+            foreach (Zone spawnZone in _spawnZones)
+            {
+                Gizmos.DrawWireCube(spawnZone.Position + transform.position, spawnZone.Size);
+            }
+        }
+        
     }
     private bool IsSetup() => _spawnZones.Count <= 0 || _objectTypes.Count <= 0;
 }

@@ -3,28 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Mail;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PursuingCarController : AICarController
 {
     protected enum State { PURSUE, PATROL, ATTACK, FLEE, PICKUP, DELIVERY }
     [SerializeField] protected State NextState;
 
-    private GameObject MoveTarget;
-    private GameObject ShootTarget;
+    protected GameObject MoveTarget;
+    protected GameObject ShootTarget;
 
     [Header("Systems")]
    
-    [SerializeField] private EntitySpawner packageSpawner;
-    [SerializeField] private PackageSystem PackageSystem;
-    [SerializeField] private HealthSystem Health;
+    [SerializeField] protected EntitySpawner packageSpawner;
+    [SerializeField] protected PackageSystem PackageSystem;
+    [SerializeField] protected HealthSystem Health;
 
-    private Vector3 SpawnPoint;
+    protected Vector3 SpawnPoint;
 
-    [SerializeField] private BackTriggerCheck frontTriggerCheck;
-    [SerializeField] private BackTriggerCheck backTriggerCheck;
+    [SerializeField] protected BackTriggerCheck frontTriggerCheck;
+    [SerializeField] protected BackTriggerCheck backTriggerCheck;
 
-    [SerializeField] private float distanceToReset = 50f;
-    [SerializeField] private float distanceBetweenAgent = 30;
+    [SerializeField] protected float distanceToReset = 50f;
+    [SerializeField] protected float distanceBetweenAgent = 30;
 
     [Header("Attack Range")]
     [Tooltip("This will change the range in which the bots can attack from")]
@@ -172,23 +173,18 @@ public class PursuingCarController : AICarController
             case State.PURSUE:
                 Pursue();
                 break;
-
             case State.PATROL:
                 Patrol();
                 break;
-
             case State.ATTACK:
                 Attack();
                 break;
-
             case State.FLEE:
                 Flee();
                 break;
-
             case State.PICKUP:
                 Pickup();
                 break;
-
             case State.DELIVERY:
                 Delivery();
                 break;
@@ -227,7 +223,7 @@ public class PursuingCarController : AICarController
         State next = NextState;
 
 
-        Evaluate();       
+        Evaluate();
 
         if (next != NextState) newState = true;
 
@@ -236,9 +232,16 @@ public class PursuingCarController : AICarController
             newState = true;
         }
 
+        Shoot();
+
+        SwapState();
+    }
+
+    protected virtual void Shoot()
+    {
         if (ShootTarget)
         {
-            if (ShootTarget.TryGetComponent<GamePlayer>(out GamePlayer gp))
+            if (ShootTarget.TryGetComponent<GamePlayer>(out GamePlayer gp) && gamePlayer.PlayerTeamData != null)
             {
                 if (gamePlayer.PlayerTeamData.TeamName == gp.PlayerTeamData.TeamName)
                 {
@@ -264,8 +267,6 @@ public class PursuingCarController : AICarController
             }
 
         }
-
-        SwapState();
     }
 
     private void Pursue()
@@ -345,9 +346,21 @@ public class PursuingCarController : AICarController
     {
         Debug.Log("Pickup");
         
-        if (newState)
+        if ((newState || !MoveTarget) && packageSpawner.SpawnedObjects.Count > 0)
         {
-            MoveTarget = packageSpawner.SpawnedObjects[Random.Range(0, packageSpawner.SpawnedObjects.Count)].gameObject;
+            do
+            {
+                MoveTarget = packageSpawner.SpawnedObjects[Random.Range(0, packageSpawner.SpawnedObjects.Count)].gameObject;
+
+                NavMeshPath path = new NavMeshPath();
+
+                agent.CalculatePath(MoveTarget.transform.position, path);
+
+                if (path.status == NavMeshPathStatus.PathPartial || path.status == NavMeshPathStatus.PathInvalid)
+                {
+                    MoveTarget = null;
+                }
+            } while (!MoveTarget);
         }
 
         if (MoveTarget)
