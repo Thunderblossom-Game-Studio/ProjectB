@@ -1,16 +1,20 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class TutorialStateManager : Singleton<TutorialStateManager>
 {
     public enum TutorialAttribute
     {
+        IntroCutScene,
         CollectPackage,
         DeliverPackage,
         ReachDestination
     }
 
+    [SerializeField] private PlayableAsset introCutScene;
+    [SerializeField] private CutSceneTrigger cutSceneTrigger;
     [SerializeField] private GameEvent infoEvent;
 
     public bool _hasIntroCutSceneComplected;
@@ -33,6 +37,7 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
 
     private IEnumerator RunTutorial()
     {
+        yield return IntroCutSceneState();
         yield return WelcomeState();
         yield return DrivingControlState();
         yield return PackageState();
@@ -42,6 +47,7 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
 
     private IEnumerator IntroCutSceneState()
     {
+        cutSceneTrigger.StartCutScene(introCutScene);
         yield return new WaitUntil(() => _hasIntroCutSceneComplected);
     }
 
@@ -145,6 +151,9 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     {
         switch (tutorialAttribute)
         {
+            case TutorialAttribute.IntroCutScene:
+                _hasIntroCutSceneComplected = true;
+                return;
             case TutorialAttribute.CollectPackage:
                 _hasCollectPackage = true;
                 return;

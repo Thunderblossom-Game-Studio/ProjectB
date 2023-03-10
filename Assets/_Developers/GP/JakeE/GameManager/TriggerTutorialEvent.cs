@@ -11,7 +11,6 @@ public class TriggerTutorialEvent : MonoBehaviour
 
     public void Trigger()
     {
-        Debug.Log("Trigger");
         TutorialStateManager.Instance.CompleteAttribute(_attributeToModify);
     }
 }

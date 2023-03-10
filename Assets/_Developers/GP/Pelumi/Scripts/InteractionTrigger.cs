@@ -17,12 +17,10 @@ public class InteractionTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!detectLayer.ContainsLayer(other.gameObject.layer) || IsUsedUp()) return;
-        if (maxTrigger > 0)
-        {
-            ++currentTrigger;
-            if (currentTrigger == maxTrigger) gameObject.SetActive(false);
-        } 
+
         eventToTrigger?.Invoke();
+
+        if (maxTrigger > 0) ++currentTrigger;
     }
 
     public bool IsUsedUp() => maxTrigger > 0 && currentTrigger >= maxTrigger;
