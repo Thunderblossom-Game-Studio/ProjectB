@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 246802411}
   - component: {fileID: 246802410}
   m_Layer: 5
-  m_Name: Hello Text
+  m_Name: InfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227,7 +227,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 540.1435, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &246802410
 MonoBehaviour:
@@ -571,6 +571,7 @@ GameObject:
   - component: {fileID: 1355849358}
   - component: {fileID: 1355849357}
   - component: {fileID: 1355849356}
+  - component: {fileID: 1355849359}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -660,6 +661,38 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1355849359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355849354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsNested>k__BackingField: 0
+  <ComponentIndex>k__BackingField: 0
+  <PredictedSpawn>k__BackingField: {fileID: 0}
+  _networkBehaviours:
+  - {fileID: 1625819497}
+  <ParentNetworkObject>k__BackingField: {fileID: 0}
+  <ChildNetworkObjects>k__BackingField: []
+  _isNetworked: 1
+  _isGlobal: 0
+  _initializeOrder: 0
+  _defaultDespawnType: 0
+  NetworkObserver: {fileID: 0}
+  <PrefabId>k__BackingField: 0
+  <SpawnableCollectionId>k__BackingField: 0
+  _scenePathHash: 696990136
+  <SceneId>k__BackingField: 2993549842221982436
+  <AssetPathHash>k__BackingField: 0
+  _sceneNetworkObjects:
+  - {fileID: 1355849359}
+  - {fileID: 254662324718595202}
 --- !u!1 &1625819493
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,7 +784,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6148528551cd0cb4a9551036c0faa8f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exitButton: {fileID: 0}
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 1355849359}
+  _networkObjectCache: {fileID: 1355849359}
+  exitButton: {fileID: 1926604303}
+  infoText: {fileID: 246802410}
 --- !u!1 &1904949060
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,7 +937,7 @@ GameObject:
   - component: {fileID: 1926604304}
   - component: {fileID: 1926604303}
   m_Layer: 5
-  m_Name: Exit Button
+  m_Name: ExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1070,3 +1107,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebcfb7d7eb6cf904595372824ee9b448, type: 3}
+--- !u!114 &254662324718595202 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 254662323653470161, guid: ebcfb7d7eb6cf904595372824ee9b448, type: 3}
+  m_PrefabInstance: {fileID: 254662324718595201}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
