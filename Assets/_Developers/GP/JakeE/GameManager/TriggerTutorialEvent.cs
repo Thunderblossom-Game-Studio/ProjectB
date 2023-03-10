@@ -11,14 +11,7 @@ public class TriggerTutorialEvent : MonoBehaviour
 
     public void Trigger()
     {
+        Debug.Log("Trigger");
         TutorialStateManager.Instance.CompleteAttribute(_attributeToModify);
     }
 }
-
-public enum MyEnum
-{
-    Option1,
-    Option2,
-    Option3
-}
-

@@ -30,7 +30,7 @@ public class InfoHUD : MonoBehaviour
             displayText.text = infoHUD.Message;
             StartCoroutine(OpenMenuRoutine());
         }
-        else StopCoroutine(CloseMenuRoutine());
+        else StartCoroutine(CloseMenuRoutine());
     }
 
     public IEnumerator OpenMenuRoutine()

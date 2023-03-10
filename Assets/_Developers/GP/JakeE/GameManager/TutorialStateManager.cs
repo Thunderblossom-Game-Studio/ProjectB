@@ -36,8 +36,6 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
         yield return WelcomeState();
         yield return DrivingControlState();
         yield return PackageState();
-        //  yield return CollectPackageState();
-        //  yield return DeliverPackageState();
         //  yield return BattleEnemyState();
         //  yield return GoodbyeState();
     }
@@ -70,15 +68,7 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
 
         while (!_hasDriveFoward)
         {
-            if (InputManager.Instance.HandleMoveInput().IsPressed())
-            {
-                currentThreeshold += Time.deltaTime;
-                if (currentThreeshold >= buttonPressThresshold)
-                {
-                    _hasDriveFoward = true;
-                    currentThreeshold = 0;
-                }
-            }
+            InputConditionCheck(ref _hasDriveFoward, InputManager.Instance.HandleAccelerateInput().ReadValue<float>() > 0);
 
             yield return null;
         }
@@ -91,15 +81,7 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
 
         while (!_hasTurnLeft)
         {
-            if (InputManager.Instance.HandleMoveInput().ReadValue<Vector2>().x < 0)
-            {
-                currentThreeshold += Time.deltaTime;
-                if (currentThreeshold >= buttonPressThresshold)
-                {
-                    _hasTurnLeft = true;
-                    currentThreeshold = 0;
-                }
-            }
+            InputConditionCheck(ref _hasTurnLeft, InputManager.Instance.HandleMoveInput().ReadValue<Vector2>().x < 0);
             yield return null;
         }
 
@@ -111,15 +93,7 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
 
         while (!_hasTurnRight)
         {
-            if (InputManager.Instance.HandleMoveInput().ReadValue<Vector2>().x > 0)
-            {
-                currentThreeshold += Time.deltaTime;
-                if (currentThreeshold >= buttonPressThresshold)
-                {
-                    _hasTurnRight = true;
-                    currentThreeshold = 0;
-                }
-            }
+            InputConditionCheck(ref _hasTurnRight, InputManager.Instance.HandleMoveInput().ReadValue<Vector2>().x > 0);
             yield return null;
         }
 
@@ -131,37 +105,28 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
 
         while (!_hasBreaked)
         {
-            if (InputManager.Instance.HandleBrakeInput().IsPressed())
-            {
-                currentThreeshold += Time.deltaTime;
-                if (currentThreeshold >= buttonPressThresshold)
-                {
-                    _hasBreaked = true;
-                    currentThreeshold = 0;
-                }
-            }
+            InputConditionCheck(ref _hasBreaked, InputManager.Instance.HandleBrakeInput().IsPressed());
             yield return null;
         }
 
         infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Break Complected" });
+
+        yield return new WaitForSeconds(2f);
+
+        infoEvent.Raise(this, new InfoHUDData { Enable = false});
     }
 
     private IEnumerator PackageState()
     {
-        yield return new WaitUntil(() => _hasCollectPackage == true);
-        Debug.Log("Collect Package State");
-    }
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Pick up the Package" });
 
-    private IEnumerator CollectPackageState()
-    {
         yield return new WaitUntil(() => _hasCollectPackage == true);
-        Debug.Log("Collect Package State");
-    }
 
-    private IEnumerator DeliverPackageState()
-    {
-        yield return new WaitForSeconds(5f);
-        Debug.Log("Deliver Package State");
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Drop off the Package" });
+
+        yield return new WaitUntil(() => _hasDeliverPackage == true);
+
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = "Successful" });
     }
 
     private IEnumerator BattleEnemyState()
@@ -189,6 +154,19 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
             case TutorialAttribute.ReachDestination:
                 _hasReachedDestination = true;
                 return;
+        }
+    }
+
+    public void InputConditionCheck(ref bool conditionToReset, bool conditionToCheck)
+    {
+        if (conditionToCheck)
+        {
+            currentThreeshold += Time.deltaTime;
+            if (currentThreeshold >= buttonPressThresshold)
+            {
+                conditionToReset = true;
+                currentThreeshold = 0;
+            }
         }
     }
 }
