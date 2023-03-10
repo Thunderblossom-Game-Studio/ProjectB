@@ -680,7 +680,7 @@ GameObject:
   - component: {fileID: 834949198}
   - component: {fileID: 834949197}
   m_Layer: 5
-  m_Name: MultiplayerMenu
+  m_Name: MultiplayerMenuUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -722,6 +722,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eecef053bdf1ea943a38d518f15d0aca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  networkManager: {fileID: 0}
+  isConnecting: 0
   hostButton: {fileID: 2042266401}
   joinButton: {fileID: 568844781}
   connectionStatusText: {fileID: 956045808}
@@ -1563,6 +1565,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1504547385}
   m_CullTransparentMesh: 1
+--- !u!1 &1519390227
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1519390228}
+  m_Layer: 0
+  m_Name: ClientInfo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1519390228
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519390227}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 445.58182, y: 229.88968, z: -1.4829078}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1562550921
 GameObject:
   m_ObjectHideFlags: 0
