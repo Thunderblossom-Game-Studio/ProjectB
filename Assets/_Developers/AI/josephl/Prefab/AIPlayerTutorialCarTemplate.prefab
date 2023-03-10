@@ -1709,7 +1709,6 @@ GameObject:
   - component: {fileID: 7576731440948102138}
   - component: {fileID: 7576731440948102139}
   - component: {fileID: 8933231745500003346}
-  - component: {fileID: 3362753873132208361}
   - component: {fileID: 7834126168606480056}
   m_Layer: 3
   m_Name: Combat Car
@@ -1942,7 +1941,7 @@ MonoBehaviour:
   turningRadius: 6
   downForceValue: 0
   currentSpeed: 0
---- !u!114 &3362753873132208361
+--- !u!114 &7834126168606480056
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1951,7 +1950,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7651979918987682056}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f53b15e5c0ad224a9f812682507078e, type: 3}
+  m_Script: {fileID: 11500000, guid: b58d8b075e3b9cb4ebb001c71771d29b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 1330326868928177836}
@@ -1978,18 +1977,6 @@ MonoBehaviour:
   DistanceFromPatrolPoint: 20
   weaponHandler: {fileID: 3631949243076593990}
   gamePlayer: {fileID: 7576731440948102138}
---- !u!114 &7834126168606480056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7651979918987682056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b58d8b075e3b9cb4ebb001c71771d29b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7651979919001708465
 GameObject:
   m_ObjectHideFlags: 0
