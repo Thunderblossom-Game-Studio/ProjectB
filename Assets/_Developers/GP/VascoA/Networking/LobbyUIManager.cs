@@ -1,27 +1,32 @@
+using FishNet;
 using FishNet.Managing;
+using FishNet.Object;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LobbyUIManager : MonoBehaviour
+public class LobbyUIManager : NetworkBehaviour
 {
     [SerializeField] private Button exitButton;
+    [SerializeField] private TMPro.TMP_Text infoText;
 
-    NetworkManager networkManager;
-
-    private void Awake()
+    private void Start()
     {
-        networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+        exitButton.onClick.AddListener(() => InstanceFinder.ClientManager.StopConnection());
+        
+        if (IsServer)
+        {
+            exitButton.onClick.AddListener(() => InstanceFinder.ServerManager.StopConnection(false));
 
-        exitButton = GameObject.Find("Exit Button").GetComponent<Button>();
+            infoText.text = "You are the host.";
+        }
+        else
+        {
+            infoText.text = "You are a client. ID: " + InstanceFinder.ClientManager.GetInstanceID();
+        }
 
-
-        exitButton.onClick.AddListener(() => networkManager.ClientManager.StopConnection());
-
-        exitButton.onClick.AddListener(() => SceneManager.LoadScene("MultiplayerMenu"));
     }
-    
-    
+
 }
