@@ -16,7 +16,7 @@ public class TrafficDirector : MonoBehaviour
     public bool red = false;
 
     public float lightMaxTimer = 3f;
-    private float lightTimer = 0f;
+    //private float lightTimer = 0f;
 
     private void Update()
     {

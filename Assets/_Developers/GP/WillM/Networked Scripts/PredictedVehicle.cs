@@ -10,12 +10,12 @@ public class PredictedVehicle : NetworkBehaviour
     // Holds non-visual elements
     [SerializeField] private GameObject scriptRootObject;
     // Duration of smoothing
-    private float smoothingDuration = 0.05f;
+    //private float smoothingDuration = 0.05f;
 
     #region Local State
 
     // Check if subscribed to Timer Manager events
-    private bool isSubscribed = false;
+    //private bool isSubscribed = false;
 
     // Car controller (input)
     private NetworkedVehicleController _controller;
