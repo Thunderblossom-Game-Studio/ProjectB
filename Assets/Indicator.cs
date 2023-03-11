@@ -6,48 +6,43 @@ public class Indicator : MonoBehaviour
 {
     Renderer render;
 
-    public float timeRemaining = 30;
-    public float scale = 3;
+    public Vector3 scale = new Vector3(2,1,2);
+    public float timeToLand;
 
     private void Start()
     {
         render = gameObject.GetComponent<Renderer>();
     }
 
-    private void Update()
+    public void UpdateStuff(float _timeToLand)
     {
-        if (timeRemaining > 0)
-        {
-            timeRemaining -= Time.deltaTime;
-        }
-        else
-        {
-            StartCoroutine(FadeColor(render, Color.red, new Color(1, 0, 0, 0), 2f));
-            StartCoroutine(Scale(render, scale, 2f));
-            timeRemaining = 30;
-        }
+        timeToLand = _timeToLand;
+        StartCoroutine(FadeColor(render, Color.red, new Color(1, 0, 0, 0), 2f));
+        StartCoroutine(Scale(scale));
     }
 
-    private IEnumerator FadeColor(Renderer objectRenderer, Color startColor, Color endColor, float fadeDuration)
+        private IEnumerator FadeColor(Renderer objectRenderer, Color startColor, Color endColor, float fadeDuration)
     {
         float currentDuration = 0;
         while (currentDuration < fadeDuration)
         {
             currentDuration += Time.deltaTime;
+            if (objectRenderer == null) break;
             objectRenderer.material.color = Color.Lerp
                 (startColor, endColor, currentDuration / fadeDuration);
             yield return null;
         }
     }
 
-    private IEnumerator Scale(Renderer objectRenderer, float scale, float fadeDuration)
+    private IEnumerator Scale(Vector3 scale)
     {
-        float currentDuration = 0;
-        while (currentDuration < fadeDuration)
+        float startTime = Time.time; // Store the start time of the coroutine
+        while (Time.time < startTime + timeToLand) // Loop until the duration has passed
         {
-            currentDuration += Time.deltaTime;
-            transform.localScale = Vector3.Lerp(transform.localScale, transform.localScale * scale, Time.deltaTime * fadeDuration);
-            yield return null;
+            float t = (Time.time - startTime) / timeToLand; // Calculate the current time fraction
+            transform.localScale = Vector3.Lerp(transform.localScale, scale, t); // Interpolate between the initial scale and the target scale
+            yield return null; // Wait for the next frame
         }
+        transform.localScale = scale; // Set the final scale to the target scale
     }
 }
