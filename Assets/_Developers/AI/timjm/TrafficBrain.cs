@@ -153,7 +153,18 @@ public class TrafficBrain : MonoBehaviour
         {
            StartCoroutine(PanicMode());
         }
+
+        if(CompareTag("Train"))
+        {
+            InstantExplosion();
+        }
     }
+
+    public void ActivatePanic()
+    {
+        StartCoroutine(PanicMode());
+    }
+
 
     IEnumerator PanicMode()
     {
@@ -194,7 +205,7 @@ public class TrafficBrain : MonoBehaviour
         goal = savegoal;
     }
 
-    void SpinOut()
+    public void SpinOut()
     {
         agent.enabled = false;
         ObjectToSpinOut.GetComponent<Rigidbody>().AddForce(transform.forward * Thrust);
@@ -206,6 +217,12 @@ public class TrafficBrain : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         //Insert Explosion/Particle Effects Here
+        SpawnStation.GetComponent<SpawnerControl>().count = SpawnStation.GetComponent<SpawnerControl>().count - 1;
+        Destroy(this.gameObject);
+    }
+
+    void InstantExplosion()
+    {
         SpawnStation.GetComponent<SpawnerControl>().count = SpawnStation.GetComponent<SpawnerControl>().count - 1;
         Destroy(this.gameObject);
     }

@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 7579156045399426608}
   - component: {fileID: 8751441792368329387}
   - component: {fileID: 1397856119209843785}
+  - component: {fileID: 1162770767472714334}
   - component: {fileID: 900090383336713462}
   - component: {fileID: 6132395619493621886}
   m_Layer: 0
@@ -193,6 +194,59 @@ MonoBehaviour:
   RearRight: {fileID: 1657287716529583639}
   turnSpeed: 100
   SpawnStation: {fileID: 0}
+--- !u!114 &1162770767472714334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926617803036837812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fcea8360c8a4ae43803b3b0d73648f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isImmune: 0
+  _currentHealth: 0
+  _spawnHealth: 100
+  _maximumHealth: 100
+  _minimumHealth: 0
+  _onReduceHealth:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1397856119209843785}
+        m_TargetAssemblyTypeName: TrafficBrain, Assembly-CSharp
+        m_MethodName: ActivatePanic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onRestoreHealth:
+    m_PersistentCalls:
+      m_Calls: []
+  _onDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1397856119209843785}
+        m_TargetAssemblyTypeName: TrafficBrain, Assembly-CSharp
+        m_MethodName: SpinOut
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onReachFullHealth:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &900090383336713462
 Rigidbody:
   m_ObjectHideFlags: 0

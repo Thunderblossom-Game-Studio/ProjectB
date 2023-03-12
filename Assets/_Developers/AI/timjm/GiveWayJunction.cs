@@ -12,6 +12,9 @@ public class GiveWayJunction : MonoBehaviour
     public GameObject GiveWay;
     public GameObject GiveWayTwo;
 
+    Vector3 forward3;
+    Vector3 forward4;
+
     [SerializeField] bool FourLaneJunction;
 
     void FixedUpdate()
@@ -22,7 +25,7 @@ public class GiveWayJunction : MonoBehaviour
 
         if (FourLaneJunction)
         {
-         Vector3 forward3 = RayThree.transform.TransformDirection(Vector3.up) * 10;
+            forward3 = RayThree.transform.TransformDirection(Vector3.up) * 10;
         }
 
         if (Physics.Raycast(RayOne.transform.position, forward, out hit, 5.0f) || Physics.Raycast(RayThree.transform.position,forward3,out hit, 5.0f))
@@ -38,7 +41,7 @@ public class GiveWayJunction : MonoBehaviour
 
         if (FourLaneJunction) 
         {         
-            Vector3 forward4 = RayFour.transform.TransformDirection(Vector3.up) * 10;
+            forward4 = RayFour.transform.TransformDirection(Vector3.up) * 10;
         }
 
         if (Physics.Raycast(RayTwo.transform.position, forward2, out hit2, 5.0f) || Physics.Raycast(RayFour.transform.position, forward4, out hit, 5.0f))
