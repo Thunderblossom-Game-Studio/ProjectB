@@ -1,36 +1,76 @@
+using FishNet;
+using FishNet.Connection;
 using FishNet.Managing;
 using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using FishNet.Transporting;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LobbyManager : NetworkBehaviour
 {
-    public NetworkManager networkManager;
 
-    public List<int> clientIds;
+    [Header("LobbyUI")]
+    [SerializeField] private GameObject lobbyUI;
+    [SerializeField] private TMPro.TMP_Text infoText;
 
-    private void Awake()
+    [Header("PlayerSetupUI")]
+    [SerializeField] private GameObject playerSetupUI;
+
+
+    [SerializeField] List<int> clientIDs;
+    
+
+
+    private void Start()
     {
-        networkManager = FindObjectOfType<NetworkManager>();
+        InstanceFinder.NetworkManager.ServerManager.OnRemoteConnectionState += OnRemoteClientConnecting;
+        InstanceFinder.NetworkManager.ClientManager.OnClientConnectionState += OnClientConnecting;
 
-        networkManager.ClientManager.OnRemoteConnectionState += OnClientConnected;
+        
+
+        playerSetupUI.SetActive(true);
+
+        //if (IsServer)
+        //    infoText.text = "You are the host.";
+
+        //if(IsClient)
+        //    infoText.text = "You are a client.";
+
+    }
+
+    
+    private void OnRemoteClientConnecting(NetworkConnection conn, RemoteConnectionStateArgs remote)
+    {
+        
+
+        if (remote.ConnectionState == RemoteConnectionState.Started)
+        {
+            clientIDs.Add(remote.ConnectionId);
+        }
+
+        if (remote.ConnectionState == RemoteConnectionState.Stopped)
+        {
+            clientIDs.Remove(remote.ConnectionId);
+        }
 
         
     }
-
-    private void OnClientConnected(RemoteConnectionStateArgs remoteClient)
+    
+    private void OnClientConnecting(ClientConnectionStateArgs local)
     {
+        
+    }
 
 
-        if (remoteClient.ConnectionState == RemoteConnectionState.Started)
+    public void OnClick_Exit()
+    {
+        InstanceFinder.ClientManager.StopConnection();
+        
+        if (IsServer)
         {
-            Debug.Log("Client with ID: " + remoteClient.ConnectionId + " has started");
-        }
-
-        if (remoteClient.ConnectionState == RemoteConnectionState.Stopped)
-        {
-            Debug.Log("Client with ID: " + remoteClient.ConnectionId + " has stopped");
+            InstanceFinder.ServerManager.StopConnection(false);
         }
     }
 
