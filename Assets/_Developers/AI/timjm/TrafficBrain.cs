@@ -19,13 +19,16 @@ public class TrafficBrain : MonoBehaviour
     #region References
     [Tooltip("If This Is Ticked, The Traffic Car Will Start To Panic And Drive Frantically.")]
     public bool panic;
-    public bool ShowPanic;
-    [Tooltip("If This Is Ticked, The Traffic Car Will Panic Forever.")]
+    [Tooltip("If This Is Ticked, extends the duration drastically.")]
     public bool ExtendedPanic;
     [SerializeField] int DistanceForwardIncrease;
     public int PastPanicAxis;  
     public int PanicAxis;
+    [Tooltip("If This Is Ticked, The Traffic Car Will Panic Forever.")]
     public bool PanicForever;
+    [Tooltip("Controls reaction strength")]
+    public int ReactionLimit;
+    [Tooltip("Controls reaction length")]
     public int ForLoopLength = 3;
     float KeepX;
     #endregion
@@ -49,29 +52,32 @@ public class TrafficBrain : MonoBehaviour
 
     [Header("SpinOut")]
     #region
+    [Tooltip("The spin applied during spin out")]
+    public int SpinY;
+    [Tooltip("The thrust applied during spin out, must be above 100 to see effect")]
+    public float Thrust = 120f;
     public bool ActivateSpinOut;
     public GameObject ObjectToSpinOut;
-    public int SpinY;
-    public float Thrust = 120f;
     #endregion
 
     [Header("Wheels")]
     #region
+    [Tooltip("How fast the wheels spin")]
+    public float turnSpeed = 100f;
     public GameObject FrontLeft;
     public GameObject FrontRight;
     public GameObject RearLeft;
     public GameObject RearRight;
-    public float turnSpeed = 100f;
     #endregion
 
     [Header("Death")]
     #region
+    [Tooltip("Spawner this instance spawned from")]
     public GameObject SpawnStation;
     #endregion
 
     void Start()
     {
-        panic = ShowPanic;
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         agent.destination = goal.position;
         Health = MaxHealth;
@@ -165,7 +171,6 @@ public class TrafficBrain : MonoBehaviour
         StartCoroutine(PanicMode());
     }
 
-
     IEnumerator PanicMode()
     {
         //point based off rng local
@@ -176,7 +181,7 @@ public class TrafficBrain : MonoBehaviour
         for (int i = 0; i < ForLoopLength; i++)
         {
             PastPanicAxis = PanicAxis;
-            PanicAxis = Random.Range(0, 7);
+            PanicAxis = Random.Range(0, ReactionLimit);
             panicgoal.transform.position = transform.position;
             panicgoal.transform.localPosition = new Vector3((PanicAxis - PastPanicAxis), 0, 4);
             goal = panicgoal;
@@ -184,19 +189,13 @@ public class TrafficBrain : MonoBehaviour
             agent.ResetPath();
             agent.isStopped = false;
             agent.SetDestination(goal.position);
-
             yield return new WaitForSeconds(SecondsToWait);
-
             DistanceForwardIncrease += 5;
-
             if (PanicForever == true)
             {
                 i = 0;
             }
-
-
         }
-
         DistanceForwardIncrease += 2;
         agent.isStopped = true;
         agent.ResetPath();
@@ -228,69 +227,75 @@ public class TrafficBrain : MonoBehaviour
     }
 }
 
-//#if UNITY_EDITOR
+#if UNITY_EDITOR
 
-//[CustomEditor(typeof(TrafficBrain))]
-//public class TrafficStatEditor : Editor
-//{
-//    // The various categories the editor will display the variables in 
-//    public enum DisplayCategory
-//    {
-//        Basic, Panic, Health
-//    }
+[CustomEditor(typeof(TrafficBrain))]
+public class TrafficStatEditor : Editor
+{
+    // The various categories the editor will display the variables in 
+    public enum DisplayCategory
+    {
+        Basic, Panic, Health
+    }
 
-//    // The enum field that will determine what variables to display in the Inspector
-//    public DisplayCategory categoryToDisplay;
+    // The enum field that will determine what variables to display in the Inspector
+    public DisplayCategory categoryToDisplay;
 
-//    // The function that makes the custom editor work
-//    public override void OnInspectorGUI()
-//    {
-//        // Display the enum popup in the inspector
-//        categoryToDisplay = (DisplayCategory)EditorGUILayout.EnumPopup("Display", categoryToDisplay);
+    // The function that makes the custom editor work
+    public override void OnInspectorGUI()
+    {
+        // Display the enum popup in the inspector
+        categoryToDisplay = (DisplayCategory)EditorGUILayout.EnumPopup("Display", categoryToDisplay);
 
-//        // Create a space to separate this enum popup from other variables 
-//        EditorGUILayout.Space();
+        // Create a space to separate this enum popup from other variables 
+        EditorGUILayout.Space();
 
-//        // Switch statement to handle what happens for each category
-//        switch (categoryToDisplay)
-//        {
-//            case DisplayCategory.Basic:
-//                DisplayBasicInfo();
-//                break;
+        // Switch statement to handle what happens for each category
+        switch (categoryToDisplay)
+        {
+            case DisplayCategory.Basic:
+                DisplayBasicInfo();
+                break;
 
-//            case DisplayCategory.Panic:
-//                DisplayPanicInfo();
-//                break;
+            case DisplayCategory.Panic:
+                DisplayPanicInfo();
+                break;
 
-//            case DisplayCategory.Health:
-//                DisplayHealthInfo();
-//                break;
+            case DisplayCategory.Health:
+                DisplayHealthInfo();
+                break;
 
-//        }
-//        serializedObject.ApplyModifiedProperties();
-//    }
+        }
+        serializedObject.ApplyModifiedProperties();
+    }
 
-//    // When the categoryToDisplay enum is at "Basic"
-//    void DisplayBasicInfo()
-//    {
-//        EditorGUILayout.PropertyField(serializedObject.FindProperty("goal"));
-//        EditorGUILayout.PropertyField(serializedObject.FindProperty("Thrust"));
-//        EditorGUILayout.PropertyField(serializedObject.FindProperty("turnSpeed"));
-//    }
+    // When the categoryToDisplay enum is at "Basic"
+    void DisplayBasicInfo()
+    {
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("goal"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("SpawnStation"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("SpinY"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("Thrust"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("ActivateSpinOut"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("turnSpeed"));
+    }
 
-//    // When the categoryToDisplay enum is at "Panic"
-//    void DisplayPanicInfo()
-//    {
-//        EditorGUILayout.PropertyField(serializedObject.FindProperty("panic"));
-//        EditorGUILayout.PropertyField(serializedObject.FindProperty("ExtendedPanic"));
-//    }
+    // When the categoryToDisplay enum is at "Panic"
+    void DisplayPanicInfo()
+    {
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("panic"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("ExtendedPanic"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("PanicForever"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("ReactionLimit"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("ForLoopLength"));
+    }
 
-//    // When the categoryToDisplay enum is at "Health"
-//    void DisplayHealthInfo()
-//    {
-//        EditorGUILayout.PropertyField(serializedObject.FindProperty("Health"));
-//        EditorGUILayout.PropertyField(serializedObject.FindProperty("MaxHealth"));
-//    }
-//}
+    // When the categoryToDisplay enum is at "Health"
+    void DisplayHealthInfo()
+    {
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("Health"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("MaxHealth"));
+    }
+}
 
-//#endif
+#endif
