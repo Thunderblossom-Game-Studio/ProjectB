@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class BrakableObjects : MonoBehaviour
 {
-    [SerializeField] GameObject originalWall;
-    [SerializeField] GameObject brokenWall;
+    //[SerializeField] GameObject originalWall;
+    //[SerializeField] GameObject brokenWall;
     //[SerializeField] Material targetColor;
     //[SerializeField] Color currentColor;
     //[SerializeField] Color targetColor;
-
     //List<MeshRenderer> pieceRenderer;
+    [SerializeField] GameObject OriginalWall;
+    [SerializeField] GameObject BreakableWall;
+    GameObject secondChildObject;
 
     public float explosionForce = 500.0f;
     public float spreadRadious = 150.8f;
@@ -25,21 +27,24 @@ public class BrakableObjects : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.collider.tag == "Breakable Wall")
+        if (other.gameObject.CompareTag("Controllable Car"))
         {
-            originalWall.SetActive(false);
-            brokenWall.SetActive(true);
+            OriginalWall.SetActive(false);
+            BreakableWall.SetActive(true);
+            Debug.Log("Tag worked");
             ExplodeWall();
         }
+        Debug.Log("Trigger with out if");
     }
 
     public void ExplodeWall()
     {
-        foreach (Transform child in brokenWall.transform)
+        foreach (Transform child in BreakableWall.transform)
         {
-            child.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, brokenWall.transform.position, spreadRadious);
+            child.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, BreakableWall.transform.position, spreadRadious);
             //pieceRenderer.Add(child.GetComponent<MeshRenderer>()); 
         }
         StartCoroutine(DestroyPieces());
@@ -48,7 +53,7 @@ public class BrakableObjects : MonoBehaviour
     public IEnumerator DestroyPieces()
     {
         yield return new WaitForSeconds(9.7f);
-        brokenWall.SetActive(false);
+        BreakableWall.SetActive(false);
     }
     //public IEnumerator FadePieces()
     //{
