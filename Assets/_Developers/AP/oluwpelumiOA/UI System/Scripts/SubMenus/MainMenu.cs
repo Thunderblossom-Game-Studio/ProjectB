@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Pelumi.Juicer;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : BaseMenu<MainMenu>
 {
@@ -15,6 +16,7 @@ public class MainMenu : BaseMenu<MainMenu>
     [SerializeField] private AdvanceButton carSelectButton;
     [SerializeField] private AdvanceButton settingsButton;
     [SerializeField] private AdvanceButton quitButton;
+    [SerializeField] private AdvanceButton creditButton;
 
     [Header("Open Transition Settings")]
     [SerializeField] private JuicerVector3Properties view1OpenTransition;
@@ -28,6 +30,7 @@ public class MainMenu : BaseMenu<MainMenu>
         carSelectButton.onClick.AddListener(CarSelectButton);
         settingsButton.onClick.AddListener(OptionButton);
         quitButton.onClick.AddListener(QuitButton);
+        creditButton.onClick.AddListener(CreditButton);
     }
 
     public override IEnumerator OpenMenuRoutine(Action onCompleted = null)
@@ -71,5 +74,10 @@ public class MainMenu : BaseMenu<MainMenu>
     public void QuitButton()
     {
         Application.Quit();
+    }
+
+    public void CreditButton()
+    {
+        SceneManager.LoadScene("Credits", LoadSceneMode.Single);
     }
 }
