@@ -628,8 +628,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 1.54, z: 2.751597}
-  m_Center: {x: -3.9048476e-10, y: 0, z: 0.8758108}
+  m_Size: {x: 2, y: 1.6443831, z: 2.9513056}
+  m_Center: {x: -0.0000000011120835, y: -0.052191556, z: 0.77595615}
 --- !u!114 &1078696219465399200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -800,8 +800,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 1.54, z: 2.415581}
-  m_Center: {x: 0.0000000010646279, y: 0, z: -0.7077892}
+  m_Size: {x: 2, y: 1.7185553, z: 2.0443118}
+  m_Center: {x: 1.1853629e-10, y: -0.089277685, z: -0.89342207}
 --- !u!114 &666629236538970752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1953,6 +1953,8 @@ MonoBehaviour:
   DistanceFromPatrolPoint: 20
   weaponHandler: {fileID: 3631949243076593990}
   gamePlayer: {fileID: 7576731440948102138}
+  defaultAgentAcc: 60
+  weightedAgentAcc: 15
 --- !u!114 &8933231745500003346
 MonoBehaviour:
   m_ObjectHideFlags: 0
