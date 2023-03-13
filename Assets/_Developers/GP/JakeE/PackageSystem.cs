@@ -30,7 +30,7 @@ public class PackageSystem : MonoBehaviour
     private Action _onPickUp;
     private Action _onDeliver;
     
-    private void Start() => _onPickUp.Invoke();
+    //private void Start() => _onPickUp.Invoke();
 
     public void AddPackageData(PackageData packageData)
     {
@@ -53,6 +53,7 @@ public class PackageSystem : MonoBehaviour
 
     public void DeliverPackages()
     {
+        Debug.Log("Deliver Packages!");
         int totalScore = 0;
         int totalPackage = 0;
 
@@ -63,11 +64,11 @@ public class PackageSystem : MonoBehaviour
         }
         
         _packageScore += totalScore;
-        if (!TryGetComponent(out GamePlayer gamePlayer)) return;
         
-        if (GameTeamManager.Instance)
-            GameTeamManager.Instance.AddScore
-                (gamePlayer.PlayerTeamData, totalScore, totalPackage);
+        if (TryGetComponent(out GamePlayer gamePlayer))
+            if (GameTeamManager.Instance)
+                GameTeamManager.Instance.AddScore
+                    (gamePlayer.PlayerTeamData, totalScore, totalPackage);
 
         ClearPackageData();
         _onDeliver?.Invoke();
@@ -77,13 +78,18 @@ public class PackageSystem : MonoBehaviour
     private void AddPackageVisual()
     {
         if (!(_packageSpawns.Count >= _currentPackages.Count)) return;
+        
+        //GameObject packageObject = Instantiate
+            //(_packageObjectVisual,transform.position + _packageSpawns[_currentPackages.Count - 1], Quaternion.identity);
+            
         GameObject packageObject = Instantiate
-            (_packageObjectVisual,transform.position + _packageSpawns[_currentPackages.Count - 1], Quaternion.identity);
+            (_packageObjectVisual,transform.position, Quaternion.identity);
+        
         _currentPackageObjects.Add(packageObject);
         packageObject.transform.SetParent(transform);
-        packageObject.transform.GetChild(0).GetComponent<MeshRenderer>().material.color =
-            _currentPackages[^1].PackageColor;
-        packageObject.transform.localEulerAngles = new Vector3(0, 0, 0);
+        packageObject.transform.GetComponentInChildren<MeshRenderer>()
+                .material.color = _currentPackages[^1].PackageColor;
+        packageObject.transform.localEulerAngles = Vector3.zero;
         packageObject.transform.localPosition = _packageSpawns[_currentPackages.Count - 1];
     }
 

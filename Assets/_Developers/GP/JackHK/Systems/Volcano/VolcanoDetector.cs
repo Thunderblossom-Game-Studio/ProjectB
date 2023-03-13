@@ -1,4 +1,5 @@
 using JE.General;
+using RVP;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,7 +26,10 @@ public class VolcanoDetector : MonoBehaviour
 
     private void ChangeDetectionState(Collider other, Transform target)
     {
-        if (!detectingLayers.ContainsLayer(other.gameObject.layer)) return;
+        if (!other.gameObject.TryGetComponent(out VehicleParent vehicle))
+        {
+            Debug.Log("Not a car"); return;
+        }
         volcano.SetTarget(target);
     }
 }
