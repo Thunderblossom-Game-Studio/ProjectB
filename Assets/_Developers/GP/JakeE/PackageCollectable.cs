@@ -9,9 +9,15 @@ public class PackageCollectable : Collectable
 
     protected override void Collect(GameObject collideObject)
     {
-        PackageSystem packageSystem = collideObject.GetComponent<PackageSystem>();
-        if (packageSystem == null) return;
-        if (packageSystem.PackageAmount >= packageSystem.MaxPackages) return;
+        Debug.Log("Collectable", this);
+        GameObject targetObject = collideObject.transform.root.gameObject;
+        
+        if (!targetObject.TryGetComponent(out PackageSystem packageSystem))
+            return;
+        
+        if (packageSystem.PackageAmount >= packageSystem.MaxPackages) 
+            return;
+
         packageSystem.AddPackageData(_packageData);
         _onCollect?.Invoke();
         DestroyObject();
