@@ -6,31 +6,38 @@ public class Indicator : MonoBehaviour
 {
     Renderer render;
 
-    public Vector3 scale = new Vector3(2,1,2);
-    public float timeToLand;
+    public Vector3 scale = new Vector3(2, 1, 2);
+    public float fadeDuration = 1;
+    public float fadeAmount = 0.1f;
+
+    float timeToLand;
+    float currentDuration = 0;
 
     private void Start()
     {
         render = gameObject.GetComponent<Renderer>();
     }
 
+    private void Update()
+    {
+        FadeColor(render);
+        currentDuration += Time.deltaTime;
+    }
+
     public void UpdateStuff(float _timeToLand)
     {
         timeToLand = _timeToLand;
-        StartCoroutine(FadeColor(render, Color.red, new Color(1, 0, 0, 0), 2f));
         StartCoroutine(Scale(scale));
     }
 
-        private IEnumerator FadeColor(Renderer objectRenderer, Color startColor, Color endColor, float fadeDuration)
+    private void FadeColor(Renderer objectRenderer)
     {
-        float currentDuration = 0;
-        while (currentDuration < fadeDuration)
+        if (currentDuration > fadeDuration)
         {
-            currentDuration += Time.deltaTime;
-            if (objectRenderer == null) break;
-            objectRenderer.material.color = Color.Lerp
-                (startColor, endColor, currentDuration / fadeDuration);
-            yield return null;
+            currentDuration = 0;
+            if (objectRenderer != null)
+                if (objectRenderer.material.color.a <= 0) return;
+            objectRenderer.material.color -= new Color(0, 0, 0, fadeAmount);
         }
     }
 

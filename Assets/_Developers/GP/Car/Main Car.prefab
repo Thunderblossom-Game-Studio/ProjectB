@@ -16186,6 +16186,7 @@ GameObject:
   - component: {fileID: 1496054183925433576}
   - component: {fileID: 7440135898434820062}
   - component: {fileID: 8335015285068822155}
+  - component: {fileID: 8087752752115177723}
   m_Layer: 9
   m_Name: Main Car
   m_TagString: Untagged
@@ -16542,6 +16543,19 @@ MonoBehaviour:
     m_Bits: 24575
   gunSocket: {fileID: 1750455242733553118}
   currentWeapon: {fileID: 0}
+--- !u!65 &8087752752115177723
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6427845818648099103}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6482612975936952463
 GameObject:
   m_ObjectHideFlags: 0
