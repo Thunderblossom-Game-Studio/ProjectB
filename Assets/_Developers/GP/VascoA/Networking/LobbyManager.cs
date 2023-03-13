@@ -1,37 +1,97 @@
+using FishNet;
+using FishNet.Connection;
 using FishNet.Managing;
 using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using FishNet.Transporting;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LobbyManager : NetworkBehaviour
 {
-    public NetworkManager networkManager;
 
-    public List<int> clientIds;
+    [Header("LobbyUI")]
+    [SerializeField] private LobbyUI lobbyUI;
+    [SerializeField] private TMPro.TMP_Text infoText;
 
-    private void Awake()
+    [Header("PlayerSetupUI")]
+    [SerializeField] private GameObject playerSetupUI;
+
+
+    public Dictionary<NetworkConnection, string> LoggedInUsernames = new Dictionary<NetworkConnection, string>();
+
+    public event Action<NetworkObject> OnClientLoggedIn;
+
+    
+
+    private void Start()
+    {      
+        playerSetupUI.SetActive(true);
+
+        //if (IsServer)
+        //    infoText.text = "You are the host.";
+
+        //if(IsClient)
+        //    infoText.text = "You are a client.";
+
+    }
+
+    
+   
+
+    public void OnClick_Exit()
     {
-        networkManager = FindObjectOfType<NetworkManager>();
+        InstanceFinder.ClientManager.StopConnection();
+        
+        if (IsServer)
+        {
+            InstanceFinder.ServerManager.StopConnection(false);
+        }
+    }
 
-        networkManager.ClientManager.OnRemoteConnectionState += OnClientConnected;
+
+    /// <summary>
+    /// Called when a client has signed in.
+    /// </summary>
+    /// <param name="username"></param>
+    /// <param name="sender"></param>
+    [ServerRpc(RequireOwnership = false)]
+    public void SignIn(string username, NetworkConnection sender = null)
+    {
+        ClientInfo ci;
+        if (!FindClientInstance(sender, out ci))
+            return;
+
+        LoggedInUsernames[ci.Owner] = username;
+
+        ci.SetUsername(username);
+        OnClientLoggedIn?.Invoke(ci.NetworkObject);
+        playerSetupUI.SetActive(false); // Disables client sign in card
+        lobbyUI.Show(); // Shows lobby UI
+        lobbyUI.AddPlayerCard(username); // Adds player card to lobby UI
+    }
 
         
-    }
-
-    private void OnClientConnected(RemoteConnectionStateArgs remoteClient)
+    private bool FindClientInstance(NetworkConnection conn, out ClientInfo ci)
     {
-
-
-        if (remoteClient.ConnectionState == RemoteConnectionState.Started)
+        ci = null;
+        if (conn == null)
         {
-            Debug.Log("Client with ID: " + remoteClient.ConnectionId + " has started");
+            Debug.LogError("Connection is null.");
+            return false;
         }
 
-        if (remoteClient.ConnectionState == RemoteConnectionState.Stopped)
+        ci = ClientInfo.ReturnClientInstance(conn);
+        if (ci == null)
         {
-            Debug.Log("Client with ID: " + remoteClient.ConnectionId + " has stopped");
+            Debug.LogError("ClientInfo not found on connection.");
+            return false;
         }
+
+        return true;
+
+
     }
-
 }

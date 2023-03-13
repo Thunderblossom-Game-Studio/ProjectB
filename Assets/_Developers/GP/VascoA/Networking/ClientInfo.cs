@@ -1,18 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using FishNet.Object;
+using FishNet.Object.Synchronizing;
+using FishNet.Connection;
+using FishNet;
 
-public class ClientInfo : MonoBehaviour
+public class ClientInfo : NetworkBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public static ClientInfo Instance;
+
+    [SyncVar][SerializeField] private string username;
+    
+    public void SetUsername(string name)
     {
-        
+        username = name;
     }
 
-    // Update is called once per frame
-    void Update()
+    public string GetUsername() 
     {
-        
+        return username;
     }
+
+    public static ClientInfo ReturnClientInstance(NetworkConnection conn)
+    {
+        if (InstanceFinder.IsServer && conn != null)
+        {
+            NetworkObject nob = conn.FirstObject;
+            return (nob == null) ? null : nob.GetComponent<ClientInfo>();
+        }
+        else
+        {
+            return Instance;
+        }
+    }
+
 }
+
