@@ -161,6 +161,11 @@ public class GameMenu : BaseMenu<GameMenu>
         _redPackages.text = ((int[])value)[1].ToString();
     }
 
+    private void OnPopup(Component arg1, object value)
+    {
+        StartCoroutine(Juicer.DoVector3(null, Vector3.zero, (pos) => _centreScreenText.transform.localScale = pos, _packageUIProperties, null));
+    }
+
     private void OnDisable()
     {
         _onPickUp.Unregister(OnPickUp);
