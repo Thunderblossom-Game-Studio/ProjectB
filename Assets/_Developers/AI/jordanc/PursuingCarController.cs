@@ -201,7 +201,7 @@ public class PursuingCarController : AICarController
 
         if (Vector3.Distance(transform.position, agent.transform.position) > distanceBetweenAgent * 1.1f)
         {
-            Vector3 pos = transform.position;// get pos
+            Vector3 pos = gameObject.transform.position;// get pos
             pos += transform.forward * agentSpawnWeight; // finding behind
             agent.transform.position = pos;
         }

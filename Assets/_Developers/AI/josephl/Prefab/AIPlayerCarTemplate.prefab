@@ -449,6 +449,7 @@ MonoBehaviour:
   upRotationLimit: 180
   downRotationLimit: 180
   turnSpeed: 150
+  fireSoundID: 
   weaponSO: {fileID: 11400000, guid: 1ba6be49524b7564b900b967656fdc01, type: 2}
   firePoint:
   - {fileID: 7856153253794415566}
@@ -508,6 +509,7 @@ MonoBehaviour:
   upRotationLimit: 180
   downRotationLimit: 180
   turnSpeed: 300
+  fireSoundID: 
   weaponSO: {fileID: 11400000, guid: 430526edd0f905646982879f60bbc628, type: 2}
   firePoint:
   - {fileID: 7576731441977016097}
@@ -1889,8 +1891,6 @@ MonoBehaviour:
   _onReachFullHealth:
     m_PersistentCalls:
       m_Calls: []
-  _respawnPoints:
-  - {x: -9.31, y: 19.67, z: 311.9}
 --- !u!114 &7576731440948102138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2746,8 +2746,12 @@ PrefabInstance:
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5725102409683620107, guid: 9636c90de6396184d86e232e0748f7c4, type: 3}
+      propertyPath: m_Height
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5725102409683620107, guid: 9636c90de6396184d86e232e0748f7c4, type: 3}
       propertyPath: m_Radius
-      value: 0.18
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5725102409683620107, guid: 9636c90de6396184d86e232e0748f7c4, type: 3}
       propertyPath: m_Acceleration
@@ -2756,6 +2760,10 @@ PrefabInstance:
     - target: {fileID: 5725102409683620107, guid: 9636c90de6396184d86e232e0748f7c4, type: 3}
       propertyPath: m_AngularSpeed
       value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 5725102409683620107, guid: 9636c90de6396184d86e232e0748f7c4, type: 3}
+      propertyPath: avoidancePriority
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5725102409683620108, guid: 9636c90de6396184d86e232e0748f7c4, type: 3}
       propertyPath: m_RootOrder
