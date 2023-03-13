@@ -16188,6 +16188,8 @@ GameObject:
   - component: {fileID: 2473974623390743224}
   - component: {fileID: 8335015285068822155}
   - component: {fileID: 8087752752115177723}
+  - component: {fileID: -4829767517200364671}
+  - component: {fileID: 2043132127715688138}
   m_Layer: 9
   m_Name: Main Car
   m_TagString: Untagged
@@ -16573,6 +16575,40 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-4829767517200364671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6427845818648099103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9e5aa3e3b804214cacb73c626f1b566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _packageScore: 0
+  _packageDrop: {fileID: 5676333477140487690, guid: 7f1a74560e12b0244b97855cdfd21ef8, type: 3}
+  _packageObjectVisual: {fileID: 5676333477140487690, guid: c273e1d1bba822c448ad29ab53a3e576, type: 3}
+  _maxPackages: 2
+  _packageSpawns:
+  - {x: -0.44, y: 1.85, z: -2.19}
+  - {x: 0.56, y: 1.52, z: -1.93}
+  _onDeliverEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2043132127715688138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6427845818648099103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c138514126984b44295a59fd00d8aad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6482612975936952463
 GameObject:
   m_ObjectHideFlags: 0
