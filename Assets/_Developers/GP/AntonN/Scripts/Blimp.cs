@@ -17,11 +17,17 @@ public class Blimp : MonoBehaviour
     [SerializeField] private float sphereSize;
     [SerializeField] private int dropAmount = 1;
     [SerializeField] private float raycastDistance;
+    [SerializeField] private Audio3D fanAudio;
     private float timer;
     private bool GizmosActive;
     RaycastHit hit;
 
     private Vector3 hitPoint;
+
+    private void Awake()
+    {
+        //fanAudio.PlaySoundEffect("BlimpFan");
+    }
 
     private void Start()
     {
@@ -36,7 +42,7 @@ public class Blimp : MonoBehaviour
 
     private void BlimpBehaviour()
     {
-        AudioManager.PlaySoundEffect("BlimpFan");
+        
         switch (state)
         {
             case State.Moving:
