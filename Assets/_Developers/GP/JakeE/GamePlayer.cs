@@ -8,7 +8,9 @@ public class GamePlayer : MonoBehaviour
     #region GET
     public TeamData PlayerTeamData => _playerTeamData;
     #endregion
-    
+
+    [SerializeField] private bool addOnAwake = true;
+
     private TeamData _playerTeamData;
 
     public void InitialisePlayer(TeamData playerTeamData)
@@ -17,7 +19,7 @@ public class GamePlayer : MonoBehaviour
     }
     private void Awake()
     {
-        GameTeamManager.Instance._gamePlayers.Add(this);
+        if (addOnAwake) GameTeamManager.Instance._gamePlayers.Add(this);
     }
 }
 
