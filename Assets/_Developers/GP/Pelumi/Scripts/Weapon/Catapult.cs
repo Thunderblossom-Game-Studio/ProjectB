@@ -74,6 +74,7 @@ public class Catapult : Weapon
                 ModifyAmmo(currentAmmo - 1);
                 loadedProjectile.transform.SetParent(null);
                 loadedProjectile.SetUp(targetPos, weaponSO.projectileSpeed, angle);
+                AudioManager.PlaySoundEffect(FireSoundID, true);
                 break;
         }
     }

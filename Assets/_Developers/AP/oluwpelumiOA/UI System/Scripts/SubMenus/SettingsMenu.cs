@@ -37,6 +37,9 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
     
     [Header("Audio Settings")]
     [SerializeField] private AudioMixer audioMixer;
+    [SerializeField] private Slider masterSlider;
+    [SerializeField] private Slider musiclider;
+    [SerializeField] private Slider sfxSlider;
 
     [Header("Video Settings")]
     [SerializeField] private HorizontalSelector screenResolutionSelector;
@@ -60,6 +63,10 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
         PopulateScreenResolution();
 
         fullScreenToggle.onValueChanged.AddListener((x) => Screen.fullScreen = x);
+
+        masterSlider.onValueChanged.AddListener(SetMasterVolume);
+        musiclider.onValueChanged.AddListener(SetMusicVolume);
+        sfxSlider.onValueChanged.AddListener(SetSfxVolume);
     }
 
     protected override void InputManager_OnDeviceChanged(object sender, InputManager.DeviceType deviceType)
@@ -259,24 +266,23 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
 
     public void SetMasterVolume(float value)
     {
-        //SetVolume("Master", value, masterDisplay);
+        SetVolume("Master", value);
     }
 
     public void SetMusicVolume(float value)
     {
-       // SetVolume("Music", value, musicDisplay);
+        SetVolume("Music", value);
     }
 
     public void SetSfxVolume(float value)
     {
-      //  SetVolume("Sfx", value, sfxDisplay);
+        SetVolume("Sfx", value);
     }
 
-    void SetVolume(string parameter, float value, Text display)
+    void SetVolume(string parameter, float value)
     {
         audioMixer.SetFloat(parameter, Mathf.Log10(value) * 80);
-
-        display.text = (value * 100).ToString("0") + "%";
+       // display.text = (value * 100).ToString("0") + "%";
     }
 
     void SaveVolume(string parameter, float value)
@@ -284,13 +290,13 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
         PlayerPrefs.SetFloat(parameter, value);
     }
     
-    void LoadVolume(string parameter, Slider slider, Text display)
+    void LoadVolume(string parameter, Slider slider)
     {
         if (PlayerPrefs.HasKey(parameter))
         {
             float volume = PlayerPrefs.GetFloat(parameter);
             slider.value = volume;
-            SetVolume(parameter, volume, display);
+            SetVolume(parameter, volume);
         }
     }
     

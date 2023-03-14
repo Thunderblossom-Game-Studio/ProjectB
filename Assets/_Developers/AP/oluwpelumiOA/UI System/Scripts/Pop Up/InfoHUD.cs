@@ -8,18 +8,18 @@ using TMPro;
 
 public class InfoHUD : MonoBehaviour
 {
-    [SerializeField] private CanvasGroup content;
-    [SerializeField] private TextMeshProUGUI displayText;
-    [SerializeField] private GameEvent infoEvent;
+    [SerializeField] private CanvasGroup _content;
+    [SerializeField] private TextMeshProUGUI _displayText;
+    [SerializeField] private GameEvent _infoEvent;
 
     private void OnEnable()
     {
-        infoEvent.Register(InfoEvent);
+        _infoEvent.Register(InfoEvent);
     }
 
     private void OnDisable()
     {
-        infoEvent.Unregister(InfoEvent);
+        _infoEvent.Unregister(InfoEvent);
     }
 
     private void InfoEvent(Component arg1, object arg2)
@@ -27,7 +27,7 @@ public class InfoHUD : MonoBehaviour
         InfoHUDData infoHUD = (InfoHUDData)arg2;
         if (infoHUD.Enable)
         {
-            displayText.text = infoHUD.Message;
+            _displayText.text = infoHUD.Message;
             StartCoroutine(OpenMenuRoutine());
         }
         else StartCoroutine(CloseMenuRoutine());
@@ -35,14 +35,14 @@ public class InfoHUD : MonoBehaviour
 
     public IEnumerator OpenMenuRoutine()
     {
-        StartCoroutine(Juicer.DoVector3(null, Vector3.zero, (pos) => content.transform.localScale = pos, new JuicerVector3Properties(Vector3.one, .2f, animationCurveType: AnimationCurveType.EaseInOut), null));
-        yield return Juicer.DoFloat(null, 0, (pos) => content.alpha = pos, new JuicerFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
+        StartCoroutine(Juicer.DoVector3(null, Vector3.zero, (pos) => _content.transform.localScale = pos, new JuicerVector3Properties(Vector3.one, .2f, animationCurveType: AnimationCurveType.EaseInOut), null));
+        yield return Juicer.DoFloat(null, 0, (pos) => _content.alpha = pos, new JuicerFloatProperties(1, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
     }
 
     public IEnumerator CloseMenuRoutine()
     {
-        StartCoroutine(Juicer.DoVector3(null, content.transform.localScale, (pos) => content.transform.localScale = pos, new JuicerVector3Properties(Vector3.zero, .2f, animationCurveType: AnimationCurveType.EaseInOut), null));
-        yield return Juicer.DoFloat(null, content.alpha, (pos) => content.alpha = pos, new JuicerFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
+        StartCoroutine(Juicer.DoVector3(null, _content.transform.localScale, (pos) => _content.transform.localScale = pos, new JuicerVector3Properties(Vector3.zero, .2f, animationCurveType: AnimationCurveType.EaseInOut), null));
+        yield return Juicer.DoFloat(null, _content.alpha, (pos) => _content.alpha = pos, new JuicerFloatProperties(0, .2f, animationCurveType: AnimationCurveType.EaseInOut), null);
     }
 
     public IEnumerator LifeTimeRoutine()

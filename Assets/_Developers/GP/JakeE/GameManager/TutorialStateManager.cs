@@ -52,7 +52,7 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     [Viewable] private float _buttonPressThresshold = 1;
     [Viewable] private float _currentThreeshold;
 
-    private WaitForSeconds _defaultDelay = new WaitForSeconds(2);
+    private readonly WaitForSeconds _defaultDelay = new WaitForSeconds(2);
 
     private IEnumerator Start() 
     { 

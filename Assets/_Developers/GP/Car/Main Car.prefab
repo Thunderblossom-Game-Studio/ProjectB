@@ -1358,7 +1358,7 @@ MonoBehaviour:
   upRotationLimit: 180
   downRotationLimit: 20
   turnSpeed: 300
-  fireSoundID: NerfGunShot
+  fireSoundID: ConfettiCannon
   weaponSO: {fileID: 11400000, guid: 68268341ce3857d4892d302995dc1593, type: 2}
   firePoint:
   - {fileID: 2210001534041592993}
@@ -15393,7 +15393,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24333640, guid: 36e40e79cbecd9449800bb1288274833, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 0debe53a9c4cef54f95b55f393937edf, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f152b269b7c5c684d96a7fae975d4ad6, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -16079,7 +16079,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24371594, guid: 36e40e79cbecd9449800bb1288274833, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 2c3d914dbaa4b7d4a90dedb7e6ea952a, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 51733b1df44304c42a350062bb817e6f, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -16188,6 +16188,8 @@ GameObject:
   - component: {fileID: 2473974623390743224}
   - component: {fileID: 8335015285068822155}
   - component: {fileID: 8087752752115177723}
+  - component: {fileID: -4829767517200364671}
+  - component: {fileID: 2043132127715688138}
   m_Layer: 9
   m_Name: Main Car
   m_TagString: Untagged
@@ -16532,8 +16534,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OriginalWall: {fileID: 8371347127821782638, guid: 4397f830715a619418e70501de40da76, type: 3}
   BreakableWall: {fileID: 7436475925024760935, guid: d9ff306da667e0348a4ab3f55366ebe2, type: 3}
+  isItdestroyed: 0
   explosionForce: 500
   spreadRadious: 150.8
+  destroytime: 9.7
 --- !u!114 &8335015285068822155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16546,7 +16550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d43d9b93f66256b499886061d14497c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugMode: 1
+  debugMode: 0
   allWeapon:
   - {fileID: 924067890231493878}
   - {fileID: 2210001534272783018}
@@ -16573,6 +16577,41 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-4829767517200364671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6427845818648099103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9e5aa3e3b804214cacb73c626f1b566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _packageScore: 0
+  _packageDrop: {fileID: 5676333477140487690, guid: 7f1a74560e12b0244b97855cdfd21ef8, type: 3}
+  _packageObjectVisual: {fileID: 5676333477140487690, guid: c273e1d1bba822c448ad29ab53a3e576, type: 3}
+  _maxPackages: 2
+  _packageSpawns:
+  - {x: -0.44, y: 1.85, z: -2.19}
+  - {x: 0.56, y: 1.52, z: -1.93}
+  _onDeliverEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2043132127715688138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6427845818648099103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c138514126984b44295a59fd00d8aad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addOnAwake: 1
 --- !u!1 &6482612975936952463
 GameObject:
   m_ObjectHideFlags: 0
@@ -17026,7 +17065,7 @@ MonoBehaviour:
   upRotationLimit: 20
   downRotationLimit: 180
   turnSpeed: 300
-  fireSoundID: NerfGunShot
+  fireSoundID: CatapultShooting
   weaponSO: {fileID: 11400000, guid: 430526edd0f905646982879f60bbc628, type: 2}
   firePoint:
   - {fileID: 3263541549933274025}
