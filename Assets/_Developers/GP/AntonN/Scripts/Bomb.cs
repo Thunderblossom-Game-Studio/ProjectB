@@ -7,6 +7,7 @@ public class Bomb : MonoBehaviour
     [SerializeField] private float explosionTime = 6f;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private LayerMask environmentLayer;
+    [SerializeField] private Audio3D bombAudio;
     private float timer;
     private bool exploded;
     private bool collisionWithPlayer;
@@ -30,6 +31,7 @@ public class Bomb : MonoBehaviour
 
         if(timerStart == true)
         {
+            bombAudio.PlaySoundEffect("BombTick");
             timer -= Time.deltaTime;
         }
     }
@@ -38,7 +40,7 @@ public class Bomb : MonoBehaviour
     {
         exploded = true;
         Debug.Log("BOOM!");
-        //AudioManager.PlaySoundEffect("BBExplode");
+        bombAudio.PlaySoundEffect("BombNoise");
 
         Destroy(gameObject);
     }
