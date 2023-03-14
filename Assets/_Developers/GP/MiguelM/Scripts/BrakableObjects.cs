@@ -11,10 +11,12 @@ public class BrakableObjects : MonoBehaviour
     //List<MeshRenderer> pieceRenderer;
     [SerializeField] GameObject OriginalWall;
     [SerializeField] GameObject BreakableWall;
+    public bool isItdestroyed = false;
     GameObject secondChildObject;
 
     public float explosionForce = 500.0f;
     public float spreadRadious = 150.8f;
+    public float destroytime = 9.7f;
 
     //public float destroyTime = 3.0f;
     //public float fadeTime = 3.0f;
@@ -28,11 +30,11 @@ public class BrakableObjects : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Controllable Car"))
+        if (other.gameObject.CompareTag("Controllable Car") && !isItdestroyed)
         {
             OriginalWall.SetActive(false);
             BreakableWall.SetActive(true);
-            Debug.Log("Tag worked");
+            Debug.Log("Tag worked and bollean Worked");
             ExplodeWall();
         }
         Debug.Log("Trigger with out if");
@@ -50,8 +52,10 @@ public class BrakableObjects : MonoBehaviour
 
     public IEnumerator DestroyPieces()
     {
-        yield return new WaitForSeconds(9.7f);
+        yield return new WaitForSeconds(destroytime);
         BreakableWall.SetActive(false);
+        isItdestroyed = true;
+        Debug.Log(isItdestroyed);
     }
     //public IEnumerator FadePieces()
     //{
