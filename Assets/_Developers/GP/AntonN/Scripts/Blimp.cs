@@ -139,6 +139,7 @@ public class Blimp : MonoBehaviour
 
     private void DropBomb()
     {
+        fanAudio.PlaySoundEffect("BombHatch");
         DeactivateIndicator();
         for (int i = 0; i < dropAmount; i++)
         {
