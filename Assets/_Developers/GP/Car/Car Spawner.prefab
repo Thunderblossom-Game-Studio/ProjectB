@@ -88,11 +88,10 @@ GameObject:
   - component: {fileID: 4429676525576954510}
   - component: {fileID: 6500123244141429672}
   - component: {fileID: 4429676525576954496}
-  - component: {fileID: 6500123244464096042}
   - component: {fileID: 6500123244464096043}
   - component: {fileID: 6500123244464096036}
   - component: {fileID: 6500123244974778414}
-  - component: {fileID: 3068527427837913708}
+  - component: {fileID: 1703846999551887165}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -166,25 +165,6 @@ MonoBehaviour:
   _addToDefaultScene: 0
   Spawns:
   - {fileID: 6500123244649418076}
---- !u!114 &6500123244464096042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4429676525576954511}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f48f002b825cbd45a19bd96d90f9edb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _unreliableMTU: 1023
-  _ipv4BindAddress: 
-  _ipv6BindAddress: 
-  _port: 25525
-  _maximumClients: 4095
-  _clientAddress: localhost
-  _timeout: 15
 --- !u!114 &6500123244464096043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,7 +184,7 @@ MonoBehaviour:
   _tickRate: 50
   _pingInterval: 1
   _timingInterval: 1
-  _physicsMode: 0
+  _physicsMode: 1
 --- !u!114 &6500123244464096036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,7 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TicksBetweenReconcilation: 10
---- !u!114 &3068527427837913708
+--- !u!114 &1703846999551887165
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -239,12 +219,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4429676525576954511}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9b6b565cd9533c4ebc18003f0fc18a2, type: 3}
+  m_Script: {fileID: 11500000, guid: 91f4cf5273666764789e6f8bada05e3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _color: {r: 1, g: 0, b: 0, a: 1}
-  _placement: 1
-  _hideTickRate: 0
 --- !u!1 &6500123243651079247
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,7 +491,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7404731519449996976
 RectTransform:
   m_ObjectHideFlags: 0
