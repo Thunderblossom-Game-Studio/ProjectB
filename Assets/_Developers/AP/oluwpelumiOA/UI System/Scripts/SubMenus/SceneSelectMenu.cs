@@ -10,23 +10,23 @@ public class SceneSelectMenu : BaseMenu<SceneSelectMenu>
     [Header("Buttons")]
     [SerializeField] private AdvanceButton tutorialButton;
     [SerializeField] private AdvanceButton mpButton;
+
     [SerializeField] private AdvanceButton backButton;
     [SerializeField] private AdvanceButton TempLevel1;
     [SerializeField] private AdvanceButton TempLevel2;
     [SerializeField] private AdvanceButton TempLevel3;
-    
-
+    [SerializeField] private AdvanceButton TempLevel4;
 
     [SerializeField] private CanvasGroup buttonHolder;
 
     private void Start()
     {
         tutorialButton.onClick.AddListener(() => SwitchScene(SceneType.Tutorial));
-        mpButton.onClick.AddListener(() => SwitchScene(SceneType.Multiplayer));
         backButton.onClick.AddListener(CloseButton);
         TempLevel1.onClick.AddListener(() => SwitchScene(SceneType.TempLevel1));
         TempLevel2.onClick.AddListener(() => SwitchScene(SceneType.TempLevel2));
         TempLevel3.onClick.AddListener(() => SwitchScene(SceneType.TempLevel3));
+        TempLevel4.onClick.AddListener(() => SwitchScene(SceneType.TempLevel4));
     }
 
     protected override void Instance_OnTabLeftAction(object sender, EventArgs e)
@@ -71,19 +71,16 @@ public class SceneSelectMenu : BaseMenu<SceneSelectMenu>
     public void SwitchScene(SceneType sceneType)
     {
         Close(() => LoadingMenu.GetInstance().LoadScene((int)sceneType));
-    }
-
-  
+    }  
 }
 
 public enum SceneType
 {
     MainMenu = 0,
-    Credits = 1,
-    Tutorial = 2,
-    Multiplayer = 3,
-    TempLevel1 = 3,
-    TempLevel2 = 4,
-    TempLevel3 = 5,
-
+    Tutorial = 1,
+    TempLevel1 = 2,
+    TempLevel2 = 3,
+    TempLevel3 = 4,
+    TempLevel4 = 5,
+    Credits = 6,
 }
