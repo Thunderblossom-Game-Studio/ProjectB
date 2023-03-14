@@ -211,9 +211,9 @@ public class PursuingCarController : AICarController
 
         if (backTriggerCheck.active) agentSpawnWeight = 3;
         else if (frontTriggerCheck.active) agentSpawnWeight = -3;
-        else agentSpawnWeight = 20;
+        else agentSpawnWeight = 10;
 
-        if (agentSpawnWeight != 20) agent.speed = weightedAgentAcc;
+        if (agentSpawnWeight != 10) agent.speed = weightedAgentAcc;
         else agent.speed = defaultAgentAcc;
 
         if (Vector3.Distance(transform.position, agent.transform.position) > distanceBetweenAgent * 1.1f)
@@ -369,6 +369,7 @@ public class PursuingCarController : AICarController
         if ((newState || !MoveTarget) && packageSpawner.SpawnedObjects.Count > 0)
         {
             NavMeshPath path = new NavMeshPath();
+            int num = 0;
             do
             {
                 MoveTarget = packageSpawner.SpawnedObjects[Random.Range(0, packageSpawner.SpawnedObjects.Count)].gameObject;
@@ -377,7 +378,8 @@ public class PursuingCarController : AICarController
                 {
                     MoveTarget = null;
                 }
-            } while (!MoveTarget);
+                num++;
+            } while (!MoveTarget && num < 3);
         }
 
         if (MoveTarget)

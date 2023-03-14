@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 6378188301674734925}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -458.3, y: 6.23, z: -518.74}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 10, y: 10, z: 40}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -94,7 +94,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6378188301674734925}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   eventToTrigger:
     m_PersistentCalls:
       m_Calls:
@@ -129,7 +129,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  maxTrigger: 0
+  maxTrigger: 1
   currentTrigger: 0
 --- !u!114 &4481279799145618408
 MonoBehaviour:

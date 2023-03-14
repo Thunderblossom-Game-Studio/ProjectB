@@ -12,8 +12,4 @@ public class GameSettings : ScriptableObject
     [Header("Sequence Settings")]
     public string[] _beginSequenceText;
     public string[] _completeSequenceText;
-
-    [Header("Team Settings")] 
-    public Vector3[] _blueTeamSpawns;
-    public Vector3[] _redTeamSpawns;
 }
