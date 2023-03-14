@@ -11,19 +11,12 @@ public class MultiplayerMenuUIManager : MonoBehaviour
     [Header("Networking")]
     [SerializeField] private NetworkManager networkManager;
     [SerializeField] private bool isConnecting;
+    [SerializeField] private ClientInfo clientInfo;
 
     [Header("UI")]
     [SerializeField] private Button hostButton;  
     [SerializeField] private Button joinButton;
-
     [SerializeField] private TMPro.TMP_Text connectionStatusText;
-
-
-    private void Awake()
-    {
-        hostButton = GameObject.Find("HostGameButton").GetComponent<Button>();
-        joinButton = GameObject.Find("JoinGameButton").GetComponent<Button>();       
-    }
 
     private void Start()
     {
@@ -43,11 +36,17 @@ public class MultiplayerMenuUIManager : MonoBehaviour
         {
             InstanceFinder.ClientManager.StartConnection();          
         });
+
     }
 
     private void Update()
     {
         ButtonInputLock(isConnecting);
+    }
+
+    private void OnDisable()
+    {
+        networkManager.ClientManager.OnClientConnectionState -= OnClientConnecting;
     }
 
     private void ButtonInputLock(bool state)
@@ -82,8 +81,7 @@ public class MultiplayerMenuUIManager : MonoBehaviour
         
         if (localClient.ConnectionState == LocalConnectionState.Starting)
         {
-            isConnecting = true;
-            
+            isConnecting = true;          
         }
 
         if (localClient.ConnectionState == LocalConnectionState.Stopped)
@@ -92,9 +90,4 @@ public class MultiplayerMenuUIManager : MonoBehaviour
         }
     }
 
-    IEnumerator DisappearText(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        connectionStatusText.text = "";
-    }
 }

@@ -594,8 +594,8 @@ GameObject:
   m_Component:
   - component: {fileID: 800196387}
   - component: {fileID: 800196386}
+  - component: {fileID: 800196389}
   - component: {fileID: 800196388}
-  - component: {fileID: 800196391}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -653,7 +653,7 @@ MonoBehaviour:
   _offlineScene: Assets/_Developers/GP/VascoA/Networking/MultiplayerMenu.unity
   _onlineScene: Assets/_Developers/GP/VascoA/Networking/LobbyScene.unity
   _replaceScenes: 0
---- !u!114 &800196391
+--- !u!114 &800196389
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -662,11 +662,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 800196385}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aca43cf6f20e77c4f8fcc078fd85081f, type: 3}
+  m_Script: {fileID: 11500000, guid: 211a9f6ec51ddc14f908f5acc0cd0423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _changeFrameRate: 1
-  _frameRate: 500
+  _playerPrefab: {fileID: 8733321124668565146, guid: e3f1030bcad284b459aa0d90059f47e6, type: 3}
+  _addToDefaultScene: 1
+  Spawns: []
 --- !u!1 &834949195
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,6 +725,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   networkManager: {fileID: 0}
   isConnecting: 0
+  clientInfo: {fileID: 0}
   hostButton: {fileID: 2042266401}
   joinButton: {fileID: 568844781}
   connectionStatusText: {fileID: 956045808}
@@ -1089,7 +1091,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1060952417
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1565,37 +1567,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1504547385}
   m_CullTransparentMesh: 1
---- !u!1 &1519390227
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1519390228}
-  m_Layer: 0
-  m_Name: ClientInfo
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1519390228
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1519390227}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 445.58182, y: 229.88968, z: -1.4829078}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1562550921
 GameObject:
   m_ObjectHideFlags: 0
@@ -1749,7 +1720,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1680298329
 RectTransform:
   m_ObjectHideFlags: 0

@@ -47,13 +47,18 @@ public class PursuingCarController : AICarController
     [SerializeField] private Weapon weaponHandler;
 
     [Viewable] private Transform DeliveryPoint;        
-    [Viewable] private float agentSpawnWeight = 1;
+    [Viewable] private float agentSpawnWeight = 2;
 
     [SerializeField] private GamePlayer gamePlayer;
 
     internal float fleeThreshold;
 
+    [SerializeField] private float defaultAgentAcc;
+    [SerializeField] private float weightedAgentAcc;
+
     public GamePlayer GetGamePlayer => gamePlayer;
+
+    float aishashopahfoiahsf;
 
     protected override void Start()
     {
@@ -90,7 +95,16 @@ public class PursuingCarController : AICarController
 
     }
 
-    
+    private void FixedUpdate()
+    {
+        if (frontTriggerCheck.active || backTriggerCheck.active)
+        {
+            Vector3 pos = gameObject.transform.position;// get pos
+            pos += transform.forward * agentSpawnWeight; // finding behind
+            agent.transform.position = pos;
+        }
+    }
+
     protected override void Evaluate()
     {
         newState = false;
@@ -197,13 +211,19 @@ public class PursuingCarController : AICarController
 
         if (backTriggerCheck.active) agentSpawnWeight = 3;
         else if (frontTriggerCheck.active) agentSpawnWeight = -3;
-        else agentSpawnWeight = -1;
+        else agentSpawnWeight = 10;
+
+        if (agentSpawnWeight != 10) agent.speed = weightedAgentAcc;
+        else agent.speed = defaultAgentAcc;
 
         if (Vector3.Distance(transform.position, agent.transform.position) > distanceBetweenAgent * 1.1f)
         {
-            Vector3 pos = transform.position;// get pos
+            Vector3 pos = gameObject.transform.position;// get pos
             pos += transform.forward * agentSpawnWeight; // finding behind
+
+            agent.enabled = false;
             agent.transform.position = pos;
+            agent.enabled = true;
         }
 
         if (Vector3.Distance(transform.position, agent.transform.position) > distanceBetweenAgent)
@@ -222,7 +242,6 @@ public class PursuingCarController : AICarController
 
         State next = NextState;
 
-
         Evaluate();
 
         if (next != NextState) newState = true;
@@ -235,6 +254,7 @@ public class PursuingCarController : AICarController
         Shoot();
 
         SwapState();
+
     }
 
     protected virtual void Shoot()
@@ -348,19 +368,18 @@ public class PursuingCarController : AICarController
         
         if ((newState || !MoveTarget) && packageSpawner.SpawnedObjects.Count > 0)
         {
+            NavMeshPath path = new NavMeshPath();
+            int num = 0;
             do
             {
                 MoveTarget = packageSpawner.SpawnedObjects[Random.Range(0, packageSpawner.SpawnedObjects.Count)].gameObject;
-
-                NavMeshPath path = new NavMeshPath();
-
                 agent.CalculatePath(MoveTarget.transform.position, path);
-
                 if (path.status == NavMeshPathStatus.PathPartial || path.status == NavMeshPathStatus.PathInvalid)
                 {
                     MoveTarget = null;
                 }
-            } while (!MoveTarget);
+                num++;
+            } while (!MoveTarget && num < 3);
         }
 
         if (MoveTarget)

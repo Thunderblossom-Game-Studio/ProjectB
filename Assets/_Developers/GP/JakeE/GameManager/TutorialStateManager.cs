@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -29,10 +30,14 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     [SerializeField] private TutorialInstruction _turnLeftText;
     [SerializeField] private TutorialInstruction _turnRightText;
     [SerializeField] private TutorialInstruction _breakText;
+    [SerializeField] private TutorialInstruction _reachDestinationText;
 
-    [Header("Pakage Intructions")]
+    [Header("Package Intructions")]
     [SerializeField] private TutorialInstruction _collectPackageText;
     [SerializeField] private TutorialInstruction _deliverPackageText;
+
+    [Header("Tutorial Walls")] 
+    [SerializeField] private GameObject _firstWall;
 
     [Viewable] private bool _hasIntroCutSceneComplected;
 
@@ -47,6 +52,8 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     [Viewable] private float _buttonPressThresshold = 1;
     [Viewable] private float _currentThreeshold;
 
+    private readonly WaitForSeconds _defaultDelay = new WaitForSeconds(2);
+
     private IEnumerator Start() 
     { 
         yield return RunTutorial();
@@ -57,6 +64,7 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
         yield return IntroCutSceneState();
         yield return WelcomeState();
         yield return DrivingControlState();
+        yield return ReachDestination();
         yield return PackageState();
         //  yield return BattleEnemyState();
         //  yield return GoodbyeState();
@@ -130,8 +138,19 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
         DisplaySuccess();
 
         yield return new WaitForSeconds(2f);
+    }
 
-        infoEvent.Raise(this, new InfoHUDData { Enable = false});
+    private IEnumerator ReachDestination()
+    {
+        _firstWall.SetActive(false);
+        
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _reachDestinationText.Message });
+        AudioManager.PlaySoundEffect(_reachDestinationText.AudioID);
+
+        yield return new WaitUntil(() => _hasReachedDestination == true);
+        DisplaySuccess();
+
+        yield return _defaultDelay;
     }
 
     private IEnumerator PackageState()
@@ -147,6 +166,9 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
 
         yield return new WaitUntil(() => _hasDeliverPackage == true);
         DisplaySuccess();
+
+        yield return new WaitForSeconds(2);
+        infoEvent.Raise(this, new InfoHUDData { Enable = false});
     }
 
     private IEnumerator BattleEnemyState()

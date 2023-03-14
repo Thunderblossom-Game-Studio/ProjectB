@@ -19,21 +19,23 @@ public class TrafficBrain : MonoBehaviour
     #region References
     [Tooltip("If This Is Ticked, The Traffic Car Will Start To Panic And Drive Frantically.")]
     public bool panic;
-    public bool ShowPanic;
-    [Tooltip("If This Is Ticked, The Traffic Car Will Panic Forever.")]
+    [Tooltip("If This Is Ticked, extends the duration drastically.")]
     public bool ExtendedPanic;
     [SerializeField] int DistanceForwardIncrease;
     public int PastPanicAxis;  
     public int PanicAxis;
-    bool PanicForever;
-    int ForLoopLength = 3;
+    [Tooltip("If This Is Ticked, The Traffic Car Will Panic Forever.")]
+    public bool PanicForever;
+    [Tooltip("Controls reaction strength")]
+    public int ReactionLimit;
+    [Tooltip("Controls reaction length")]
+    public int ForLoopLength = 3;
     float KeepX;
     #endregion
 
     [Header("Raycast")]
     #region
-    public GameObject LeftRayCast;
-    public GameObject RightRayCast;
+    public GameObject RayCast;
     UnityEngine.AI.NavMeshAgent agent;
     bool IgnoreRaycasts;
     [SerializeField] float RayCastInt;
@@ -50,31 +52,32 @@ public class TrafficBrain : MonoBehaviour
 
     [Header("SpinOut")]
     #region
+    [Tooltip("The spin applied during spin out")]
+    public int SpinY;
+    [Tooltip("The thrust applied during spin out, must be above 100 to see effect")]
+    public float Thrust = 120f;
     public bool ActivateSpinOut;
     public GameObject ObjectToSpinOut;
-    public GameObject anchor;
-    public int SpinY;
-    public float Thrust = 20f;
     #endregion
 
     [Header("Wheels")]
     #region
+    [Tooltip("How fast the wheels spin")]
+    public float turnSpeed = 100f;
     public GameObject FrontLeft;
     public GameObject FrontRight;
     public GameObject RearLeft;
     public GameObject RearRight;
-    public float turnSpeed = 100f;
     #endregion
 
     [Header("Death")]
     #region
+    [Tooltip("Spawner this instance spawned from")]
     public GameObject SpawnStation;
-    public GameObject Itself;
     #endregion
 
     void Start()
     {
-        panic = ShowPanic;
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         agent.destination = goal.position;
         Health = MaxHealth;
@@ -92,30 +95,10 @@ public class TrafficBrain : MonoBehaviour
 
         #region Raycast Code
         RaycastHit hit;
-        Vector3 forward = LeftRayCast.transform.TransformDirection(Vector3.forward) * RayCastInt;
-        if (Physics.Raycast(LeftRayCast.transform.position, forward, out hit, 5.0f))
+        Vector3 forward = RayCast.transform.TransformDirection(Vector3.forward) * RayCastInt;
+        if (Physics.Raycast(RayCast.transform.position, forward, out hit, 5.0f))
         {
             if (hit.rigidbody != null && IgnoreRaycasts == false)
-            {
-                agent.isStopped = true;
-            }
-        }
-        else
-        {
-            agent.isStopped = false;
-        }
-
-        if (Vector3.Distance(transform.position, goal.transform.position) < 1)
-        {
-            goal.GetComponent<WaypointControl>().Car = this.gameObject;
-            goal.GetComponent<WaypointControl>().Lane();
-            agent.destination = goal.position;
-        }
-        RaycastHit AnotherHit;
-        Vector3 MovingForward = RightRayCast.transform.TransformDirection(Vector3.forward) * RayCastInt;
-        if (Physics.Raycast(RightRayCast.transform.position, MovingForward, out AnotherHit, 5.0f))
-        {
-            if (AnotherHit.rigidbody != null && IgnoreRaycasts == false)
             {
                 agent.isStopped = true;
             }
@@ -176,6 +159,16 @@ public class TrafficBrain : MonoBehaviour
         {
            StartCoroutine(PanicMode());
         }
+
+        if(CompareTag("Train"))
+        {
+            InstantExplosion();
+        }
+    }
+
+    public void ActivatePanic()
+    {
+        StartCoroutine(PanicMode());
     }
 
     IEnumerator PanicMode()
@@ -188,7 +181,7 @@ public class TrafficBrain : MonoBehaviour
         for (int i = 0; i < ForLoopLength; i++)
         {
             PastPanicAxis = PanicAxis;
-            PanicAxis = Random.Range(0, 7);
+            PanicAxis = Random.Range(0, ReactionLimit);
             panicgoal.transform.position = transform.position;
             panicgoal.transform.localPosition = new Vector3((PanicAxis - PastPanicAxis), 0, 4);
             goal = panicgoal;
@@ -196,19 +189,13 @@ public class TrafficBrain : MonoBehaviour
             agent.ResetPath();
             agent.isStopped = false;
             agent.SetDestination(goal.position);
-
             yield return new WaitForSeconds(SecondsToWait);
-
             DistanceForwardIncrease += 5;
-
             if (PanicForever == true)
             {
                 i = 0;
             }
-
-
         }
-
         DistanceForwardIncrease += 2;
         agent.isStopped = true;
         agent.ResetPath();
@@ -217,14 +204,9 @@ public class TrafficBrain : MonoBehaviour
         goal = savegoal;
     }
 
-    void SpinOut()
+    public void SpinOut()
     {
         agent.enabled = false;
-        Destroy(anchor);
-        LeftRayCast.SetActive(false);
-        RightRayCast.SetActive(false);
-        FrontLeft.SetActive(false);
-        FrontRight.SetActive(false);
         ObjectToSpinOut.GetComponent<Rigidbody>().AddForce(transform.forward * Thrust);
         ObjectToSpinOut.transform.Rotate(new Vector3(0, SpinY, 0));
         StartCoroutine(Explode());
@@ -235,7 +217,13 @@ public class TrafficBrain : MonoBehaviour
         yield return new WaitForSeconds(3);
         //Insert Explosion/Particle Effects Here
         SpawnStation.GetComponent<SpawnerControl>().count = SpawnStation.GetComponent<SpawnerControl>().count - 1;
-        Destroy(Itself);
+        Destroy(this.gameObject);
+    }
+
+    void InstantExplosion()
+    {
+        SpawnStation.GetComponent<SpawnerControl>().count = SpawnStation.GetComponent<SpawnerControl>().count - 1;
+        Destroy(this.gameObject);
     }
 }
 
@@ -285,7 +273,10 @@ public class TrafficStatEditor : Editor
     void DisplayBasicInfo()
     {
         EditorGUILayout.PropertyField(serializedObject.FindProperty("goal"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("SpawnStation"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("SpinY"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("Thrust"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("ActivateSpinOut"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("turnSpeed"));
     }
 
@@ -294,6 +285,9 @@ public class TrafficStatEditor : Editor
     {
         EditorGUILayout.PropertyField(serializedObject.FindProperty("panic"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("ExtendedPanic"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("PanicForever"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("ReactionLimit"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("ForLoopLength"));
     }
 
     // When the categoryToDisplay enum is at "Health"

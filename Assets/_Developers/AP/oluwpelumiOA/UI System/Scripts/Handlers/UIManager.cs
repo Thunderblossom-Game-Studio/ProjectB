@@ -81,7 +81,10 @@ public class UIManager : MonoBehaviour
                 InputManager.Instance.SwithControlMode(InputManager.ControlMode.UI);
                 break;
             case SceneType.Tutorial: GameMenu.Open(); break;
-            case SceneType.Multiplayer: GameMenu.Open(); break;
+            case SceneType.TempLevel1: GameMenu.Open(); break;
+            case SceneType.TempLevel2: GameMenu.Open(); break;
+            case SceneType.TempLevel3: GameMenu.Open(); break;
+            case SceneType.TempLevel4: GameMenu.Open(); break;
             default: break;
         }
     }
