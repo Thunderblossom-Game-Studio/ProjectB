@@ -13,7 +13,7 @@ public class GameTeamManager : Singleton<GameTeamManager>
     [Header("Team Data")]
     [SerializeField] private TeamData _blueTeamData;
     [SerializeField] private TeamData _redTeamData;
-    [SerializeField] private List<GamePlayer> _gamePlayers;
+    public List<GamePlayer> _gamePlayers;
     
     public void InitialiseTeams()
     {

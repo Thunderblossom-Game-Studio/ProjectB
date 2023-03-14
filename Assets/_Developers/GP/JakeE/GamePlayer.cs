@@ -15,7 +15,10 @@ public class GamePlayer : MonoBehaviour
     {
         _playerTeamData = playerTeamData;
     }
-
+    private void Awake()
+    {
+        GameTeamManager.Instance._gamePlayers.Add(this);
+    }
 }
 
 
