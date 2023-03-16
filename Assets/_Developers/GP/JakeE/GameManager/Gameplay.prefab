@@ -170,18 +170,21 @@ MonoBehaviour:
   _onBlueTeamScore: {fileID: 11400000, guid: 1ce1f797dae8adf4fa524eea19247b71, type: 2}
   _onRedTeamScore: {fileID: 11400000, guid: ff307cd9262bd5b459e83bac2ae20c0f, type: 2}
   _blueTeamData:
-    _teamName: 
+    _teamName: Blue
     _teamPoints: 0
     _teamPackages: 0
     _spawnPoints: []
     _teamPlayers: []
   _redTeamData:
-    _teamName: 
+    _teamName: Red
     _teamPoints: 0
     _teamPackages: 0
     _spawnPoints: []
     _teamPlayers: []
-  _gamePlayers: []
+  _gamePlayers:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &8765554942794726861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,7 +225,7 @@ MonoBehaviour:
   NetworkObserver: {fileID: 0}
   <PrefabId>k__BackingField: 0
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 2418443194
+  _scenePathHash: 1714396463
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 0
   _sceneNetworkObjects:
@@ -311,6 +314,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8765554943570563663}
+  - component: {fileID: 1158450063}
   m_Layer: 0
   m_Name: Gameplay
   m_TagString: Untagged
@@ -336,3 +340,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1158450063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8765554943570563660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81d532d726d88de48902e80d415b2a1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _entitySpawner: {fileID: 8765554942935746474}
+  closestPackage: {fileID: 0}

@@ -16185,7 +16185,6 @@ GameObject:
   - component: {fileID: 8308345038842029898}
   - component: {fileID: 1496054183925433576}
   - component: {fileID: 7440135898434820062}
-  - component: {fileID: 2473974623390743224}
   - component: {fileID: 8335015285068822155}
   - component: {fileID: 8087752752115177723}
   - component: {fileID: -4829767517200364671}
@@ -16520,26 +16519,6 @@ MonoBehaviour:
   TopClamp: 30
   BottomClamp: -30
   CameraAngleOverride: 0
---- !u!114 &2473974623390743224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6427845818648099103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d92d2c6655745e64dbed40e6cc18f5ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OriginalWall: {fileID: 8371347127821782638, guid: 4397f830715a619418e70501de40da76, type: 3}
-  BreakableWall: {fileID: 7436475925024760935, guid: d9ff306da667e0348a4ab3f55366ebe2, type: 3}
-  isItdestroyed: 0
-  explosionForce: 500
-  spreadRadious: 150.8
-  destroytime: 9.7
-  fadeOutTime: 3
-  pieceRenderer: []
 --- !u!114 &8335015285068822155
 MonoBehaviour:
   m_ObjectHideFlags: 0

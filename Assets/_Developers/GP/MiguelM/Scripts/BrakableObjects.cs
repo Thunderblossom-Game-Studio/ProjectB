@@ -29,7 +29,6 @@ public class BrakableObjects : MonoBehaviour
         {
             Explode();
         }
-        Debug.Log("Trigger with out if");
     }
 
     public void Explode()
