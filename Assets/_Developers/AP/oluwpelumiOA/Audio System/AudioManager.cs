@@ -107,8 +107,6 @@ public class AudioManager : MonoBehaviour
     public static AudioClip GetMusicClip(string audioID)
     {
         if (!InstanceExists()) return null;
-        Debug.Log(InstanceExists());
-        Debug.Log(Instance.musicBank.GetAudioByID(audioID));
         return  Instance.musicBank.GetAudioByID(audioID);
     } 
     

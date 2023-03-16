@@ -12,16 +12,13 @@ public class AudioBank : ScriptableObject
     public AudioClip GetAudioByID(string ID)
     {
         AudioWithID audioWithID = audioClips.Find(x => x.ID == ID);
-
-        Debug.Log(audioWithID);
-
         if (audioWithID == null)
         {
             Debug.LogError("Audio with ID: " + ID + " not found in " + name);
             return null;
         }
 
-        if (audioWithID.similarAudioClips.Length > 0)
+        if (audioWithID.hasSimilar && audioWithID.similarAudioClips.Length > 0 && audioWithID.similarAudioClips[0] != null)
         {
             if (Random.value > 0.5f) return audioWithID.audioClip;
             else  return audioWithID.similarAudioClips[Random.Range(0, audioWithID.similarAudioClips.Length)];        
@@ -44,6 +41,7 @@ public class AudioWithID
     public string ID;
     public AudioClip audioClip;
     public string info;
+    public bool hasSimilar;
     public AudioClip[] similarAudioClips;
 }
 
@@ -53,10 +51,12 @@ public class AudioWithID
 public class AudioWithIDEditor : Editor
 {
     SerializedProperty listProperty;
-    
+    GUILayoutOption[] verticalBoxOption;
+
     private void OnEnable()
     {
         listProperty = serializedObject.FindProperty("audioClips");
+        verticalBoxOption = new GUILayoutOption[] { GUILayout.MaxHeight(50) };
     }
 
     public override void OnInspectorGUI()
@@ -79,11 +79,11 @@ public class AudioWithIDEditor : Editor
 
             if (element.FindPropertyRelative("audioClip").objectReferenceValue == null) GUI.backgroundColor = Color.red;
 
-            GUILayoutOption[] options = new GUILayoutOption[1];
-            options[0] = GUILayout.MaxHeight(50);
-            EditorGUILayout.BeginVertical("box", options);
+            EditorGUILayout.BeginVertical("box", verticalBoxOption);
 
-            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.BeginHorizontal("box");
+
+            EditorGUILayout.LabelField(i.ToString());
 
             GUI.backgroundColor = Color.red;
             if (GUILayout.Button("X", GUILayout.Width(20)))
@@ -92,15 +92,21 @@ public class AudioWithIDEditor : Editor
                 serializedObject.ApplyModifiedProperties();
                 return;
             }
+
+            EditorGUILayout.EndHorizontal();
+
             GUI.backgroundColor = Color.white;
 
-            EditorGUILayout.PropertyField(element.FindPropertyRelative("ID"), GUIContent.none);
-            EditorGUILayout.PropertyField(element.FindPropertyRelative("audioClip"), GUIContent.none);
-            EditorGUILayout.EndHorizontal();
-            EditorGUILayout.PropertyField(element.FindPropertyRelative("info"), GUIContent.none);
-            EditorGUILayout.PropertyField(element.FindPropertyRelative("similarAudioClips"));
-            EditorGUILayout.EndVertical();
+            EditorGUILayout.PropertyField(element.FindPropertyRelative("ID"), new GUIContent("ID", "Put ID Here"));
+            EditorGUILayout.PropertyField(element.FindPropertyRelative("audioClip"), new GUIContent("AudioClip", "Put AudioClip Here"));
+            EditorGUILayout.PropertyField(element.FindPropertyRelative("info"), new GUIContent("Info", "Put Info Here"), new GUILayoutOption[] { GUILayout.Height(50) });
 
+            SerializedProperty serializedProperty = listProperty.GetArrayElementAtIndex(i);
+
+            serializedProperty.FindPropertyRelative("hasSimilar").boolValue = EditorGUILayout.Toggle("Has Similar", serializedProperty.FindPropertyRelative("hasSimilar").boolValue);
+            if (serializedProperty.FindPropertyRelative("hasSimilar").boolValue) EditorGUILayout.PropertyField(element.FindPropertyRelative("similarAudioClips"), new GUIContent("Similar AudioClips", "Put Similar AudioClips Here"));
+
+            EditorGUILayout.EndVertical();
             GUILayout.Space(10);
         }
     }
