@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e12a5bb7ad04d8744985d5f2dcee0823, type: 2}
+  - {fileID: 2100000, guid: 7f9b3fbb09a13a94abde1ed18a0702eb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damageLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 66048
   _damageAmount: 10
   _criticalDamagePercentage: 0
   _criticalChance: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
   hitEvent: {fileID: 11400000, guid: 6e64ab4c64e4fec47868435545a105fb, type: 2}
   detectLayer:
     serializedVersion: 2
-    m_Bits: 32763
+    m_Bits: 98299
   impactParticle: {fileID: 1894376261830645168, guid: 0681e849e3837b24bb11e851afe115c5, type: 3}
   speed: 0
   destroyTime: 10

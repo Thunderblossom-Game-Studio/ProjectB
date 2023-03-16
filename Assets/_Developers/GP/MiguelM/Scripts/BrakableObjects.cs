@@ -24,13 +24,17 @@ public class BrakableObjects : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Controllable Car") && !isItdestroyed)
         {
-            isItdestroyed = true;
-            OriginalWall.SetActive(false);
-            BreakableWall.SetActive(true);
-            Debug.Log("Tag worked and bollean Worked");
-           StartCoroutine(ExplodeWall());
+            Explode();
         }
         Debug.Log("Trigger with out if");
+    }
+
+    public void Explode()
+    {
+        isItdestroyed = true;
+        OriginalWall.SetActive(false);
+        BreakableWall.SetActive(true);
+        StartCoroutine(ExplodeWall());
     }
 
     public IEnumerator ExplodeWall()
