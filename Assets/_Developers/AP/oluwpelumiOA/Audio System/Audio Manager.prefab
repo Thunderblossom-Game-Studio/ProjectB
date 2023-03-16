@@ -44,7 +44,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -8364859668551990209, guid: 883c77b4e1a35bf4c9266e2821f07ee0, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -178,6 +178,14 @@ MonoBehaviour:
   soundEffectBank: {fileID: 11400000, guid: 6c6ea8fa345296545a255b774e4c22e7, type: 2}
   musicPlayer: {fileID: 7058685829920936358}
   soundEffectPlayer: {fileID: 7058685831297585296}
+  audioAlbums:
+  - {fileID: 11400000, guid: 563244b523a8c4e4f8a4118e6182fff1, type: 2}
+  - {fileID: 11400000, guid: 962f4a55cb29116479da1b44c4851132, type: 2}
+  - {fileID: 11400000, guid: 32fb3218c012c5548af0469022e9545b, type: 2}
+  - {fileID: 11400000, guid: 1b2b9d0a3f7772e4aa0c73ea275d3ed8, type: 2}
+  audioAlbum: {fileID: 0}
+  albumIndex: 0
+  fadingMusic: 0
 --- !u!1 &7058685831297585297
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +230,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 5174313804198701302, guid: 883c77b4e1a35bf4c9266e2821f07ee0, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
