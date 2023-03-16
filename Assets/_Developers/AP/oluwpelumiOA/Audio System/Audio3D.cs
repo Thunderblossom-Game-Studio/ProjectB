@@ -31,9 +31,18 @@ public class Audio3D: MonoBehaviour
         if (playAudioOnStart) PlayMusicEffect(musicClipID, loopAudio);
     }
 
-    public void PlaySoundEffect(string audioID)
+    public void PlaySoundEffect(string audioID, bool loop = false)
     {
-        audioSource.PlayOneShot(AudioManager.GetSoundEffectClip(audioID));
+        if(loop)
+        {
+            audioSource.PlayOneShot(AudioManager.GetSoundEffectClip(audioID));
+        }
+        else
+        {
+            audioSource.clip = AudioManager.GetSoundEffectClip(audioID);
+            audioSource.loop = loop;
+            audioSource.Play();
+        }
     }
 
     public void PlayMusicEffect(string audioID, bool loop)
