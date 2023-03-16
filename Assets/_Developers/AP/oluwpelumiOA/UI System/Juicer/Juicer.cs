@@ -95,6 +95,64 @@ namespace Pelumi.Juicer
             return Random.Range(-value, value);
         }
 
+        public static IEnumerator FadeOutMaterial(Material materialToFade, float fadeDuration, Action OnComplected)
+        {
+            Color initialColor = materialToFade.color;
+            Color targetColor = new Color(initialColor.r, initialColor.g, initialColor.b, 0f);
+            float rateOfChange = 1f / fadeDuration;
+            float t = 0f;
+
+            while (t < 1f)
+            {
+                t += Time.deltaTime * rateOfChange;
+                Color newColor = Color.Lerp(initialColor, targetColor, t);
+                materialToFade.color = newColor;
+                yield return null;
+            }
+
+            materialToFade.color = targetColor;
+
+            OnComplected?.Invoke();
+        }
+
+        public static IEnumerator FadeOutAll(List<Renderer> renderers, float duration, Action OnComplected)
+        {
+            List<Color> initialColors = new List<Color>();
+            List<Color> targetColors = new List<Color>();
+
+            // Get initial and target colors for each renderer
+            foreach (Renderer ren in renderers)
+            {
+                initialColors.Add(ren.material.color);
+                targetColors.Add(new Color(initialColors[initialColors.Count - 1].r, initialColors[initialColors.Count - 1].g, initialColors[initialColors.Count - 1].b, 0f));
+            }
+
+            float rateOfChange = 1f / duration;
+            float t = 0f;
+
+            while (t < 1f)
+            {
+                t += Time.deltaTime * rateOfChange;
+
+                // Update the color of each renderer
+                for (int i = 0; i < renderers.Count; i++)
+                {
+                    Color newColor = Color.Lerp(initialColors[i], targetColors[i], t);
+                    foreach (var material in renderers[i].materials)
+                    {
+                        material.color = newColor;
+                    }
+                }
+                yield return null;
+            }
+
+            // Set the color of each renderer to the target color
+            for (int i = 0; i < renderers.Count; i++)
+            {
+                renderers[i].material.color = targetColors[i];
+            }
+            OnComplected?.Invoke();
+        }
 
         public static AnimationCurve GetAnimationCurve(AnimationCurveType animationCurveType)
         {
@@ -108,8 +166,6 @@ namespace Pelumi.Juicer
         }
     }
 }
-
-
 
 [Serializable]
 public class RotateStat

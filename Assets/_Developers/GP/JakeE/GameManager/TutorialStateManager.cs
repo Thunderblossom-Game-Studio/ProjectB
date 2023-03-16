@@ -1,3 +1,4 @@
+using Pelumi.Juicer;
 using System;
 using System.Collections;
 using Unity.VisualScripting;
@@ -142,8 +143,8 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
 
     private IEnumerator ReachDestination()
     {
-        _firstWall.SetActive(false);
-        
+        StartCoroutine(Juicer.FadeOutMaterial(_firstWall.GetComponent<Renderer>().material, 2f, () => _firstWall.SetActive(false)));
+
         infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _reachDestinationText.Message });
         AudioManager.PlaySoundEffect(_reachDestinationText.AudioID);
 
