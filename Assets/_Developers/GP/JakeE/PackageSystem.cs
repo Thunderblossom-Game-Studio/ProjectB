@@ -21,6 +21,7 @@ public class PackageSystem : MonoBehaviour
     [Header("Settings")] 
     [SerializeField] private GameObject _packageDrop;
     [SerializeField] private GameObject _packageObjectVisual;
+    [SerializeField] private Transform _bodyVisual;
     [SerializeField] private int _maxPackages;
     [SerializeField] private List<Vector3> _packageSpawns;
     [SerializeField] private UnityEvent _onDeliverEvent;
@@ -29,8 +30,6 @@ public class PackageSystem : MonoBehaviour
     private readonly List<PackageData> _currentPackages = new List<PackageData>();
     private Action _onPickUp;
     private Action _onDeliver;
-    
-    //private void Start() => _onPickUp.Invoke();
 
     public void AddPackageData(PackageData packageData)
     {
@@ -53,7 +52,6 @@ public class PackageSystem : MonoBehaviour
 
     public void DeliverPackages()
     {
-        Debug.Log("Deliver Packages!");
         int totalScore = 0;
         int totalPackage = 0;
 
@@ -78,15 +76,12 @@ public class PackageSystem : MonoBehaviour
     private void AddPackageVisual()
     {
         if (!(_packageSpawns.Count >= _currentPackages.Count)) return;
-        
-        //GameObject packageObject = Instantiate
-            //(_packageObjectVisual,transform.position + _packageSpawns[_currentPackages.Count - 1], Quaternion.identity);
             
         GameObject packageObject = Instantiate
-            (_packageObjectVisual,transform.position, Quaternion.identity);
+            (_packageObjectVisual, _bodyVisual.position, Quaternion.identity);
         
         _currentPackageObjects.Add(packageObject);
-        packageObject.transform.SetParent(transform);
+        packageObject.transform.SetParent(_bodyVisual);
         packageObject.transform.GetComponentInChildren<MeshRenderer>()
                 .material.color = _currentPackages[^1].PackageColor;
         packageObject.transform.localEulerAngles = Vector3.zero;
@@ -111,11 +106,11 @@ public class PackageSystem : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        if (_packageSpawns.Count < 1) return;
+        if (_bodyVisual == null || _packageSpawns.Count < 1) return;
         foreach (Vector3 packageLocation in _packageSpawns)
         {
             Gizmos.color = Color.grey;
-            Gizmos.DrawCube(transform.position + packageLocation, _packageObjectVisual.transform.localScale);
+            Gizmos.DrawCube(_bodyVisual.position + packageLocation, _packageObjectVisual.transform.localScale);
         }
     }
 #endif
