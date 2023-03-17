@@ -13,8 +13,8 @@ public class DestroyByInterval : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         if(fadeMaterial)
-            StartCoroutine(Juicer.FadeOutMaterial
-                (transform.GetComponent<Renderer>().material, 2f,null));
+            yield return Juicer.FadeOutMaterial
+                (transform.GetComponent<Renderer>().material, 3f,null);
 
         Destroy(gameObject);
     }
