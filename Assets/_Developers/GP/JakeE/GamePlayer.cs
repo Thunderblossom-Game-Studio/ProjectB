@@ -19,7 +19,7 @@ public class GamePlayer : MonoBehaviour
     }
     private void Awake()
     {
-        if (addOnAwake) GameTeamManager.Instance._gamePlayers.Add(this);
+        if (addOnAwake) GameTeamManager.Instance?._gamePlayers.Add(this);
     }
 
     public void OnHealthChanged(float normalisedValue)
