@@ -91,7 +91,6 @@ GameObject:
   - component: {fileID: 8765554942794726863}
   - component: {fileID: 8765554942794726860}
   - component: {fileID: 8765554942794726861}
-  - component: {fileID: 8765554942794726850}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -127,8 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 8765554942794726850}
-  _networkObjectCache: {fileID: 8765554942794726850}
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
 --- !u!114 &8765554942794726862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,37 +198,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameSettings: {fileID: 11400000, guid: 15f5e1793c4f6ee4b9b788972857b870, type: 2}
   _onCentreTextUpdate: {fileID: 11400000, guid: b764a52f099040640a0c2bd6e4a79319, type: 2}
---- !u!114 &8765554942794726850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8765554942794726848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <IsNested>k__BackingField: 0
-  <ComponentIndex>k__BackingField: 0
-  <PredictedSpawn>k__BackingField: {fileID: 0}
-  _networkBehaviours:
-  - {fileID: 8765554942794726857}
-  <ParentNetworkObject>k__BackingField: {fileID: 0}
-  <ChildNetworkObjects>k__BackingField: []
-  _isNetworked: 1
-  _isGlobal: 0
-  _initializeOrder: 0
-  _defaultDespawnType: 0
-  NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 0
-  <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 1714396463
-  <SceneId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 0
-  _sceneNetworkObjects:
-  - {fileID: 8765554942794726850}
 --- !u!1 &8765554942935746473
 GameObject:
   m_ObjectHideFlags: 0
