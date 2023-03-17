@@ -56,7 +56,8 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     private readonly WaitForSeconds _defaultDelay = new WaitForSeconds(2);
 
     private IEnumerator Start() 
-    { 
+    {
+        Time.timeScale = 1;
         yield return RunTutorial();
     }
 
