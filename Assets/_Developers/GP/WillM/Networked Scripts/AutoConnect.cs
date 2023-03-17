@@ -32,6 +32,7 @@ public class AutoConnect : MonoBehaviour
     private void Start()
     {
         NetworkManager nm = gameObject.GetComponent<NetworkManager>();
+        nm.ServerManager.StartConnection();
         nm.ClientManager.StartConnection();
     }
 #endif
