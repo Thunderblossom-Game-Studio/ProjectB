@@ -36,6 +36,7 @@ namespace JE.DamageSystem
     [SerializeField] private float _maximumHealth;
     [SerializeField] private float _minimumHealth;
 
+    [SerializeField] private UnityEvent<float> _onHealthChange;
     [SerializeField] private UnityEvent _onReduceHealth;
     [SerializeField] private UnityEvent _onRestoreHealth;
     [SerializeField] private UnityEvent _onDeath;
@@ -55,9 +56,12 @@ namespace JE.DamageSystem
         if (_isImmune) return;
 
         _currentHealth -= reduceAmount;
+
         _onReduceHealth?.Invoke();
-        
-        if (!(_currentHealth <= _minimumHealth)) return;
+
+       _onHealthChange?.Invoke(_currentHealth / _maximumHealth);
+
+       if (!(_currentHealth <= _minimumHealth)) return;
         
         _currentHealth = _minimumHealth;
         _onDeath?.Invoke();
@@ -70,6 +74,8 @@ namespace JE.DamageSystem
     {
         _currentHealth += restoreAmount;
         _onRestoreHealth?.Invoke();
+
+        _onHealthChange?.Invoke(_currentHealth / _maximumHealth);
 
         if (!(_currentHealth >= _maximumHealth)) return;
         

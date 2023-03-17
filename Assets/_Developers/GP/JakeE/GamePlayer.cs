@@ -21,6 +21,11 @@ public class GamePlayer : MonoBehaviour
     {
         if (addOnAwake) GameTeamManager.Instance._gamePlayers.Add(this);
     }
+
+    public void OnHealthChanged(float normalisedValue)
+    {
+        GameMenu.GetInstance().SetHealthView(normalisedValue);
+    }
 }
 
 

@@ -16175,6 +16175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6427845818647645601}
   - component: {fileID: 6427845818642621857}
+  - component: {fileID: 3564249663842536137}
   - component: {fileID: 6427845818653605781}
   - component: {fileID: 7998634542838451250}
   - component: {fileID: 6427845818653417113}
@@ -16186,9 +16187,9 @@ GameObject:
   - component: {fileID: 1496054183925433576}
   - component: {fileID: 7440135898434820062}
   - component: {fileID: 8335015285068822155}
-  - component: {fileID: 8087752752115177723}
   - component: {fileID: -4829767517200364671}
   - component: {fileID: 2043132127715688138}
+  - component: {fileID: 8507421929529851721}
   m_Layer: 9
   m_Name: Main Car
   m_TagString: Untagged
@@ -16229,6 +16230,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!64 &3564249663842536137
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6427845818648099103}
+  m_Material: {fileID: 13400000, guid: 54a777298baef2c4f9c84ebdc5c57029, type: 2}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7673246021391805175, guid: 2646bf6dde75c044786a5b290da291da, type: 3}
 --- !u!114 &6427845818653605781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16545,19 +16560,6 @@ MonoBehaviour:
     m_Bits: 24575
   gunSocket: {fileID: 1750455242733553118}
   currentWeapon: {fileID: 0}
---- !u!65 &8087752752115177723
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6427845818648099103}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-4829767517200364671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16594,6 +16596,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   addOnAwake: 1
+--- !u!114 &8507421929529851721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6427845818648099103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fcea8360c8a4ae43803b3b0d73648f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isImmune: 0
+  _currentHealth: 0
+  _spawnHealth: 100
+  _maximumHealth: 100
+  _minimumHealth: 0
+  _onHealthChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2043132127715688138}
+        m_TargetAssemblyTypeName: GamePlayer, Assembly-CSharp
+        m_MethodName: OnHealthChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onReduceHealth:
+    m_PersistentCalls:
+      m_Calls: []
+  _onRestoreHealth:
+    m_PersistentCalls:
+      m_Calls: []
+  _onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  _onReachFullHealth:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6482612975936952463
 GameObject:
   m_ObjectHideFlags: 0

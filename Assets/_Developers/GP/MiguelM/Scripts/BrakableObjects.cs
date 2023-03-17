@@ -16,7 +16,7 @@ public class BrakableObjects : MonoBehaviour
     [SerializeField] private float destroyTime = 9.7f;
     [SerializeField] private float fadeOutTime = 3f;
 
-    [Viewable]  [SerializeField] private List<Renderer> pieceRenderer = new List<Renderer>();
+    [Viewable] [SerializeField] private List<Renderer> pieceRenderer = new List<Renderer>();
 
     void Update()
     {
@@ -25,7 +25,7 @@ public class BrakableObjects : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Controllable Car") && !isItdestroyed)
+        if (other.TryGetComponent<GamePlayer>(out GamePlayer gamePlayer) && !isItdestroyed)
         {
             Explode();
         }
