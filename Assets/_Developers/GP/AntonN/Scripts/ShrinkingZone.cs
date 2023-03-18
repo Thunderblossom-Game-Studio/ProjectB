@@ -1,35 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
+using UnityEngine.UI;
 
 public class ShrinkingZone : MonoBehaviour
 {
+    [SerializeField] private float numberOfWaves;
     [SerializeField] private float secondsToShrink;
-    [SerializeField] private float amountOfWaves;
-    [SerializeField] private float secondsToCooldown;
+    [SerializeField] private float delayDuringShrink;
+    [SerializeField] private Text countdownTimerText;
+    [SerializeField] private Transform centrePoint;
+    [SerializeField] private GameObject insideZone;
+    [SerializeField] private GameObject outsideZone;
+
     private float timer;
     private int currentWaves;
-    private bool outputTest;
-    private float cooldown;
+    private bool checkLastShrink;
+    private float currentTime;
+    private bool cooldownBool;
+    private float displayWaves;
 
     private void Start()
     {
         currentWaves = 0;
-        outputTest = false;
+        checkLastShrink = false;
+        cooldownBool = false;
     }
 
     private void Update()
     {
-        if(currentWaves <= amountOfWaves)
+        if(currentWaves <= numberOfWaves-1)
         {
             Timer();
         }
         else
         {
-            if(!outputTest)
+            if(!checkLastShrink)
             {
-                Debug.Log("End of match");
-                outputTest = true;
+                checkLastShrink = true;
             }
         }
     }
@@ -39,31 +48,39 @@ public class ShrinkingZone : MonoBehaviour
         if (timer >= secondsToShrink)
         {
             timer = 0;
+            cooldownBool = true;
+            StartCoroutine(CooldownBetweenShrinks());
             ShrinkZone();
         }
-        else
+        else if (cooldownBool == false)
         {
             timer += Time.deltaTime;
-            Debug.Log(secondsToShrink - timer + 1);
+            currentTime = secondsToShrink - timer;
+            displayWaves = currentWaves + 1;
+            countdownTimerText.text = "Zone will shrink in: " + currentTime.ToString("0") + " seconds";
+            if (countdownTimerText.text == "Zone will shrink in: " + 0.ToString() + " seconds")
+            {
+                if(currentWaves+1 == numberOfWaves)
+                {
+                    countdownTimerText.text = "FINAL WAVE!";
+                }
+                else
+                {
+                    countdownTimerText.text = "WAVE " + displayWaves + "\n The zone is shrinking!";
+                }
+            }
         }
     }
 
-    private void CooldownBetweenShrinks()
+    IEnumerator CooldownBetweenShrinks()
     {
-        if (cooldown >= secondsToCooldown)
-        {
-            cooldown = 0;
-        }
-        else
-        {
-            cooldown += Time.deltaTime;
-        }
+        yield return new WaitForSeconds(delayDuringShrink);
+        cooldownBool = false;
     }
 
     private void ShrinkZone()
     {
         currentWaves++;
-        Debug.Log("Shrinking!");
-        Debug.Log(currentWaves);
+        
     }
 }
