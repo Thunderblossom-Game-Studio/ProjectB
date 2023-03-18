@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerSetupCanvas : MonoBehaviour
+public class PlayerSignUpCanvas : MonoBehaviour
 {
     public LobbyCanvasManager LobbyCanvasManager { get; private set; }
 

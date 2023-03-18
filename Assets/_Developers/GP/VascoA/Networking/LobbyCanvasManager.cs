@@ -5,8 +5,8 @@ using UnityEngine;
 public class LobbyCanvasManager : MonoBehaviour
 {
     
-    [SerializeField] private PlayerSetupCanvas _playerSetupCanvas;
-    public PlayerSetupCanvas PlayerSetupCanvas { get { return _playerSetupCanvas; } }
+    [SerializeField] private PlayerSignUpCanvas _playerSignUpCanvas;
+    public PlayerSignUpCanvas PlayerSignUpCanvas { get { return _playerSignUpCanvas; } }
 
 
     [SerializeField] private LobbyCanvas _lobbyCanvas;
@@ -16,7 +16,7 @@ public class LobbyCanvasManager : MonoBehaviour
 
     public void Initialize()
     {
-        PlayerSetupCanvas.Initialize(this);
+        PlayerSignUpCanvas.Initialize(this);
         LobbyCanvas.Initialize(this);
     }
 }
