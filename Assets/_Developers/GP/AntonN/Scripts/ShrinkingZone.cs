@@ -7,64 +7,71 @@ using UnityEngine.UI;
 public class ShrinkingZone : MonoBehaviour
 {
     [SerializeField] private float numberOfWaves;
-    [SerializeField] private float secondsToShrink;
-    [SerializeField] private float delayDuringShrink;
+    [SerializeField] private float secondsToNextWave;
+    [SerializeField] private float waveChangeDelay;
     [SerializeField] private Text countdownTimerText;
-    [SerializeField] private Transform centrePoint;
-    [SerializeField] private GameObject insideZone;
-    [SerializeField] private GameObject outsideZone;
-
+    [SerializeField] private GameObject zone;
+    private float shrinkingSpeed;
+    private Vector3 scalingRate = new Vector3(0f, 0f, 0f);
     private float timer;
     private int currentWaves;
-    private bool checkLastShrink;
+    private bool checkLastWave;
     private float currentTime;
     private bool cooldownBool;
     private float displayWaves;
+    private float zoneXpos;
+    private float zoneYpos;
+    private float zoneZpos;
+    private bool scaleCheck;
 
     private void Start()
     {
         currentWaves = 0;
-        checkLastShrink = false;
+        checkLastWave = false;
         cooldownBool = false;
-    }
+        scaleCheck = false;
+        scalingRate = new Vector3(shrinkingSpeed, shrinkingSpeed, 0f);
+     }
 
     private void Update()
     {
-        if(currentWaves <= numberOfWaves-1)
+        if (currentWaves <= numberOfWaves)
         {
             Timer();
+            Shrinking();
         }
-        else
+        else if(!checkLastWave)
         {
-            if(!checkLastShrink)
-            {
-                checkLastShrink = true;
-            }
+            checkLastWave = true;
         }
     }
 
     private void Timer()
     {
-        if (timer >= secondsToShrink)
+        if (timer >= secondsToNextWave)
         {
             timer = 0;
             cooldownBool = true;
             StartCoroutine(CooldownBetweenShrinks());
-            ShrinkZone();
+            ShrinkCheck();
         }
         else if (cooldownBool == false)
         {
             timer += Time.deltaTime;
-            currentTime = secondsToShrink - timer;
+            currentTime = secondsToNextWave - timer;
             displayWaves = currentWaves + 1;
-            countdownTimerText.text = "Zone will shrink in: " + currentTime.ToString("0") + " seconds";
-            if (countdownTimerText.text == "Zone will shrink in: " + 0.ToString() + " seconds")
+            if(checkLastWave == false)
             {
-                if(currentWaves+1 == numberOfWaves)
+                countdownTimerText.text = "Next wave in: " + currentTime.ToString("0") + " seconds";
+            }
+            if (countdownTimerText.text == "Next wave in: " + 0.ToString() + " seconds")
+            {
+                if(currentWaves == numberOfWaves - 1)
                 {
                     countdownTimerText.text = "FINAL WAVE!";
+                    checkLastWave = true;
                 }
-                else
+                else if(currentWaves < numberOfWaves)
                 {
                     countdownTimerText.text = "WAVE " + displayWaves + "\n The zone is shrinking!";
                 }
@@ -74,13 +81,29 @@ public class ShrinkingZone : MonoBehaviour
 
     IEnumerator CooldownBetweenShrinks()
     {
-        yield return new WaitForSeconds(delayDuringShrink);
+        yield return new WaitForSeconds(waveChangeDelay);
         cooldownBool = false;
     }
 
-    private void ShrinkZone()
+    private void Shrinking()
     {
+        if (((scaleCheck == true) && (zone.transform.localScale.x != zoneXpos / 2) && (zone.transform.localScale.y != zoneYpos / 2)))
+        {
+            zone.transform.localScale -= scalingRate;
+        }
+        else if ((zone.transform.localScale.x <= zoneXpos / 2) && (zone.transform.localScale.y <= zoneYpos / 2))
+        {
+            scaleCheck = false;
+        }
+    }
+
+    private void ShrinkCheck()
+    {
+        scaleCheck = true;
         currentWaves++;
-        
+
+        zoneXpos = zone.transform.localScale.x;
+        zoneYpos = zone.transform.localScale.y;
+        zoneZpos = zone.transform.localScale.z;
     }
 }
