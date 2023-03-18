@@ -107,12 +107,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7579156045399426608}
+  - component: {fileID: 3103857212526529414}
   - component: {fileID: 8751441792368329387}
   - component: {fileID: 1397856119209843785}
   - component: {fileID: 1162770767472714334}
   - component: {fileID: 900090383336713462}
   - component: {fileID: 6132395619493621886}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: AITraffic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,6 +137,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3103857212526529414
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926617803036837812}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.95391905, z: 3.0966387}
+  m_Center: {x: 0, y: 0.5230405, z: -1.0483193}
 --- !u!195 &8751441792368329387
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -173,26 +187,26 @@ MonoBehaviour:
   goal: {fileID: 0}
   panicgoal: {fileID: 2681432919690165156}
   panic: 0
-  ShowPanic: 0
   ExtendedPanic: 0
   DistanceForwardIncrease: 5
   PastPanicAxis: 0
   PanicAxis: 0
   PanicForever: 0
+  ReactionLimit: 0
   ForLoopLength: 3
   RayCast: {fileID: 4960384603844348745}
   RayCastInt: 0
   Health: 0
   MaxHealth: 100
-  ActivateSpinOut: 0
-  ObjectToSpinOut: {fileID: 4238849322737389121}
   SpinY: 5
   Thrust: 20
+  ActivateSpinOut: 0
+  ObjectToSpinOut: {fileID: 4238849322737389121}
+  turnSpeed: 100
   FrontLeft: {fileID: 316287180885428805}
   FrontRight: {fileID: 3574830104928499472}
   RearLeft: {fileID: 3847423473718545084}
   RearRight: {fileID: 1657287716529583639}
-  turnSpeed: 100
   SpawnStation: {fileID: 0}
 --- !u!114 &1162770767472714334
 MonoBehaviour:
@@ -211,6 +225,9 @@ MonoBehaviour:
   _spawnHealth: 100
   _maximumHealth: 100
   _minimumHealth: 0
+  _onHealthChange:
+    m_PersistentCalls:
+      m_Calls: []
   _onReduceHealth:
     m_PersistentCalls:
       m_Calls:
