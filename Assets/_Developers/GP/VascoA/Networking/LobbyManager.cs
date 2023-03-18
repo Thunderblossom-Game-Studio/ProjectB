@@ -1,23 +1,15 @@
 using FishNet;
 using FishNet.Connection;
-using FishNet.Managing;
 using FishNet.Object;
-using FishNet.Object.Synchronizing;
-using FishNet.Transporting;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LobbyManager : NetworkBehaviour
 {
-
-    [Header("LobbyUI")]
-    [SerializeField] private LobbyUI lobbyUI;
-    [SerializeField] private TMPro.TMP_Text infoText;
-
-    [Header("PlayerSetupUI")]
-    [SerializeField] private GameObject playerSetupUI;
+    private static LobbyManager Instance;
+    
+    protected LobbyCanvasManager LobbyCanvasManager;
 
 
     public Dictionary<NetworkConnection, string> LoggedInUsernames = new Dictionary<NetworkConnection, string>();
@@ -26,39 +18,51 @@ public class LobbyManager : NetworkBehaviour
 
     
 
-    private void Start()
-    {      
-        playerSetupUI.SetActive(true);
-
-        //if (IsServer)
-        //    infoText.text = "You are the host.";
-
-        //if(IsClient)
-        //    infoText.text = "You are a client.";
-
-    }
-
-    
-   
-
-    public void OnClick_Exit()
+    private void Awake()
     {
-        InstanceFinder.ClientManager.StopConnection();
-        
-        if (IsServer)
-        {
-            InstanceFinder.ServerManager.StopConnection(false);
-        }
+        Initialize();
     }
 
+    private void Initialize()
+    {
+        Instance = this;
 
+        LobbyCanvasManager = GameObject.FindObjectOfType<LobbyCanvasManager>();
+        if (LobbyCanvasManager == null)
+        {
+            Debug.LogError("LobbyCanvasManager not found.");
+            return;
+        }
+        LobbyCanvasManager.Initialize();
+
+        
+        InstanceFinder.SceneManager.OnClientLoadedStartScenes += OnClientLoadedStartScenes;
+    }
+
+    #region Subscribed Events
+
+    private void OnClientLoadedStartScenes(NetworkConnection conn, bool asServer)
+    {
+
+        
+    }
+    
+    #endregion
+
+
+
+
+    public static void SignIn(string username)
+    {
+        Instance.InternalSignIn(username);
+    }    
     /// <summary>
     /// Called when a client has signed in.
     /// </summary>
     /// <param name="username"></param>
     /// <param name="sender"></param>
     [ServerRpc(RequireOwnership = false)]
-    public void SignIn(string username, NetworkConnection sender = null)
+    private void InternalSignIn(string username, NetworkConnection sender = null)
     {
         ClientInfo ci;
         if (!FindClientInstance(sender, out ci))
@@ -68,12 +72,18 @@ public class LobbyManager : NetworkBehaviour
 
         ci.SetUsername(username);
         OnClientLoggedIn?.Invoke(ci.NetworkObject);
-        playerSetupUI.SetActive(false); // Disables client sign in card
-        lobbyUI.Show(); // Shows lobby UI
-        lobbyUI.AddPlayerCard(username); // Adds player card to lobby UI
+        TargetSignInSuccess(sender, username);
+
     }
 
-        
+    [TargetRpc]
+    private void TargetSignInSuccess(NetworkConnection conn, string username)
+    {
+        LobbyCanvasManager.PlayerSetupCanvas.gameObject.SetActive(false);
+        LobbyCanvasManager.LobbyCanvas.gameObject.SetActive(true);
+        LobbyCanvasManager.LobbyCanvas.AddPlayerCard(username);
+    }
+
     private bool FindClientInstance(NetworkConnection conn, out ClientInfo ci)
     {
         ci = null;
