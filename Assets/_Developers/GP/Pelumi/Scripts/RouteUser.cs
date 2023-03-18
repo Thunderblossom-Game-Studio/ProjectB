@@ -20,6 +20,11 @@ public class RouteUser : MonoBehaviour
     private int currentRouteIndex = 0;
     public float MoveSpeed => moveSpeed;
 
+    private void Start()
+    {
+        nextTrainRoute = routes.GetRoute(currentRouteIndex);
+    }
+
     public void Activate(int startIndex, bool canMove = true, bool canRotate = true)
     {
         currentRouteIndex = startIndex;

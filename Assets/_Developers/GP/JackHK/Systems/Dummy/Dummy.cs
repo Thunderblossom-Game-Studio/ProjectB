@@ -57,7 +57,7 @@ public class Dummy : MonoBehaviour
     {
         if (step == FSM.Step.Enter)
         {
-            if (!_isMoving) fsm.TransitionTo(_freezeState);
+            if (!_isMoving) _fsm.TransitionTo(_freezeState);
             _routeUser.ToggleMovement(true);
         }
     }
@@ -75,6 +75,7 @@ public class Dummy : MonoBehaviour
         if (step == FSM.Step.Enter)
         {
             _onFlippedStartEvent.Invoke();
+            _routeUser.ToggleMovement(false);
         }
         else if (step == FSM.Step.Update)
         {
