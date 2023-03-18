@@ -11,7 +11,7 @@ public class ShrinkingZone : MonoBehaviour
     [SerializeField] private float waveChangeDelay;
     [SerializeField] private Text countdownTimerText;
     [SerializeField] private GameObject zone;
-    private float shrinkingSpeed;
+    private float shrinkingSpeed = 1f;
     private Vector3 scalingRate = new Vector3(0f, 0f, 0f);
     private float timer;
     private int currentWaves;
