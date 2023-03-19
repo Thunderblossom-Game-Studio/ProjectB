@@ -36,7 +36,7 @@ public class TrafficBrain : MonoBehaviour
     [Header("Raycast")]
     #region
     public GameObject RayCast;
-    UnityEngine.AI.NavMeshAgent agent;
+    public UnityEngine.AI.NavMeshAgent agent;
     bool IgnoreRaycasts;
     [SerializeField] float RayCastInt;
     float SecondsToWait;
@@ -93,21 +93,21 @@ public class TrafficBrain : MonoBehaviour
             agent.destination = goal.position;
         }
 
-        #region Raycast Code
-        RaycastHit hit;
-        Vector3 forward = RayCast.transform.TransformDirection(Vector3.forward) * RayCastInt;
-        if (Physics.Raycast(RayCast.transform.position, forward, out hit, 5.0f))
-        {
-            if (hit.rigidbody != null && IgnoreRaycasts == false)
-            {
-                agent.isStopped = true;
-            }
-        }
-        else
-        {
-            agent.isStopped = false;
-        }
-        #endregion
+        //#region Raycast Code
+        //RaycastHit hit;
+        //Vector3 forward = RayCast.transform.TransformDirection(Vector3.forward) * RayCastInt; 
+        //if (Physics.Raycast(RayCast.transform.position, forward, out hit, 5.0f))
+        //{
+        //    if (hit.rigidbody != null && IgnoreRaycasts == false)
+        //    {
+        //        agent.isStopped = true;
+        //    }
+        //}
+        //else
+        //{
+        //    agent.isStopped = false;
+        //}
+        //#endregion
 
         #region Panic Code
         if (panic == true && ExtendedPanic == false)
@@ -151,6 +151,8 @@ public class TrafficBrain : MonoBehaviour
         FrontRight.transform.Rotate(Vector3.forward, turnSpeed * Time.deltaTime);
         RearLeft.transform.Rotate(Vector3.back, turnSpeed * Time.deltaTime);
         RearRight.transform.Rotate(Vector3.forward, turnSpeed * Time.deltaTime);
+
+       
     }
 
     private void OnCollisionEnter(Collision collision)
