@@ -69,36 +69,65 @@ public class LobbyManager : NetworkBehaviour
 
 
     #region SignIn
+
+    [Client]
     public static void SignIn(string username)
     {
         Instance.InternalSignIn(username);
     }
-    /// <summary>
-    /// Called when a client has signed in.
-    /// </summary>
-    /// <param name="username"></param>
-    /// <param name="sender"></param>
+
+    private void InternalSignIn(string username)
+    {
+        CmdSignIn(username);
+    }
+
     [ServerRpc(RequireOwnership = false)]
-    private void InternalSignIn(string username, NetworkConnection sender = null)
+    private void CmdSignIn(string username, NetworkConnection sender = null)
     {
         ClientInfo ci;
         if (!FindClientInstance(sender, out ci))
             return;
 
-        LoggedInUsernames[ci.Owner] = username;
+        string failedReason = string.Empty;
+        bool success = OnSignIn(ref username, ref failedReason);
 
-        ci.SetUsername(username);
-        OnClientLoggedIn?.Invoke(ci.NetworkObject);
-        TargetSignInSuccess(sender, username);
+        
 
     }
 
-    [TargetRpc]
-    private void TargetSignInSuccess(NetworkConnection conn, string username)
+    private bool OnSignIn(ref string username, ref string failedReason)
     {
-        LobbyCanvasManager.PlayerSignUpCanvas.gameObject.SetActive(false);
-        LobbyCanvasManager.LobbyCanvas.gameObject.SetActive(true);
-        LobbyCanvasManager.LobbyCanvas.AddPlayerCard(username);
+        throw new NotImplementedException();
+    }
+
+    public static bool SanitizeUsername(ref string value, ref string failedReason) {  return Instance.InternalSanitizeUsername(ref value, ref failedReason); }
+
+    
+    protected virtual bool InternalSanitizeUsername(ref string value, ref string failedReason)
+    {
+        value = value.Trim();
+        SanitizeTextMeshProString(ref value);
+        
+        if(value.Length < 3)
+        {
+            failedReason = "Username must be at least 3 characters long.";
+            return false;
+        }
+
+        if(value.Length > 15)
+        {
+            failedReason = "Username can't be longer than 15 characters long.";
+            return false;
+        }
+
+        bool letters = value.All(c => Char.IsLetter(c));
+        if(!letters)
+        {
+            failedReason = "Username can only contain letters.";
+            return false;
+        }
+
+        return true;
     }
 
     #endregion
@@ -122,6 +151,8 @@ public class LobbyManager : NetworkBehaviour
 
         bool success = false;
         string failedReason = string.Empty;
+
+        // TODO VASCO rest of this
         
     }
 
@@ -253,6 +284,8 @@ public class LobbyManager : NetworkBehaviour
                 RpcUpdateRooms(new RoomDetails[] { roomDetails });
                 
         }
+
+        return roomDetails;
     }
 
     [ObserversRpc]
@@ -285,8 +318,8 @@ public class LobbyManager : NetworkBehaviour
         foreach (RoomDetails room in CreatedRooms)
             rooms.Add(room);
 
-        if(rooms.Count > 0)
-
+        if (rooms.Count > 0)
+            TargetInitialRooms(conn, rooms.ToArray());
     }
 
     [TargetRpc]
