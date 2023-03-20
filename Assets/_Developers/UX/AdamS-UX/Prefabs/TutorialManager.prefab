@@ -331,6 +331,7 @@ MonoBehaviour:
   - Message: Super!
     AudioID: 
     duration: 2
+  _destinationArea: {fileID: 0}
   _driveControlIntroText:
     Message: Welcome to the driving tutorial!
     AudioID: 
@@ -355,6 +356,7 @@ MonoBehaviour:
     Message: Drive through the route!
     AudioID: 
     duration: 2
+  _deliveryZone1: {fileID: 0}
   _collectPackageText:
     Message: Drive into packages to pick em up
     AudioID: 
@@ -370,7 +372,7 @@ MonoBehaviour:
     AudioID: 
     duration: 2
   _shootingInputText:
-    Message: Press Fire Button
+    Message: Press Fire Button to shoot at targets
     AudioID: 
     duration: 2
   _shootingWeaponSwapText:
@@ -383,6 +385,12 @@ MonoBehaviour:
     AudioID: 
     duration: 2
   _volcanoStateObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _deliveryZone: {fileID: 0}
+  _packages:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

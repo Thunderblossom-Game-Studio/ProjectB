@@ -4,6 +4,8 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
+using System.Linq;
+using System.Collections.Generic;
 
 public class TutorialStateManager : Singleton<TutorialStateManager>
 {
@@ -14,7 +16,8 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
         CollectPackage,
         DeliverPackage,
         ReachedWeaponArea,
-        ReachedHat
+        ReachedHat,
+        HasDeliveredVolcanoPackage
     }
 
     [SerializeField] private GameEvent infoEvent;
@@ -30,6 +33,7 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     [SerializeField] private TutorialInstruction[] _successTexts;
 
     [Header("Driving State")]
+    [SerializeField] private Transform _destinationArea;
     [SerializeField] private TutorialInstruction _driveControlIntroText;
     [SerializeField] private TutorialInstruction _driveForwardText;
     [SerializeField] private TutorialInstruction _turnLeftText;
@@ -38,6 +42,7 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     [SerializeField] private TutorialInstruction _reachDestinationText;
 
     [Header("Package State")]
+    [SerializeField] private DeliveryZone _deliveryZone1;
     [SerializeField] private TutorialInstruction _collectPackageText;
     [SerializeField] private TutorialInstruction _deliverPackageText;
 
@@ -54,6 +59,8 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
 
     [Header("Volcano State")]
     [SerializeField] private GameObject[] _volcanoStateObjects;
+    [SerializeField] private DeliveryZone _deliveryZone;
+    [SerializeField] private List<GameObject> _packages;
     [SerializeField] private TutorialInstruction _volcanoIntroText;
     [SerializeField] private TutorialInstruction _volcanoPackageText;
 
@@ -79,12 +86,10 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
 
     [Viewable] private bool _hasEnteredHat;
 
-    [Viewable] private bool _hasCollectAllVolcanoPackages;
+    [Viewable] private bool _hasDeliveredVolcanoPackage;
 
     [Viewable] private float _buttonPressThresshold = 1;
     [Viewable] private float _currentThreeshold;
-
-    private readonly WaitForSeconds _defaultDelay = new WaitForSeconds(2);
 
     private IEnumerator Start() 
     {
@@ -170,9 +175,13 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     {
         StartCoroutine(Juicer.FadeOutMaterial(_drivingStopWall.GetComponent<Renderer>().material, 1f, () => _drivingStopWall.SetActive(false)));
 
+        WaypointMarker.Instance.SetTarget(_destinationArea.transform);
+
         yield return TriggerInstrution(_reachDestinationText);
 
         yield return new WaitUntil(() => _hasReachedDestination == true);
+
+        WaypointMarker.Instance.SetTarget(null);
 
         yield return DisplaySuccess();
     }
@@ -182,14 +191,19 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
         yield return TriggerInstrution(_collectPackageText);
 
         yield return new WaitUntil(() => _hasCollectPackage == true);
+
         yield return DisplaySuccess();
+
+        WaypointMarker.Instance.SetTarget(_deliveryZone1.transform);
 
         yield return TriggerInstrution(_deliverPackageText);
 
         yield return new WaitUntil(() => _hasDeliverPackage == true);
+
+        WaypointMarker.Instance.SetTarget(null);
+
         yield return DisplaySuccess();
 
-        yield return new WaitForSeconds(2);
         infoEvent.Raise(this, new InfoHUDData { Enable = false});
     }
 
@@ -200,14 +214,16 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
         yield return TriggerInstrution(_shootingIntroText);
 
         yield return new WaitUntil(() => _hasReachedWeaponArea);
+
         WaypointMarker.Instance.SetTarget(_dummyArea);
 
         yield return TriggerInstrution(_shootingInputText);
 
         yield return new WaitUntil(() => InputManager.Instance.HandleFireInput().IsPressed());
-        yield return DisplaySuccess();
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
+
+        yield return DisplaySuccess();
 
         yield return TriggerInstrution(_shootingWeaponSwapText);
 
@@ -219,11 +235,15 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     private IEnumerator MagicHatState()
     {
         yield return TriggerInstrution(_magicHatText);
+
         WaypointMarker.Instance.SetTarget(_magicHatTrigger);
+
         yield return new WaitUntil(() => _hasEnteredHat);
+
         yield return DisplaySuccess();
+
         WaypointMarker.Instance.SetTarget(null);
-        yield return new WaitForSeconds(2);
+
         infoEvent.Raise(this, new InfoHUDData { Enable = false });
     }
 
@@ -239,12 +259,16 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
 
         foreach (var gameObject in _volcanoStateObjects) gameObject.SetActive(true);
 
+        WaypointMarker.Instance.SetTarget(_deliveryZone.transform);
+
         yield return TriggerInstrution(_volcanoPackageText);
 
-        yield return new WaitUntil(() => _hasCollectAllVolcanoPackages);
+        yield return new WaitUntil(() => _packages.All((gameObject)=> gameObject == null));
+
         yield return DisplaySuccess();
+
         WaypointMarker.Instance.SetTarget(null);
-        yield return new WaitForSeconds(2);
+
         infoEvent.Raise(this, new InfoHUDData { Enable = false });
 
         StartCoroutine(Juicer.FadeOutMaterial(_volcanoStopWall.GetComponent<Renderer>().material, 1f, () => _volcanoStopWall.SetActive(false)));
@@ -283,6 +307,9 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
                 return;
             case TutorialAttribute.ReachedHat:
                 _hasEnteredHat = true;
+                return;
+            case TutorialAttribute.HasDeliveredVolcanoPackage:
+                _hasDeliveredVolcanoPackage = true;
                 return;
         }
     }
