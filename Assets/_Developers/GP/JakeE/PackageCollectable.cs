@@ -9,8 +9,6 @@ public class PackageCollectable : Collectable
 
     protected override void Collect(GameObject collideObject)
     {
-        Debug.Log("Collectable", this);
-
         if (collideObject.TryGetComponent(out PackageSystem packageSystem))
         {
             if (packageSystem.PackageAmount >= packageSystem.MaxPackages)

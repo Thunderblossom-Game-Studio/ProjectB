@@ -26,10 +26,11 @@ public class VolcanoDetector : MonoBehaviour
 
     private void ChangeDetectionState(Collider other, Transform target)
     {
-        if (!other.gameObject.TryGetComponent(out VehicleParent vehicle))
-        {
-            Debug.Log("Not a car"); return;
-        }
+        if (!other.gameObject.TryGetComponent(out VehicleParent vehicle)) return;
+
         volcano.SetTarget(target);
+
+        if(target) HazardIndicator.Instance?.ActivateIndicator(HazardIndicator.IndicatorType.Volcano);
+        else HazardIndicator.Instance?.DeActivateIndicator(HazardIndicator.IndicatorType.Volcano);
     }
 }

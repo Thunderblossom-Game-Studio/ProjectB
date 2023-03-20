@@ -6,10 +6,16 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
-    [SerializeField] AudioBank musicBank;
-    [SerializeField] AudioBank soundEffectBank;
-    [SerializeField] AudioSource musicPlayer;
-    [SerializeField] AudioSource soundEffectPlayer;
+    [SerializeField] private AudioBank musicBank;
+    [SerializeField] private AudioBank soundEffectBank;
+    [SerializeField] private AudioSource musicPlayer;
+    [SerializeField] private AudioSource soundEffectPlayer;
+
+    [Header("Radio System")]
+    [SerializeField] private AudioAlbum[] audioAlbums;
+    [Viewable] [SerializeField] private AudioAlbum audioAlbum;
+    [Viewable] [SerializeField] private int albumIndex;
+    [Viewable] [SerializeField] bool fadingMusic;
 
     private void Awake()
     {
@@ -27,12 +33,29 @@ public class AudioManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    private void Update()
+    {
+        if(InputManager.Instance.HandleInteractInput().WasPressedThisFrame() && !fadingMusic && audioAlbum != null)
+        {
+            audioAlbum.Switch(ref albumIndex);
+        }
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         SceneType loadedScene = (SceneType)scene.buildIndex;
+        PlayLevelMusic(loadedScene);
+        SetMusicAlbum(loadedScene);
+    }
+
+    public void PlayLevelMusic(SceneType loadedScene)
+    {
         switch (loadedScene)
         {
             case SceneType.MainMenu:
+                ChangeMusicWithFade("MMTheme", true);
+                break;
+            case SceneType.Credits:
                 ChangeMusicWithFade("MMTheme", true);
                 break;
             case SceneType.Tutorial: ChangeMusicWithFade("TuneT", true); break;
@@ -42,6 +65,11 @@ public class AudioManager : MonoBehaviour
             case SceneType.TempLevel4: ChangeMusicWithFade("TuneL2", true); break;
             default: break;
         }
+    }
+
+    public void SetMusicAlbum(SceneType loadedScene)
+    {
+        audioAlbum = audioAlbums[(int)loadedScene];
     }
 
     private void ChangeMusic(AudioClip audioClip, bool loop)
@@ -79,14 +107,13 @@ public class AudioManager : MonoBehaviour
 
     private IEnumerator ChangeMusicWithFadeRoutine(AudioClip audioClip, bool loop)
     {
+        fadingMusic = true;
+
         while (musicPlayer.volume > 0)
         {
             musicPlayer.volume -= 0.05f;
             yield return new WaitForSecondsRealtime(0.1f);
         }
-
-        Debug.Log(audioClip);
-
         musicPlayer.clip = audioClip;
         musicPlayer.loop = loop;
         musicPlayer.Play();
@@ -96,6 +123,8 @@ public class AudioManager : MonoBehaviour
             musicPlayer.volume += 0.05f;
             yield return new WaitForSecondsRealtime(0.1f);
         }
+
+        fadingMusic = false;
     }
 
     private IEnumerator BlendTwoMusicRoutine(AudioClip intro, AudioClip loopMusic, bool loop  = true)
@@ -104,11 +133,10 @@ public class AudioManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(musicPlayer.clip.length - 0.5f);
         ChangeMusic(loopMusic, loop);
     }
+
     public static AudioClip GetMusicClip(string audioID)
     {
         if (!InstanceExists()) return null;
-        Debug.Log(InstanceExists());
-        Debug.Log(Instance.musicBank.GetAudioByID(audioID));
         return  Instance.musicBank.GetAudioByID(audioID);
     } 
     

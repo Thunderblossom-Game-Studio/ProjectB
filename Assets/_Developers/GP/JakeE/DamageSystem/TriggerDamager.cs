@@ -18,21 +18,28 @@ namespace JE.DamageSystem
         }
         
         [SerializeField] private DamageType _damageType;
-    
+        [SerializeField] private int _maxHit;
+
+        [Viewable] [SerializeField] private int currentHit;
+
         private void OnTriggerEnter(Collider objectCollider)
         {
-            if (!_damageLayers.ContainsLayer(objectCollider.gameObject.layer)) return;
-        
+            if (!_damageLayers.ContainsLayer(objectCollider.gameObject.layer) || IsUsedUp()) return;
+
             switch (_damageType)
             {
                 case DamageType.Instant:
                     DamageEntity(objectCollider.gameObject);
-                    return;
+                    break;
                 case DamageType.Overtime:
                     DamageEntityDuration(objectCollider.gameObject);
-                    return;
+                    break;
             }
+
+            if (_maxHit > uint.MinValue) ++currentHit;
         }
+
+        public bool IsUsedUp() => _maxHit > 0 && currentHit >= _maxHit;
     }
 }
 

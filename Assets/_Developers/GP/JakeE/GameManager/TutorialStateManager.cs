@@ -1,22 +1,30 @@
+using Pelumi.Juicer;
 using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
+using System.Linq;
+using System.Collections.Generic;
 
 public class TutorialStateManager : Singleton<TutorialStateManager>
 {
     public enum TutorialAttribute
     {
-        IntroCutScene,
+        CutSceneComplected,
+        ReachDrivingDestination,
         CollectPackage,
         DeliverPackage,
-        ReachDestination
+        ReachedWeaponArea,
+        ReachedHat,
+        HasDeliveredVolcanoPackage
     }
 
-    [SerializeField] private PlayableAsset introCutScene;
-    [SerializeField] private CutSceneTrigger cutSceneTrigger;
     [SerializeField] private GameEvent infoEvent;
+
+    [Header("CutSceneTriggers")]
+    [SerializeField] private CutSceneTrigger cutSceneTrigger;
+    [SerializeField] private CutSceneTrigger area2CutSceneTrigger;
 
     [Header("Welcome Intructions")]
     [SerializeField] private TutorialInstruction _welcomeText;
@@ -24,7 +32,8 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     [Header("Success Notifications")]
     [SerializeField] private TutorialInstruction[] _successTexts;
 
-    [Header("Driving Intructions")]
+    [Header("Driving State")]
+    [SerializeField] private Transform _destinationArea;
     [SerializeField] private TutorialInstruction _driveControlIntroText;
     [SerializeField] private TutorialInstruction _driveForwardText;
     [SerializeField] private TutorialInstruction _turnLeftText;
@@ -32,14 +41,35 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     [SerializeField] private TutorialInstruction _breakText;
     [SerializeField] private TutorialInstruction _reachDestinationText;
 
-    [Header("Package Intructions")]
+    [Header("Package State")]
+    [SerializeField] private DeliveryZone _deliveryZone1;
     [SerializeField] private TutorialInstruction _collectPackageText;
     [SerializeField] private TutorialInstruction _deliverPackageText;
 
-    [Header("Tutorial Walls")] 
-    [SerializeField] private GameObject _firstWall;
+    [Header("Shooting State")]
+    [SerializeField] private Transform _ShootingArea;
+    [SerializeField] private Transform _dummyArea;
+    [SerializeField] private TutorialInstruction _shootingIntroText;
+    [SerializeField] private TutorialInstruction _shootingInputText;
+    [SerializeField] private TutorialInstruction _shootingWeaponSwapText;
 
-    [Viewable] private bool _hasIntroCutSceneComplected;
+    [Header("Hat State")]
+    [SerializeField] private Transform _magicHatTrigger;
+    [SerializeField] private TutorialInstruction _magicHatText;
+
+    [Header("Volcano State")]
+    [SerializeField] private GameObject[] _volcanoStateObjects;
+    [SerializeField] private DeliveryZone _deliveryZone;
+    [SerializeField] private List<GameObject> _packages;
+    [SerializeField] private TutorialInstruction _volcanoIntroText;
+    [SerializeField] private TutorialInstruction _volcanoPackageText;
+
+    [Header("Tutorial Walls")] 
+    [SerializeField] private GameObject _drivingStopWall;
+    [SerializeField] private GameObject _shootingStopWall;
+    [SerializeField] private GameObject _volcanoStopWall;
+
+    [Viewable] private bool _hasCutSceneComplected;
 
     [Viewable] private bool _hasDriveFoward;
     [Viewable] private bool _hasTurnLeft;
@@ -47,15 +77,23 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     [Viewable] private bool _hasBreaked;
 
     [Viewable] private bool _hasReachedDestination;
+
     [Viewable] private bool _hasCollectPackage;
     [Viewable] private bool _hasDeliverPackage;
+
+    [Viewable] private bool _hasReachedWeaponArea;
+    [Viewable] private bool _hasShootTargets;
+
+    [Viewable] private bool _hasEnteredHat;
+
+    [Viewable] private bool _hasDeliveredVolcanoPackage;
+
     [Viewable] private float _buttonPressThresshold = 1;
     [Viewable] private float _currentThreeshold;
 
-    private readonly WaitForSeconds _defaultDelay = new WaitForSeconds(2);
-
     private IEnumerator Start() 
-    { 
+    {
+        Time.timeScale = 1;
         yield return RunTutorial();
     }
 
@@ -66,33 +104,33 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
         yield return DrivingControlState();
         yield return ReachDestination();
         yield return PackageState();
+        yield return ShootingState();
+        yield return MagicHatState();
+
+        yield return Area2CutSceneState();
+        yield return VolcanoState();
         //  yield return BattleEnemyState();
         //  yield return GoodbyeState();
     }
 
     private IEnumerator IntroCutSceneState()
     {
-        cutSceneTrigger.StartCutScene(introCutScene);
-        yield return new WaitUntil(() => _hasIntroCutSceneComplected);
+        cutSceneTrigger.StartCutScene();
+        yield return new WaitUntil(() => _hasCutSceneComplected);
+        _hasCutSceneComplected = false;
     }
 
     private IEnumerator WelcomeState()
     {
         yield return new WaitForSeconds(2f);
-
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _welcomeText.Message });
-        AudioManager.PlaySoundEffect(_welcomeText.AudioID);
+        yield return TriggerInstrution(_welcomeText);
     }
 
     private IEnumerator DrivingControlState()
     {
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _driveControlIntroText.Message});
-        AudioManager.PlaySoundEffect( _driveControlIntroText.AudioID);
+        yield return TriggerInstrution(_driveControlIntroText);
 
-        yield return new WaitForSeconds(2f);
-
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _driveForwardText.Message });
-        AudioManager.PlaySoundEffect(_driveForwardText.AudioID);
+        yield return TriggerInstrution(_driveForwardText);
 
         while (!_hasDriveFoward)
         {
@@ -100,11 +138,9 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
             yield return null;
         }
 
-        DisplaySuccess();
+        yield return DisplaySuccess();
 
-        yield return new WaitForSeconds(2f);
-
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _turnLeftText.Message });
+        yield return TriggerInstrution(_turnLeftText);
 
         while (!_hasTurnLeft)
         {
@@ -112,10 +148,9 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
             yield return null;
         }
 
-        DisplaySuccess();
+        yield return DisplaySuccess();
 
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _turnRightText.Message });
-        AudioManager.PlaySoundEffect(_turnRightText.AudioID);
+        yield return TriggerInstrution(_turnRightText);
 
         while (!_hasTurnRight)
         {
@@ -123,11 +158,9 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
             yield return null;
         }
 
-        DisplaySuccess();
+        yield return DisplaySuccess();
 
-        yield return new WaitForSeconds(2f);
-
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _breakText.Message });
+        yield return TriggerInstrution(_breakText);
 
         while (!_hasBreaked)
         {
@@ -135,40 +168,110 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
             yield return null;
         }
 
-        DisplaySuccess();
-
-        yield return new WaitForSeconds(2f);
+        yield return DisplaySuccess();
     }
 
     private IEnumerator ReachDestination()
     {
-        _firstWall.SetActive(false);
-        
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _reachDestinationText.Message });
-        AudioManager.PlaySoundEffect(_reachDestinationText.AudioID);
+        StartCoroutine(Juicer.FadeOutMaterial(_drivingStopWall.GetComponent<Renderer>().material, 1f, () => _drivingStopWall.SetActive(false)));
+
+        WaypointMarker.Instance.SetTarget(_destinationArea.transform);
+
+        yield return TriggerInstrution(_reachDestinationText);
 
         yield return new WaitUntil(() => _hasReachedDestination == true);
-        DisplaySuccess();
 
-        yield return _defaultDelay;
+        WaypointMarker.Instance.SetTarget(null);
+
+        yield return DisplaySuccess();
     }
 
     private IEnumerator PackageState()
     {
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _collectPackageText.Message });
-        AudioManager.PlaySoundEffect(_collectPackageText.AudioID);
+        yield return TriggerInstrution(_collectPackageText);
 
         yield return new WaitUntil(() => _hasCollectPackage == true);
-        DisplaySuccess();
 
-        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = _deliverPackageText.Message});
-        AudioManager.PlaySoundEffect(_deliverPackageText.AudioID);
+        yield return DisplaySuccess();
+
+        WaypointMarker.Instance.SetTarget(_deliveryZone1.transform);
+
+        yield return TriggerInstrution(_deliverPackageText);
 
         yield return new WaitUntil(() => _hasDeliverPackage == true);
-        DisplaySuccess();
 
-        yield return new WaitForSeconds(2);
+        WaypointMarker.Instance.SetTarget(null);
+
+        yield return DisplaySuccess();
+
         infoEvent.Raise(this, new InfoHUDData { Enable = false});
+    }
+
+    private IEnumerator ShootingState()
+    {
+        WaypointMarker.Instance.SetTarget(_ShootingArea);
+
+        yield return TriggerInstrution(_shootingIntroText);
+
+        yield return new WaitUntil(() => _hasReachedWeaponArea);
+
+        WaypointMarker.Instance.SetTarget(_dummyArea);
+
+        yield return TriggerInstrution(_shootingInputText);
+
+        yield return new WaitUntil(() => InputManager.Instance.HandleFireInput().IsPressed());
+
+        yield return new WaitForSeconds(5f);
+
+        yield return DisplaySuccess();
+
+        yield return TriggerInstrution(_shootingWeaponSwapText);
+
+        yield return new WaitUntil(() => Input.GetKey(KeyCode.Tab));
+
+        StartCoroutine(Juicer.FadeOutMaterial(_shootingStopWall.GetComponent<Renderer>().material, 1f, () => _shootingStopWall.SetActive(false)));
+    }
+
+    private IEnumerator MagicHatState()
+    {
+        yield return TriggerInstrution(_magicHatText);
+
+        WaypointMarker.Instance.SetTarget(_magicHatTrigger);
+
+        yield return new WaitUntil(() => _hasEnteredHat);
+
+        yield return DisplaySuccess();
+
+        WaypointMarker.Instance.SetTarget(null);
+
+        infoEvent.Raise(this, new InfoHUDData { Enable = false });
+    }
+
+    private IEnumerator Area2CutSceneState()
+    {
+        area2CutSceneTrigger.StartCutScene();
+        yield return new WaitUntil(() => _hasCutSceneComplected);
+    }
+
+    private IEnumerator VolcanoState()
+    {
+        yield return TriggerInstrution(_volcanoIntroText);
+
+        foreach (var gameObject in _volcanoStateObjects) gameObject.SetActive(true);
+
+        WaypointMarker.Instance.SetTarget(_deliveryZone.transform);
+
+        yield return TriggerInstrution(_volcanoPackageText);
+
+        yield return new WaitUntil(() => _packages.All((gameObject)=> gameObject == null));
+
+        yield return DisplaySuccess();
+
+        WaypointMarker.Instance.SetTarget(null);
+
+        infoEvent.Raise(this, new InfoHUDData { Enable = false });
+
+        StartCoroutine(Juicer.FadeOutMaterial(_volcanoStopWall.GetComponent<Renderer>().material, 1f, () => _volcanoStopWall.SetActive(false)));
     }
 
     private IEnumerator BattleEnemyState()
@@ -187,8 +290,8 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     {
         switch (tutorialAttribute)
         {
-            case TutorialAttribute.IntroCutScene:
-                _hasIntroCutSceneComplected = true;
+            case TutorialAttribute.CutSceneComplected:
+                _hasCutSceneComplected = true;
                 return;
             case TutorialAttribute.CollectPackage:
                 _hasCollectPackage = true;
@@ -196,8 +299,17 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
             case TutorialAttribute.DeliverPackage:
                 _hasDeliverPackage = true;
                 return;
-            case TutorialAttribute.ReachDestination:
+            case TutorialAttribute.ReachDrivingDestination:
                 _hasReachedDestination = true;
+                return;
+            case TutorialAttribute.ReachedWeaponArea:
+                _hasReachedWeaponArea = true;
+                return;
+            case TutorialAttribute.ReachedHat:
+                _hasEnteredHat = true;
+                return;
+            case TutorialAttribute.HasDeliveredVolcanoPackage:
+                _hasDeliveredVolcanoPackage = true;
                 return;
         }
     }
@@ -215,11 +327,19 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
         }
     }
 
-    public void DisplaySuccess()
+    public IEnumerator DisplaySuccess()
     {
         TutorialInstruction tutorialInstruction = _successTexts[UnityEngine.Random.Range(0, _successTexts.Length - 1)];
         infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = tutorialInstruction.Message });
         AudioManager.PlaySoundEffect(tutorialInstruction.AudioID);
+        yield return new WaitForSeconds(tutorialInstruction.duration);
+    }
+
+    public IEnumerator TriggerInstrution(TutorialInstruction tutorialInstruction)
+    {
+        infoEvent.Raise(this, new InfoHUDData { Enable = true, Message = tutorialInstruction.Message });
+        AudioManager.PlaySoundEffect(tutorialInstruction.AudioID);
+        yield return new WaitForSeconds(tutorialInstruction.duration);
     }
 }
 
@@ -228,4 +348,5 @@ public class TutorialInstruction
 {
     public string Message;
     public string AudioID;
+    public float duration = 2;
 }

@@ -43,7 +43,10 @@ public class GameMenu : BaseMenu<GameMenu>
     [SerializeField] private GameEvent _onReloadStart;
     [SerializeField] private GameEvent _onReloading;
     [SerializeField] private GameEvent _onReloadEnd;
-    
+
+    [Header("Health")]
+    [SerializeField] private CanvasGroup _healthView;
+
     [Header("Gameplay Events")]
     [SerializeField] private GameEvent _onTimerUpdate;
     [SerializeField] private GameEvent _onCountDown;
@@ -164,6 +167,11 @@ public class GameMenu : BaseMenu<GameMenu>
     private void OnPopup(Component arg1, object value)
     {
         StartCoroutine(Juicer.DoVector3(null, Vector3.zero, (pos) => _centreScreenText.transform.localScale = pos, _packageUIProperties, null));
+    }
+
+    public void SetHealthView(float amount)
+    {
+        _healthView.alpha =  1 - amount;
     }
 
     private void OnDisable()
