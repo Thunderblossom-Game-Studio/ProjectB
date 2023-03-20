@@ -6,43 +6,45 @@ using UnityEngine.AI;
 [RequireComponent(typeof(AIVehicleController))]
 public class AICarController : MonoBehaviour
 {
-    private AIVehicleController car;
+    private AIVehicleController _car;
 
     [Header("Pathfinding Settings")]
 
-    [SerializeField] private NavMeshAgent agent;
-    [Range(0f, 1f)] [SerializeField] private float forwardmultiplier;
-    [Range(0f, 5f)] [SerializeField] private float turnmultiplier;
-    [Range(0, 100)] [SerializeField] private float brakeSensitivity = 50;
-    [Range(0, 180)] [SerializeField] private int angle;
-    [SerializeField] private float stopDistance = 10;
+    [SerializeField] private NavMeshAgent _agent;
+    [Range(0f, 1f)] [SerializeField] private float _forwardmultiplier;
+    [Range(0f, 5f)] [SerializeField] private float _turnmultiplier;
+    [Range(0, 100)] [SerializeField] private float _brakeSensitivity = 50;
+    [Range(0, 180)] [SerializeField] private int _angle;
+    [SerializeField] private float _stopDistance = 10;
 
-    [SerializeField] private float defaultSpawnWeight = 5f;
-    [SerializeField] private float spawnWeight = 3f;
+    [SerializeField] private float _defaultSpawnWeight = 5f;
+    [SerializeField] private float _spawnWeight = 3f;
 
-    [SerializeField] private BackTriggerCheck frontTriggerCheck;
-    [SerializeField] private BackTriggerCheck backTriggerCheck;
+    [SerializeField] private BackTriggerCheck _frontTriggerCheck;
+    [SerializeField] private BackTriggerCheck _backTriggerCheck;
 
-    [Viewable] private float agentSpawnWeight = 2;
-    [SerializeField] private float defaultAgentAcc;
-    [SerializeField] private float weightedAgentAcc;
-    [SerializeField] private float distanceBetweenAgent = 30;
+    [Viewable] private float _agentSpawnWeight = 2;
+    [SerializeField] private float _defaultAgentAcc;
+    [SerializeField] private float _weightedAgentAcc;
+    [SerializeField] private float _distanceBetweenAgent = 30;
 
-    public GameObject MoveTarget;
+    [Viewable] public GameObject MoveTarget;
 
-    private float maxIdleTimer = 4;
-    private float idleTimer = 0;
-    private bool stuck = false;
+    private float _maxIdleTimer = 4;
+    private float _idleTimer = 0;
+    private bool _stuck = false;
+
+    private float _distanceMultiplier = 1.6f;
 
     // Start is called before the first frame update
     private void Start()
     {
-        car = GetComponent<AIVehicleController>();
+        _car = GetComponent<AIVehicleController>();
     }
 
     private void Update()
     {
-        if (!agent)
+        if (!_agent)
         {
             Debug.LogWarning("No NavMesh Agent Assigned");
 
@@ -56,11 +58,11 @@ public class AICarController : MonoBehaviour
 
     public AIPlayerHandler.CurrentState Evaluate(AIPlayerHandler.CurrentState state)
     {
-        if ((Vector3.Distance(transform.position, agent.transform.position) > distanceBetweenAgent * 1.6f)
+        if ((Vector3.Distance(transform.position, _agent.transform.position) > _distanceBetweenAgent * _distanceMultiplier)
             ||
-            (frontTriggerCheck.active || backTriggerCheck.active)
+            (_frontTriggerCheck.active || _backTriggerCheck.active)
             ||
-            stuck)
+            _stuck)
         {
             state = AIPlayerHandler.CurrentState.IDLE;
         }
@@ -72,9 +74,9 @@ public class AICarController : MonoBehaviour
     /// </summary>
     public void FollowAgent()
     {
-        Vector3 dir = (agent.transform.position - transform.position).normalized;
+        Vector3 dir = (_agent.transform.position - transform.position).normalized;
 
-        float distance = Vector3.Distance(transform.position, agent.transform.position);
+        float distance = Vector3.Distance(transform.position, _agent.transform.position);
 
         float direction = Vector3.SignedAngle(transform.forward, dir, Vector3.up);
 
@@ -88,15 +90,15 @@ public class AICarController : MonoBehaviour
         }
         else
         {
-            forwardInput = 1 * forwardmultiplier;
+            forwardInput = 1 * _forwardmultiplier;
         }
 
         // turning
-        if (direction < -angle / 2)
+        if (direction < -_angle / 2)
         {
             horizontalInput = -1;
         }
-        else if (direction > angle / 2)
+        else if (direction > _angle / 2)
         {
             horizontalInput = 1;
         }
@@ -106,14 +108,14 @@ public class AICarController : MonoBehaviour
 
         if (
             // if not turning and speed is greater than brake sens
-            (horizontalInput != 0 && car.GetSpeed() > brakeSensitivity) ||
+            (horizontalInput != 0 && _car.GetSpeed() > _brakeSensitivity) ||
 
             // if in stopping distance and speed is greater than brake sens
-            (Vector3.Distance(transform.position, agent.transform.position) < stopDistance &&
-            car.GetSpeed() > brakeSensitivity) ||
+            (Vector3.Distance(transform.position, _agent.transform.position) < _stopDistance &&
+            _car.GetSpeed() > _brakeSensitivity) ||
 
             // if speed is greater than bleh
-            (car.GetSpeed() > brakeSensitivity * 1.8))
+            (_car.GetSpeed() > _brakeSensitivity * 1.8))
         {
             b = true;
         }
@@ -121,7 +123,7 @@ public class AICarController : MonoBehaviour
         forwardInput = Mathf.Clamp(forwardInput, -1f, 1f);
         horizontalInput = Mathf.Clamp(horizontalInput, -1f, 1f);
 
-        car.HandleInput(forwardInput, horizontalInput, b);
+        _car.HandleInput(forwardInput, horizontalInput, b);
     }
 
     /// <summary>
@@ -129,36 +131,36 @@ public class AICarController : MonoBehaviour
     /// </summary>
     public void CourseCorrection()
     {
-        if (backTriggerCheck.active) agentSpawnWeight = spawnWeight;
-        else if (frontTriggerCheck.active) agentSpawnWeight = -spawnWeight;
-        else agentSpawnWeight = defaultSpawnWeight;
-        if (agentSpawnWeight != defaultSpawnWeight) agent.speed = weightedAgentAcc;
-        else agent.speed = defaultAgentAcc;
-        if (Vector3.Distance(transform.position, agent.transform.position) > distanceBetweenAgent)
+        if (_backTriggerCheck.active) _agentSpawnWeight = _spawnWeight;
+        else if (_frontTriggerCheck.active) _agentSpawnWeight = -_spawnWeight;
+        else _agentSpawnWeight = _defaultSpawnWeight;
+        if (_agentSpawnWeight != _defaultSpawnWeight) _agent.speed = _weightedAgentAcc;
+        else _agent.speed = _defaultAgentAcc;
+        if (Vector3.Distance(transform.position, _agent.transform.position) > _distanceBetweenAgent)
         {
-            agent.isStopped = true;
+            _agent.isStopped = true;
         }
         else
         {
-            agent.isStopped = false;
+            _agent.isStopped = false;
         }
-        if (Mathf.Abs(agent.transform.position.y - transform.position.y) > 5)
+        if (Mathf.Abs(_agent.transform.position.y - transform.position.y) > 5)
         {
-            agent.Warp(transform.position);
+            _agent.Warp(transform.position);
         }
     }
 
     public void RecallAgent()
     {
         Vector3 pos = transform.position;
-        pos += transform.forward * agentSpawnWeight;
+        pos += transform.forward * _agentSpawnWeight;
         SetAgentTarget(pos);
     }
 
     public bool FindPath(Vector3 target)
     {
         NavMeshPath path = new NavMeshPath();
-        agent.CalculatePath(target, path);
+        _agent.CalculatePath(target, path);
         if (path.status == NavMeshPathStatus.PathPartial || path.status == NavMeshPathStatus.PathInvalid)
         {
             return false;
@@ -168,39 +170,39 @@ public class AICarController : MonoBehaviour
 
     public bool StalePath()
     {
-        return agent.isPathStale;
+        return _agent.isPathStale;
     }
 
     public void SetAgentTarget(Vector3 position)
     {
-        agent.SetDestination(position);
+        _agent.SetDestination(position);
     }
 
     private void IdleTiming()
     {
-        if (car.GetSpeed() < 3)
+        if (_car.GetSpeed() < 3)
         {
-            idleTimer += Time.deltaTime;
+            _idleTimer += Time.deltaTime;
 
-            if (idleTimer > maxIdleTimer)
+            if (_idleTimer > _maxIdleTimer)
             {
-                stuck = true;
+                _stuck = true;
             }
         }
         else
         {
-            stuck = false;
-            idleTimer = 0f;
+            _stuck = false;
+            _idleTimer = 0f;
         }
     }
 
     public void OnDrawGizmos()
     {
-        if (agent)
+        if (_agent)
         {
             Gizmos.color = Color.red;
 
-            Gizmos.DrawSphere(agent.transform.position, .5f);
+            Gizmos.DrawSphere(_agent.transform.position, .5f);
         }
     }
 }

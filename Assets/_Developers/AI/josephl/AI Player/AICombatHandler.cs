@@ -5,36 +5,38 @@ using JE.DamageSystem;
 
 public class AICombatHandler : MonoBehaviour
 {
-    private PackageSystem packageSystem;
-    private AICarController carHandler;
-    private AIDecisionHandler decisionHandler;
-    private GameObject ShootTarget;
+    private PackageSystem _packageSystem;
+    private AICarController _carHandler;
+    private AIDecisionHandler _decisionHandler;
+    private GameObject _shootTarget;
 
-    [SerializeField] private Weapon weaponHandler;
-    [SerializeField] private HealthSystem Health;
-    private GamePlayer gamePlayer;
-    private Vector3 SpawnPoint;
+    [SerializeField] private Weapon _weaponHandler;
+    [SerializeField] private HealthSystem _health;
+    private GamePlayer _gamePlayer;
+    private Vector3 _spawnPoint;
 
-    [SerializeField] private float AttackRange;
-    [Viewable] private float fleeThreshold;
+    [SerializeField] private float _attackRange;
+    [Viewable] private float _fleeThreshold;
 
-    [SerializeField] float AggroRange;
-    [SerializeField] LayerMask Car;
+    [SerializeField] private float _aggroRange;
+    [SerializeField] private LayerMask _car;
+
+    private int _closeThreshold = 15;
 
     // Start is called before the first frame update
     private void Start()
     {
-        carHandler = GetComponent<AICarController>();
-        decisionHandler = GetComponent<AIDecisionHandler>();
-        packageSystem = GetComponent<PackageSystem>();
-        gamePlayer = GetComponent<GamePlayer>();
+        _carHandler = GetComponent<AICarController>();
+        _decisionHandler = GetComponent<AIDecisionHandler>();
+        _packageSystem = GetComponent<PackageSystem>();
+        _gamePlayer = GetComponent<GamePlayer>();
 
         if (AIDirector.Instance)
-            fleeThreshold = AIDirector.Instance.tierOne.healthThreshold / 100;
+            _fleeThreshold = AIDirector.Instance.tierOne.healthThreshold / 100;
         else
             Debug.LogWarning("No AI Director Instance Detected.");
 
-        SpawnPoint = transform.position;
+        _spawnPoint = transform.position;
     }
 
     private void Update()
@@ -48,16 +50,16 @@ public class AICombatHandler : MonoBehaviour
     {
         if (state == AIPlayerHandler.CurrentState.DELIVERY) return state;
 
-        if (ShootTarget)
+        if (_shootTarget)
         {
             // Pursue
-            if (Vector3.Distance(transform.position, ShootTarget.transform.position) <= AggroRange)
+            if (Vector3.Distance(transform.position, _shootTarget.transform.position) <= _aggroRange)
             {
                 state = AIPlayerHandler.CurrentState.PURSUE;
             }
         }
 
-        if (Health.HealthPercentage <= fleeThreshold)
+        if (_health.HealthPercentage <= _fleeThreshold)
         {
             state = AIPlayerHandler.CurrentState.FLEE;
         }
@@ -67,8 +69,8 @@ public class AICombatHandler : MonoBehaviour
 
     public void Pursue()
     {
-        if (ShootTarget)
-            carHandler.SetAgentTarget(ShootTarget.transform.position);
+        if (_shootTarget)
+            _carHandler.SetAgentTarget(_shootTarget.transform.position);
     }
 
     /// <summary>
@@ -76,19 +78,19 @@ public class AICombatHandler : MonoBehaviour
     /// </summary>
     public void Flee()
     {
-        if (packageSystem.PackageAmount >= 1)
+        if (_packageSystem.PackageAmount >= 1)
         {
-            decisionHandler.Delivery();
+            _decisionHandler.Delivery();
         }
-        else if (packageSystem.PackageAmount == 0)
+        else if (_packageSystem.PackageAmount == 0)
         {
-            carHandler.SetAgentTarget(SpawnPoint);
+            _carHandler.SetAgentTarget(_spawnPoint);
         }
     }
 
     private void LookForTargets()
     {
-        RaycastHit[] Hits = Physics.SphereCastAll(transform.position, AggroRange, Vector3.forward, 0, Car);
+        RaycastHit[] Hits = Physics.SphereCastAll(transform.position, _aggroRange, Vector3.forward, 0, _car);
 
         if (Hits.Length > 0)
         {
@@ -97,7 +99,7 @@ public class AICombatHandler : MonoBehaviour
                 if (hit.transform.gameObject != gameObject && hit.transform.CompareTag("Player"))
                 {
 
-                    ShootTarget = hit.transform.gameObject;
+                    _shootTarget = hit.transform.gameObject;
 
                 }
             }
@@ -106,31 +108,31 @@ public class AICombatHandler : MonoBehaviour
 
     private void TryShoot()
     {
-        if (ShootTarget)
+        if (_shootTarget)
         {
-            if (ShootTarget.TryGetComponent<GamePlayer>(out GamePlayer gp) && gamePlayer.PlayerTeamData != null)
+            if (_shootTarget.TryGetComponent<GamePlayer>(out GamePlayer gp) && _gamePlayer.PlayerTeamData != null)
             {
-                if (gamePlayer.PlayerTeamData.TeamName == gp.PlayerTeamData.TeamName)
+                if (_gamePlayer.PlayerTeamData.TeamName == gp.PlayerTeamData.TeamName)
                 {
-                    ShootTarget = null;
+                    _shootTarget = null;
                 }
             }
         }
 
-        if (ShootTarget)
+        if (_shootTarget)
         {
             // Attack
-            if (Vector3.Distance(transform.position, ShootTarget.transform.position) <= AttackRange)
+            if (Vector3.Distance(transform.position, _shootTarget.transform.position) <= _attackRange)
             {
-                if (ShootTarget.TryGetComponent<HealthSystem>(out HealthSystem hs))
+                if (_shootTarget.TryGetComponent<HealthSystem>(out HealthSystem hs))
                 {
                     Shoot();
                 }
             }
 
-            if (Vector3.Distance(transform.position, ShootTarget.transform.position) <= 15)
+            if (Vector3.Distance(transform.position, _shootTarget.transform.position) <= _closeThreshold)
             {
-                ShootTarget = null;
+                _shootTarget = null;
             }
 
         }
@@ -138,9 +140,9 @@ public class AICombatHandler : MonoBehaviour
 
     private void Shoot()
     {
-        if (!ShootTarget) return;
-        weaponHandler.SetAim((ShootTarget.transform.position - transform.position).normalized);
-        weaponHandler.Shoot(ShootTarget.transform.position);
+        if (!_shootTarget) return;
+        _weaponHandler.SetAim((_shootTarget.transform.position - transform.position).normalized);
+        _weaponHandler.Shoot(_shootTarget.transform.position);
 
     }
 }

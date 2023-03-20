@@ -2007,19 +2007,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9547ffe71daf33e4e93ee6f934c74bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 1330326868928177836}
-  forwardmultiplier: 1
-  turnmultiplier: 5
-  brakeSensitivity: 40
-  angle: 20
-  stopDistance: 20
-  defaultSpawnWeight: 5
-  spawnWeight: 3
-  frontTriggerCheck: {fileID: 1078696219465399200}
-  backTriggerCheck: {fileID: 666629236538970752}
-  defaultAgentAcc: 60
-  weightedAgentAcc: 15
-  distanceBetweenAgent: 15
+  _agent: {fileID: 1330326868928177836}
+  _forwardmultiplier: 1
+  _turnmultiplier: 5
+  _brakeSensitivity: 40
+  _angle: 20
+  _stopDistance: 20
+  _defaultSpawnWeight: 5
+  _spawnWeight: 3
+  _frontTriggerCheck: {fileID: 1078696219465399200}
+  _backTriggerCheck: {fileID: 666629236538970752}
+  _defaultAgentAcc: 60
+  _weightedAgentAcc: 15
+  _distanceBetweenAgent: 15
   MoveTarget: {fileID: 0}
 --- !u!114 &1185542315486851123
 MonoBehaviour:
@@ -2033,7 +2033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80c230f41ba2eea46a04c993611a57d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  packageSpawner: {fileID: 0}
+  _packageSpawner: {fileID: 0}
 --- !u!114 &5804470171757818121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2046,11 +2046,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34f2236c7cf3c544485875d9eaf0291b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponHandler: {fileID: 3631949243076593990}
-  Health: {fileID: 9043634083372453861}
-  AttackRange: 50
-  AggroRange: 20
-  Car:
+  _weaponHandler: {fileID: 3631949243076593990}
+  _health: {fileID: 9043634083372453861}
+  _attackRange: 50
+  _aggroRange: 20
+  _car:
     serializedVersion: 2
     m_Bits: 8
 --- !u!114 &2857147098930332873

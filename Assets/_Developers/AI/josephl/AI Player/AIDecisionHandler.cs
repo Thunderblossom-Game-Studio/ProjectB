@@ -4,24 +4,26 @@ using UnityEngine;
 
 public class AIDecisionHandler : MonoBehaviour
 {
-    private AICarController carHandler;
-    private PackageSystem PackageSystem;
+    private AICarController _carHandler;
+    private PackageSystem _packageSystem;
 
-    [SerializeField] private EntitySpawner packageSpawner;
-    [Viewable] private Transform DeliveryPoint;
+    [SerializeField] private EntitySpawner _packageSpawner;
+    [Viewable] private Transform _deliveryPoint;
+
+    private int _numOfAttempts = 3;
 
     // Start is called before the first frame update
     private void Start()
     {
-        carHandler = GetComponent<AICarController>();
-        PackageSystem = GetComponent<PackageSystem>();
+        _carHandler = GetComponent<AICarController>();
+        _packageSystem = GetComponent<PackageSystem>();
 
         if (AIDirector.Instance)
         {
             int numOfDeliveryZones = AIDirector.Instance.deliveryZones.Count;
 
             if (numOfDeliveryZones > 0)
-                DeliveryPoint = AIDirector.Instance.deliveryZones[Random.Range(0, numOfDeliveryZones)].t;
+                _deliveryPoint = AIDirector.Instance.deliveryZones[Random.Range(0, numOfDeliveryZones)].t;
             else
                 Debug.LogWarning("No delivery points allocated in AI Director.");
         }
@@ -29,12 +31,12 @@ public class AIDecisionHandler : MonoBehaviour
 
     public AIPlayerHandler.CurrentState Evaluate(AIPlayerHandler.CurrentState state)
     {
-        if (packageSpawner && packageSpawner.SpawnedObjects.Count > 0)
+        if (_packageSpawner && _packageSpawner.SpawnedObjects.Count > 0)
         {
             state = AIPlayerHandler.CurrentState.PICKUP;
         }
 
-        if (PackageSystem.PackageAmount == PackageSystem.MaxPackages)
+        if (_packageSystem.PackageAmount == _packageSystem.MaxPackages)
         {
             state = AIPlayerHandler.CurrentState.DELIVERY;
         }
@@ -47,27 +49,27 @@ public class AIDecisionHandler : MonoBehaviour
     /// </summary>
     public AIPlayerHandler.CurrentState Pickup(bool newState, AIPlayerHandler.CurrentState state)
     {
-        if ((newState || !carHandler.MoveTarget) && packageSpawner.SpawnedObjects.Count > 0)
+        if ((newState || !_carHandler.MoveTarget) && _packageSpawner.SpawnedObjects.Count > 0)
         {
             int num = 0;
             do
             {
-                carHandler.MoveTarget = packageSpawner.SpawnedObjects[Random.Range(0, packageSpawner.SpawnedObjects.Count)].gameObject;                
-                if (!carHandler.FindPath(carHandler.MoveTarget.transform.position))
+                _carHandler.MoveTarget = _packageSpawner.SpawnedObjects[Random.Range(0, _packageSpawner.SpawnedObjects.Count)].gameObject;                
+                if (!_carHandler.FindPath(_carHandler.MoveTarget.transform.position))
                 {
-                    carHandler.MoveTarget = null;
+                    _carHandler.MoveTarget = null;
                 }
                 num++;
-            } while (!carHandler.MoveTarget && num < 3);
+            } while (!_carHandler.MoveTarget && num < _numOfAttempts);
         }
 
-        if (!carHandler.MoveTarget)
+        if (!_carHandler.MoveTarget)
         {
             state = AIPlayerHandler.CurrentState.IDLE;
         }
         else
         {
-            carHandler.SetAgentTarget(carHandler.MoveTarget.transform.position);
+            _carHandler.SetAgentTarget(_carHandler.MoveTarget.transform.position);
         }
 
         return state;
@@ -80,9 +82,9 @@ public class AIDecisionHandler : MonoBehaviour
     {
         if (AIDirector.Instance)
         {
-            DeliveryPoint = AIDirector.Instance.FindClosestDeliveryZone(transform.position);
+            _deliveryPoint = AIDirector.Instance.FindClosestDeliveryZone(transform.position);
         }
 
-        carHandler.SetAgentTarget(DeliveryPoint.position);
+        _carHandler.SetAgentTarget(_deliveryPoint.position);
     }
 }
