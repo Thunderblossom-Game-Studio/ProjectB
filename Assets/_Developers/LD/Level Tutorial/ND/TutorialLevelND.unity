@@ -180,7 +180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7147830899735363557, guid: 7a798c5a4d0b087438c033b03b9f0781, type: 3}
       propertyPath: m_PathPosition
-      value: 13.26
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7147830899791437490, guid: 7a798c5a4d0b087438c033b03b9f0781, type: 3}
       propertyPath: m_LocalRotation.w
@@ -188,15 +188,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7147830899791437490, guid: 7a798c5a4d0b087438c033b03b9f0781, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.071417615
+      value: -0.07141762
       objectReference: {fileID: 0}
     - target: {fileID: 7147830899791437490, guid: 7a798c5a4d0b087438c033b03b9f0781, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.20038888
+      value: 0.20038882
       objectReference: {fileID: 0}
     - target: {fileID: 7147830899791437490, guid: 7a798c5a4d0b087438c033b03b9f0781, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.014648206
+      value: 0.014648195
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a798c5a4d0b087438c033b03b9f0781, type: 3}
@@ -225,7 +225,9 @@ PlayableDirector:
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
-  - key: {fileID: 424674306981667693, guid: e1b1b538dd531664692ed06404c8f9ec, type: 2}
+  - key: {fileID: 0}
+    value: {fileID: 7147830900166124605}
+  - key: {fileID: 142291202196271085, guid: e1b1b538dd531664692ed06404c8f9ec, type: 2}
     value: {fileID: 7147830900166124605}
   m_ExposedReferences:
     m_References: []
