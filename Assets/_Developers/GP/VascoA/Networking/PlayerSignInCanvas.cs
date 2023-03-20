@@ -34,6 +34,8 @@ public class PlayerSignInCanvas : MonoBehaviour
         SignInMenu.SignInFailed(failedReason);
         //TODO VASCO User Action Canvas
     }
+
+    
 }
 
 

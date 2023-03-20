@@ -17,6 +17,8 @@ public class LobbyManager : NetworkBehaviour
 
     public event Action<NetworkObject> OnClientLoggedIn;
 
+    public static event Action<NetworkObject> OnMemberJoined;
+    public static event Action<NetworkObject> OnMemberStarted;
     public static event Action<NetworkObject> OnMemberLeft;
 
     public List<RoomDetails> CreatedRooms = new List<RoomDetails>();
@@ -24,6 +26,10 @@ public class LobbyManager : NetworkBehaviour
     public Dictionary<NetworkConnection, RoomDetails> ConnectionRooms = new Dictionary<NetworkConnection, RoomDetails>();
 
     public event Action<RoomDetails, NetworkObject> OnClientLeftRoom;
+
+    public event Action<RoomDetails, NetworkObject> OnClientJoinedRoom;
+
+    
 
     public RoomDetails currentRoom { get; private set; } = null;
     public static RoomDetails CurrentRoom
@@ -91,7 +97,7 @@ public class LobbyManager : NetworkBehaviour
         string failedReason = string.Empty;
         bool success = OnSignIn(ref username, ref failedReason);
 
-        
+
 
     }
 
@@ -100,28 +106,28 @@ public class LobbyManager : NetworkBehaviour
         throw new NotImplementedException();
     }
 
-    public static bool SanitizeUsername(ref string value, ref string failedReason) {  return Instance.InternalSanitizeUsername(ref value, ref failedReason); }
+    public static bool SanitizeUsername(ref string value, ref string failedReason) { return Instance.InternalSanitizeUsername(ref value, ref failedReason); }
 
-    
+
     protected virtual bool InternalSanitizeUsername(ref string value, ref string failedReason)
     {
         value = value.Trim();
         SanitizeTextMeshProString(ref value);
-        
-        if(value.Length < 3)
+
+        if (value.Length < 3)
         {
             failedReason = "Username must be at least 3 characters long.";
             return false;
         }
 
-        if(value.Length > 15)
+        if (value.Length > 15)
         {
             failedReason = "Username can't be longer than 15 characters long.";
             return false;
         }
 
         bool letters = value.All(c => Char.IsLetter(c));
-        if(!letters)
+        if (!letters)
         {
             failedReason = "Username can only contain letters.";
             return false;
@@ -132,7 +138,133 @@ public class LobbyManager : NetworkBehaviour
 
     #endregion
 
-    #region CreateRoom
+    #region Join Room
+
+    [Client]
+    public static void JoinRoom(string roomName, string password)
+    {
+        Instance.JoinRoomInternal(roomName, password);
+    }
+    
+    private void JoinRoomInternal(string roomName, string password)
+    {
+        CmdJoinRoom(roomName, password);
+    }
+    
+    [ServerRpc(RequireOwnership = false)]
+    private void CmdJoinRoom(string roomName, string password, NetworkConnection sender = null)
+    {
+        ClientInfo ci;
+        if (!FindClientInstance(sender, out ci))
+            return;
+
+        string failedReason = string.Empty;
+        RoomDetails roomDetails = null;
+
+        bool success = OnJoinRoom(roomName, password, ci.NetworkObject, ref failedReason, ref roomDetails);
+
+        if (success)
+        {
+            roomDetails.AddMember(ci.NetworkObject);
+            ConnectionRooms[ci.Owner] = roomDetails;
+            TargetJoinRoomSuccess(ci.Owner, roomDetails);
+            OnClientJoinedRoom?.Invoke(roomDetails, ci.NetworkObject);
+
+            RpcUpdateRooms(new RoomDetails[] { roomDetails });
+
+            foreach (NetworkObject item in roomDetails.MemberIds)
+                TargetMemberJoined(item.Owner, ci.NetworkObject);
+        }
+        else
+        {
+            //Send failed reason to client.
+            TargetJoinRoomFailed(ci.Owner, failedReason);
+        }
+    }
+
+    protected virtual bool OnJoinRoom(string roomName, string password, NetworkObject joiner, ref string failedReason, ref RoomDetails roomDetails)
+    {
+        //Already in a room. 
+        if (ReturnRoomDetails(joiner) != null)
+        {
+            failedReason = "You are already in a room.";
+            return false;
+        }
+
+        roomDetails = ReturnRoomDetails(roomName);
+        //Room doesn't exist.
+        if (roomDetails == null)
+        {
+            failedReason = "Room does not exist.";
+            return false;
+        }
+        //Room exist.
+        else
+        {
+            //Wrong password.
+            if (roomDetails.IsPasswordProtected && password != roomDetails.Password)
+            {
+                failedReason = "Incorrect room password.";
+                return false;
+            }
+            //Full.
+            if (roomDetails.MemberIds.Count >= roomDetails.MaxPlayers)
+            {
+                failedReason = "Room is full.";
+                return false;
+            }
+            //If started and locked on start.
+            if (roomDetails.IsStarted)
+            {
+                failedReason = "Room has already started.";
+                return false;
+            }
+            //Kicked from room.
+            if (roomDetails.IsMemberKicked(joiner))
+            {
+                failedReason = "You are kicked from that room.";
+                return false;
+            }
+        }
+
+        //All checks passed.
+        return true;
+    }
+
+    [TargetRpc]
+    private void TargetMemberJoined(NetworkConnection conn, NetworkObject member)
+    {
+        //Not in a room, shouldn't have got this. Likely left as someone joined.
+        if (CurrentRoom == null)
+            return;
+
+        MemberJoined(member);
+    }
+
+    private void MemberJoined(NetworkObject member)
+    {
+        CurrentRoom.AddMember(member);
+        OnMemberJoined?.Invoke(member);
+    }
+
+    [TargetRpc]
+    private void TargetJoinRoomSuccess(NetworkConnection conn, RoomDetails roomDetails)
+    {
+        CurrentRoom = roomDetails;
+        //TODO VASCO
+        //LobbyCanvasManager.CreateJoinCurrentRoomCanvas.ShowRoomJoinedSuccess(roomDetails);
+    }
+
+    [TargetRpc]
+    private void TargetJoinRoomFailed(NetworkConnection conn, string failedReason)
+    {
+        CurrentRoom = null;
+        //TODO VASCO
+        //LobbyCanvasManager.CreateJoinCurrentRoomCanvas.ShowRoomJoinedFailed(failedReason);
+    }
+    #endregion
+
+    #region Create Room
 
     [Client]
     public static void CreateRoom(string roomName, string password, int playerCount) { Instance.InternalCreateRoom(roomName, password, playerCount); }
@@ -153,11 +285,11 @@ public class LobbyManager : NetworkBehaviour
         string failedReason = string.Empty;
 
         // TODO VASCO rest of this
-        
+
     }
 
     public static bool SanitizePlayerCount(int count, ref string failedReason) { return Instance.OnSanitizePlayerCount(count, ref failedReason); }
-    
+
     protected virtual bool OnSanitizePlayerCount(int count, ref string failedReason)
     {
         if (count < OnReturnMinimumPlayers() || count > OnReturnMaximumPlayers())
@@ -165,12 +297,12 @@ public class LobbyManager : NetworkBehaviour
             failedReason = "Invalid player count.";
             return false;
         }
-        
+
         return true;
     }
-    
+
     public static int ReturnMinimumPlayers() { return Instance.OnReturnMinimumPlayers(); }
-    
+
     protected virtual int OnReturnMinimumPlayers() { return MIN_PLAYERS; }
 
     public static int ReturnMaximumPlayers() { return Instance.OnReturnMaximumPlayers(); }
@@ -183,7 +315,7 @@ public class LobbyManager : NetworkBehaviour
     {
         value = value.Trim();
         SanitizeTextMeshProString(ref value);
-        
+
         if (value.Length > 25)
         {
             failedReason = "Room name must be at most 25 characters long.";
@@ -219,14 +351,13 @@ public class LobbyManager : NetworkBehaviour
     }
     #endregion
 
-
     #region Manage Rooms
 
     private RoomDetails ReturnRoomDetails(string roomName)
     {
         foreach (RoomDetails room in CreatedRooms)
         {
-            if(room.RoomName.Equals(roomName, System.StringComparison.CurrentCultureIgnoreCase))
+            if (room.RoomName.Equals(roomName, System.StringComparison.CurrentCultureIgnoreCase))
                 return room;
         }
 
@@ -251,9 +382,9 @@ public class LobbyManager : NetworkBehaviour
     private RoomDetails RemoveFromRoom(NetworkObject clientId, bool clientDisconnected)
     {
         RoomDetails roomDetails = ReturnRoomDetails(clientId);
-        if(roomDetails != null)
+        if (roomDetails != null)
         {
-            foreach(NetworkObject member in roomDetails.MemberIds)
+            foreach (NetworkObject member in roomDetails.MemberIds)
             {
                 if (clientDisconnected && member == clientId)
                     continue;
@@ -282,7 +413,7 @@ public class LobbyManager : NetworkBehaviour
 
             if (!roomDetails.IsStarted)
                 RpcUpdateRooms(new RoomDetails[] { roomDetails });
-                
+
         }
 
         return roomDetails;
@@ -291,7 +422,7 @@ public class LobbyManager : NetworkBehaviour
     [ObserversRpc]
     public void RpcUpdateRooms(RoomDetails[] roomDetails)
     {
-        if(CurrentRoom != null)
+        if (CurrentRoom != null)
         {
             for (int i = 0; i < roomDetails.Length; i++)
             {
@@ -307,6 +438,7 @@ public class LobbyManager : NetworkBehaviour
              * be optimal to only send this to clients which are not in a match,
              * or ignore if in a match then request room updates upon
              * leaving the match. */
+        
         //LobbyCanvases.JoinCreateRoomCanvas.CurrentRoomMenu.UpdateRoom(roomDetails);
         //LobbyCanvases.JoinCreateRoomCanvas.JoinRoomMenu.UpdateRooms(roomDetails);
 
@@ -327,7 +459,7 @@ public class LobbyManager : NetworkBehaviour
     {
 
     }
-    
+
     #endregion
 
     #region Utilities
