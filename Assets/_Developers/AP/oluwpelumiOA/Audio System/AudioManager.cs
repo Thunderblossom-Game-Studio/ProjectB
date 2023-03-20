@@ -8,7 +8,7 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private AudioBank musicBank;
     [SerializeField] private AudioBank soundEffectBank;
-    [SerializeField] private  AudioSource musicPlayer;
+    [SerializeField] private AudioSource musicPlayer;
     [SerializeField] private AudioSource soundEffectPlayer;
 
     [Header("Radio System")]
@@ -53,6 +53,9 @@ public class AudioManager : MonoBehaviour
         switch (loadedScene)
         {
             case SceneType.MainMenu:
+                ChangeMusicWithFade("MMTheme", true);
+                break;
+            case SceneType.Credits:
                 ChangeMusicWithFade("MMTheme", true);
                 break;
             case SceneType.Tutorial: ChangeMusicWithFade("TuneT", true); break;

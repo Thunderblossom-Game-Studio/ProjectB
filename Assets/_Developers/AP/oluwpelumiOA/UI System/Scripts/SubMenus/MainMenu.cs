@@ -78,6 +78,8 @@ public class MainMenu : BaseMenu<MainMenu>
 
     public void CreditButton()
     {
-        SceneManager.LoadScene("Credits", LoadSceneMode.Single);
+        //Close(() => SceneManager.LoadScene("Credits", LoadSceneMode.Single));
+
+        Close(() => (LoadingMenu.Instance as LoadingMenu)?.LoadScene(6));
     }
 }
