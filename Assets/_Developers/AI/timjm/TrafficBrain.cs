@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.AI;
+using JetBrains.Annotations;
+using Unity.VisualScripting;
 
 public class TrafficBrain : MonoBehaviour
 {
@@ -38,7 +40,7 @@ public class TrafficBrain : MonoBehaviour
     [Header("Raycast")]
     #region
     public GameObject RayCast;
-    UnityEngine.AI.NavMeshAgent agent;
+    public UnityEngine.AI.NavMeshAgent agent;
     bool IgnoreRaycasts;
     [SerializeField] float RayCastInt;
     float SecondsToWait;
@@ -76,6 +78,8 @@ public class TrafficBrain : MonoBehaviour
     #region
     [Tooltip("Spawner this instance spawned from")]
     public GameObject SpawnStation;
+    public bool DeathCleared;
+    public int HowLongTillDeath = 3;
     #endregion
 
     void Start()
@@ -96,21 +100,21 @@ public class TrafficBrain : MonoBehaviour
             agent.destination = goal.position;
         }
 
-        #region Raycast Code
-        RaycastHit hit;
-        Vector3 forward = RayCast.transform.TransformDirection(Vector3.forward) * RayCastInt;
-        if (Physics.Raycast(RayCast.transform.position, forward, out hit, 5.0f))
-        {
-            if (hit.rigidbody != null && IgnoreRaycasts == false)
-            {
-                agent.isStopped = true;
-            }
-        }
-        else
-        {
-            agent.isStopped = false;
-        }
-        #endregion
+        //#region Raycast Code
+        //RaycastHit hit;
+        //Vector3 forward = RayCast.transform.TransformDirection(Vector3.forward) * RayCastInt; 
+        //if (Physics.Raycast(RayCast.transform.position, forward, out hit, 5.0f))
+        //{
+        //    if (hit.rigidbody != null && IgnoreRaycasts == false)
+        //    {
+        //        agent.isStopped = true;
+        //    }
+        //}
+        //else
+        //{
+        //    agent.isStopped = false;
+        //}
+        //#endregion
 
         #region Panic Code
         if (panic == true && ExtendedPanic == false)
@@ -154,6 +158,14 @@ public class TrafficBrain : MonoBehaviour
         FrontRight.transform.Rotate(Vector3.forward, turnSpeed * Time.deltaTime);
         RearLeft.transform.Rotate(Vector3.back, turnSpeed * Time.deltaTime);
         RearRight.transform.Rotate(Vector3.forward, turnSpeed * Time.deltaTime);
+
+
+        if (agent.destination != goal.position)
+        {
+            ReattachDestination();
+        }
+
+       
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -217,9 +229,11 @@ public class TrafficBrain : MonoBehaviour
 
     IEnumerator Explode()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(HowLongTillDeath);
         //Insert Explosion/Particle Effects Here
         SpawnStation.GetComponent<SpawnerControl>().count = SpawnStation.GetComponent<SpawnerControl>().count - 1;
+        this.gameObject.transform.position = SpawnStation.GetComponent<SpawnerControl>().Grave.transform.position;
+        yield return new WaitForSeconds(10);
         Destroy(this.gameObject);
     }
 
@@ -228,6 +242,13 @@ public class TrafficBrain : MonoBehaviour
         SpawnStation.GetComponent<SpawnerControl>().count = SpawnStation.GetComponent<SpawnerControl>().count - 1;
         Destroy(this.gameObject);
     }
+
+
+    void ReattachDestination()
+    {
+        agent.destination = goal.position;
+    }
+
 }
 
 #if UNITY_EDITOR

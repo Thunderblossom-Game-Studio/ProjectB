@@ -9,6 +9,7 @@ public class SpawnerControl : MonoBehaviour
     [Tooltip("Reference to prefab to spawn")]
     [Header("References")]
     public GameObject RoadConnect;
+    public GameObject Grave;
     [Tooltip("Waypoint for the traffic to go to")]
     public GameObject Director;
     [Tooltip("The MasterWaypoint for the car")]
