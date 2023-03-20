@@ -60,7 +60,7 @@ public class ShrinkingZone : MonoBehaviour
         {
             currentWaveIndex++;
             currentWave = waves[currentWaveIndex];
-            StartCoroutine(Timer());
+            StartCoroutine(Timer()); //starts timer
         }
         else
         {
