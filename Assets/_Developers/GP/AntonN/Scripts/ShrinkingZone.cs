@@ -1,69 +1,76 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
+using UnityEngine.UI;
 
 public class ShrinkingZone : MonoBehaviour
 {
-    [SerializeField] private float secondsToShrink;
-    [SerializeField] private float amountOfWaves;
-    [SerializeField] private float secondsToCooldown;
-    private float timer;
-    private int currentWaves;
-    private bool outputTest;
-    private float cooldown;
+    [Serializable] public class Wave
+    {
+        public int waveNumber;
+        public Vector3 waveSize;
+        public float duration;
+    }
+
+    [SerializeField] List<Wave> waves = new List<Wave>();
+    [SerializeField] private float secondsToNextWave;
+    [SerializeField] private float waveChangeDelay;
+    [SerializeField] private Text countdownTimerText;
+    private int currentWaveIndex;
+    private Wave currentWave;
 
     private void Start()
     {
-        currentWaves = 0;
-        outputTest = false;
+        currentWave = waves[currentWaveIndex];
+        StartCoroutine(Timer());
+    }
+    
+    IEnumerator Timer()
+    {
+        float currentTime = secondsToNextWave;
+        while(currentTime > 0)
+        {
+            currentTime -= Time.deltaTime;
+            countdownTimerText.text = "WAVE " + currentWave.waveNumber + "\n The zone is shrinking! , " + currentTime;
+            yield return null;
+        }
+        StartCoroutine(ScaleZone());
     }
 
-    private void Update()
+    IEnumerator ScaleZone()
     {
-        if(currentWaves <= amountOfWaves)
+        Vector3 originalScale = transform.localScale;
+        float elapsedTime = 0f;
+        while (elapsedTime < currentWave.duration)
         {
-            Timer();
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / currentWave.duration);
+            transform.localScale = Vector3.Lerp(originalScale, currentWave.waveSize, t);
+            yield return null;
+        }
+        NextWave();
+    }
+
+    private void NextWave()
+    {
+        if(currentWaveIndex < waves.Count - 1)
+        {
+            currentWaveIndex++;
+            currentWave = waves[currentWaveIndex];
+            StartCoroutine(Timer());
         }
         else
         {
-            if(!outputTest)
-            {
-                Debug.Log("End of match");
-                outputTest = true;
-            }
+            WaveCompleted();
         }
     }
 
-    private void Timer()
+    private void WaveCompleted()
     {
-        if (timer >= secondsToShrink)
-        {
-            timer = 0;
-            ShrinkZone();
-        }
-        else
-        {
-            timer += Time.deltaTime;
-            Debug.Log(secondsToShrink - timer + 1);
-        }
-    }
-
-    private void CooldownBetweenShrinks()
-    {
-        if (cooldown >= secondsToCooldown)
-        {
-            cooldown = 0;
-        }
-        else
-        {
-            cooldown += Time.deltaTime;
-        }
-    }
-
-    private void ShrinkZone()
-    {
-        currentWaves++;
-        Debug.Log("Shrinking!");
-        Debug.Log(currentWaves);
+        Debug.Log("Wave Completed");
     }
 }
+
