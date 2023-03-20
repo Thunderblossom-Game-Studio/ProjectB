@@ -606,20 +606,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5076553779408679788, guid: c18624b5658b9354883a6f68040ac546, type: 3}
   m_PrefabInstance: {fileID: 2017601508613555642}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-1608978496140259931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6740902542980822742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9547ffe71daf33e4e93ee6f934c74bf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentState: 0
-  agent: {fileID: 0}
 --- !u!208 &7972528803786120260
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -636,6 +622,59 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &-1608978496140259931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6740902542980822742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9547ffe71daf33e4e93ee6f934c74bf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
+  _agent: {fileID: 0}
+  _forwardmultiplier: 0
+  _turnmultiplier: 0
+  _brakeSensitivity: 50
+  _angle: 0
+  _stopDistance: 10
+  _defaultSpawnWeight: 5
+  _spawnWeight: 3
+  _frontTriggerCheck: {fileID: 0}
+  _backTriggerCheck: {fileID: 0}
+  _defaultAgentAcc: 0
+  _weightedAgentAcc: 0
+  _distanceBetweenAgent: 30
+  MoveTarget: {fileID: 0}
+--- !u!114 &8516153776489548581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6740902542980822742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4df60984ef420d4694cc2f9795c7c61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wheelMeshes: {fileID: 0}
+  wheelColliders: {fileID: 0}
+  centerOfMass: {fileID: 0}
+  driveType: 2
+  brakeType: 2
+  topSpeed: 0
+  carPower: 0
+  brakePower: 0
+  boostPower: 0
+  turningRadius: 0
+  downForceValue: 0
+  currentSpeed: 0
 --- !u!4 &6740902542980822745 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5076553779408679779, guid: c18624b5658b9354883a6f68040ac546, type: 3}

@@ -1,22 +1,29 @@
+using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Networking changes:
+/// - Added NetworkBehaviour inheritance.
+/// - Added [SyncVar] to _state.
+/// </summary>
+
 [RequireComponent(typeof(AICarController), typeof(AIDecisionHandler), typeof(AICombatHandler))]
-public class AIPlayerHandler : MonoBehaviour
+public class AIPlayerHandler : NetworkBehaviour
 {
     public enum CurrentState { IDLE, PURSUE, FLEE, PICKUP, DELIVERY }
 
-    [Viewable] private CurrentState _state;
+    [SyncVar][Viewable] private CurrentState _state;
 
     private AICarController _carHandler;
     private AIDecisionHandler _decisionHandler;
     private AICombatHandler _combatHandler;
 
     private bool _newState = false;
-    private CurrentState _previousState;
+    [SyncVar] private CurrentState _previousState;
 
-    // Start is called before the first frame update
     void Start()
     {
         _carHandler = GetComponent<AICarController>();
@@ -27,9 +34,11 @@ public class AIPlayerHandler : MonoBehaviour
         else Debug.LogWarning("No AI Director found in scene.");
     }
 
-    // Update is called once per frame
     private void Update()
     {
+        if (!IsServer)
+            return;
+
         Evaluations();
 
         StateController();
@@ -45,6 +54,7 @@ public class AIPlayerHandler : MonoBehaviour
         if (_state != _previousState || _carHandler.StalePath()) _newState = true;
     }
 
+    [ServerRpc (RequireOwnership = false)]
     private void StateController()
     {
         switch (_state)

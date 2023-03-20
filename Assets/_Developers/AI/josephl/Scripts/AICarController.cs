@@ -1,10 +1,11 @@
+using FishNet.Object;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(AIVehicleController))]
-public class AICarController : MonoBehaviour
+public class AICarController : NetworkBehaviour
 {
     private AIVehicleController _car;
 
@@ -44,6 +45,9 @@ public class AICarController : MonoBehaviour
 
     private void Update()
     {
+        if (!IsServer)
+            return;
+
         if (!_agent)
         {
             Debug.LogWarning("No NavMesh Agent Assigned");
@@ -72,6 +76,7 @@ public class AICarController : MonoBehaviour
     /// <summary>
     /// Makes the car move in the direction of the navmesh agent it's chasing at all times
     /// </summary>
+    [ServerRpc (RequireOwnership = false)]
     public void FollowAgent()
     {
         Vector3 dir = (_agent.transform.position - transform.position).normalized;

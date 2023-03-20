@@ -1831,6 +1831,7 @@ MonoBehaviour:
   _packageScore: 0
   _packageDrop: {fileID: 0}
   _packageObjectVisual: {fileID: 5676333477140487690, guid: c273e1d1bba822c448ad29ab53a3e576, type: 3}
+  _bodyVisual: {fileID: 0}
   _maxPackages: 2
   _packageSpawns:
   - {x: -0.43, y: 0.9, z: -1.68}
@@ -1867,6 +1868,9 @@ MonoBehaviour:
   _spawnHealth: 100
   _maximumHealth: 100
   _minimumHealth: 0
+  _onHealthChange:
+    m_PersistentCalls:
+      m_Calls: []
   _onReduceHealth:
     m_PersistentCalls:
       m_Calls:
@@ -1903,6 +1907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c138514126984b44295a59fd00d8aad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  addOnAwake: 1
 --- !u!114 &7576731440948102139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1953,20 +1958,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58d8b075e3b9cb4ebb001c71771d29b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 1330326868928177836}
-  forwardmultiplier: 1
-  turnmultiplier: 5
-  brakeSensitivity: 40
-  angle: 20
-  stopDistance: 20
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
+  _agent: {fileID: 0}
+  _forwardmultiplier: 0
+  _turnmultiplier: 0
+  _brakeSensitivity: 50
+  _angle: 0
+  _stopDistance: 10
+  _defaultSpawnWeight: 5
+  _spawnWeight: 3
+  _frontTriggerCheck: {fileID: 0}
+  _backTriggerCheck: {fileID: 0}
+  _defaultAgentAcc: 0
+  _weightedAgentAcc: 0
+  _distanceBetweenAgent: 30
+  MoveTarget: {fileID: 0}
   NextState: 4
   packageSpawner: {fileID: 0}
   PackageSystem: {fileID: 9043634083372453858}
   Health: {fileID: 9043634083372453861}
-  frontTriggerCheck: {fileID: 1078696219465399200}
-  backTriggerCheck: {fileID: 666629236538970752}
-  distanceToReset: 150
-  distanceBetweenAgent: 20
   AttackRange: 50
   AggroRange: 60
   Car:
@@ -1977,6 +1989,11 @@ MonoBehaviour:
   DistanceFromPatrolPoint: 20
   weaponHandler: {fileID: 3631949243076593990}
   gamePlayer: {fileID: 7576731440948102138}
+  tutorialState: 0
+  canShoot: 0
+  currentRoute:
+    points: []
+    pointIndex: 0
 --- !u!1 &7651979919001708465
 GameObject:
   m_ObjectHideFlags: 0
@@ -2818,10 +2835,5 @@ PrefabInstance:
 --- !u!4 &1330326868928177835 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5725102409683620108, guid: 9636c90de6396184d86e232e0748f7c4, type: 3}
-  m_PrefabInstance: {fileID: 6703013699955980199}
-  m_PrefabAsset: {fileID: 0}
---- !u!195 &1330326868928177836 stripped
-NavMeshAgent:
-  m_CorrespondingSourceObject: {fileID: 5725102409683620107, guid: 9636c90de6396184d86e232e0748f7c4, type: 3}
   m_PrefabInstance: {fileID: 6703013699955980199}
   m_PrefabAsset: {fileID: 0}
