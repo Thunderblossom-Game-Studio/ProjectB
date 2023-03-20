@@ -1,5 +1,30 @@
 {
   "dependencies": {
+    "com.heathen.steamworksfoundation": {
+      "version": "https://github.com/heathen-engineering/SteamworksFoundation.git?path=Unity/com.heathen.steamworksfoundation",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.mathematics": "1.2.5"
+      },
+      "hash": "34aa0ab83a81752bf64117abdb4ba97b6da5c3e1"
+    },
+    "com.heathen.systemcore": {
+      "version": "https://github.com/heathen-engineering/SystemCore.git?path=/com.heathen.systemcore",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.mathematics": "1.2.5"
+      },
+      "hash": "7c126795e8dfef5b599e05cbe9f83dff55978f00"
+    },
+    "com.rlabrecque.steamworks.net": {
+      "version": "https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "6c169a9129de81d2bd836612131617f1be82edd1"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
