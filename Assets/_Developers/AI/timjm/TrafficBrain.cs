@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.AI;
+using JetBrains.Annotations;
+using Unity.VisualScripting;
 
 public class TrafficBrain : MonoBehaviour
 {
@@ -74,6 +76,8 @@ public class TrafficBrain : MonoBehaviour
     #region
     [Tooltip("Spawner this instance spawned from")]
     public GameObject SpawnStation;
+    public bool DeathCleared;
+    public int HowLongTillDeath = 3;
     #endregion
 
     void Start()
@@ -152,6 +156,12 @@ public class TrafficBrain : MonoBehaviour
         RearLeft.transform.Rotate(Vector3.back, turnSpeed * Time.deltaTime);
         RearRight.transform.Rotate(Vector3.forward, turnSpeed * Time.deltaTime);
 
+
+        if (agent.destination != goal.position)
+        {
+            ReattachDestination();
+        }
+
        
     }
 
@@ -216,9 +226,11 @@ public class TrafficBrain : MonoBehaviour
 
     IEnumerator Explode()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(HowLongTillDeath);
         //Insert Explosion/Particle Effects Here
         SpawnStation.GetComponent<SpawnerControl>().count = SpawnStation.GetComponent<SpawnerControl>().count - 1;
+        this.gameObject.transform.position = SpawnStation.GetComponent<SpawnerControl>().Grave.transform.position;
+        yield return new WaitForSeconds(10);
         Destroy(this.gameObject);
     }
 
@@ -227,6 +239,13 @@ public class TrafficBrain : MonoBehaviour
         SpawnStation.GetComponent<SpawnerControl>().count = SpawnStation.GetComponent<SpawnerControl>().count - 1;
         Destroy(this.gameObject);
     }
+
+
+    void ReattachDestination()
+    {
+        agent.destination = goal.position;
+    }
+
 }
 
 #if UNITY_EDITOR

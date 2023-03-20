@@ -159,15 +159,15 @@ NavMeshAgent:
   m_GameObject: {fileID: 926617803036837812}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 1.5
   m_Speed: 4
   m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 600
-  m_StoppingDistance: 2
-  m_AutoTraverseOffMeshLink: 1
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 0
-  m_AutoRepath: 1
+  m_AutoRepath: 0
   m_Height: 1
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
@@ -209,6 +209,8 @@ MonoBehaviour:
   RearLeft: {fileID: 3847423473718545084}
   RearRight: {fileID: 1657287716529583639}
   SpawnStation: {fileID: 0}
+  DeathCleared: 0
+  HowLongTillDeath: 3
 --- !u!114 &1162770767472714334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -855,7 +857,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5826700790219469066}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.022, y: 0.078, z: 2.753}
+  m_LocalPosition: {x: 0.022, y: 0.078, z: 2.779}
   m_LocalScale: {x: 0.26235187, y: 0.032508858, z: 1.9804972}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -888,6 +890,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TrafficCarObject: {fileID: 926617803036837812}
+  stop: 0
 --- !u!1 &8447182002730721345
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class SpawnerControl : MonoBehaviour
     private GameObject SpawnerReference;
     GameObject Clone;
     public GameObject RoadConnect;
+    public GameObject Grave;
     public int limit;
     public int count;
     bool ready = true;

@@ -6,7 +6,7 @@ public class TrafficAiDetection : MonoBehaviour
 {
 
     public GameObject TrafficCarObject;
-
+    public bool stop;
 
 
 
@@ -25,18 +25,24 @@ public class TrafficAiDetection : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         TrafficCarObject.GetComponent<TrafficBrain>().agent.isStopped = true;
+        stop = true;
+
     }
 
     private void OnTriggerExit(Collider other)
     {
         TrafficCarObject.GetComponent<TrafficBrain>().agent.isStopped = false;
+        stop = false;
     }
 
-    
+
     private void OnTriggerStay(Collider other)
     {
         TrafficCarObject.GetComponent<TrafficBrain>().agent.isStopped = true;
+        stop = true;
+        
     }
+
 
     
 
