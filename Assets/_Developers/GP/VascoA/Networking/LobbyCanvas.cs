@@ -1,10 +1,22 @@
 using UnityEngine;
 
-public class LobbyUI : MonoBehaviour
+public class LobbyCanvas : MonoBehaviour
 {
+    public LobbyCanvasManager LobbyCanvasManager { get; private set; }
+
+    
     [SerializeField] private GameObject playerCardPrefab;
     [SerializeField] private GameObject playerCardContainer;
+    [SerializeField] private TMPro.TMP_Text infoText;
 
+
+
+    public void Initialize(LobbyCanvasManager lobbyCanvasManager)
+    {
+        LobbyCanvasManager = lobbyCanvasManager;
+    }
+
+    
 
     public void AddPlayerCard(string username)
     {
@@ -19,13 +31,5 @@ public class LobbyUI : MonoBehaviour
             Destroy(go.gameObject);
     }
 
-    public void Show()
-    {
-        gameObject.SetActive(true);
-    }
-
-    public void Hide()
-    {
-        gameObject.SetActive(false);
-    }
+    
 }
