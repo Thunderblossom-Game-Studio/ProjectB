@@ -6,32 +6,41 @@ using UnityEngine.AI;
 [RequireComponent(typeof(AIVehicleController))]
 public class AICarController : MonoBehaviour
 {
-    protected AIVehicleController car;
+    private AIVehicleController car;
 
     [Header("Pathfinding Settings")]
 
-    [SerializeField] protected NavMeshAgent agent;
-    [Range(0f, 1f)] [SerializeField] protected float forwardmultiplier;
-    [Range(0f, 5f)] [SerializeField] protected float turnmultiplier;
-    [Range(0, 100)] [SerializeField] protected float brakeSensitivity = 50;
-    [Range(0, 180)] [SerializeField] protected int angle;
-    [SerializeField] protected float stopDistance = 10;
+    [SerializeField] private NavMeshAgent agent;
+    [Range(0f, 1f)] [SerializeField] private float forwardmultiplier;
+    [Range(0f, 5f)] [SerializeField] private float turnmultiplier;
+    [Range(0, 100)] [SerializeField] private float brakeSensitivity = 50;
+    [Range(0, 180)] [SerializeField] private int angle;
+    [SerializeField] private float stopDistance = 10;
 
-    protected bool newState = false;
-    
-    internal bool crashed = false;
-    protected float crashReverseTime = 0;
+    [SerializeField] private float defaultSpawnWeight = 5f;
+    [SerializeField] private float spawnWeight = 3f;
 
-    #region Modifiable Controller Functions
-    
+    [SerializeField] private BackTriggerCheck frontTriggerCheck;
+    [SerializeField] private BackTriggerCheck backTriggerCheck;
+
+    [Viewable] private float agentSpawnWeight = 2;
+    [SerializeField] private float defaultAgentAcc;
+    [SerializeField] private float weightedAgentAcc;
+    [SerializeField] private float distanceBetweenAgent = 30;
+
+    public GameObject MoveTarget;
+
+    private float maxIdleTimer = 4;
+    private float idleTimer = 0;
+    private bool stuck = false;
+
     // Start is called before the first frame update
-    protected virtual void Start()
+    private void Start()
     {
         car = GetComponent<AIVehicleController>();
     }
 
-    // Update is called once per frame
-    protected virtual void Update()
+    private void Update()
     {
         if (!agent)
         {
@@ -40,72 +49,30 @@ public class AICarController : MonoBehaviour
             return;
         }
 
-        Act();
-    }
-
-    /// <summary>
-    /// Runs a series of checks to choose what state is appropriate based on the current data provided
-    /// </summary>
-    protected virtual void Evaluate()
-    {
-
-    }
-
-    /// <summary>
-    /// Runs the state selected in Evaluate()
-    /// </summary>
-    protected virtual void SwapState()
-    {
-
-    }
-
-    /// <summary>
-    /// State that attempts to fix a crash
-    /// </summary>
-    protected virtual void CourseCorrect()
-    {
-        crashReverseTime += Time.deltaTime;
-
-        if (crashReverseTime > .5f)
-        {
-            crashed = false;
-
-            //agent.transform.position = ha.shootpoint.position;
-
-            crashReverseTime = 0;
-        }
-
-        
-        car.HandleInput(-1, 1, false);
-
-        newState = false;
-    }
-
-    #endregion
-
-    #region Core Controller Functions
-
-    /// <summary>
-    /// Runs the AI controllers frame functionality from path finding to state evaluation + execution
-    /// </summary>
-    protected virtual void Act()
-    {
         FollowAgent();
+        CourseCorrection();
+        IdleTiming();
+    }
 
-        Evaluate();
-
-
-        SwapState();
+    public AIPlayerHandler.CurrentState Evaluate(AIPlayerHandler.CurrentState state)
+    {
+        if ((Vector3.Distance(transform.position, agent.transform.position) > distanceBetweenAgent * 1.6f)
+            ||
+            (frontTriggerCheck.active || backTriggerCheck.active)
+            ||
+            stuck)
+        {
+            state = AIPlayerHandler.CurrentState.IDLE;
+        }
+        return state;
     }
 
     /// <summary>
     /// Makes the car move in the direction of the navmesh agent it's chasing at all times
     /// </summary>
-    protected virtual void FollowAgent()
+    public void FollowAgent()
     {
         Vector3 dir = (agent.transform.position - transform.position).normalized;
-
-        //float direction = Vector3.Dot(dir, transform.forward);
 
         float distance = Vector3.Distance(transform.position, agent.transform.position);
 
@@ -137,26 +104,19 @@ public class AICarController : MonoBehaviour
         // braking
         bool b = false;
 
-        // brakesens
-        // stoppingdis
-
-        //Debug.Log(car.GetSpeed());
-
         if (
             // if not turning and speed is greater than brake sens
-            (horizontalInput != 0 && car.GetSpeed() > brakeSensitivity) || 
-            
+            (horizontalInput != 0 && car.GetSpeed() > brakeSensitivity) ||
+
             // if in stopping distance and speed is greater than brake sens
-            (Vector3.Distance(transform.position, agent.transform.position) < stopDistance && 
-            car.GetSpeed() > brakeSensitivity) || 
-            
+            (Vector3.Distance(transform.position, agent.transform.position) < stopDistance &&
+            car.GetSpeed() > brakeSensitivity) ||
+
             // if speed is greater than bleh
             (car.GetSpeed() > brakeSensitivity * 1.8))
         {
             b = true;
         }
-
-        if (b) Debug.Log("braking");
 
         forwardInput = Mathf.Clamp(forwardInput, -1f, 1f);
         horizontalInput = Mathf.Clamp(horizontalInput, -1f, 1f);
@@ -164,9 +124,77 @@ public class AICarController : MonoBehaviour
         car.HandleInput(forwardInput, horizontalInput, b);
     }
 
-    #endregion
+    /// <summary>
+    /// State that attempts to fix a crash
+    /// </summary>
+    public void CourseCorrection()
+    {
+        if (backTriggerCheck.active) agentSpawnWeight = spawnWeight;
+        else if (frontTriggerCheck.active) agentSpawnWeight = -spawnWeight;
+        else agentSpawnWeight = defaultSpawnWeight;
+        if (agentSpawnWeight != defaultSpawnWeight) agent.speed = weightedAgentAcc;
+        else agent.speed = defaultAgentAcc;
+        if (Vector3.Distance(transform.position, agent.transform.position) > distanceBetweenAgent)
+        {
+            agent.isStopped = true;
+        }
+        else
+        {
+            agent.isStopped = false;
+        }
+        if (Mathf.Abs(agent.transform.position.y - transform.position.y) > 5)
+        {
+            agent.Warp(transform.position);
+        }
+    }
 
-    protected virtual void OnDrawGizmos()
+    public void RecallAgent()
+    {
+        Vector3 pos = transform.position;
+        pos += transform.forward * agentSpawnWeight;
+        SetAgentTarget(pos);
+    }
+
+    public bool FindPath(Vector3 target)
+    {
+        NavMeshPath path = new NavMeshPath();
+        agent.CalculatePath(target, path);
+        if (path.status == NavMeshPathStatus.PathPartial || path.status == NavMeshPathStatus.PathInvalid)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public bool StalePath()
+    {
+        return agent.isPathStale;
+    }
+
+    public void SetAgentTarget(Vector3 position)
+    {
+        agent.SetDestination(position);
+    }
+
+    private void IdleTiming()
+    {
+        if (car.GetSpeed() < 3)
+        {
+            idleTimer += Time.deltaTime;
+
+            if (idleTimer > maxIdleTimer)
+            {
+                stuck = true;
+            }
+        }
+        else
+        {
+            stuck = false;
+            idleTimer = 0f;
+        }
+    }
+
+    public void OnDrawGizmos()
     {
         if (agent)
         {
