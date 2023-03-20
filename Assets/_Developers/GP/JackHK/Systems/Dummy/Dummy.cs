@@ -16,14 +16,12 @@ public class Dummy : MonoBehaviour
     FSM.State _movingState;
     FSM.State _freezeState;
     RouteUser _routeUser;
-    HealthSystem _healthSystem;
+    [SerializeField] HealthSystem _healthSystem;
     float _currentTime;
 
     void Start()
     {
         _routeUser = GetComponent<RouteUser>();
-        _healthSystem = GetComponent<HealthSystem>();
-
         _flippedState = FSM_Flipped;
         _movingState = FSM_Moving;
         _freezeState = FSM_Freeze;

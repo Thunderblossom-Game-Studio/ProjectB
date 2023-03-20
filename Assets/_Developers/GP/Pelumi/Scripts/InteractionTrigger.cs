@@ -11,6 +11,7 @@ public class InteractionTrigger : MonoBehaviour
 
     [Tooltip("Number of time the trigger will work [0  = Unlimied]")]
     [SerializeField] private int maxTrigger;
+    [SerializeField] private UnityEvent OnMaxTrigger;
 
     [Viewable] [SerializeField] private int currentTrigger;
 
@@ -20,7 +21,11 @@ public class InteractionTrigger : MonoBehaviour
 
         eventToTrigger?.Invoke();
 
-        if (maxTrigger > 0) ++currentTrigger;
+        if (maxTrigger > 0)
+        {
+            ++currentTrigger;
+            if (IsUsedUp()) OnMaxTrigger.Invoke();
+        } 
     }
 
     public bool IsUsedUp() => maxTrigger > 0 && currentTrigger >= maxTrigger;
