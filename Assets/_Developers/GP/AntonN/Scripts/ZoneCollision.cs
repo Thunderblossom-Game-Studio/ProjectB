@@ -7,14 +7,14 @@ using JE.DamageSystem;
 public class ZoneCollision : MonoBehaviour
 {
     [SerializeField] private LayerMask playerLayer;
-    public DamageSystem damager;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
+        IDamageable damager = other.GetComponent<IDamageable>();
         if ((playerLayer.value & 1 << other.gameObject.layer) == 1 << other.gameObject.layer)
         {
-            Debug.Log("Collision with player");
-            
+            Debug.Log("TAKING DAMAGE IN THE ZONE");
+            damager.ReduceHealth(1);
         }
     }
 }

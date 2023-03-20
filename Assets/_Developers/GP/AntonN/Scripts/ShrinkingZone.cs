@@ -1,109 +1,76 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.UI;
 
 public class ShrinkingZone : MonoBehaviour
 {
-    [SerializeField] private float numberOfWaves;
+    [Serializable] public class Wave
+    {
+        public int waveNumber;
+        public Vector3 waveSize;
+        public float duration;
+    }
+
+    [SerializeField] List<Wave> waves = new List<Wave>();
     [SerializeField] private float secondsToNextWave;
     [SerializeField] private float waveChangeDelay;
     [SerializeField] private Text countdownTimerText;
-    [SerializeField] private GameObject zone;
-    private float shrinkingSpeed = 1f;
-    private Vector3 scalingRate = new Vector3(0f, 0f, 0f);
-    private float timer;
-    private int currentWaves;
-    private bool checkLastWave;
-    private float currentTime;
-    private bool cooldownBool;
-    private float displayWaves;
-    private float zoneXpos;
-    private float zoneYpos;
-    private float zoneZpos;
-    private bool scaleCheck;
+    private int currentWaveIndex;
+    private Wave currentWave;
 
     private void Start()
     {
-        currentWaves = 0;
-        checkLastWave = false;
-        cooldownBool = false;
-        scaleCheck = false;
-        scalingRate = new Vector3(shrinkingSpeed, shrinkingSpeed, 0f);
-     }
-
-    private void Update()
+        currentWave = waves[currentWaveIndex];
+        StartCoroutine(Timer());
+    }
+    
+    IEnumerator Timer()
     {
-        if (currentWaves <= numberOfWaves)
+        float currentTime = secondsToNextWave;
+        while(currentTime > 0)
         {
-            Timer();
-            Shrinking();
+            currentTime -= Time.deltaTime;
+            countdownTimerText.text = "WAVE " + currentWave.waveNumber + "\n The zone is shrinking! , " + currentTime;
+            yield return null;
         }
-        else if(!checkLastWave)
+        StartCoroutine(ScaleZone());
+    }
+
+    IEnumerator ScaleZone()
+    {
+        Vector3 originalScale = transform.localScale;
+        float elapsedTime = 0f;
+        while (elapsedTime < currentWave.duration)
         {
-            checkLastWave = true;
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / currentWave.duration);
+            transform.localScale = Vector3.Lerp(originalScale, currentWave.waveSize, t);
+            yield return null;
+        }
+        NextWave();
+    }
+
+    private void NextWave()
+    {
+        if(currentWaveIndex < waves.Count - 1)
+        {
+            currentWaveIndex++;
+            currentWave = waves[currentWaveIndex];
+            StartCoroutine(Timer());
+        }
+        else
+        {
+            WaveCompleted();
         }
     }
 
-    private void Timer()
+    private void WaveCompleted()
     {
-        if (timer >= secondsToNextWave)
-        {
-            timer = 0;
-            cooldownBool = true;
-            StartCoroutine(CooldownBetweenShrinks());
-            ShrinkCheck();
-        }
-        else if (cooldownBool == false)
-        {
-            timer += Time.deltaTime;
-            currentTime = secondsToNextWave - timer;
-            displayWaves = currentWaves + 1;
-            if(checkLastWave == false)
-            {
-                countdownTimerText.text = "Next wave in: " + currentTime.ToString("0") + " seconds";
-            }
-            if (countdownTimerText.text == "Next wave in: " + 0.ToString() + " seconds")
-            {
-                if(currentWaves == numberOfWaves - 1)
-                {
-                    countdownTimerText.text = "FINAL WAVE!";
-                    checkLastWave = true;
-                }
-                else if(currentWaves < numberOfWaves)
-                {
-                    countdownTimerText.text = "WAVE " + displayWaves + "\n The zone is shrinking!";
-                }
-            }
-        }
-    }
-
-    IEnumerator CooldownBetweenShrinks()
-    {
-        yield return new WaitForSeconds(waveChangeDelay);
-        cooldownBool = false;
-    }
-
-    private void Shrinking()
-    {
-        if (((scaleCheck == true) && (zone.transform.localScale.x != zoneXpos / 2) && (zone.transform.localScale.y != zoneYpos / 2)))
-        {
-            zone.transform.localScale -= scalingRate;
-        }
-        else if ((zone.transform.localScale.x <= zoneXpos / 2) && (zone.transform.localScale.y <= zoneYpos / 2))
-        {
-            scaleCheck = false;
-        }
-    }
-
-    private void ShrinkCheck()
-    {
-        scaleCheck = true;
-        currentWaves++;
-
-        zoneXpos = zone.transform.localScale.x;
-        zoneYpos = zone.transform.localScale.y;
-        zoneZpos = zone.transform.localScale.z;
+        Debug.Log("Wave Completed");
     }
 }
+
