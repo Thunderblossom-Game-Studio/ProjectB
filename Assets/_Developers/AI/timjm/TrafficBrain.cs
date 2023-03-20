@@ -15,6 +15,8 @@ public class TrafficBrain : MonoBehaviour
     public Transform goal;
     public Transform panicgoal;
     Transform savegoal;
+    public GameObject Director;
+    public int Index;
     #endregion
 
     [Header("Panic States")]
@@ -92,8 +94,9 @@ public class TrafficBrain : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, goal.transform.position) < 1)
         {
-            goal.GetComponent<WaypointControl>().Car = this.gameObject;
-            goal.GetComponent<WaypointControl>().Lane();
+            Director.GetComponent<WaypointDirector>().Car = this.gameObject;
+            Director.GetComponent<WaypointDirector>().CarIndex = Index;
+            Director.GetComponent<WaypointDirector>().Lane();
             agent.destination = goal.position;
         }
 
@@ -294,6 +297,7 @@ public class TrafficStatEditor : Editor
     void DisplayBasicInfo()
     {
         EditorGUILayout.PropertyField(serializedObject.FindProperty("goal"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("Director"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("SpawnStation"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("SpinY"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("Thrust"));
