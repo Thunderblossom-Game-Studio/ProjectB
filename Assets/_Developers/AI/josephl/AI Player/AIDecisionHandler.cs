@@ -7,9 +7,9 @@ public class AIDecisionHandler : MonoBehaviour
     private AICarController _carHandler;
     private PackageSystem _packageSystem;
 
-    [SerializeField] private EntitySpawner _packageSpawner;
     [Viewable] private Transform _deliveryPoint;
 
+    private EntitySpawner _packageSpawner;
     private int _numOfAttempts = 3;
 
     // Start is called before the first frame update
@@ -26,11 +26,18 @@ public class AIDecisionHandler : MonoBehaviour
                 _deliveryPoint = AIDirector.Instance.deliveryZones[Random.Range(0, numOfDeliveryZones)].t;
             else
                 Debug.LogWarning("No delivery points allocated in AI Director.");
+
+            if (AIDirector.Instance.packageSpawners.Count > 0)
+                _packageSpawner = AIDirector.Instance.packageSpawners[Random.Range(0, AIDirector.Instance.packageSpawners.Count)];
+            else
+                Debug.LogWarning("No package spawners allocated in AI Director.");
         }
     }
 
     public AIPlayerHandler.CurrentState Evaluate(AIPlayerHandler.CurrentState state)
     {
+        if (!_packageSpawner) return state = AIPlayerHandler.CurrentState.IDLE;
+
         if (_packageSpawner && _packageSpawner.SpawnedObjects.Count > 0)
         {
             state = AIPlayerHandler.CurrentState.PICKUP;
@@ -49,6 +56,8 @@ public class AIDecisionHandler : MonoBehaviour
     /// </summary>
     public AIPlayerHandler.CurrentState Pickup(bool newState, AIPlayerHandler.CurrentState state)
     {
+        if (!_packageSpawner) return state = AIPlayerHandler.CurrentState.IDLE;
+
         if ((newState || !_carHandler.MoveTarget) && _packageSpawner.SpawnedObjects.Count > 0)
         {
             int num = 0;

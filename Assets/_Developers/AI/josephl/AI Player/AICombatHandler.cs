@@ -96,11 +96,9 @@ public class AICombatHandler : MonoBehaviour
         {
             foreach (RaycastHit hit in Hits)
             {
-                if (hit.transform.gameObject != gameObject && hit.transform.CompareTag("Player"))
+                if (hit.transform.gameObject != gameObject /*&& hit.transform.CompareTag("Player")*/ && hit.transform.TryGetComponent<HealthSystem>(out HealthSystem hs))
                 {
-
                     _shootTarget = hit.transform.gameObject;
-
                 }
             }
         }

@@ -29,6 +29,8 @@ public class AICarController : NetworkBehaviour
     [SerializeField] private float _weightedAgentAcc;
     [SerializeField] private float _distanceBetweenAgent = 30;
 
+    [SerializeField] private float _yWarp = 7;
+
     [Viewable] public GameObject MoveTarget;
 
     private float _maxIdleTimer = 4;
@@ -149,7 +151,7 @@ public class AICarController : NetworkBehaviour
         {
             _agent.isStopped = false;
         }
-        if (Mathf.Abs(_agent.transform.position.y - transform.position.y) > 5)
+        if (Mathf.Abs(_agent.transform.position.y - transform.position.y) > _yWarp)
         {
             _agent.Warp(transform.position);
         }
