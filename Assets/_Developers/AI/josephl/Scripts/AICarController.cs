@@ -1,113 +1,89 @@
+using FishNet.Object;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(AIVehicleController))]
-public class AICarController : MonoBehaviour
+public class AICarController : NetworkBehaviour
 {
-    protected AIVehicleController car;
+    private AIVehicleController _car;
 
     [Header("Pathfinding Settings")]
 
-    [SerializeField] protected NavMeshAgent agent;
-    [Range(0f, 1f)] [SerializeField] protected float forwardmultiplier;
-    [Range(0f, 5f)] [SerializeField] protected float turnmultiplier;
-    [Range(0, 100)] [SerializeField] protected float brakeSensitivity = 50;
-    [Range(0, 180)] [SerializeField] protected int angle;
-    [SerializeField] protected float stopDistance = 10;
+    [SerializeField] private NavMeshAgent _agent;
+    [Range(0f, 1f)] [SerializeField] private float _forwardmultiplier;
+    [Range(0f, 5f)] [SerializeField] private float _turnmultiplier;
+    [Range(0, 100)] [SerializeField] private float _brakeSensitivity = 50;
+    [Range(0, 180)] [SerializeField] private int _angle;
+    [SerializeField] private float _stopDistance = 10;
 
-    protected bool newState = false;
-    
-    internal bool crashed = false;
-    protected float crashReverseTime = 0;
+    [SerializeField] private float _defaultSpawnWeight = 5f;
+    [SerializeField] private float _spawnWeight = 3f;
 
-    #region Modifiable Controller Functions
-    
+    [SerializeField] private BackTriggerCheck _frontTriggerCheck;
+    [SerializeField] private BackTriggerCheck _backTriggerCheck;
+
+    [Viewable] private float _agentSpawnWeight = 2;
+    [SerializeField] private float _defaultAgentAcc;
+    [SerializeField] private float _weightedAgentAcc;
+    [SerializeField] private float _distanceBetweenAgent = 30;
+
+    [SerializeField] private float _yWarp = 7;
+
+    [Viewable] public GameObject MoveTarget;
+
+    private float _maxIdleTimer = 4;
+    private float _idleTimer = 0;
+    private bool _stuck = false;
+
+    private float _distanceMultiplier = 1.6f;
+
     // Start is called before the first frame update
-    protected virtual void Start()
+    private void Start()
     {
-        car = GetComponent<AIVehicleController>();
+        _car = GetComponent<AIVehicleController>();
     }
 
-    // Update is called once per frame
-    protected virtual void Update()
+    private void Update()
     {
-        if (!agent)
+        if (!IsServer)
+            return;
+
+        if (!_agent)
         {
             Debug.LogWarning("No NavMesh Agent Assigned");
 
             return;
         }
 
-        Act();
-    }
-
-    /// <summary>
-    /// Runs a series of checks to choose what state is appropriate based on the current data provided
-    /// </summary>
-    protected virtual void Evaluate()
-    {
-
-    }
-
-    /// <summary>
-    /// Runs the state selected in Evaluate()
-    /// </summary>
-    protected virtual void SwapState()
-    {
-
-    }
-
-    /// <summary>
-    /// State that attempts to fix a crash
-    /// </summary>
-    protected virtual void CourseCorrect()
-    {
-        crashReverseTime += Time.deltaTime;
-
-        if (crashReverseTime > .5f)
-        {
-            crashed = false;
-
-            //agent.transform.position = ha.shootpoint.position;
-
-            crashReverseTime = 0;
-        }
-
-        
-        car.HandleInput(-1, 1, false);
-
-        newState = false;
-    }
-
-    #endregion
-
-    #region Core Controller Functions
-
-    /// <summary>
-    /// Runs the AI controllers frame functionality from path finding to state evaluation + execution
-    /// </summary>
-    protected virtual void Act()
-    {
         FollowAgent();
+        CourseCorrection();
+        IdleTiming();
+    }
 
-        Evaluate();
-
-
-        SwapState();
+    public AIPlayerHandler.CurrentState Evaluate(AIPlayerHandler.CurrentState state)
+    {
+        if ((Vector3.Distance(transform.position, _agent.transform.position) > _distanceBetweenAgent * _distanceMultiplier)
+            ||
+            (_frontTriggerCheck.active || _backTriggerCheck.active)
+            ||
+            _stuck)
+        {
+            state = AIPlayerHandler.CurrentState.IDLE;
+        }
+        return state;
     }
 
     /// <summary>
     /// Makes the car move in the direction of the navmesh agent it's chasing at all times
     /// </summary>
-    protected virtual void FollowAgent()
+    [ServerRpc (RequireOwnership = false)]
+    public void FollowAgent()
     {
-        Vector3 dir = (agent.transform.position - transform.position).normalized;
+        Vector3 dir = (_agent.transform.position - transform.position).normalized;
 
-        //float direction = Vector3.Dot(dir, transform.forward);
-
-        float distance = Vector3.Distance(transform.position, agent.transform.position);
+        float distance = Vector3.Distance(transform.position, _agent.transform.position);
 
         float direction = Vector3.SignedAngle(transform.forward, dir, Vector3.up);
 
@@ -121,15 +97,15 @@ public class AICarController : MonoBehaviour
         }
         else
         {
-            forwardInput = 1 * forwardmultiplier;
+            forwardInput = 1 * _forwardmultiplier;
         }
 
         // turning
-        if (direction < -angle / 2)
+        if (direction < -_angle / 2)
         {
             horizontalInput = -1;
         }
-        else if (direction > angle / 2)
+        else if (direction > _angle / 2)
         {
             horizontalInput = 1;
         }
@@ -137,42 +113,103 @@ public class AICarController : MonoBehaviour
         // braking
         bool b = false;
 
-        // brakesens
-        // stoppingdis
-
-        //Debug.Log(car.GetSpeed());
-
         if (
             // if not turning and speed is greater than brake sens
-            (horizontalInput != 0 && car.GetSpeed() > brakeSensitivity) || 
-            
+            (horizontalInput != 0 && _car.GetSpeed() > _brakeSensitivity) ||
+
             // if in stopping distance and speed is greater than brake sens
-            (Vector3.Distance(transform.position, agent.transform.position) < stopDistance && 
-            car.GetSpeed() > brakeSensitivity) || 
-            
+            (Vector3.Distance(transform.position, _agent.transform.position) < _stopDistance &&
+            _car.GetSpeed() > _brakeSensitivity) ||
+
             // if speed is greater than bleh
-            (car.GetSpeed() > brakeSensitivity * 1.8))
+            (_car.GetSpeed() > _brakeSensitivity * 1.8))
         {
             b = true;
         }
 
-        if (b) Debug.Log("braking");
-
         forwardInput = Mathf.Clamp(forwardInput, -1f, 1f);
         horizontalInput = Mathf.Clamp(horizontalInput, -1f, 1f);
 
-        car.HandleInput(forwardInput, horizontalInput, b);
+        _car.HandleInput(forwardInput, horizontalInput, b);
     }
 
-    #endregion
-
-    protected virtual void OnDrawGizmos()
+    /// <summary>
+    /// State that attempts to fix a crash
+    /// </summary>
+    public void CourseCorrection()
     {
-        if (agent)
+        if (_backTriggerCheck.active) _agentSpawnWeight = _spawnWeight;
+        else if (_frontTriggerCheck.active) _agentSpawnWeight = -_spawnWeight;
+        else _agentSpawnWeight = _defaultSpawnWeight;
+        if (_agentSpawnWeight != _defaultSpawnWeight) _agent.speed = _weightedAgentAcc;
+        else _agent.speed = _defaultAgentAcc;
+        if (Vector3.Distance(transform.position, _agent.transform.position) > _distanceBetweenAgent)
+        {
+            _agent.isStopped = true;
+        }
+        else
+        {
+            _agent.isStopped = false;
+        }
+        if (Mathf.Abs(_agent.transform.position.y - transform.position.y) > _yWarp)
+        {
+            _agent.Warp(transform.position);
+        }
+    }
+
+    public void RecallAgent()
+    {
+        Vector3 pos = transform.position;
+        pos += transform.forward * _agentSpawnWeight;
+        SetAgentTarget(pos);
+    }
+
+    public bool FindPath(Vector3 target)
+    {
+        NavMeshPath path = new NavMeshPath();
+        _agent.CalculatePath(target, path);
+        if (path.status == NavMeshPathStatus.PathPartial || path.status == NavMeshPathStatus.PathInvalid)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public bool StalePath()
+    {
+        return _agent.isPathStale;
+    }
+
+    public void SetAgentTarget(Vector3 position)
+    {
+        _agent.SetDestination(position);
+    }
+
+    private void IdleTiming()
+    {
+        if (_car.GetSpeed() < 3)
+        {
+            _idleTimer += Time.deltaTime;
+
+            if (_idleTimer > _maxIdleTimer)
+            {
+                _stuck = true;
+            }
+        }
+        else
+        {
+            _stuck = false;
+            _idleTimer = 0f;
+        }
+    }
+
+    public void OnDrawGizmos()
+    {
+        if (_agent)
         {
             Gizmos.color = Color.red;
 
-            Gizmos.DrawSphere(agent.transform.position, .5f);
+            Gizmos.DrawSphere(_agent.transform.position, .5f);
         }
     }
 }

@@ -25,7 +25,7 @@ public class AIDirector : Singleton<AIDirector>
     public List<DeliveryPoint> deliveryZones;
 
     [Tooltip("All bots currently in the scene.")]
-    public List<PursuingCarController> bots;
+    public List<AIPlayerHandler> bots;
     #endregion
 
     public Transform FindClosestDeliveryZone(Vector3 car)
