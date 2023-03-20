@@ -11,7 +11,7 @@ public class CrashDetector : MonoBehaviour
     {
         if (other.CompareTag("EditorOnly"))
         {
-            owner.crashed = true;
+            //owner.crashed = true;
         }
     }
 }

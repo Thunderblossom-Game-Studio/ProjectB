@@ -19,7 +19,7 @@ public class AIPlayerTutorialController : PursuingCarController
 
     [SerializeField] private TutorialAIDirector.Route currentRoute;
 
-    protected override void Start()
+    protected void Start()
     {
         if (TutorialAIDirector.Instance)
         {
@@ -28,7 +28,6 @@ public class AIPlayerTutorialController : PursuingCarController
         }
         else Debug.LogWarning("No Tutorial AI Director found in scene.");
 
-        base.Start();
     }
 
     private void OnDestroy()
@@ -40,14 +39,13 @@ public class AIPlayerTutorialController : PursuingCarController
 
     }
 
-    protected override void Evaluate()
+    protected void Evaluate()
     {
-        base.Evaluate();
 
         tutorialState = TutorialState.FOLLOWROUTE;
     }
 
-    protected override void SwapState()
+    private void SwapState()
     {
 
         switch (tutorialState)
@@ -61,9 +59,9 @@ public class AIPlayerTutorialController : PursuingCarController
         }
     }
 
-    protected override void Shoot()
+    private void Shoot()
     {
-        if (canShoot) base.Shoot();
+        //if (canShoot) base.Shoot();
     }
 
     public void SetNextRoute(TutorialAIDirector.Route next)
@@ -91,12 +89,12 @@ public class AIPlayerTutorialController : PursuingCarController
             return;
         }
 
-        agent.SetDestination(currentRoute.points[currentRoute.pointIndex].position);
+        //agent.SetDestination(currentRoute.points[currentRoute.pointIndex].position);
 
-        if (Vector3.Distance(transform.position, currentRoute.points[currentRoute.pointIndex].position) <= stopDistance)
-        {
-            currentRoute.pointIndex++;
-        }
+        //if (Vector3.Distance(transform.position, currentRoute.points[currentRoute.pointIndex].position) <= stopDistance)
+        //{
+        //    currentRoute.pointIndex++;
+        //}
 
     }
 
