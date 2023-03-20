@@ -59,7 +59,6 @@ public class WaypointMarker : MonoBehaviour
 
     public void SetTarget(Transform newTarget)
     {
-        if (newTarget == null) return;
         target = newTarget;
         canvasGroup.alpha = 1;
     }

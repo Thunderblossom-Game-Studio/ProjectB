@@ -18,20 +18,17 @@ public class CutSceneTrigger : MonoBehaviour
 
     private void Director_played(PlayableDirector obj)
     {
-        Debug.Log("OnStart");
         OnStart.Invoke();
     }
 
     private void Director_stopped(PlayableDirector obj)
     {
-        Debug.Log("OnFinish");
         OnFinish.Invoke();
     }
 
-    public void StartCutScene(PlayableAsset playableAsset)
+    public void StartCutScene(PlayableAsset playableAsset = null)
     {
-        Debug.Log("Start");
-        director.playableAsset = playableAsset;
-        director.Play();
+        if(playableAsset) director.playableAsset = playableAsset;
+        if (director.playableAsset) director.Play();
     }
 }
