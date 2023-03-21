@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2165258942793733593}
   - component: {fileID: 8450499179467355111}
-  - component: {fileID: 5535845764904431679}
   - component: {fileID: 5932267724794856864}
   m_Layer: 0
   m_Name: Waypoint
@@ -76,28 +75,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!102 &5535845764904431679
-TextMesh:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2165258942793733589}
-  m_Text: 
-  m_OffsetZ: 0
-  m_CharacterSize: 1
-  m_LineSpacing: 1
-  m_Anchor: 0
-  m_Alignment: 0
-  m_TabSize: 4
-  m_FontSize: 0
-  m_FontStyle: 0
-  m_RichText: 1
-  m_Font: {fileID: 0}
-  m_Color:
-    serializedVersion: 2
-    rgba: 4294967295
 --- !u!114 &5932267724794856864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,3 +88,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   t: {fileID: 2165258942793733593}
+  showText: 0
