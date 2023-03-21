@@ -43,7 +43,7 @@ PlayableDirector:
   m_GameObject: {fileID: 1498212425}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 980a56f12fe3ea045a6451b4dd1446c2, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: e1b1b538dd531664692ed06404c8f9ec, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 2
@@ -52,6 +52,8 @@ PlayableDirector:
   - key: {fileID: -2230061429191192517, guid: e828d35c9dc995f469012a209edfc4ca, type: 2}
     value: {fileID: 0}
   - key: {fileID: -7853690581920467759, guid: 980a56f12fe3ea045a6451b4dd1446c2, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 142291202196271085, guid: e1b1b538dd531664692ed06404c8f9ec, type: 2}
     value: {fileID: 0}
   m_ExposedReferences:
     m_References:
@@ -300,40 +302,37 @@ MonoBehaviour:
   cutSceneTrigger: {fileID: 7775630848148401728}
   area2CutSceneTrigger: {fileID: 1498212428}
   _welcomeText:
-    Message: Welome
+    Message: 
     AudioID: 
     duration: 2
   _successTexts:
-  - Message: Bravo!
+  - Message: Bravo
     AudioID: 
     duration: 2
-  - Message: Sucess!
+  - Message: Success
     AudioID: 
     duration: 2
-  - Message: Wow you don't suck!
+  - Message: Wow you dont suck
     AudioID: 
     duration: 2
-  - Message: Good job!
+  - Message: Good job
     AudioID: 
     duration: 2
-  - Message: Nice!
+  - Message: Nice
     AudioID: 
     duration: 2
-  - Message: Great!
+  - Message: Great
     AudioID: 
     duration: 2
-  - Message: Very Good!
+  - Message: Very Good
     AudioID: 
     duration: 2
-  - Message: Super!
-    AudioID: 
-    duration: 2
-  - Message: Super!
+  - Message: Super
     AudioID: 
     duration: 2
   _destinationArea: {fileID: 0}
   _driveControlIntroText:
-    Message: Welcome to the driving tutorial!
+    Message: Welcome to the driving tutorial
     AudioID: 
     duration: 2
   _driveForwardText:
@@ -368,20 +367,20 @@ MonoBehaviour:
   _ShootingArea: {fileID: 0}
   _dummyArea: {fileID: 0}
   _shootingIntroText:
-    Message: Learn Shooting
+    Message: Drive to the shooting range
     AudioID: 
     duration: 2
   _shootingInputText:
-    Message: Press Fire Button to shoot at targets
+    Message: Use Left Mouse Button to shoot the targets
     AudioID: 
     duration: 2
   _shootingWeaponSwapText:
-    Message: Press swap button
+    Message: Press Tab to swap weapons
     AudioID: 
     duration: 2
   _magicHatTrigger: {fileID: 0}
   _magicHatText:
-    Message: Drive to the HAT
+    Message: Drive into the magic hat at the end of the road
     AudioID: 
     duration: 2
   _volcanoStateObjects:
@@ -396,11 +395,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   _volcanoIntroText:
-    Message: Vocano is triggred when you go hear
+    Message: oh no the volcano is erupting
     AudioID: 
     duration: 2
   _volcanoPackageText:
-    Message: Deliver the packages
+    Message: Grab the packages from the other side of the volcno and deliver them
     AudioID: 
     duration: 2
   _drivingStopWall: {fileID: 0}
