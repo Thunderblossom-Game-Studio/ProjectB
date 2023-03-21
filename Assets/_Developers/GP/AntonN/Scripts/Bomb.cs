@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using JE.General;
+using JE.DamageSystem;
 
 public class Bomb : MonoBehaviour
 {
     [SerializeField] private float explosionTime = 6f;
-    [SerializeField] private LayerMask playerLayer;
-    [SerializeField] private LayerMask environmentLayer;
+    [SerializeField] private LayerMask instantHitLayer;
+    [SerializeField] private LayerMask delayHitLayer;
     [SerializeField] private Audio3D bombAudio;
+    [SerializeField] private SphereDamager damager;
     private float timer;
     private bool exploded;
     private bool collisionWithPlayer;
@@ -23,7 +26,7 @@ public class Bomb : MonoBehaviour
 
     private void Update()
     {
-        
+       
         if ((timer <= 0f && exploded == false) || (collisionWithPlayer == true))
         {
             Explosion();
@@ -31,7 +34,6 @@ public class Bomb : MonoBehaviour
 
         if(timerStart == true)
         {
-            bombAudio.PlaySoundEffect("BombTick");
             timer -= Time.deltaTime;
         }
     }
@@ -39,24 +41,25 @@ public class Bomb : MonoBehaviour
     private void Explosion()
     {
         exploded = true;
-        Debug.Log("BOOM!");
+        damager.Damage();
         bombAudio.PlaySoundEffect("BombNoise");
-
         Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision hit)
     {
-        //if bomb directly collides with any object in "playerLayer", bomb explodes.
-        if((playerLayer.value & 1 << hit.gameObject.layer) == 1 << hit.gameObject.layer)
+        if (collisionWithPlayer || timerStart) return;
+        if (!instantHitLayer.ContainsLayer(hit.gameObject.layer))
         {
             collisionWithPlayer = true;
             Explosion();
+            return;
         }
-        //if bomb collides with this layer, the timer will start (any other layer, but not the bomb itself)
-        else if ((environmentLayer.value & 1 << hit.gameObject.layer) == 1 << hit.gameObject.layer)
+
+        if (!delayHitLayer.ContainsLayer(hit.gameObject.layer))
         {
             timerStart = true;
+            bombAudio.PlaySoundEffect("BombTick");
         }
     }
 }
