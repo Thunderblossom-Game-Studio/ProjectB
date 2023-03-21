@@ -24,14 +24,18 @@ public class AIPlayerHandler : NetworkBehaviour
     private bool _newState = false;
     [SyncVar] private CurrentState _previousState;
 
+    private void Awake()
+    {
+        if (AIDirector.Instance) AIDirector.Instance.bots.Add(this);
+        else Debug.LogWarning("No AI Director found in scene.");
+    }
+
     void Start()
     {
         _carHandler = GetComponent<AICarController>();
         _decisionHandler = GetComponent<AIDecisionHandler>();
         _combatHandler = GetComponent<AICombatHandler>();
 
-        if (AIDirector.Instance) AIDirector.Instance.bots.Add(this);
-        else Debug.LogWarning("No AI Director found in scene.");
     }
 
     private void Update()
@@ -54,7 +58,7 @@ public class AIPlayerHandler : NetworkBehaviour
         if (_state != _previousState || _carHandler.StalePath()) _newState = true;
     }
 
-    [ServerRpc (RequireOwnership = false)]
+    //[ServerRpc (RequireOwnership = false)]
     private void StateController()
     {
         switch (_state)

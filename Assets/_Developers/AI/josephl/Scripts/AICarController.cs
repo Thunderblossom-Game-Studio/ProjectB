@@ -78,7 +78,7 @@ public class AICarController : NetworkBehaviour
     /// <summary>
     /// Makes the car move in the direction of the navmesh agent it's chasing at all times
     /// </summary>
-    [ServerRpc (RequireOwnership = false)]
+    //[ServerRpc (RequireOwnership = false)]
     public void FollowAgent()
     {
         Vector3 dir = (_agent.transform.position - transform.position).normalized;

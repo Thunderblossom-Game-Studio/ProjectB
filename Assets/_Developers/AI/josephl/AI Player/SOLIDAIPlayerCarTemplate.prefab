@@ -1980,6 +1980,7 @@ MonoBehaviour:
   _defaultAgentAcc: 60
   _weightedAgentAcc: 15
   _distanceBetweenAgent: 15
+  _yWarp: 7
   MoveTarget: {fileID: 0}
 --- !u!114 &1185542315486851123
 MonoBehaviour:
@@ -1993,7 +1994,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80c230f41ba2eea46a04c993611a57d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _packageSpawner: {fileID: 0}
 --- !u!114 &5804470171757818121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2049,6 +2049,7 @@ MonoBehaviour:
   - {fileID: 6330080598999758443}
   - {fileID: 2857147098930332873}
   - {fileID: 6770178609462254455}
+  - {fileID: 0}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
