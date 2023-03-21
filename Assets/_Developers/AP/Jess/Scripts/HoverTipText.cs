@@ -8,7 +8,7 @@ public class HoverTipText : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     Vector3 spawnPosition;
 
     public string tipToShow;
-    private float timeTowait = 0.9f;
+    private float timeTowait = 0.7f;
     public void OnPointerEnter(PointerEventData eventData)
     {
          
@@ -16,7 +16,7 @@ public class HoverTipText : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         StartCoroutine(StartTimer());
         spawnPosition = eventData.pointerEnter.transform.position;
     }
-
+    
     public void OnPointerExit(PointerEventData eventData)
     {
        

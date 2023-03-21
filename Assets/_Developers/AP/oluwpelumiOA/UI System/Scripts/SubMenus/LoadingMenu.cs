@@ -37,7 +37,7 @@ public class LoadingMenu : BaseMenu<LoadingMenu>
         ShowRandomTip();
 
         loadingBar.fillAmount = 0;
-        loadingText.text = "Loading...";
+        loadingText.text = "Loading";
 
         yield return Juicer.DoFloat(null,0, (v) => loadingContent.alpha = v, new JuicerFloatProperties(1, .5f, animationCurveType: AnimationCurveType.EaseInOut), ()=> ToggleLoadingContent(true));
 
@@ -48,7 +48,7 @@ public class LoadingMenu : BaseMenu<LoadingMenu>
         while (!sceneToLoad.isDone && loadingBar.fillAmount < 1)
         {
             loadingBar.fillAmount += amountToLoad * Time.unscaledDeltaTime;
-            loadingText.text = "Loading... " + (int)(loadingBar.fillAmount * 100) + "%";
+            loadingText.text = "Loading " + (int)(loadingBar.fillAmount * 100);
 
             RandomTipTimer(ref tipTimer);
 
