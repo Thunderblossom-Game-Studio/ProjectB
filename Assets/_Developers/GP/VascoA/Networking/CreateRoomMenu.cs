@@ -22,6 +22,7 @@ public class CreateRoomMenu : MonoBehaviour
     
     public void Initialize()
     {
+        _canvasGroup = GetComponent<CanvasGroup>();
         _playerCount.ClearOptions();
         List<string> options = new List<string>();
         int minimum = LobbyManager.ReturnMinimumPlayers();
@@ -36,7 +37,7 @@ public class CreateRoomMenu : MonoBehaviour
     public void Reset()
     {
         _awaitingCreateResponse = false;
-        ShowRoomCreateFailed();
+        ShowRoomCreatedFailed();
     }
 
     public void OnClick_CreateRoom()
@@ -53,6 +54,8 @@ public class CreateRoomMenu : MonoBehaviour
         if (!LobbyManager.SanitizeRoomName(ref roomName, ref failedReason) || !LobbyManager.SanitizePlayerCount(playerCount, ref failedReason))
         {
             Debug.LogError(failedReason);
+            //TODO VASCO
+            //GlobalManager.CanvasesManager.MessagesCanvas.InfoMessages.ShowTimedMessage(failedReason, MessagesCanvas.BRIGHT_ORANGE);
         }
         else
         {
@@ -71,10 +74,36 @@ public class CreateRoomMenu : MonoBehaviour
             return result;
     }
 
-
-    public void ShowRoomCreateFailed()
+    public void ShowRoomCreatedSuccess()
+    {
+        _passwordText.text = string.Empty;
+        _awaitingCreateResponse = false;
+        _canvasGroup.SetActive(false, true);
+    }
+    
+    public void ShowRoomCreatedFailed()
     {
         _awaitingCreateResponse = false;
         _canvasGroup.SetActive(true, true);
+    }
+
+    public void ShowRoomJoinedSuccess()
+    {
+        _canvasGroup.SetActive(false, true);
+    }
+
+    public void ShowRoomJoinedFailed()
+    {
+        _canvasGroup.SetActive(true, true);
+    }
+
+    public void ShowRoomLeftSuccess()
+    {
+        _canvasGroup.SetActive(true, true);
+    }
+
+    public void ShowRoomLeftFailed()
+    {
+        _canvasGroup.SetActive(false, true);
     }
 }
