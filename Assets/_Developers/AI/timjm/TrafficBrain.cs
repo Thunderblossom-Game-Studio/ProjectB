@@ -298,6 +298,7 @@ public class TrafficStatEditor : Editor
     {
         EditorGUILayout.PropertyField(serializedObject.FindProperty("goal"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("Director"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("Index"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("SpawnStation"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("SpinY"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("Thrust"));
