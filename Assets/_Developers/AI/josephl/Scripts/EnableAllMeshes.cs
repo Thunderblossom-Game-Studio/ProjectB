@@ -8,11 +8,16 @@ public class EnableAllMeshes : NetworkBehaviour
 
     private MeshRenderer[] meshes;
 
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
 
-    // Start is called before the first frame update
+        StartCoroutine(delayedstart());
+    }
+    
     void Start()
     {
-        StartCoroutine(delayedstart());
+        //StartCoroutine(delayedstart());
     }
 
     IEnumerator delayedstart()
