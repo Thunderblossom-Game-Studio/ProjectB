@@ -58,7 +58,7 @@ public class AIPlayerHandler : NetworkBehaviour
         if (_state != _previousState || _carHandler.StalePath()) _newState = true;
     }
 
-    //[ServerRpc (RequireOwnership = false)]
+    [ServerRpc(RequireOwnership = false)]
     private void StateController()
     {
         switch (_state)
@@ -83,6 +83,7 @@ public class AIPlayerHandler : NetworkBehaviour
 
     private void Idle()
     {
+        _state = CurrentState.PICKUP;
         _carHandler.RecallAgent();
     }
 
