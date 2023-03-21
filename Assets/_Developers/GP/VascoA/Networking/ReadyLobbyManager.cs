@@ -61,7 +61,7 @@ public class ReadyLobbyManager : LobbyManager
                 UnitySceneManager.UnloadSceneAsync(s);
         }
 
-        base.LobbyCanvasManager.SetLobbyCameraActive(true); //TODO VASCO
+        base.LobbyCanvasManager.SetLobbyCameraActive(true);
     }
 
     private void SceneManager_OnLoadEnd(SceneLoadEndEventArgs obj)
