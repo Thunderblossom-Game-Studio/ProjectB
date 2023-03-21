@@ -16,7 +16,8 @@ public class GameStateManager : Singleton<GameStateManager>
 
     private IEnumerator StartState()
     {
-        yield return GameSequencer.Instance.CountDownSequence();
+        //yield return GameSequencer.Instance.CountDownSequence();
+        yield return null;
         GameTeamManager.Instance.InitialiseTeams();
         GameTimer.Instance.GameStart();
         OnStart?.Invoke();

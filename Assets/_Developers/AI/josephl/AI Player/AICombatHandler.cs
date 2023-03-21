@@ -110,9 +110,12 @@ public class AICombatHandler : MonoBehaviour
         {
             if (_shootTarget.TryGetComponent<GamePlayer>(out GamePlayer gp) && _gamePlayer.PlayerTeamData != null)
             {
-                if (_gamePlayer.PlayerTeamData.TeamName == gp.PlayerTeamData.TeamName)
+                if (gp.PlayerTeamData != null)
                 {
-                    _shootTarget = null;
+                    if (_gamePlayer.PlayerTeamData.TeamName == gp.PlayerTeamData.TeamName)
+                    {
+                        _shootTarget = null;
+                    }
                 }
             }
         }
