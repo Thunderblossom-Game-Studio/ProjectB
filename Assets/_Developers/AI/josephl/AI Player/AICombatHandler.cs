@@ -44,6 +44,9 @@ public class AICombatHandler : MonoBehaviour
         LookForTargets();
 
         TryShoot();
+
+        if (!_shootTarget) return;
+        _weaponHandler.SetAim((_shootTarget.transform.position - transform.position).normalized);
     }
 
     public AIPlayerHandler.CurrentState Evaluate(AIPlayerHandler.CurrentState state)
@@ -110,9 +113,12 @@ public class AICombatHandler : MonoBehaviour
         {
             if (_shootTarget.TryGetComponent<GamePlayer>(out GamePlayer gp) && _gamePlayer.PlayerTeamData != null)
             {
-                if (_gamePlayer.PlayerTeamData.TeamName == gp.PlayerTeamData.TeamName)
+                if (gp.PlayerTeamData != null)
                 {
-                    _shootTarget = null;
+                    if (_gamePlayer.PlayerTeamData.TeamName == gp.PlayerTeamData.TeamName)
+                    {
+                        _shootTarget = null;
+                    }
                 }
             }
         }
@@ -139,8 +145,6 @@ public class AICombatHandler : MonoBehaviour
     private void Shoot()
     {
         if (!_shootTarget) return;
-        _weaponHandler.SetAim((_shootTarget.transform.position - transform.position).normalized);
         _weaponHandler.Shoot(_shootTarget.transform.position);
-
     }
 }

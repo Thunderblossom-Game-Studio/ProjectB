@@ -19,7 +19,11 @@ public class GamePlayer : MonoBehaviour
     }
     private void Awake()
     {
-        if (addOnAwake) GameTeamManager.Instance?._gamePlayers.Add(this);
+        if (addOnAwake)
+        {
+            InitialisePlayer(GameTeamManager.Instance._blueTeamData);
+            GameTeamManager.Instance._blueTeamData.AddPlayer(this);
+        }
     }
 
     public void OnHealthChanged(float normalisedValue)

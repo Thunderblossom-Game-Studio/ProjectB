@@ -22,6 +22,7 @@ public class SceneSelectMenu : BaseMenu<SceneSelectMenu>
     private void Start()
     {
         tutorialButton.onClick.AddListener(() => SwitchScene(SceneType.Tutorial));
+        mpButton.onClick.AddListener(() => SwitchScene(SceneType.MultiplayerMenu));
         backButton.onClick.AddListener(CloseButton);
         TempLevel1.onClick.AddListener(() => SwitchScene(SceneType.TempLevel1));
         TempLevel2.onClick.AddListener(() => SwitchScene(SceneType.TempLevel2));
@@ -71,7 +72,7 @@ public class SceneSelectMenu : BaseMenu<SceneSelectMenu>
     public void SwitchScene(SceneType sceneType)
     {
         Close(() => LoadingMenu.GetInstance().LoadScene((int)sceneType));
-    }  
+    }
 }
 
 public enum SceneType
@@ -83,4 +84,7 @@ public enum SceneType
     TempLevel3 = 4,
     TempLevel4 = 5,
     Credits = 6,
+    MultiplayerMenu = 7,
+    LobbyScene = 8,
 }
+

@@ -40,6 +40,7 @@ public class Catapult : Weapon
     {
         if (inAction) return;
         base.ShootProjectile(targetPos);
+        this.targetPos = targetPos;
         inAction = true;
         StartCoroutine(Juicer.DoMultipleVector3(null, Vector3.zero, (rotation) => thrower.localEulerAngles = rotation, throwProperties, throwerResetDelay, false, HandleState, null));
     }
