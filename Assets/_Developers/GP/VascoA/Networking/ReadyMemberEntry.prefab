@@ -546,6 +546,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c5766d593929a54d9241e379201f6f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startedIcon: {fileID: 4941786583994006055}
+  _name: {fileID: 4941786583829633679}
+  _kickButton: {fileID: 6812774018631689752}
+  _readyImage: {fileID: 4941786585051743489}
+  _readyButtonImage: {fileID: 4941786585083968021}
+  _readyColor: {r: 0.25485048, g: 0.7830189, b: 0.25485048, a: 1}
+  _notReadyColor: {r: 0.9056604, g: 0.2007832, b: 0.2007832, a: 1}
 --- !u!114 &4941786584933857763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -793,7 +800,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4941786585083968021}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4941786584933857772}
+        m_TargetAssemblyTypeName: ReadyMemberEntry, Assembly-CSharp
+        m_MethodName: OnClick_Ready
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6812774018631689752
 GameObject:
   m_ObjectHideFlags: 0
@@ -915,4 +934,16 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1361812358897015907}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4941786584933857772}
+        m_TargetAssemblyTypeName: MemberEntry, Assembly-CSharp
+        m_MethodName: OnClick_Kick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

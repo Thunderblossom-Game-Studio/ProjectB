@@ -15,7 +15,7 @@ namespace JE.General
 
         public static bool IsEmpty<T>(this List<T> collection)
         {
-            return collection.Count > 0;
+            return collection.Count == 0;
         } 
         
     }

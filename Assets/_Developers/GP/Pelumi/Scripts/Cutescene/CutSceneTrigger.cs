@@ -4,6 +4,7 @@ using UnityEngine.Playables;
 
 public class CutSceneTrigger : MonoBehaviour
 {
+    [SerializeField] private bool playOnAwake;
     [SerializeField] private UnityEvent OnStart;
     [SerializeField] private UnityEvent OnFinish;
 
@@ -14,6 +15,11 @@ public class CutSceneTrigger : MonoBehaviour
         director = GetComponent<PlayableDirector>();
         director.played += Director_played;
         director.stopped += Director_stopped;
+    }
+
+    private void Start()
+    {
+        if (director.playableAsset) director.Play();
     }
 
     private void Director_played(PlayableDirector obj)
