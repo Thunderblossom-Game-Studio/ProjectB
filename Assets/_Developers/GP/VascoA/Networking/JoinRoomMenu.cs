@@ -25,13 +25,17 @@ public class JoinRoomMenu : MonoBehaviour
     
     public void Initialize()
     {
+        _canvasGroup = GetComponent<CanvasGroup>();
+        Reset();
+    }
+
+    public void Reset()
+    {
         ShowRoomJoinedFailed();
         _passwordCanvas.SetActive(false, true);
 
-        foreach (RoomEntry roomEntry in _roomEntries)
-        {
-            Destroy(roomEntry.gameObject);
-        }
+        for (int i = 0; i < _roomEntries.Count; i++)
+            Destroy(_roomEntries[i].gameObject); //TODO VASCO Foreach
 
         _roomEntries.Clear();
     }
@@ -48,7 +52,7 @@ public class JoinRoomMenu : MonoBehaviour
         _canvasGroup.SetActive(false, true);
     }
 
-    private void ShowRoomJoinedFailed()
+    public void ShowRoomJoinedFailed()
     {
         _awaitingPasswordResponse = false;
         _canvasGroup.SetActive(true, true);

@@ -10,8 +10,7 @@ public class MultiplayerMenuUIManager : MonoBehaviour
 {
     [Header("Networking")]
     [SerializeField] private NetworkManager networkManager;
-    [SerializeField] private bool isConnecting;
-    [SerializeField] private ClientInfo clientInfo;
+    private bool isConnecting;
 
     [Header("UI")]
     [SerializeField] private Button hostButton;  
