@@ -44,6 +44,9 @@ public class AICombatHandler : MonoBehaviour
         LookForTargets();
 
         TryShoot();
+
+        if (!_shootTarget) return;
+        _weaponHandler.SetAim((_shootTarget.transform.position - transform.position).normalized);
     }
 
     public AIPlayerHandler.CurrentState Evaluate(AIPlayerHandler.CurrentState state)
@@ -142,8 +145,6 @@ public class AICombatHandler : MonoBehaviour
     private void Shoot()
     {
         if (!_shootTarget) return;
-        _weaponHandler.SetAim((_shootTarget.transform.position - transform.position).normalized);
         _weaponHandler.Shoot(_shootTarget.transform.position);
-
     }
 }

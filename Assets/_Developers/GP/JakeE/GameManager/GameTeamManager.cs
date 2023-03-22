@@ -11,7 +11,7 @@ public class GameTeamManager : Singleton<GameTeamManager>
     [SerializeField] private GameEvent _onRedTeamScore;
     
     [Header("Team Data")]
-    [SerializeField] private TeamData _blueTeamData;
+    [SerializeField] public TeamData _blueTeamData;
     [SerializeField] private TeamData _redTeamData;
     public List<GamePlayer> _gamePlayers;
     
