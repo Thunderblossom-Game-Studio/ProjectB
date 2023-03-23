@@ -1716,6 +1716,7 @@ GameObject:
   - component: {fileID: 5828578571159730612}
   - component: {fileID: 8012868542808225175}
   - component: {fileID: 6770178609462254455}
+  - component: {fileID: 369532269604550736}
   m_Layer: 3
   m_Name: Combat Car
   m_TagString: Player
@@ -2049,7 +2050,6 @@ MonoBehaviour:
   - {fileID: 6330080598999758443}
   - {fileID: 2857147098930332873}
   - {fileID: 6770178609462254455}
-  - {fileID: 0}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
@@ -2120,6 +2120,21 @@ MonoBehaviour:
     X: 0
     Y: 0
     Z: 0
+--- !u!114 &369532269604550736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7651979918987682056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58093e104130cd745828cfe911774b18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 5828578571159730612}
+  _networkObjectCache: {fileID: 0}
 --- !u!1 &7651979919001708465
 GameObject:
   m_ObjectHideFlags: 0
