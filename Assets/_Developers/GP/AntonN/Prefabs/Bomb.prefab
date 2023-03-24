@@ -130,15 +130,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 117cc6ee338cd734985646e175dc6614, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionTime: 6
-  instantHitLayer:
-    serializedVersion: 2
-    m_Bits: 8
+  explosionTime: 4
   delayHitLayer:
     serializedVersion: 2
     m_Bits: 64
+  instantHitLayer:
+    serializedVersion: 2
+    m_Bits: 8
   bombAudio: {fileID: 1163751872645458617}
   damager: {fileID: -7998556890650140287}
+  explosionEffect: {fileID: 187952, guid: f8de19b8f65f13c43b10711607842412, type: 3}
+  explosionRadius: 5
+  explosionForce: 700
 --- !u!114 &-7998556890650140287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +168,7 @@ MonoBehaviour:
   _debugColor: {r: 1, g: 1, b: 1, a: 1}
   _damageSpheres:
   - _sphereOffset: {x: 0, y: 0, z: 0}
-    _sphereRadius: 10
+    _sphereRadius: 20
   _hitEntitiesMaximum: 10
 --- !u!82 &2509681979622863907
 AudioSource:

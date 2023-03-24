@@ -7,10 +7,13 @@ using JE.DamageSystem;
 public class Bomb : MonoBehaviour
 {
     [SerializeField] private float explosionTime = 6f;
-    [SerializeField] private LayerMask instantHitLayer;
     [SerializeField] private LayerMask delayHitLayer;
+    [SerializeField] private LayerMask instantHitLayer;
     [SerializeField] private Audio3D bombAudio;
     [SerializeField] private SphereDamager damager;
+    [SerializeField] private GameObject explosionEffect;
+    [SerializeField] private float explosionRadius = 10f;
+    [SerializeField] private float explosionForce = 1f;
     private float timer;
     private bool exploded;
     private bool collisionWithPlayer;
@@ -40,23 +43,33 @@ public class Bomb : MonoBehaviour
 
     private void Explosion()
     {
-        exploded = true;
-        damager.Damage();
         bombAudio.PlaySoundEffect("BombNoise");
+        Instantiate(explosionEffect, transform.position, transform.rotation);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        foreach (Collider nearbyObject in colliders)
+        {
+            Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
+            if(rb != null)
+            {
+                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius);
+            }
+            damager.Damage();
+        }
+        exploded = true;
         Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision hit)
     {
         if (collisionWithPlayer || timerStart) return;
-        if (!instantHitLayer.ContainsLayer(hit.gameObject.layer))
+        if (!delayHitLayer.ContainsLayer(hit.gameObject.layer))
         {
             collisionWithPlayer = true;
             Explosion();
             return;
         }
 
-        if (!delayHitLayer.ContainsLayer(hit.gameObject.layer))
+        if (!instantHitLayer.ContainsLayer(hit.gameObject.layer))
         {
             timerStart = true;
             bombAudio.PlaySoundEffect("BombTick");

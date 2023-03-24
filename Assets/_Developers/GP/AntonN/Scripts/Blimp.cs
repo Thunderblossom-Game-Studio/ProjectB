@@ -1,3 +1,4 @@
+using HeathenEngineering.SteamworksIntegration;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,15 +43,15 @@ public class Blimp : MonoBehaviour
 
     private void BlimpBehaviour()
     {
-        
+
         switch (state)
         {
             case State.Moving:
-                if(DetectTarget())
+                if (DetectTarget())
                 {
                     OnTargetDetected();
                 }
-                else if(!DetectTarget())
+                else if (!DetectTarget())
                 {
                     ru.ToggleMovement(true);
                 }
@@ -91,6 +92,10 @@ public class Blimp : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out RaycastHit groundHit, raycastDistance, raycastLayer))
         {
             hitPoint = groundHit.point;
+
+            SpawnGround(hitPoint);
+
+
             Debug.DrawLine(transform.position, hitPoint, Color.red);
 
             Collider[] hitColliders = Physics.OverlapSphere(hitPoint, sphereSize, detectLayer);
@@ -123,7 +128,7 @@ public class Blimp : MonoBehaviour
             timer += Time.deltaTime;
         }
     }
-    
+
     private void Cooldown()
     {
         if (timer >= cooldownTime)
@@ -143,7 +148,7 @@ public class Blimp : MonoBehaviour
         DeactivateIndicator();
         for (int i = 0; i < dropAmount; i++)
         {
-            Instantiate(droppableObject, dropPoint.position, Quaternion.Euler(new Vector3 (Random.Range(0,360), Random.Range(0, 360), Random.Range(0, 360))));
+            Instantiate(droppableObject, dropPoint.position, Quaternion.Euler(new Vector3(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360))));
         }
     }
 
@@ -156,4 +161,30 @@ public class Blimp : MonoBehaviour
     {
         spawnIndicator.SetActive(false);
     }
+
+    void SpawnGround(Vector3 endPos)
+    {
+        Vector3 centerPos = new Vector3(dropPoint.position.x + endPos.x, dropPoint.position.y + endPos.y) / 2;
+
+        float scaleX = Mathf.Abs(dropPoint.position.x - endPos.x);
+        float scaleY = Mathf.Abs(dropPoint.position.y - endPos.y);
+
+        centerPos.x -= 0.5f;
+        centerPos.y += 0.5f;
+        spawnIndicator.transform.position = centerPos;
+        spawnIndicator.transform.localScale = new Vector3(scaleX, scaleY, 5);
+    }
+
+    /*void UpdateTransform()
+    {
+        float distance =
+            Vector3.Distance(StartObject.transform.position, EndObject.transform.position);
+        transform.localScale = new Vector3(InitialScale.x, distance / 2f, InitialScale.z);
+
+        Vector3 middlePoint = (StartObject.transform.position + EndObject.transform.position) / 2f;
+        transform.position = middlePoint;
+
+        Vector3 rotationDirection = (EndObject.transform.position - StartObject.transform.position) / 2f;
+        transform.up = rotationDirection;
+    }*/
 }
