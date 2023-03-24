@@ -9,6 +9,7 @@ public class Volcano : MonoBehaviour
     public GameObject warning;
     public Transform origin;
     public Transform target;
+    public bool targetsPlayer;
     public float speed;
     public float randomDeviation;
     public float angle;
