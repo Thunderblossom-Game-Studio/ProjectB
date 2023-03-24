@@ -96,6 +96,7 @@ public class TrafficBrain : MonoBehaviour
         {
             Director.GetComponent<WaypointDirector>().Car = this.gameObject;
             Director.GetComponent<WaypointDirector>().CarIndex = Index;
+            Director.GetComponent<WaypointDirector>().CarBody = ObjectToSpinOut;
             Director.GetComponent<WaypointDirector>().Lane();
             agent.destination = goal.position;
         }
