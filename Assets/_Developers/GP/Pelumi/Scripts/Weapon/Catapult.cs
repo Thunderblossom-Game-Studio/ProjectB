@@ -1,3 +1,4 @@
+using FishNet.Object;
 using Pelumi.Juicer;
 using System;
 using System.Collections;
@@ -26,7 +27,7 @@ public class Catapult : Weapon
     [Viewable] [SerializeField] private float angle;
     [Viewable] [SerializeField] private State state;
     [Viewable] [SerializeField] private LayerMask layerMask;
-    [Viewable] [SerializeField] private CatapultProjectile loadedProjectile;
+    [Viewable] [SerializeField] public CatapultProjectile loadedProjectile;
     [Viewable] [SerializeField] private bool inAction;
     [Viewable] [SerializeField] private Vector3 targetPos;
 
@@ -67,16 +68,37 @@ public class Catapult : Weapon
         switch (state)
         {
             case State.Reload:
-                loadedProjectile = Instantiate(weaponSO.projectile, firePoint[0].position, Quaternion.identity) as CatapultProjectile;
-                loadedProjectile.transform.SetParent(firePoint[0]);
+                SpawnProjectile(firePoint[0].position, this);
                 inAction = false;
                 break;
             case State.Fire:
                 ModifyAmmo(currentAmmo - 1);
-                loadedProjectile.transform.SetParent(null);
-                loadedProjectile.SetUp(targetPos, weaponSO.projectileSpeed, angle);
+                FireProjectile(targetPos, weaponSO.projectileSpeed, angle);
                 AudioManager.PlaySoundEffect(FireSoundID, true);
                 break;
         }
+    }
+
+    [ServerRpc]
+    public void SpawnProjectile(Vector3 position, Catapult catapult)
+    {
+        GameObject projectile = Instantiate(weaponSO.projectile, position, Quaternion.identity).gameObject;
+        ServerManager.Spawn(projectile);
+        SetSpawnedProjectile(projectile, catapult);
+    }
+
+    [ObserversRpc]
+    public void SetSpawnedProjectile(GameObject projectile, Catapult catapult)
+    {
+        catapult.loadedProjectile = projectile.GetComponent<CatapultProjectile>();
+        loadedProjectile.transform.SetParent(firePoint[0]);
+    }
+
+    [ObserversRpc]
+    public void FireProjectile(Vector3 target, float speed, float angle)
+    {
+        if (loadedProjectile == null) return;
+        loadedProjectile.transform.SetParent(null);
+        loadedProjectile.SetUp(target, speed, angle);
     }
 }

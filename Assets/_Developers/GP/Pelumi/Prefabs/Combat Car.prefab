@@ -413,6 +413,7 @@ MonoBehaviour:
   _packageScore: 0
   _packageDrop: {fileID: 0}
   _packageObjectVisual: {fileID: 5676333477140487690, guid: c273e1d1bba822c448ad29ab53a3e576, type: 3}
+  _bodyVisual: {fileID: 0}
   _maxPackages: 2
   _packageSpawns:
   - {x: -0.43, y: 0.9, z: -1.68}
@@ -449,6 +450,9 @@ MonoBehaviour:
   _spawnHealth: 100
   _maximumHealth: 100
   _minimumHealth: 0
+  _onHealthChange:
+    m_PersistentCalls:
+      m_Calls: []
   _onReduceHealth:
     m_PersistentCalls:
       m_Calls:
@@ -473,8 +477,6 @@ MonoBehaviour:
   _onReachFullHealth:
     m_PersistentCalls:
       m_Calls: []
-  _respawnPoints:
-  - {x: -9.31, y: 19.67, z: 311.9}
 --- !u!114 &1814196969196963211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -488,7 +490,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CinemachineCameraTarget: {fileID: 1053113273156046065}
-  invert: 0
+  invertVertical: 0
+  invertHorizontal: 0
   sensitivity: 0.05
   TopClamp: 70
   BottomClamp: -30
@@ -505,6 +508,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d43d9b93f66256b499886061d14497c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   debugMode: 0
   allWeapon:
   - {fileID: 1889801707300910895}
@@ -566,6 +572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c138514126984b44295a59fd00d8aad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  addOnAwake: 1
 --- !u!114 &1889801707744073865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1299,6 +1306,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1814196969196960372}
     m_Modifications:
+    - target: {fileID: 799727371445044208, guid: 935cc6196c761074795ea0df78deee9e, type: 3}
+      propertyPath: <IsNested>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 799727371445044208, guid: 935cc6196c761074795ea0df78deee9e, type: 3}
+      propertyPath: <AssetPathHash>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4624849625175021811, guid: 935cc6196c761074795ea0df78deee9e, type: 3}
       propertyPath: m_Name
       value: DartGun
@@ -1440,6 +1455,14 @@ PrefabInstance:
       propertyPath: upRotationLimit
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 5622192242559371559, guid: cef86d34be55c2a4c8b631bcac440ea9, type: 3}
+      propertyPath: <IsNested>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622192242559371559, guid: cef86d34be55c2a4c8b631bcac440ea9, type: 3}
+      propertyPath: <AssetPathHash>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cef86d34be55c2a4c8b631bcac440ea9, type: 3}
 --- !u!4 &1889801706746551439 stripped
@@ -1516,6 +1539,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3423956865552068079, guid: 888f58e9d2122fb48a96e651fc63c983, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7209711191107342802, guid: 888f58e9d2122fb48a96e651fc63c983, type: 3}
+      propertyPath: <IsNested>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7209711191107342802, guid: 888f58e9d2122fb48a96e651fc63c983, type: 3}
+      propertyPath: <AssetPathHash>k__BackingField
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

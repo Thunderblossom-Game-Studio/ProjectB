@@ -1,8 +1,9 @@
+using FishNet.Object;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Projectile : MonoBehaviour
+public abstract class Projectile : NetworkBehaviour
 {
     [SerializeField] protected bool playerBullet;
     [SerializeField] protected GameEvent hitEvent;
@@ -24,6 +25,13 @@ public abstract class Projectile : MonoBehaviour
 
     protected virtual void DestroyProjectile()
     {
-        Destroy(gameObject);
+        transform.SetParent(null);
+        DespawnObject(gameObject);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void DespawnObject(GameObject gameObject)
+    {
+        ServerManager.Despawn(gameObject);
     }
 }
