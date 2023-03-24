@@ -1,13 +1,13 @@
 using FishNet.Object;
+using RVP;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(AIVehicleController))]
 public class AICarController : NetworkBehaviour
 {
-    private AIVehicleController _car;
+    private VehicleParent _car;
 
     [Header("Pathfinding Settings")]
 
@@ -39,10 +39,15 @@ public class AICarController : NetworkBehaviour
 
     private float _distanceMultiplier = 1.6f;
 
+    private BasicInput.MoveData _md;
+
     // Start is called before the first frame update
     private void Start()
     {
-        _car = GetComponent<AIVehicleController>();
+        _car = GetComponent<VehicleParent>();
+
+        if (_agent)
+            _agent.Warp(transform.position);
     }
 
     private void Update()
@@ -62,16 +67,23 @@ public class AICarController : NetworkBehaviour
         IdleTiming();
     }
 
+    private void FixedUpdate()
+    {
+        if (!IsServer)
+            return;
+
+        if (!_agent)
+        {
+            Debug.LogWarning("No NavMesh Agent Assigned");
+
+            return;
+        }
+
+        _agent.CalculatePath(_agent.destination, _agent.path);
+    }
+
     public AIPlayerHandler.CurrentState Evaluate(AIPlayerHandler.CurrentState state)
     {
-        if ((Vector3.Distance(transform.position, _agent.transform.position) > _distanceBetweenAgent * _distanceMultiplier)
-            ||
-            (_frontTriggerCheck.active || _backTriggerCheck.active)
-            ||
-            _stuck)
-        {
-            state = AIPlayerHandler.CurrentState.IDLE;
-        }
         return state;
     }
 
@@ -88,12 +100,13 @@ public class AICarController : NetworkBehaviour
         float direction = Vector3.SignedAngle(transform.forward, dir, Vector3.up);
 
         float forwardInput = 0;
+        float brakeInput = 0;
         float horizontalInput = 0;
 
         // acceleration/reversing
         if ((direction < -90) || (direction > 90))
         {
-            forwardInput = -1;
+            brakeInput = -5;
         }
         else
         {
@@ -111,26 +124,30 @@ public class AICarController : NetworkBehaviour
         }
 
         // braking
-        bool b = false;
+        int brake = 0;
 
         if (
             // if not turning and speed is greater than brake sens
-            (horizontalInput != 0 && _car.GetSpeed() > _brakeSensitivity) ||
+            //(horizontalInput != 0 && _car.localVelocity.magnitude > _brakeSensitivity) ||
 
-            // if in stopping distance and speed is greater than brake sens
+            //// if in stopping distance and speed is greater than brake sens
             (Vector3.Distance(transform.position, _agent.transform.position) < _stopDistance &&
-            _car.GetSpeed() > _brakeSensitivity) ||
+            _car.localVelocity.magnitude > _brakeSensitivity) ||
 
             // if speed is greater than bleh
-            (_car.GetSpeed() > _brakeSensitivity * 1.8))
+            (_car.localVelocity.magnitude > _brakeSensitivity))
         {
-            b = true;
+            forwardInput = 0;
         }
 
-        forwardInput = Mathf.Clamp(forwardInput, -1f, 1f);
+        forwardInput = Mathf.Clamp(forwardInput, 0f, .75f);
+        brakeInput = Mathf.Clamp(brakeInput, -1f, 0f);
         horizontalInput = Mathf.Clamp(horizontalInput, -1f, 1f);
 
-        _car.HandleInput(forwardInput, horizontalInput, b);
+        _md.AccelInput = forwardInput;
+        _md.BrakeInput = brakeInput;
+        _md.SteerInput = horizontalInput;
+        //_md.EbrakeInput = brake;
     }
 
     /// <summary>
@@ -143,8 +160,9 @@ public class AICarController : NetworkBehaviour
         else _agentSpawnWeight = _defaultSpawnWeight;
         if (_agentSpawnWeight != _defaultSpawnWeight) _agent.speed = _weightedAgentAcc;
         else _agent.speed = _defaultAgentAcc;
-        if (Vector3.Distance(transform.position, _agent.transform.position) > _distanceBetweenAgent)
+        if ((Vector3.Distance(transform.position, _agent.transform.position) > _distanceBetweenAgent))
         {
+            //RecallAgent();
             _agent.isStopped = true;
         }
         else
@@ -155,6 +173,17 @@ public class AICarController : NetworkBehaviour
         {
             _agent.Warp(transform.position);
         }
+        //if ((Vector3.Distance(transform.position, _agent.transform.position) > _warpDistance))
+        //{
+        //    NavMeshPath path = new NavMeshPath();
+        //    Vector3 pos = transform.position;
+        //    pos += transform.forward * _agentSpawnWeight;
+        //    _agent.CalculatePath(pos, path);
+        //    if (!(path.status == NavMeshPathStatus.PathPartial || path.status == NavMeshPathStatus.PathInvalid))
+        //    {
+        //        _agent.Warp(pos);
+        //    }
+        //}
     }
 
     public void RecallAgent()
@@ -187,7 +216,7 @@ public class AICarController : NetworkBehaviour
 
     private void IdleTiming()
     {
-        if (_car.GetSpeed() < 3)
+        if (_car.localVelocity.magnitude < 3)
         {
             _idleTimer += Time.deltaTime;
 
@@ -211,5 +240,12 @@ public class AICarController : NetworkBehaviour
 
             Gizmos.DrawSphere(_agent.transform.position, .5f);
         }
+    }
+
+    public void GetAIMoveData(out BasicInput.MoveData md)
+    {
+        md = default;
+
+        md = _md;
     }
 }
