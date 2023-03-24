@@ -472,6 +472,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c68221e66c9043d43ac52a8350c993fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   content: {fileID: 2936944324391621137}
   rotateVertical: 1
   rightRotationLimit: 180
@@ -532,6 +535,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4398a01757d91d4394e7a91d4bf090a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   content: {fileID: 4753920987509625734}
   rotateVertical: 0
   rightRotationLimit: 180
@@ -1452,6 +1458,7 @@ MonoBehaviour:
   _packageScore: 0
   _packageDrop: {fileID: 0}
   _packageObjectVisual: {fileID: 5676333477140487690, guid: c273e1d1bba822c448ad29ab53a3e576, type: 3}
+  _bodyVisual: {fileID: 0}
   _maxPackages: 2
   _packageSpawns:
   - {x: -0.43, y: 0.9, z: -1.68}
@@ -1488,6 +1495,9 @@ MonoBehaviour:
   _spawnHealth: 100
   _maximumHealth: 100
   _minimumHealth: 0
+  _onHealthChange:
+    m_PersistentCalls:
+      m_Calls: []
   _onReduceHealth:
     m_PersistentCalls:
       m_Calls:
@@ -1525,7 +1535,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CinemachineCameraTarget: {fileID: 7473897214639564153}
-  invert: 0
+  invertVertical: 0
+  invertHorizontal: 0
   sensitivity: 0.05
   TopClamp: 70
   BottomClamp: -30
@@ -1542,6 +1553,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d43d9b93f66256b499886061d14497c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   debugMode: 0
   allWeapon:
   - {fileID: 8294532899549519527}
@@ -1603,6 +1617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c138514126984b44295a59fd00d8aad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  addOnAwake: 1
 --- !u!114 &8294532899607900417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2416,6 +2431,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05afe5b8dcf50ca468528c4571c5f878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   content: {fileID: 8294532899934641011}
   rotateVertical: 1
   rightRotationLimit: 180
