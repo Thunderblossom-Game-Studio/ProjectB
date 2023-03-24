@@ -12,6 +12,7 @@ public class DartProjectile : Projectile
     [SerializeField] private int _hitEntitiesMaximum = 10;
     private bool hasHit = false;
     private Collider[] _hitEntities;
+   
 
     protected void Start()
     {
@@ -30,12 +31,6 @@ public class DartProjectile : Projectile
         speed = _speed;
     }
 
-    public override void OnDamage(float damageValue)
-    {
-        base.OnDamage(damageValue);
-        DestroyProjectile();
-    }
-
     protected IEnumerator LifeTimeDelay()
     {
         yield return new WaitForSeconds(destroyTime);
@@ -52,16 +47,27 @@ public class DartProjectile : Projectile
     {
         if (hasHit) return;
         int entitiesHit = Physics.OverlapSphereNonAlloc(transform.position , damageRadius, _hitEntities, detectLayer);
-        hasHit = entitiesHit != 0;
+       
+        if(entitiesHit != 0)
+        {
+            hasHit = true;
+            OnHit(entitiesHit);
+        }
+    }
+
+    public void OnHit(int entitiesHit)
+    {
         for (int i = 0; i < entitiesHit; i++) DamageEntity(_hitEntities[i].gameObject);
         DestroyProjectile();
     }
 
     protected void DamageEntity(GameObject damageObject)
     {
+        Debug.Log(gameObject.name);
         IDamageable healthSystem = damageObject.GetComponent<IDamageable>();
         if (healthSystem == null) return;
         healthSystem.ReduceHealth(_damageAmount);
+        OnDamage(_damageAmount);
     }
 
     public void OnDrawGizmos()
