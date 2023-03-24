@@ -22,6 +22,14 @@ public class CutSceneTrigger : MonoBehaviour
         if (director.playableAsset) director.Play();
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space) && director.state == PlayState.Playing)
+        {
+            director.Stop();
+        }
+    }
+
     private void Director_played(PlayableDirector obj)
     {
         OnStart.Invoke();

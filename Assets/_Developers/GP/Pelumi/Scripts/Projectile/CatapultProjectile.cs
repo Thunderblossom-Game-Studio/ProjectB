@@ -42,15 +42,6 @@ public class CatapultProjectile : Projectile
         moveRoutine = StartCoroutine(PathUtil.MoveObjectAlongPath(transform, transform.position, targetPostion, angle, speed, null));
     }
 
-    public void DetectTargets()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit))
-        {
-            Debug.Log("Point of contact: " + hit.point);
-        }
-    }
-
     public void OnHit()
     {
         if (playerBullet) hitEvent.Raise(this, new HitMarkInfo(Color.red, transform.position));

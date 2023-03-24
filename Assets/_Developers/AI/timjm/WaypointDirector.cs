@@ -9,6 +9,8 @@ public class WaypointDirector : MonoBehaviour
     {
         public GameObject Point;
         public List<GameObject> Exits;
+        public bool TurnUp;
+        public bool TurnDown;
     }
     public Waypoint[] WaypointArray;
 
@@ -20,6 +22,8 @@ public class WaypointDirector : MonoBehaviour
     public GameObject Car;
     [HideInInspector]
     public int CarIndex;
+    [HideInInspector]
+    public GameObject CarBody;
 
     public void Lane()
     {
@@ -37,8 +41,15 @@ public class WaypointDirector : MonoBehaviour
               Car.GetComponent<TrafficBrain>().Index = i;  
               break;
            }          
-        }        
-        
+        }
+        if (WaypointArray[CarIndex].TurnUp)
+        {
+            CarBody.transform.rotation *= Quaternion.Euler(0, -90, 0);
+        }
+        if (WaypointArray[CarIndex].TurnDown)
+        {
+            CarBody.transform.rotation *= Quaternion.Euler(0, 90, 0);
+        }
     }
 
     void OnDrawGizmos()

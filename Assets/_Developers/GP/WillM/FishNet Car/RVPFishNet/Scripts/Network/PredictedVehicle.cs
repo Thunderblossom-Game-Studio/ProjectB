@@ -57,6 +57,8 @@ namespace RVP
         /// </summary>
         private BasicInput _input;
 
+        private AICarController _aiInput;
+
         /// <summary>
         /// Car Controller core state
         /// </summary>
@@ -159,6 +161,8 @@ namespace RVP
         {
             // we setup the tick subscription here otherwise TimeManger.Tick could fire before the simulation scripts have initialised
             ChangeSubscriptions(true);
+
+            _aiInput = GetComponent<AICarController>();
         }
 
         public override void OnStartClient()
@@ -345,7 +349,11 @@ namespace RVP
             if (base.IsOwner)
             {
                 Reconciliation(default, false);
-                _input.CheckInput(out BasicInput.MoveData md);
+                BasicInput.MoveData md;
+
+                if (_aiInput) _aiInput.GetAIMoveData(out md);
+                else _input.CheckInput(out md);
+                
                 Move(md, false);
             }
 

@@ -1,9 +1,10 @@
+using FishNet.Object;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerWeaponController : MonoBehaviour
+public class PlayerWeaponController : NetworkBehaviour
 {
     [SerializeField] private bool debugMode;
     [SerializeField] private List<Weapon> allWeapon;
@@ -60,6 +61,8 @@ public class PlayerWeaponController : MonoBehaviour
 
     void Update()
     {
+        if (!base.IsOwner) return;
+
         DebugSwitchWeapons();
 
         if (debugMode) DebugMouse();
