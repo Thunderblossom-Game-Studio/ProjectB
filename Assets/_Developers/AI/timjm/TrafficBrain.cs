@@ -82,6 +82,15 @@ public class TrafficBrain : MonoBehaviour
     public int HowLongTillDeath = 3;
     #endregion
 
+    [Header("Materials")]
+    #region
+    [SerializeField] MeshRenderer MaterialRenderer;
+    public Material Material1;
+    public Material Material2;
+    public Material Material3;
+    int Randomizer;
+    #endregion
+
     void Start()
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -101,7 +110,7 @@ public class TrafficBrain : MonoBehaviour
             agent.destination = goal.position;
         }
 
-        //#region Raycast Code
+        #region Raycast Code
         //RaycastHit hit;
         //Vector3 forward = RayCast.transform.TransformDirection(Vector3.forward) * RayCastInt; 
         //if (Physics.Raycast(RayCast.transform.position, forward, out hit, 5.0f))
@@ -115,7 +124,7 @@ public class TrafficBrain : MonoBehaviour
         //{
         //    agent.isStopped = false;
         //}
-        //#endregion
+        #endregion
 
         #region Panic Code
         if (panic == true && ExtendedPanic == false)
@@ -167,6 +176,26 @@ public class TrafficBrain : MonoBehaviour
         }
 
        
+    }
+
+    private void OnEnable()
+    {
+        Randomizer = Random.Range(0, 3);
+
+        if (Randomizer == 0)
+        {
+            MaterialRenderer.material = Material1;
+        }
+
+        if (Randomizer == 1)
+        {
+            MaterialRenderer.material = Material2;
+        }
+
+        if (Randomizer == 2)
+        {
+            MaterialRenderer.material = Material3;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -260,7 +289,7 @@ public class TrafficStatEditor : Editor
     // The various categories the editor will display the variables in 
     public enum DisplayCategory
     {
-        Basic, Panic, Health
+        Basic, Panic, Health, Material
     }
 
     // The enum field that will determine what variables to display in the Inspector
@@ -288,6 +317,9 @@ public class TrafficStatEditor : Editor
 
             case DisplayCategory.Health:
                 DisplayHealthInfo();
+                break;
+            case DisplayCategory.Material:
+                DisplayMaterialInfo();
                 break;
 
         }
@@ -323,6 +355,15 @@ public class TrafficStatEditor : Editor
         EditorGUILayout.PropertyField(serializedObject.FindProperty("Health"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("MaxHealth"));
     }
+
+    void DisplayMaterialInfo()
+    {
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("MaterialRenderer"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("Material1"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("Material2"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("Material3"));
+    }
 }
 
 #endif
+
