@@ -19,9 +19,9 @@ public class SpawnerControl : MonoBehaviour
     public int limit;
     [Tooltip("Limit for the spawner to spawn")]
 
-
-    [HideInInspector]
     public int count;
+    [HideInInspector]
+
 
     bool ready = true;
     GameObject SpawnerReference;
@@ -44,11 +44,12 @@ public class SpawnerControl : MonoBehaviour
 
     IEnumerator Spawn()
     {
-        Clone = Instantiate(Traffic, transform.position, Quaternion.identity);
-        Clone.GetComponent<TrafficBrain>().goal = RoadConnect.transform;       
+        Clone = Instantiate(Traffic, transform.position, Quaternion.identity);       
         Clone.GetComponent<TrafficBrain>().SpawnStation = SpawnerReference;
+        Clone.GetComponent<TrafficBrain>().goal = RoadConnect.transform;       
         Clone.GetComponent<TrafficBrain>().Index = PointIndex;
         Clone.GetComponent<TrafficBrain>().Director = Director;
+
         count += 1;
         yield return new WaitForSeconds(3);
         ready = true;

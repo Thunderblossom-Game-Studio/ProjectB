@@ -12,6 +12,7 @@ public class TrafficBrain : MonoBehaviour
     [Header("Waypoint Targets")]
     #region References
     [Tooltip("Traffic Car's Next Target Waypoint/Movement")]
+ 
     public Transform goal;
     public Transform panicgoal;
     Transform savegoal;
@@ -26,7 +27,7 @@ public class TrafficBrain : MonoBehaviour
     [Tooltip("If This Is Ticked, extends the duration drastically.")]
     public bool ExtendedPanic;
     [SerializeField] int DistanceForwardIncrease;
-    public int PastPanicAxis;  
+    public int PastPanicAxis;
     public int PanicAxis;
     [Tooltip("If This Is Ticked, The Traffic Car Will Panic Forever.")]
     public bool PanicForever;
@@ -59,7 +60,7 @@ public class TrafficBrain : MonoBehaviour
     [Tooltip("The spin applied during spin out")]
     public int SpinY;
     [Tooltip("The thrust applied during spin out, must be above 100 to see effect")]
-    public float Thrust = 120f;
+    public float Thrust = 150f;
     public bool ActivateSpinOut;
     public GameObject ObjectToSpinOut;
     #endregion
@@ -133,12 +134,12 @@ public class TrafficBrain : MonoBehaviour
             panic = false;
         }
 
-        if(ExtendedPanic == true)
+        if (ExtendedPanic == true)
         {
             IgnoreRaycasts = true;
             PanicForever = true;
             StartCoroutine(PanicMode());
-            ExtendedPanic= false;
+            ExtendedPanic = false;
         }
 
         if (PanicForever == true)
@@ -175,7 +176,7 @@ public class TrafficBrain : MonoBehaviour
             ReattachDestination();
         }
 
-       
+
     }
 
     private void OnEnable()
@@ -200,12 +201,12 @@ public class TrafficBrain : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(CompareTag("Player"))
+        if (CompareTag("Player"))
         {
-           StartCoroutine(PanicMode());
+            StartCoroutine(PanicMode());
         }
 
-        if(CompareTag("Train"))
+        if (CompareTag("Train"))
         {
             InstantExplosion();
         }
@@ -249,6 +250,17 @@ public class TrafficBrain : MonoBehaviour
         goal = savegoal;
     }
 
+    public void TurnOnSpinOut()
+    {
+        if (ActivateSpinOut == false)
+        {
+            ActivateSpinOut = true; 
+            SpinOut();
+        }
+       
+    }
+
+
     public void SpinOut()
     {
         agent.enabled = false;
@@ -261,8 +273,10 @@ public class TrafficBrain : MonoBehaviour
     {
         yield return new WaitForSeconds(HowLongTillDeath);
         //Insert Explosion/Particle Effects Here
+        ActivateSpinOut = false;
         SpawnStation.GetComponent<SpawnerControl>().count = SpawnStation.GetComponent<SpawnerControl>().count - 1;
         this.gameObject.transform.position = SpawnStation.GetComponent<SpawnerControl>().Grave.transform.position;
+        
         yield return new WaitForSeconds(10);
         Destroy(this.gameObject);
     }
