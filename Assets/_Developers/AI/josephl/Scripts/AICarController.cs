@@ -39,6 +39,7 @@ public class AICarController : NetworkBehaviour
 
     private float _distanceMultiplier = 1.6f;
 
+    [Viewable]
     private BasicInput.MoveData _md;
 
     // Start is called before the first frame update
@@ -79,7 +80,7 @@ public class AICarController : NetworkBehaviour
             return;
         }
 
-        _agent.CalculatePath(_agent.destination, _agent.path);
+        //_agent.CalculatePath(_agent.destination, _agent.path);
     }
 
     public AIPlayerHandler.CurrentState Evaluate(AIPlayerHandler.CurrentState state)
@@ -100,17 +101,16 @@ public class AICarController : NetworkBehaviour
         float direction = Vector3.SignedAngle(transform.forward, dir, Vector3.up);
 
         float forwardInput = 0;
-        float brakeInput = 0;
         float horizontalInput = 0;
 
         // acceleration/reversing
         if ((direction < -90) || (direction > 90))
         {
-            brakeInput = -5;
+            forwardInput = -1;
         }
         else
         {
-            forwardInput = 1 * _forwardmultiplier;
+            forwardInput = 1;
         }
 
         // turning
@@ -123,31 +123,30 @@ public class AICarController : NetworkBehaviour
             horizontalInput = 1;
         }
 
-        // braking
-        int brake = 0;
 
-        if (
-            // if not turning and speed is greater than brake sens
-            //(horizontalInput != 0 && _car.localVelocity.magnitude > _brakeSensitivity) ||
-
-            //// if in stopping distance and speed is greater than brake sens
-            (Vector3.Distance(transform.position, _agent.transform.position) < _stopDistance &&
-            _car.localVelocity.magnitude > _brakeSensitivity) ||
-
-            // if speed is greater than bleh
-            (_car.localVelocity.magnitude > _brakeSensitivity))
+        if (Vector3.Distance(transform.position, _agent.transform.position) < _stopDistance
+            &&
+            _car.localVelocity.magnitude > _brakeSensitivity)
         {
             forwardInput = 0;
         }
+        // braking
+        int brake = 0;
 
-        forwardInput = Mathf.Clamp(forwardInput, 0f, .75f);
-        brakeInput = Mathf.Clamp(brakeInput, -1f, 0f);
+        if (Mathf.Abs(horizontalInput) >= 0.6f && _car.localVelocity.magnitude > _brakeSensitivity)
+        {
+            brake = 1;
+        }
+
+        if (forwardInput != 0) 
+            horizontalInput *= forwardInput;
+
+        forwardInput = Mathf.Clamp(forwardInput, -.75f, .75f);
         horizontalInput = Mathf.Clamp(horizontalInput, -1f, 1f);
 
         _md.AccelInput = forwardInput;
-        _md.BrakeInput = brakeInput;
         _md.SteerInput = horizontalInput;
-        //_md.EbrakeInput = brake;
+        _md.EbrakeInput = brake;
     }
 
     /// <summary>
@@ -160,30 +159,23 @@ public class AICarController : NetworkBehaviour
         else _agentSpawnWeight = _defaultSpawnWeight;
         if (_agentSpawnWeight != _defaultSpawnWeight) _agent.speed = _weightedAgentAcc;
         else _agent.speed = _defaultAgentAcc;
-        if ((Vector3.Distance(transform.position, _agent.transform.position) > _distanceBetweenAgent))
+        if (Vector3.Distance(transform.position, _agent.transform.position) > _distanceBetweenAgent)
         {
-            //RecallAgent();
             _agent.isStopped = true;
         }
         else
         {
             _agent.isStopped = false;
         }
+        if (_frontTriggerCheck.active || _backTriggerCheck.active)
+        {
+            _agent.isStopped = false;
+            RecallAgent();
+        }
         if (Mathf.Abs(_agent.transform.position.y - transform.position.y) > _yWarp)
         {
             _agent.Warp(transform.position);
         }
-        //if ((Vector3.Distance(transform.position, _agent.transform.position) > _warpDistance))
-        //{
-        //    NavMeshPath path = new NavMeshPath();
-        //    Vector3 pos = transform.position;
-        //    pos += transform.forward * _agentSpawnWeight;
-        //    _agent.CalculatePath(pos, path);
-        //    if (!(path.status == NavMeshPathStatus.PathPartial || path.status == NavMeshPathStatus.PathInvalid))
-        //    {
-        //        _agent.Warp(pos);
-        //    }
-        //}
     }
 
     public void RecallAgent()

@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class BackTriggerCheck : MonoBehaviour
 {
+    [SerializeField] private List<GameObject> _prefabs;
+
     internal bool active = false;
 
     private void OnTriggerStay(Collider other)
     {
-        active = true;
+        if (!_prefabs.Contains(other.gameObject))
+            active = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        active = false;
+        if (!_prefabs.Contains(other.gameObject))
+            active = false;
     }
 }
