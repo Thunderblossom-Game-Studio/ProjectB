@@ -165,10 +165,10 @@ public class TrafficBrain : MonoBehaviour
             SpinOut();
         }
 
-        FrontLeft.transform.Rotate(Vector3.back, turnSpeed * Time.deltaTime);
-        FrontRight.transform.Rotate(Vector3.forward, turnSpeed * Time.deltaTime);
-        RearLeft.transform.Rotate(Vector3.back, turnSpeed * Time.deltaTime);
-        RearRight.transform.Rotate(Vector3.forward, turnSpeed * Time.deltaTime);
+        FrontLeft.transform.Rotate(Vector3.right, turnSpeed * Time.deltaTime);
+        FrontRight.transform.Rotate(Vector3.left, turnSpeed * Time.deltaTime);
+        RearLeft.transform.Rotate(Vector3.right, turnSpeed * Time.deltaTime);
+        RearRight.transform.Rotate(Vector3.left, turnSpeed * Time.deltaTime);
 
 
         if (agent.destination != goal.position)
