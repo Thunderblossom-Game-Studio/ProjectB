@@ -676,6 +676,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c68221e66c9043d43ac52a8350c993fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 3
+  _addedNetworkObject: {fileID: 7115402400862813524}
+  _networkObjectCache: {fileID: 7115402400862813524}
   content: {fileID: 886724932864601435}
   rotateVertical: 1
   rightRotationLimit: 180
@@ -1351,6 +1354,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05afe5b8dcf50ca468528c4571c5f878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 4
+  _addedNetworkObject: {fileID: 7115402400862813524}
+  _networkObjectCache: {fileID: 7115402400862813524}
   content: {fileID: 2210001533854041982}
   rotateVertical: 1
   rightRotationLimit: 180
@@ -16465,6 +16471,10 @@ MonoBehaviour:
   _networkBehaviours:
   - {fileID: 6427845818653368417}
   - {fileID: 8308345038842029898}
+  - {fileID: 8335015285068822155}
+  - {fileID: 924067890231493878}
+  - {fileID: 2210001534272783018}
+  - {fileID: 6715046767458147039}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
@@ -16545,6 +16555,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d43d9b93f66256b499886061d14497c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 2
+  _addedNetworkObject: {fileID: 7115402400862813524}
+  _networkObjectCache: {fileID: 7115402400862813524}
   debugMode: 0
   allWeapon:
   - {fileID: 924067890231493878}
@@ -16627,12 +16640,48 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4322939432744622338, guid: 3d7497856f18b714782c6dada3a5a004, type: 3}
+        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
+        m_MethodName: UpdateHealth
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _onReduceHealth:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4322939432744622338, guid: 3d7497856f18b714782c6dada3a5a004, type: 3}
+        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
+        m_MethodName: UpdateHealth
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _onRestoreHealth:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4322939432744622338, guid: 3d7497856f18b714782c6dada3a5a004, type: 3}
+        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
+        m_MethodName: UpdateHealth
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _onDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -17085,6 +17134,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4398a01757d91d4394e7a91d4bf090a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 5
+  _addedNetworkObject: {fileID: 7115402400862813524}
+  _networkObjectCache: {fileID: 7115402400862813524}
   content: {fileID: 2283085271372021236}
   rotateVertical: 0
   rightRotationLimit: 180
