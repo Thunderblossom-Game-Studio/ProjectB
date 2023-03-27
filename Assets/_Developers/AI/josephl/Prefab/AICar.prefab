@@ -641,6 +641,7 @@ MonoBehaviour:
   _forwardmultiplier: 0
   _turnmultiplier: 0
   _brakeSensitivity: 50
+  _speedSensitivity: 50
   _angle: 0
   _stopDistance: 10
   _defaultSpawnWeight: 5
@@ -652,6 +653,7 @@ MonoBehaviour:
   _distanceBetweenAgent: 30
   _yWarp: 7
   MoveTarget: {fileID: 0}
+  _maxIdleTimer: 4
 --- !u!114 &8516153776489548581
 MonoBehaviour:
   m_ObjectHideFlags: 0
