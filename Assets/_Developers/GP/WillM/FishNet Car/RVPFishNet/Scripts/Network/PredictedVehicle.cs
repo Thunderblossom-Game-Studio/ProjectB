@@ -169,7 +169,7 @@ namespace RVP
         {
             base.OnStartClient();
 
-            if (base.IsOwner)
+            if (base.IsOwner && !_aiInput)
             {
                 if (useNewSystem)
                 {

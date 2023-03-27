@@ -21,8 +21,8 @@ public class GamePlayer : MonoBehaviour
     {
         if (addOnAwake)
         {
-            InitialisePlayer(GameTeamManager.Instance._blueTeamData);
-            GameTeamManager.Instance._blueTeamData.AddPlayer(this);
+            GameTeamManager.Instance._gamePlayers.Add(this);
+            GameTeamManager.Instance.InitialiseTeams();
         }
     }
 

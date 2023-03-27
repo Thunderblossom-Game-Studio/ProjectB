@@ -10,13 +10,13 @@ public class BackTriggerCheck : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (!_prefabs.Contains(other.gameObject))
-            active = true;
+        if (_prefabs.Contains(other.gameObject)) return;
+        active = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (!_prefabs.Contains(other.gameObject))
-            active = false;
+        if (_prefabs.Contains(other.gameObject)) return;
+        active = false;
     }
 }

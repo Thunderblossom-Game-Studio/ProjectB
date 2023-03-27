@@ -15,6 +15,7 @@ public class AICarController : NetworkBehaviour
     [Range(0f, 1f)] [SerializeField] private float _forwardmultiplier;
     [Range(0f, 5f)] [SerializeField] private float _turnmultiplier;
     [Range(0, 100)] [SerializeField] private float _brakeSensitivity = 50;
+    [Range(0, 100)] [SerializeField] private float _speedSensitivity = 50;
     [Range(0, 180)] [SerializeField] private int _angle;
     [SerializeField] private float _stopDistance = 10;
 
@@ -33,7 +34,7 @@ public class AICarController : NetworkBehaviour
 
     [Viewable] public GameObject MoveTarget;
 
-    private float _maxIdleTimer = 4;
+    [SerializeField] private float _maxIdleTimer = 20;
     private float _idleTimer = 0;
     private bool _stuck = false;
 
@@ -80,7 +81,6 @@ public class AICarController : NetworkBehaviour
             return;
         }
 
-        //_agent.CalculatePath(_agent.destination, _agent.path);
     }
 
     public AIPlayerHandler.CurrentState Evaluate(AIPlayerHandler.CurrentState state)
@@ -123,12 +123,17 @@ public class AICarController : NetworkBehaviour
             horizontalInput = 1;
         }
 
+        if (forwardInput != 0) 
+            horizontalInput *= forwardInput;
 
-        if (Vector3.Distance(transform.position, _agent.transform.position) < _stopDistance
+
+        if ((_car.localVelocity.magnitude > _speedSensitivity)
+            ||
+            ((Vector3.Distance(transform.position, _agent.transform.position) < _stopDistance
             &&
-            _car.localVelocity.magnitude > _brakeSensitivity)
+            _car.localVelocity.magnitude > _brakeSensitivity)))
         {
-            forwardInput = 0;
+            forwardInput = -.25f;
         }
         // braking
         int brake = 0;
@@ -137,9 +142,6 @@ public class AICarController : NetworkBehaviour
         {
             brake = 1;
         }
-
-        if (forwardInput != 0) 
-            horizontalInput *= forwardInput;
 
         forwardInput = Mathf.Clamp(forwardInput, -.75f, .75f);
         horizontalInput = Mathf.Clamp(horizontalInput, -1f, 1f);
@@ -159,7 +161,9 @@ public class AICarController : NetworkBehaviour
         else _agentSpawnWeight = _defaultSpawnWeight;
         if (_agentSpawnWeight != _defaultSpawnWeight) _agent.speed = _weightedAgentAcc;
         else _agent.speed = _defaultAgentAcc;
-        if (Vector3.Distance(transform.position, _agent.transform.position) > _distanceBetweenAgent)
+        Vector3 agentYRemoved = _agent.transform.position;
+        agentYRemoved.y = transform.position.y;
+        if (Vector3.Distance(transform.position, agentYRemoved) > _distanceBetweenAgent)
         {
             _agent.isStopped = true;
         }
@@ -215,6 +219,8 @@ public class AICarController : NetworkBehaviour
             if (_idleTimer > _maxIdleTimer)
             {
                 _stuck = true;
+                transform.position = _agent.transform.position;
+                transform.rotation = _agent.transform.rotation;
             }
         }
         else
