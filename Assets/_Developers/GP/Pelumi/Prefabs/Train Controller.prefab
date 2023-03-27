@@ -1301,6 +1301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveOnRoute: 0
   rotateOnRoute: 0
+  moveType: 0
   moveSpeed: 70
   rotateSpeed: 50
   routes: {fileID: 5390911508582820893}
@@ -2280,8 +2281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownerID: Train
-  trainRouteTextDebugSize: 20
-  trainRouteCircleDebugSize: 5
+  isLocal: 0
   route:
   - {x: -43.71, y: 2.1, z: 46.4}
   - {x: 42.2, y: 2.1, z: 46.4}
@@ -2295,6 +2295,8 @@ MonoBehaviour:
   - {x: 1, y: 14.9, z: 220.12}
   - {x: -0.9, y: 2.5, z: 155.2}
   - {x: -0.9, y: 2.5, z: 60.3}
+  debugTextSize: 20
+  debugCircleSize: 5
 --- !u!114 &8670259685022756619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2366,6 +2368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveOnRoute: 0
   rotateOnRoute: 0
+  moveType: 0
   moveSpeed: 70
   rotateSpeed: 50
   routes: {fileID: 5390911508582820893}
@@ -2674,6 +2677,7 @@ GameObject:
   - component: {fileID: 5390911508844911626}
   - component: {fileID: 5390911508844911627}
   - component: {fileID: 5390911508844911621}
+  - component: {fileID: 4218871614080767125}
   m_Layer: 14
   m_Name: Train Head
   m_TagString: Untagged
@@ -2724,6 +2728,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveOnRoute: 0
   rotateOnRoute: 0
+  moveType: 0
   moveSpeed: 70
   rotateSpeed: 50
   routes: {fileID: 5390911508582820893}
@@ -2741,6 +2746,32 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.56, y: 6.56, z: 13.13}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4218871614080767125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5390911508844911624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 013bce30a2c58514995c2a3b01f19d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  _damageAmount: 100
+  _criticalDamagePercentage: 100
+  _criticalChance: 100
+  _duration: 6
+  _tickRate: 1
+  _onDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  _damageType: 0
+  _maxHit: 100
+  currentHit: 0
 --- !u!1 &5390911508894695926
 GameObject:
   m_ObjectHideFlags: 0
