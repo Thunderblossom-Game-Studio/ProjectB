@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JE.DamageSystem;
 using UnityEngine;
 
-public class GamePlayer : MonoBehaviour
+public class GamePlayer : MonoBehaviour, IKillable
 {
     #region GET
     public TeamData PlayerTeamData => _playerTeamData;
@@ -29,6 +30,22 @@ public class GamePlayer : MonoBehaviour
     public void OnHealthChanged(float normalisedValue)
     {
         GameMenu.GetInstance()?.SetHealthView(normalisedValue);
+    }
+
+    public void HandleDeath(HealthSystem healthSystem)
+    {
+        if (!gameObject.TryGetComponent(out GamePlayer gamePlayer))
+            return;
+
+        transform.position = gamePlayer.PlayerTeamData.GetRandomSpawnPoint();
+        transform.rotation = Quaternion.identity;
+        
+        healthSystem.RestoreHealth(healthSystem.MaximumHealth);
+        
+        if (!gameObject.TryGetComponent(out Rigidbody currentBody)) 
+            return;
+        
+        currentBody.velocity = Vector3.zero;
     }
 }
 
