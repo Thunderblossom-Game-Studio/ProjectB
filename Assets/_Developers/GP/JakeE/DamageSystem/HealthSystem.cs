@@ -48,7 +48,7 @@ namespace JE.DamageSystem
     public void Awake()
     {
         _currentHealth = _spawnHealth;
-        _onDeath.AddListener(Respawn);
+        _onDeath.AddListener(DefaultOnDeath);
     } 
         
     public void ReduceHealth(float reduceAmount)
@@ -143,7 +143,7 @@ namespace JE.DamageSystem
 
         transform.position = gamePlayer.PlayerTeamData.GetRandomSpawnPoint();
         transform.rotation = Quaternion.identity;
-        _currentHealth = _maximumHealth;
+        RestoreHealth(_maximumHealth);
         
         if (!gameObject.TryGetComponent(out Rigidbody currentBody)) 
             return;
@@ -151,6 +151,12 @@ namespace JE.DamageSystem
         currentBody.velocity = Vector3.zero;
     }
 
+    private void DefaultOnDeath()
+    {
+        IKillable killableObject = GetComponent<IKillable>();
+        killableObject?.HandleDeath(this);
+    }
+    
     }
 
 public interface IDamageable
@@ -160,6 +166,12 @@ public interface IDamageable
     void RestoreHealthDuration(float restoreAmount, float duration, float tickRate);
     void ReduceHealthDuration(float reduceAmount, float duration, float tickRate);
 }
+
+public interface IKillable
+{
+    void HandleDeath(HealthSystem healthSystem);
+}
+
 
 }
 
