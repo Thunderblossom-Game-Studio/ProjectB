@@ -17,6 +17,7 @@ public class MainMenu : BaseMenu<MainMenu>
     [SerializeField] private AdvanceButton settingsButton;
     [SerializeField] private AdvanceButton quitButton;
     [SerializeField] private AdvanceButton creditButton;
+    [SerializeField] private AdvanceButton templevelButton;
 
     [Header("Open Transition Settings")]
     [SerializeField] private JuicerVector3Properties view1OpenTransition;
@@ -31,6 +32,7 @@ public class MainMenu : BaseMenu<MainMenu>
         settingsButton.onClick.AddListener(OptionButton);
         quitButton.onClick.AddListener(QuitButton);
         creditButton.onClick.AddListener(CreditButton);
+        templevelButton.onClick.AddListener(TempLevelButton);
     }
 
     public override IEnumerator OpenMenuRoutine(Action onCompleted = null)
@@ -81,5 +83,10 @@ public class MainMenu : BaseMenu<MainMenu>
         //Close(() => SceneManager.LoadScene("Credits", LoadSceneMode.Single));
 
         Close(() => (LoadingMenu.Instance as LoadingMenu)?.LoadScene(6));
+    }
+
+    public void TempLevelButton()
+    {
+        Close(() => TempLevelSelect.Open());
     }
 }
