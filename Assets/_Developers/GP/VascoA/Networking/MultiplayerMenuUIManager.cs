@@ -23,22 +23,18 @@ public class MultiplayerMenuUIManager : MonoBehaviour
 
         networkManager.ClientManager.OnClientConnectionState += OnClientConnecting;
 
-        // Disabled while testing server usage
         hostButton.onClick.AddListener(() =>
-        {
+        {       
             InstanceFinder.ServerManager.StartConnection();
 
             InstanceFinder.ClientManager.StartConnection();
-
+          
         });
 
         joinButton.onClick.AddListener(() =>
         {
-            InstanceFinder.ClientManager.StartConnection();
+            InstanceFinder.ClientManager.StartConnection();          
         });
-
-        // For dedicated server use
-        //InstanceFinder.ClientManager.StartConnection();
 
     }
 
