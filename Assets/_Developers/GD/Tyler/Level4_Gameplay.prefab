@@ -52,9 +52,9 @@ MonoBehaviour:
     m_Bits: 64
   _spawnZoneColor: {r: 1, g: 1, b: 0, a: 1}
   _spawnZones:
-  - _zonePosition: {x: -292.1, y: 62.737255, z: 63.4}
+  - _zonePosition: {x: -292.1, y: 63.6, z: 63.4}
     _zoneSize: {x: 8, y: 5, z: 9.11}
-  - _zonePosition: {x: -392.9, y: 68.21, z: -58.9}
+  - _zonePosition: {x: -392.4, y: 71.7, z: -61.9}
     _zoneSize: {x: 13.02, y: 5, z: 12.04}
   _objectTypes:
   - _spawnObject: {fileID: 5676333477140487690, guid: b244b0bae907de34ba04a931acbe1b66, type: 3}
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isLocal: 0
-  _spawnMode: 0
+  _spawnMode: 1
   _groundLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -137,6 +137,8 @@ MonoBehaviour:
     _zoneSize: {x: 10, y: 5, z: 10}
   - _zonePosition: {x: -225.9, y: 35.1, z: 152.6}
     _zoneSize: {x: 10, y: 5, z: 10}
+  - _zonePosition: {x: -167.5, y: 30, z: -142.7}
+    _zoneSize: {x: 8.58, y: 5, z: 12.7}
   _objectTypes:
   - _spawnObject: {fileID: 5676333477140487690, guid: 7f1a74560e12b0244b97855cdfd21ef8, type: 3}
     _spawnChance: 100
@@ -328,8 +330,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81d532d726d88de48902e80d415b2a1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DeliveryPoints: []
   _entitySpawner: {fileID: 8902450425985197850}
-  closestPackage: {fileID: 0}
+  PackageSystem: {fileID: 0}
+  ObjectToLocate: {fileID: 0}
 --- !u!114 &7212076374310680500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,7 +360,7 @@ MonoBehaviour:
   NetworkObserver: {fileID: 0}
   <PrefabId>k__BackingField: 0
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 1747756460
+  _scenePathHash: 1134805459
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 16509211291656663899
   _sceneNetworkObjects:
