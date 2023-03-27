@@ -10,8 +10,9 @@ public class WaypointMarker : MonoBehaviour
     [SerializeField] private Vector3 offset;
     [SerializeField] private Vector3 textOffset;
     [SerializeField] private Transform target;
-
-    [Viewable][SerializeField] private Image marker;
+    public IconType IconType;
+    [SerializeField] private Sprite[] Markers;
+    [SerializeField] private Image marker;
     [Viewable] [SerializeField] private CanvasGroup canvasGroup;
 
     private Camera mainCam;
@@ -23,10 +24,11 @@ public class WaypointMarker : MonoBehaviour
 
     private void Start()
     {
-        marker = GetComponent<Image>();
+       
         canvasGroup = GetComponent<CanvasGroup>();
         mainCam = Camera.main;
     }
+
 
     void Update()
     {
@@ -35,6 +37,7 @@ public class WaypointMarker : MonoBehaviour
             canvasGroup.alpha = 0;
             return;
         }
+        
 
         float minX = marker.GetPixelAdjustedRect().width / 2;
         float maxX = Screen.width - minX;
@@ -57,9 +60,29 @@ public class WaypointMarker : MonoBehaviour
         distanceDisplay.text = ((int)Vector3.Distance(target.position, mainCam.transform.position)).ToString() + "M";
     }
 
+    public void SetIcon(IconType IconType)
+    {
+        switch (IconType)
+        {
+            case IconType.Package:
+                marker.sprite = Markers[0];
+                break;
+            case IconType.Delivery:
+                marker.sprite = Markers[1];
+                break;
+            
+        }
+    }
     public void SetTarget(Transform newTarget)
     {
         target = newTarget;
         canvasGroup.alpha = 1;
     }
+
 }
+public enum IconType
+{
+
+    Package,Delivery
+}
+
