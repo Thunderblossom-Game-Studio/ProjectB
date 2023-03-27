@@ -10,6 +10,13 @@ public class DeliveryZone : MonoBehaviour
 {
     [SerializeField] private UnityEvent _onDeliver;
 
+    private void Start()
+    {
+        if(PackageTracker.Instance)
+        {
+            PackageTracker.Instance.DeliveryPoints.Add(this.gameObject);
+        }
+    }
     private void OnTriggerEnter(Collider objectCollider)
     {
         GameObject baseObject = objectCollider.gameObject.transform.root.gameObject;
