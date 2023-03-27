@@ -648,6 +648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67baeeac4eba9394a89b3e8374420ef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _prefabs: []
 --- !u!1 &4219527130497367320
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,6 +821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67baeeac4eba9394a89b3e8374420ef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _prefabs: []
 --- !u!1 &5245968500825954732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1971,6 +1973,7 @@ MonoBehaviour:
   _forwardmultiplier: 0
   _turnmultiplier: 0
   _brakeSensitivity: 50
+  _speedSensitivity: 50
   _angle: 0
   _stopDistance: 10
   _defaultSpawnWeight: 5
@@ -1982,6 +1985,7 @@ MonoBehaviour:
   _distanceBetweenAgent: 30
   _yWarp: 7
   MoveTarget: {fileID: 0}
+  _maxIdleTimer: 4
   NextState: 4
   packageSpawner: {fileID: 0}
   PackageSystem: {fileID: 9043634083372453858}

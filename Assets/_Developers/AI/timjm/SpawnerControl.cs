@@ -19,15 +19,9 @@ public class SpawnerControl : MonoBehaviour
     public int limit;
     [Tooltip("Limit for the spawner to spawn")]
 
-    [Header("Materials")]
-    public Material Material1;
-    public Material Material2;
-    public Material Material3;
-    int Randomizer;
-
-
-    [HideInInspector]
     public int count;
+    [HideInInspector]
+
 
     bool ready = true;
     GameObject SpawnerReference;
@@ -42,7 +36,7 @@ public class SpawnerControl : MonoBehaviour
     void Update()
     {
         if ((ready == true)&&(count < limit))
-        {
+        {   
             StartCoroutine(Spawn());
             ready = false;
         }
@@ -50,31 +44,12 @@ public class SpawnerControl : MonoBehaviour
 
     IEnumerator Spawn()
     {
-
-
-        Clone = Instantiate(Traffic, transform.position, Quaternion.identity);
-
-        Randomizer = Random.Range(0, 3);
-
-        if (Randomizer == 0)
-        {
-            //Clone.renderer.material = Material1;
-        }
-
-        if (Randomizer == 1)
-        {
-            //Clone.renderer.material = Material2;
-        }
-
-        if (Randomizer == 2)
-        {
-            //Clone.renderer.material = Material3;
-        }
-
-        Clone.GetComponent<TrafficBrain>().goal = RoadConnect.transform;       
+        Clone = Instantiate(Traffic, transform.position, Quaternion.identity);       
         Clone.GetComponent<TrafficBrain>().SpawnStation = SpawnerReference;
+        Clone.GetComponent<TrafficBrain>().goal = RoadConnect.transform;       
         Clone.GetComponent<TrafficBrain>().Index = PointIndex;
         Clone.GetComponent<TrafficBrain>().Director = Director;
+
         count += 1;
         yield return new WaitForSeconds(3);
         ready = true;
@@ -109,4 +84,7 @@ public class SpawnerControl : MonoBehaviour
         Gizmos.DrawRay(arrowPos, up);
         Gizmos.DrawRay(arrowPos, down);
     }
+
+
+
 }

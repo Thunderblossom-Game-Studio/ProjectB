@@ -13,7 +13,7 @@ using UnityEngine;
 [RequireComponent(typeof(AICarController), typeof(AIDecisionHandler), typeof(AICombatHandler))]
 public class AIPlayerHandler : NetworkBehaviour
 {
-    public enum CurrentState { IDLE, PURSUE, FLEE, PICKUP, DELIVERY }
+    public enum CurrentState { IDLE, PURSUE, FLEE, PICKUP, DELIVERY}
 
     [SyncVar][Viewable] private CurrentState _state;
 

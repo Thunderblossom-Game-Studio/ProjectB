@@ -12,17 +12,21 @@ public class GameTeamManager : Singleton<GameTeamManager>
     
     [Header("Team Data")]
     [SerializeField] public TeamData _blueTeamData;
-    [SerializeField] private TeamData _redTeamData;
+    [SerializeField] public TeamData _redTeamData;
     public List<GamePlayer> _gamePlayers;
     
     public void InitialiseTeams()
     {
+        _blueTeamData.TeamPlayers.Clear();
+        _redTeamData.TeamPlayers.Clear();
+
         bool toggleTeam = false;
         foreach (GamePlayer gamePlayer in _gamePlayers)
         {
             if (toggleTeam == false)
             {
                 toggleTeam = true;
+
                 _blueTeamData.AddPlayer(gamePlayer);
                 gamePlayer.InitialisePlayer(_blueTeamData);
             }
