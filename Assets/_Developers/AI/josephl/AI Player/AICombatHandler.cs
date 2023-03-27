@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using JE.DamageSystem;
+using static AIDirector;
 
 public class AICombatHandler : MonoBehaviour
 {
@@ -23,6 +24,10 @@ public class AICombatHandler : MonoBehaviour
 
     private int _closeThreshold = 15;
 
+    private Transform _deliveryZone;
+    private float _distanceToDeiveryZone;
+    private float _distanceToSpawnPoint;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -31,10 +36,28 @@ public class AICombatHandler : MonoBehaviour
         _packageSystem = GetComponent<PackageSystem>();
         _gamePlayer = GetComponent<GamePlayer>();
 
-        if (AIDirector.Instance)
-            _fleeThreshold = AIDirector.Instance.tierOne.healthThreshold / 100;
-        else
-            Debug.LogWarning("No AI Director Instance Detected.");
+        //Idea for game AI Director setting values of AI Player
+
+        switch (AIDirector.Instance.CurrentTier)
+        {
+            case AIDirector.Tiers.One:
+                _aggroRange = _aggroRange = AIDirector.Instance.tierOne.aggroRange;
+                _attackRange = AIDirector.Instance.tierOne.attackRange;
+                _fleeThreshold = AIDirector.Instance.tierOne.healthThreshold / 100;
+                break;
+            case AIDirector.Tiers.Two:
+                _aggroRange = AIDirector.Instance.tierTwo.aggroRange;
+                _attackRange = AIDirector.Instance.tierTwo.attackRange;
+                _fleeThreshold = AIDirector.Instance.tierTwo.healthThreshold / 100;
+                break;
+            case AIDirector.Tiers.Three:
+                _aggroRange = AIDirector.Instance.tierThree.aggroRange;
+                _attackRange = AIDirector.Instance.tierThree.attackRange;
+                _fleeThreshold = AIDirector.Instance.tierThree.healthThreshold / 100;
+                break;
+
+        }
+
 
         _spawnPoint = transform.position;
     }
@@ -81,9 +104,22 @@ public class AICombatHandler : MonoBehaviour
     /// </summary>
     public void Flee()
     {
-        if (_packageSystem.PackageAmount >= 1)
+        _deliveryZone = AIDirector.Instance.FindClosestDeliveryZone(transform.position);
+
+        _distanceToDeiveryZone = Vector3.Distance(this.transform.position, _deliveryZone.transform.position);
+        _distanceToSpawnPoint = Vector3.Distance(this.transform.position, _spawnPoint);
+
+        if (_packageSystem.PackageAmount >= _packageSystem.MaxPackages)
         {
             _decisionHandler.Delivery();
+        }
+        else if (_packageSystem.PackageAmount == _packageSystem.MaxPackages / 2 && _distanceToDeiveryZone < _distanceToSpawnPoint)
+        {
+            _decisionHandler.Delivery();
+        }
+        else if (_packageSystem.PackageAmount == _packageSystem.MaxPackages / 2 && _distanceToDeiveryZone > _distanceToSpawnPoint)
+        {
+            _carHandler.SetAgentTarget(_spawnPoint);
         }
         else if (_packageSystem.PackageAmount == 0)
         {
