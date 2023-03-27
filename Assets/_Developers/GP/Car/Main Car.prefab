@@ -676,6 +676,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c68221e66c9043d43ac52a8350c993fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 3
+  _addedNetworkObject: {fileID: 7115402400862813524}
+  _networkObjectCache: {fileID: 7115402400862813524}
   content: {fileID: 886724932864601435}
   rotateVertical: 1
   rightRotationLimit: 180
@@ -1351,6 +1354,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05afe5b8dcf50ca468528c4571c5f878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 4
+  _addedNetworkObject: {fileID: 7115402400862813524}
+  _networkObjectCache: {fileID: 7115402400862813524}
   content: {fileID: 2210001533854041982}
   rotateVertical: 1
   rightRotationLimit: 180
@@ -15820,7 +15826,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24358228, guid: 36e40e79cbecd9449800bb1288274833, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 7eaac2eb43881414c9ba43d3322a0ab9, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -16009,8 +16015,8 @@ MonoBehaviour:
   maxBoost: 1
   boostBurnRate: 0.01
   boostLoopSnd: {fileID: 6427845818639952587}
-  boostStart: {fileID: 8300000, guid: 27c508aa14a6022439b9fa55e3d0b8bd, type: 3}
-  boostEnd: {fileID: 8300000, guid: c77128afd2d136e4481f5235bb62fac7, type: 3}
+  boostStart: {fileID: 0}
+  boostEnd: {fileID: 0}
   boostParticles:
   - {fileID: 6427845818628191137}
   - {fileID: 6427845818628198657}
@@ -16466,6 +16472,10 @@ MonoBehaviour:
   _networkBehaviours:
   - {fileID: 6427845818653368417}
   - {fileID: 8308345038842029898}
+  - {fileID: 8335015285068822155}
+  - {fileID: 924067890231493878}
+  - {fileID: 2210001534272783018}
+  - {fileID: 6715046767458147039}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
@@ -16546,6 +16556,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d43d9b93f66256b499886061d14497c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 2
+  _addedNetworkObject: {fileID: 7115402400862813524}
+  _networkObjectCache: {fileID: 7115402400862813524}
   debugMode: 0
   allWeapon:
   - {fileID: 924067890231493878}
@@ -17113,6 +17126,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4398a01757d91d4394e7a91d4bf090a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 5
+  _addedNetworkObject: {fileID: 7115402400862813524}
+  _networkObjectCache: {fileID: 7115402400862813524}
   content: {fileID: 2283085271372021236}
   rotateVertical: 0
   rightRotationLimit: 180
