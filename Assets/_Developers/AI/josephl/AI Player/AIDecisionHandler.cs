@@ -56,6 +56,15 @@ public class AIDecisionHandler : MonoBehaviour
     /// </summary>
     public AIPlayerHandler.CurrentState Pickup(bool newState, AIPlayerHandler.CurrentState state)
     {
+        if (AIDirector.Instance && newState)
+        {
+            if (AIDirector.Instance.packageSpawners.Count > 0)
+                _packageSpawner = AIDirector.Instance.packageSpawners[Random.Range(0, AIDirector.Instance.packageSpawners.Count)];
+            else
+                Debug.LogWarning("No package spawners allocated in AI Director.");
+        }
+
+
         if (!_packageSpawner) return state = AIPlayerHandler.CurrentState.IDLE;
 
         if ((newState || !_carHandler.MoveTarget) && _packageSpawner.SpawnedObjects.Count > 0)
