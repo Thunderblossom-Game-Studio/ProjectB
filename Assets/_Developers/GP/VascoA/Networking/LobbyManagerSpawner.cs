@@ -22,7 +22,7 @@ public class LobbyManagerSpawner : MonoBehaviour
 
     
 
-    private void Start()
+    private void Awake()
     {
         _networkManager = GetComponent<NetworkManager>();
         _networkManager.ServerManager.OnServerConnectionState += ServerManager_OnServerConnectionState;
