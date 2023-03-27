@@ -92,6 +92,7 @@ public class TrafficBrain : MonoBehaviour
     int Randomizer;
     #endregion
 
+    public GameObject CarSlope;
     void Start()
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -102,13 +103,14 @@ public class TrafficBrain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(transform.position, goal.transform.position) < 1)
+        FrontLeft.transform.Rotate(Vector3.right, turnSpeed * Time.deltaTime);
+        FrontRight.transform.Rotate(Vector3.left, turnSpeed * Time.deltaTime);
+        RearLeft.transform.Rotate(Vector3.right, turnSpeed * Time.deltaTime);
+        RearRight.transform.Rotate(Vector3.left, turnSpeed * Time.deltaTime);
+
+        if (ActivateSpinOut == true)
         {
-            Director.GetComponent<WaypointDirector>().Car = this.gameObject;
-            Director.GetComponent<WaypointDirector>().CarIndex = Index;
-            Director.GetComponent<WaypointDirector>().CarBody = ObjectToSpinOut;
-            Director.GetComponent<WaypointDirector>().Lane();
-            agent.destination = goal.position;
+            SpinOut();
         }
 
         #region Raycast Code
@@ -152,25 +154,25 @@ public class TrafficBrain : MonoBehaviour
         }
         #endregion
 
-        if (Health <= 0)
+        #region Health
+        /* if (Health <= 0)
+         {
+             panic = false;
+             ExtendedPanic = false;
+             PanicForever = false;
+             ActivateSpinOut = true;
+         } */
+        #endregion
+
+        if (Vector3.Distance(transform.position, goal.transform.position) < 1)
         {
-            panic = false;
-            ExtendedPanic = false;
-            PanicForever = false;
-            ActivateSpinOut = true;
-        }
-
-        if (ActivateSpinOut == true)
-        {
-            SpinOut();
-        }
-
-        FrontLeft.transform.Rotate(Vector3.right, turnSpeed * Time.deltaTime);
-        FrontRight.transform.Rotate(Vector3.left, turnSpeed * Time.deltaTime);
-        RearLeft.transform.Rotate(Vector3.right, turnSpeed * Time.deltaTime);
-        RearRight.transform.Rotate(Vector3.left, turnSpeed * Time.deltaTime);
-
-
+            Director.GetComponent<WaypointDirector>().Car = this.gameObject;
+            Director.GetComponent<WaypointDirector>().CarIndex = Index;
+            Director.GetComponent<WaypointDirector>().CarBody = CarSlope;
+            Director.GetComponent<WaypointDirector>().Lane();
+            agent.destination = goal.position;
+        }  
+        
         if (agent.destination != goal.position)
         {
             ReattachDestination();
@@ -260,10 +262,13 @@ public class TrafficBrain : MonoBehaviour
        
     }
 
+    Vector3 Yeet;
+
 
     public void SpinOut()
     {
         agent.enabled = false;
+        ObjectToSpinOut.GetComponent<Rigidbody>().isKinematic= false;
         ObjectToSpinOut.GetComponent<Rigidbody>().AddForce(transform.forward * Thrust);
         ObjectToSpinOut.transform.Rotate(new Vector3(0, SpinY, 0));
         StartCoroutine(Explode());
