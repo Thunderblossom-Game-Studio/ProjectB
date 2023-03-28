@@ -83,15 +83,9 @@ public class Catapult : Weapon
     public void SpawnProjectile(Vector3 position)
     {
         GameObject projectile = Instantiate(weaponSO.projectile, position, Quaternion.identity).gameObject;
-        InstanceFinder.ServerManager.Spawn(projectile);
-        SetSpawnedProjectile(projectile);
-    }
-
-    [ObserversRpc]
-    public void SetSpawnedProjectile(GameObject projectile)
-    {
         loadedProjectile = projectile.GetComponent<CatapultProjectile>();
         loadedProjectile.transform.SetParent(firePoint[0]);
+        InstanceFinder.ServerManager.Spawn(projectile);
     }
 
     [ObserversRpc]

@@ -22,6 +22,11 @@ public class CatapultProjectile : Projectile
         sphereDamager = GetComponent<SphereDamager>();
     }
 
+    private void Update()
+    {
+        if (!launched)  transform.position = transform.parent.position;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!launched || !detectLayer.ContainsLayer(other.gameObject.layer) || hasHit) return;
