@@ -28,12 +28,5 @@ public abstract class Projectile : NetworkBehaviour
     {
         transform.SetParent(null);
         InstanceFinder.ServerManager.Despawn(gameObject);
-       // DespawnObject(gameObject);
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void DespawnObject(GameObject gameObject)
-    {
-        ServerManager.Despawn(gameObject);
     }
 }
