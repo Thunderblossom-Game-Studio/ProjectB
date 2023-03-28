@@ -1,3 +1,4 @@
+using FishNet;
 using FishNet.Object;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,7 +27,8 @@ public abstract class Projectile : NetworkBehaviour
     protected virtual void DestroyProjectile()
     {
         transform.SetParent(null);
-        DespawnObject(gameObject);
+        InstanceFinder.ServerManager.Despawn(gameObject);
+       // DespawnObject(gameObject);
     }
 
     [ServerRpc(RequireOwnership = false)]

@@ -1,3 +1,4 @@
+using FishNet;
 using FishNet.Object;
 using System;
 using System.Collections;
@@ -12,8 +13,7 @@ public class ConfettiCannon : Weapon
         ServerShoot(targetPos);
     }
 
-    [ServerRpc(RequireOwnership = false)]
-
+    [ObserversRpc]
     private void ServerShoot(Vector3 targetPos)
     {
         for (int i = 0; i < firePoint.Length; i++)
@@ -23,18 +23,10 @@ public class ConfettiCannon : Weapon
             ModifyAmmo(currentAmmo - 1);
         }
     }
-
-    [ServerRpc]
     public void SpawnProjectile(Vector3 position, Vector3 direction)
     {
-        GameObject projectile = Instantiate(weaponSO.projectile, position, Quaternion.LookRotation(direction, Vector3.up)).gameObject;
-        ServerManager.Spawn(projectile);
-        SetSpawnedProjectile(projectile);
-    }
-
-    [ObserversRpc]
-    public void SetSpawnedProjectile(GameObject projectile)
-    {
-        projectile.GetComponent<DartProjectile>().SetUp(weaponSO.projectileSpeed);
+        Projectile go = Instantiate(weaponSO.projectile, position , Quaternion.LookRotation(direction, Vector3.up));
+        InstanceFinder.ServerManager.Spawn(go.gameObject);
+        go.GetComponent<DartProjectile>().SetUp(weaponSO.projectileSpeed);
     }
 }

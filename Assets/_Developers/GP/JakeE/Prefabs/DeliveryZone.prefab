@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 7895970335462806092}
   - component: {fileID: 8568427875627284443}
   - component: {fileID: 2303765441415295055}
-  - component: {fileID: 1433548467669899665}
   m_Layer: 0
   m_Name: DeliveryZone
   m_TagString: Untagged
@@ -112,24 +111,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af56d9227392c04893103a5a71dc7e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _detectedLayers:
+    serializedVersion: 2
+    m_Bits: 8
   _onDeliver:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2303765441415295055}
         m_TargetAssemblyTypeName: PlaySoundEffect, Assembly-CSharp
         m_MethodName: PlaySound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1433548467669899665}
-        m_TargetAssemblyTypeName: SpawnVFX, Assembly-CSharp
-        m_MethodName: Spawn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -151,19 +141,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9771e6b49d6b90346a05348fe9a10e92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _soundID: DropOffNoise
---- !u!114 &1433548467669899665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3738754516813699930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7802a162967086c40978fde47fd1ba19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _vfxPrefab: {fileID: 7016397573198316674, guid: 4e51caa57f9940a4aacb20b23e0b488a, type: 3}
-  _positionOffset: {x: 0, y: 0, z: 0}
-  _destroyDelay: 0
+  _soundID: DeliverParcel

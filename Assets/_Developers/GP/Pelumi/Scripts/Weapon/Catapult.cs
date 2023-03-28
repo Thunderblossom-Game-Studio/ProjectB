@@ -1,3 +1,4 @@
+using FishNet;
 using FishNet.Object;
 using Pelumi.Juicer;
 using System;
@@ -68,7 +69,7 @@ public class Catapult : Weapon
         switch (state)
         {
             case State.Reload:
-                SpawnProjectile(firePoint[0].position, this);
+                SpawnProjectile(firePoint[0].position);
                 inAction = false;
                 break;
             case State.Fire:
@@ -79,18 +80,17 @@ public class Catapult : Weapon
         }
     }
 
-    [ServerRpc]
-    public void SpawnProjectile(Vector3 position, Catapult catapult)
+    public void SpawnProjectile(Vector3 position)
     {
         GameObject projectile = Instantiate(weaponSO.projectile, position, Quaternion.identity).gameObject;
-        ServerManager.Spawn(projectile);
-        SetSpawnedProjectile(projectile, catapult);
+        InstanceFinder.ServerManager.Spawn(projectile);
+        SetSpawnedProjectile(projectile);
     }
 
     [ObserversRpc]
-    public void SetSpawnedProjectile(GameObject projectile, Catapult catapult)
+    public void SetSpawnedProjectile(GameObject projectile)
     {
-        catapult.loadedProjectile = projectile.GetComponent<CatapultProjectile>();
+        loadedProjectile = projectile.GetComponent<CatapultProjectile>();
         loadedProjectile.transform.SetParent(firePoint[0]);
     }
 
