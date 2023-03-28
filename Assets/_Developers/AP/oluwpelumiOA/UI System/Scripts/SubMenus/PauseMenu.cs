@@ -18,7 +18,7 @@ public class PauseMenu : BaseMenu<PauseMenu>
 
     private void Start()
     {
-        restartButton.onClick.AddListener(RestartButton);
+       // restartButton.onClick.AddListener(RestartButton);
         resumeButton.onClick.AddListener(ResumeButton);
         settingsButton.onClick.AddListener(SettingsButton);
         menuButton.onClick.AddListener(MenuButton);
@@ -39,10 +39,10 @@ public class PauseMenu : BaseMenu<PauseMenu>
         yield return base.CloseMenuRoutine(onCompleted);
     }
 
-    public void RestartButton()
-    {
-        Close(() => LoadingMenu.GetInstance().LoadScene(SceneManager.GetActiveScene().buildIndex));
-    }
+    //public void RestartButton()
+    //{
+       // Close(() => LoadingMenu.GetInstance().LoadScene(SceneManager.GetActiveScene().buildIndex));
+   // }
     
     public void ResumeButton()
     {
