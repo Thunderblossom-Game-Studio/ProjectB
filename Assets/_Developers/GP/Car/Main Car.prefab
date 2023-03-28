@@ -676,6 +676,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c68221e66c9043d43ac52a8350c993fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 3
+  _addedNetworkObject: {fileID: 7115402400862813524}
+  _networkObjectCache: {fileID: 7115402400862813524}
   content: {fileID: 886724932864601435}
   rotateVertical: 1
   rightRotationLimit: 180
@@ -1351,6 +1354,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05afe5b8dcf50ca468528c4571c5f878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 4
+  _addedNetworkObject: {fileID: 7115402400862813524}
+  _networkObjectCache: {fileID: 7115402400862813524}
   content: {fileID: 2210001533854041982}
   rotateVertical: 1
   rightRotationLimit: 180
@@ -16188,9 +16194,9 @@ GameObject:
   - component: {fileID: 7440135898434820062}
   - component: {fileID: 8335015285068822155}
   - component: {fileID: -4829767517200364671}
-  - component: {fileID: 2043132127715688138}
   - component: {fileID: 8507421929529851721}
   - component: {fileID: 8287046931905209056}
+  - component: {fileID: -387367291902439252}
   m_Layer: 9
   m_Name: Main Car
   m_TagString: Untagged
@@ -16466,6 +16472,10 @@ MonoBehaviour:
   _networkBehaviours:
   - {fileID: 6427845818653368417}
   - {fileID: 8308345038842029898}
+  - {fileID: 8335015285068822155}
+  - {fileID: 924067890231493878}
+  - {fileID: 2210001534272783018}
+  - {fileID: 6715046767458147039}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
@@ -16546,6 +16556,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d43d9b93f66256b499886061d14497c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 2
+  _addedNetworkObject: {fileID: 7115402400862813524}
+  _networkObjectCache: {fileID: 7115402400862813524}
   debugMode: 0
   allWeapon:
   - {fileID: 924067890231493878}
@@ -16583,19 +16596,6 @@ MonoBehaviour:
   _onDeliverEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2043132127715688138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6427845818648099103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c138514126984b44295a59fd00d8aad7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  addOnAwake: 1
 --- !u!114 &8507421929529851721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16616,7 +16616,7 @@ MonoBehaviour:
   _onHealthChange:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2043132127715688138}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GamePlayer, Assembly-CSharp
         m_MethodName: OnHealthChanged
         m_Mode: 0
@@ -16667,6 +16667,19 @@ MonoBehaviour:
   fakeCar: {fileID: 2736428957474200553, guid: 7c75373ee39c75944a415e6481c15988, type: 3}
   carBody: {fileID: 6427845818647620117}
   offsetonZ: 1.23
+--- !u!114 &-387367291902439252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6427845818648099103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e59fa4d9252c0c48968eca7a2a71ebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addOnAwake: 1
 --- !u!1 &6482612975936952463
 GameObject:
   m_ObjectHideFlags: 0
@@ -17113,6 +17126,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4398a01757d91d4394e7a91d4bf090a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 5
+  _addedNetworkObject: {fileID: 7115402400862813524}
+  _networkObjectCache: {fileID: 7115402400862813524}
   content: {fileID: 2283085271372021236}
   rotateVertical: 0
   rightRotationLimit: 180

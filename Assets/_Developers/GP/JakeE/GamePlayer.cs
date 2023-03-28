@@ -18,6 +18,7 @@ public class GamePlayer : MonoBehaviour, IKillable
     {
         _playerTeamData = playerTeamData;
     }
+
     private void Awake()
     {
         if (addOnAwake)
@@ -27,12 +28,7 @@ public class GamePlayer : MonoBehaviour, IKillable
         }
     }
 
-    public void OnHealthChanged(float normalisedValue)
-    {
-        GameMenu.GetInstance()?.SetHealthView(normalisedValue);
-    }
-
-    public void HandleDeath(HealthSystem healthSystem)
+    public virtual void HandleDeath(HealthSystem healthSystem)
     {
         if (!gameObject.TryGetComponent(out GamePlayer gamePlayer))
             return;

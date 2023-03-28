@@ -6,23 +6,24 @@ public class PackageTracker : Singleton<PackageTracker>
 {
     [SerializeField] public List<GameObject> DeliveryPoints;
     [SerializeField] private EntitySpawner _entitySpawner;
-    [SerializeField] private PackageSystem PackageSystem;
+    [SerializeField] private PackageSystem _packageSystem;
     [Viewable] [SerializeField] private Transform ObjectToLocate;
-    private Camera mainCam;
-    bool MaxPackageHeld;
+    private Camera _mainCam;
+
     private void Start()
     {
-        mainCam = Camera.main;
-        Invoke(nameof(GetCar), 5);
+        _mainCam = Camera.main;
     }
 
-    private void GetCar()
+    public void SetCarPakageSystem(GameObject car)
     {
-        PackageSystem = GameObject.Find("Main Car(Clone)").GetComponent<PackageSystem>();
+        _packageSystem = car.GetComponent<PackageSystem>();
     }
+
     private void Update()
     {
-        if (PackageSystem.PackageAmount == PackageSystem.MaxPackages)
+        if (!_packageSystem) return;
+        if (_packageSystem.PackageAmount == _packageSystem.MaxPackages)
         {
             Debug.Log("Working");
             LocateClosestDropPoint();
@@ -42,7 +43,7 @@ public class PackageTracker : Singleton<PackageTracker>
             if (_entitySpawner.SpawnedObjects.Count > 0)
             {
                 WaypointMarker.Instance.SetIcon(IconType.Package);
-                ObjectToLocate = GetClosestGameObject(mainCam.transform.gameObject, CovertToGameObjectList()).transform;
+                ObjectToLocate = GetClosestGameObject(_mainCam.transform.gameObject, CovertToGameObjectList()).transform;
                 WaypointMarker.Instance?.SetTarget(ObjectToLocate);
             }
         }
@@ -51,8 +52,7 @@ public class PackageTracker : Singleton<PackageTracker>
     private void LocateClosestDropPoint ()
     {
         WaypointMarker.Instance.SetIcon(IconType.Delivery);
-        Debug.Log("Aids");
-        ObjectToLocate = GetClosestGameObject(mainCam.transform.gameObject, DeliveryPoints).transform;
+        ObjectToLocate = GetClosestGameObject(_mainCam.transform.gameObject, DeliveryPoints).transform;
         WaypointMarker.Instance?.SetTarget(ObjectToLocate);
     }
     private List<GameObject> CovertToGameObjectList()
