@@ -1,48 +1,37 @@
-using FishNet.Object;
-using FishNet.Object.Synchronizing;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class TrafficBrainAINETTEST : NetworkBehaviour
+public class TrafficBrainAINETTEST : MonoBehaviour
 {
 
     [Header("Waypoint Targets")]
-    [SyncVar] public Transform goal;
+    public Transform goal;
 
     private NavMeshAgent agent;
 
-    [SyncVar] private float CarSpeed;
+    private float CarSpeed;
     float DefaultSpeed;
 
     // Rate limit distance checks
     [SerializeField] private float timeBetweenChecks = 0.3f;
-    [SyncVar] private float timeSinceLastCheck;
+    private float timeSinceLastCheck;
     
     private void Awake()
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
     }
 
-    public override void OnStartServer()
+    public void OnStartServer()
     {
-        base.OnStartServer();
-
-        if (!base.IsServer)
-            return;
-
         agent.destination = goal.position;
         DefaultSpeed = CarSpeed;
-
-        TimeManager.OnTick += TimeManager_OnTick;
     }
 
     void TimeManager_OnTick()
     {
-        if (!base.IsServer)
-            return;
-
         if (agent.destination != goal.position)
             ReconcileDestination(this);
 
@@ -54,7 +43,6 @@ public class TrafficBrainAINETTEST : NetworkBehaviour
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
     private void DistanceCheck()
     {
         //Debug.Log("Distance: " + Vector3.Distance(transform.position, goal.transform.position));
@@ -64,7 +52,6 @@ public class TrafficBrainAINETTEST : NetworkBehaviour
         }
     }
 
-    [ServerRpc (RequireOwnership = false)]
     private void ChangeDestination(TrafficBrainAINETTEST car)
     {
         //Debug.Log("Attempting to set destination for " + car.name);
@@ -74,7 +61,6 @@ public class TrafficBrainAINETTEST : NetworkBehaviour
         car.agent.destination = car.goal.position;
     }
 
-    [ServerRpc (RequireOwnership = false)]
     private void ReconcileDestination(TrafficBrainAINETTEST car)
     {
         car.agent.destination = car.goal.position;

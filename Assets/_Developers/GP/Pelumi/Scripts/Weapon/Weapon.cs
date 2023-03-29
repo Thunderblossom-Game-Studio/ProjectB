@@ -1,10 +1,10 @@
-using FishNet.Object;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Weapon : NetworkBehaviour
+public abstract class Weapon : MonoBehaviour
 {
     public enum WeaponState { Idle, Firing, Reloading }
 

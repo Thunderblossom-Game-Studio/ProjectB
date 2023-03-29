@@ -1,5 +1,4 @@
-using FishNet;
-using FishNet.Object;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,11 +9,10 @@ public class DartGun : Weapon
     public override void ShootProjectile(Vector3 targetPos, Action OnFireSuccess = null)
     {
         base.ShootProjectile(targetPos, OnFireSuccess);
-        ServerShoot(targetPos);
+        Shoot(targetPos);
     }
 
-    [ObserversRpc]
-    private void ServerShoot(Vector3 targetPos)
+    private void Shoot(Vector3 targetPos)
     {
         for (int i = 0; i < firePoint.Length; i++)
         {
@@ -25,8 +23,7 @@ public class DartGun : Weapon
     }
     public void SpawnProjectile(Vector3 position, Vector3 direction)
     {
-        Projectile go = Instantiate(weaponSO.projectile, position, Quaternion.LookRotation(direction, Vector3.up));
-        InstanceFinder.ServerManager.Spawn(go.gameObject);
-        go.GetComponent<DartProjectile>().SetUp(weaponSO.projectileSpeed);
+        Projectile projectile = Instantiate(weaponSO.projectile, position, Quaternion.LookRotation(direction, Vector3.up));
+        (projectile as DartProjectile).SetUp(weaponSO.projectileSpeed);
     }
 }

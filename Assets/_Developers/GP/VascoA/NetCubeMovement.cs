@@ -1,9 +1,9 @@
-using FishNet.Object;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NetCubeMovement : NetworkBehaviour
+public class NetCubeMovement : MonoBehaviour
 {
     Rigidbody rb;
     public float speed = 10f;
@@ -16,8 +16,6 @@ public class NetCubeMovement : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (!IsOwner) return;
-
         if (Input.GetKey(KeyCode.W))
         {
             rb.AddForce(transform.forward * force);
@@ -36,7 +34,4 @@ public class NetCubeMovement : NetworkBehaviour
         }
 
     }
-
-
-
 }
