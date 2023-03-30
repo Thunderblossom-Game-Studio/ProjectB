@@ -8,7 +8,7 @@ public class AvancedCar : MonoBehaviour
 {
     [Header("CAR SETUP")]
     [Space(10)]
-    [Range(20, 190)]
+    [Range(20, 500)]
     public int maxSpeed = 90; //The maximum speed that the car can reach in km/h.
     [Range(10, 120)]
     public int maxReverseSpeed = 45; //The maximum speed that the car can reach while going on reverse in km/h.
@@ -59,15 +59,6 @@ public class AvancedCar : MonoBehaviour
 
     public TrailRenderer RLWTireSkid;
     public TrailRenderer RRWTireSkid;
-
-
-    [Space(20)]
-    
-    [Header("UI")]
-    [Space(10)]
-
-    public bool useUI = false;
-    public Text carSpeedText;
 
     [Space(20)]
     
@@ -125,14 +116,8 @@ public class AvancedCar : MonoBehaviour
         SetUpWheelFriction();
 
         if (carEngineSound != null)  initialCarEngineSoundPitch = carEngineSound.pitch;
-        
-        if (!useUI)
-        {
-            if (carSpeedText != null)
-            {
-                carSpeedText.text = "0";
-            }
-        }
+
+        GameMenu.GetInstance()?.SetCarSpeed("0");
 
         SetUpSound();
 
@@ -295,25 +280,14 @@ public class AvancedCar : MonoBehaviour
         
         if (steeringInput == 0)
         {
-            Debug.Log("reset");
             ResetSteeringAngle();
         }
     }
 
     public void CarSpeedUI()
     {
-        if (useUI)
-        {
-            try
-            {
-                float absoluteCarSpeed = Mathf.Abs(carSpeed);
-                carSpeedText.text = Mathf.RoundToInt(absoluteCarSpeed).ToString();
-            }
-            catch (Exception ex)
-            {
-                Debug.LogWarning(ex);
-            }
-        }
+        float absoluteCarSpeed = Mathf.Abs(carSpeed);
+        GameMenu.GetInstance()?.SetCarSpeed(Mathf.RoundToInt(absoluteCarSpeed).ToString());
     }
 
     public IEnumerator CarSoundsRoutine()
@@ -396,29 +370,16 @@ public class AvancedCar : MonoBehaviour
 
     void AnimateWheelMeshes()
     {
-        Quaternion FLWRotation;
-        Vector3 FLWPosition;
-        frontLeftCollider.GetWorldPose(out FLWPosition, out FLWRotation);
-        frontLeftMesh.transform.position = FLWPosition;
-        frontLeftMesh.transform.rotation = FLWRotation;
+        AnimateWheelMeshe(frontLeftCollider, frontLeftMesh.transform);
+        AnimateWheelMeshe(frontRightCollider, frontRightMesh.transform);
+        AnimateWheelMeshe(rearLeftCollider, rearLeftMesh.transform);
+        AnimateWheelMeshe(rearRightCollider, rearRightMesh.transform);
+    }
 
-        Quaternion FRWRotation;
-        Vector3 FRWPosition;
-        frontRightCollider.GetWorldPose(out FRWPosition, out FRWRotation);
-        frontRightMesh.transform.position = FRWPosition;
-        frontRightMesh.transform.rotation = FRWRotation;
-
-        Quaternion RLWRotation;
-        Vector3 RLWPosition;
-        rearLeftCollider.GetWorldPose(out RLWPosition, out RLWRotation);
-        rearLeftMesh.transform.position = RLWPosition;
-        rearLeftMesh.transform.rotation = RLWRotation;
-
-        Quaternion RRWRotation;
-        Vector3 RRWPosition;
-        rearRightCollider.GetWorldPose(out RRWPosition, out RRWRotation);
-        rearRightMesh.transform.position = RRWPosition;
-        rearRightMesh.transform.rotation = RRWRotation;
+    void AnimateWheelMeshe(WheelCollider wheelCollider, Transform wheelMesh)
+    {
+        wheelCollider.GetWorldPose(out Vector3 _position, out Quaternion _rotation);
+        wheelMesh.SetPositionAndRotation(_position, _rotation);
     }
 
     public void GoForward()
