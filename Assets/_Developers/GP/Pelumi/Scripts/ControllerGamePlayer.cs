@@ -12,7 +12,7 @@ public class ControllerGamePlayer : GamePlayer
 
     public void SetUpPakageTracker()
     {
-        PackageTracker.Instance.SetCarPakageSystem(gameObject);
+        PackageTracker.Instance?.SetCarPakageSystem(gameObject);
     }
 
     public void OnHealthChanged(float normalisedValue)
