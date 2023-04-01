@@ -25,7 +25,6 @@ namespace JE.DamageSystem
         private void OnTriggerEnter(Collider objectCollider)
         {
             if (!_damageLayers.ContainsLayer(objectCollider.gameObject.layer) || IsUsedUp()) return;
-
             switch (_damageType)
             {
                 case DamageType.Instant:

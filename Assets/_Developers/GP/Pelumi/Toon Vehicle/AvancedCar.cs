@@ -8,7 +8,7 @@ public class AvancedCar : MonoBehaviour
 {
     [Header("CAR SETUP")]
     [Space(10)]
-    [Range(20, 500)]
+    [Range(20, 1000)]
     public int maxSpeed = 90; //The maximum speed that the car can reach in km/h.
     [Range(10, 120)]
     public int maxReverseSpeed = 45; //The maximum speed that the car can reach while going on reverse in km/h.
@@ -272,7 +272,7 @@ public class AvancedCar : MonoBehaviour
             ThrottleOff();
         }
 
-        if ((!InputManager.Instance.HandleAccelerateInput().IsPressed() && !InputManager.Instance.HandleDecelerateInput().IsPressed()) && !InputManager.Instance.HandleBrakeInput().WasReleasedThisFrame() && !deceleratingCar)
+        if ((!InputManager.Instance.HandleAccelerateInput().IsPressed() && !InputManager.Instance.HandleDecelerateInput().IsPressed()) && !InputManager.Instance.HandleBrakeInput().IsPressed() && !deceleratingCar)
         {
             if (decelerateRoroutine == null) decelerateRoroutine = StartCoroutine(DecelerateCarRoutine());
             deceleratingCar = true;
@@ -340,8 +340,16 @@ public class AvancedCar : MonoBehaviour
     void HandleTurnning()
     {
         steeringAxis = steeringAxis + (Time.deltaTime * 10f * steeringSpeed) * steeringInput;
-        if (steeringAxis < -1f) steeringAxis = -1f;
-        if (steeringAxis > 1f) steeringAxis = 1f;
+
+        if(steeringInput > 0) // Right
+        {
+            if (steeringAxis > 1f) steeringAxis = 1f;
+        }
+        else // Left
+        {
+            if (steeringAxis < -1f) steeringAxis = -1f;
+        }
+
         var steeringAngle = steeringAxis * maxSteeringAngle;
         frontLeftCollider.steerAngle = Mathf.Lerp(frontLeftCollider.steerAngle, steeringAngle, steeringSpeed);
         frontRightCollider.steerAngle = Mathf.Lerp(frontRightCollider.steerAngle, steeringAngle, steeringSpeed);

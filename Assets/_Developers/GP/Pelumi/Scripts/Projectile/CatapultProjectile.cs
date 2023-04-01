@@ -22,11 +22,6 @@ public class CatapultProjectile : Projectile
         sphereDamager = GetComponent<SphereDamager>();
     }
 
-    private void Update()
-    {
-        if (!launched)  transform.position = transform.parent.position;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (!launched || !detectLayer.ContainsLayer(other.gameObject.layer) || hasHit) return;
@@ -36,7 +31,6 @@ public class CatapultProjectile : Projectile
         transform.position = other.ClosestPoint(transform.position);
         transform.SetParent(other.transform);
         OnHit();
-        Debug.Log(other.transform);
     }
 
     public void SetUp(Vector3 targetPos, float _speed, float angle)
@@ -44,12 +38,15 @@ public class CatapultProjectile : Projectile
         targetPostion = targetPos;
         speed = _speed;
         launched = true;
+        Rigidbody rb = gameObject.AddComponent<Rigidbody>();
+        rb.useGravity = false;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
         moveRoutine = StartCoroutine(PathUtil.MoveObjectAlongPath(transform, transform.position, targetPostion, angle, speed, null));
     }
 
     public void OnHit()
     {
-        if (playerBullet) hitEvent.Raise(this, new HitMarkInfo(Color.red, transform.position));
         StartCoroutine(ExplosionTimeDelay());
     }
 
@@ -59,7 +56,7 @@ public class CatapultProjectile : Projectile
         DestroyProjectile();
     }
 
-    protected override void DestroyProjectile()
+    public override void DestroyProjectile()
     {
         sphereDamager.Damage();
         Instantiate(explosionParticle, transform.position, Quaternion.identity);
