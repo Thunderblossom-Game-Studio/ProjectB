@@ -98,6 +98,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Radio"",
+                    ""type"": ""Button"",
+                    ""id"": ""b6831d7f-ffc3-4c25-935a-f1e4b172f477"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -362,6 +371,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Boost"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7be5e22a-d457-4ed5-9ab2-0cc3fcd12957"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Radio"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ece4a66f-f63b-4672-85cd-96c4d2721200"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Radio"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1023,6 +1054,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Decelerate = m_Player.FindAction("Decelerate", throwIfNotFound: true);
         m_Player_Brake = m_Player.FindAction("Brake", throwIfNotFound: true);
         m_Player_Boost = m_Player.FindAction("Boost", throwIfNotFound: true);
+        m_Player_Radio = m_Player.FindAction("Radio", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1108,6 +1140,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Decelerate;
     private readonly InputAction m_Player_Brake;
     private readonly InputAction m_Player_Boost;
+    private readonly InputAction m_Player_Radio;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1120,6 +1153,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Decelerate => m_Wrapper.m_Player_Decelerate;
         public InputAction @Brake => m_Wrapper.m_Player_Brake;
         public InputAction @Boost => m_Wrapper.m_Player_Boost;
+        public InputAction @Radio => m_Wrapper.m_Player_Radio;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1153,6 +1187,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Boost.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBoost;
                 @Boost.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBoost;
                 @Boost.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBoost;
+                @Radio.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRadio;
+                @Radio.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRadio;
+                @Radio.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRadio;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1181,6 +1218,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Boost.started += instance.OnBoost;
                 @Boost.performed += instance.OnBoost;
                 @Boost.canceled += instance.OnBoost;
+                @Radio.started += instance.OnRadio;
+                @Radio.performed += instance.OnRadio;
+                @Radio.canceled += instance.OnRadio;
             }
         }
     }
@@ -1375,6 +1415,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnDecelerate(InputAction.CallbackContext context);
         void OnBrake(InputAction.CallbackContext context);
         void OnBoost(InputAction.CallbackContext context);
+        void OnRadio(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
