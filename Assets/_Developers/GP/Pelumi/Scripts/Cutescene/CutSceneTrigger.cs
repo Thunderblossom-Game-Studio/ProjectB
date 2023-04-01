@@ -32,11 +32,13 @@ public class CutSceneTrigger : MonoBehaviour
 
     private void Director_played(PlayableDirector obj)
     {
+        GameMenu.Close();
         OnStart.Invoke();
     }
 
     private void Director_stopped(PlayableDirector obj)
     {
+        GameMenu.Open();
         OnFinish.Invoke();
     }
 
