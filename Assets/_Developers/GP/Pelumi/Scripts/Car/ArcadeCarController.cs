@@ -42,8 +42,10 @@ public class ArcadeCarController : MonoBehaviour
     [Header("Car Properties")]
     [SerializeField] private DriveType driveType = DriveType.FourWheelDrive;
     [SerializeField] private BrakeType brakeType = BrakeType.FourWheelBrake;
+    [SerializeField] private float maxBoostSpeed;
     [SerializeField] private float maxForwardSpeed;
     [SerializeField] private float maxReverseSpeed;
+    [Viewable] [SerializeField] private float currentMaxSpeed;
 
     [Header("Acceleration")]
     [SerializeField] private float carPower;
@@ -51,7 +53,7 @@ public class ArcadeCarController : MonoBehaviour
     [SerializeField] private float startAccelerationSpeedThreshold;
 
     [Header("Acceleration / Decceleration")]
-    [SerializeField] private float accelerationToDecelerationRate;
+    [SerializeField] private float accelerationToDecelerationSpeed = 5;
 
     [Header("Decceleration")]
     [SerializeField] private float decelerationForce;
@@ -70,6 +72,9 @@ public class ArcadeCarController : MonoBehaviour
     [SerializeField] private float boostDuration = 2f;
     [SerializeField] private float boostReductionSpeed;
     [SerializeField] private float boostRegenerationSpeed;
+
+    [SerializeField] private float resetBoostSpeed;
+
     [SerializeField] private ParticleSystem boostParticle;
     [Viewable] [SerializeField] private bool isBoosting;
     [Viewable] [SerializeField] private float currentBoostDuration;
@@ -180,7 +185,7 @@ public class ArcadeCarController : MonoBehaviour
             {
                 if (Vector3.Dot(transform.forward, rigidBody.velocity) > 0)
                 {
-                    rigidBody.velocity = Vector3.Lerp(rigidBody.velocity, Vector3.zero, accelerationToDecelerationRate * Time.deltaTime);
+                    rigidBody.velocity = Vector3.Lerp(rigidBody.velocity, Vector3.zero, accelerationToDecelerationSpeed * Time.deltaTime);
                 }
             }
 
@@ -314,7 +319,6 @@ public class ArcadeCarController : MonoBehaviour
 
     private void HandleDownForce()
     {
-        // downForceValue = currentSpeed / 2;
         rigidBody.AddForce(-transform.up * downForceValue * rigidBody.velocity.magnitude);
     }
 
@@ -336,7 +340,26 @@ public class ArcadeCarController : MonoBehaviour
 
     public void ClampCarSpeed()
     {
-        rigidBody.velocity = Vector3.ClampMagnitude(rigidBody.velocity, verticalInput > 0 ?   maxForwardSpeed  : maxReverseSpeed);
+        CalculateMaxSpeed();
+        rigidBody.velocity = Vector3.ClampMagnitude(rigidBody.velocity, currentMaxSpeed);
+    }
+
+    public void CalculateMaxSpeed()
+    {
+        if (isBoosting) currentMaxSpeed = maxBoostSpeed;
+        else
+        {
+            if (currentSpeed > maxForwardSpeed)
+            {
+                float speed = currentMaxSpeed;
+                currentMaxSpeed = Mathf.Lerp(speed, maxForwardSpeed, resetBoostSpeed * Time.deltaTime);
+            }
+            else 
+            {
+                float speed = currentMaxSpeed;
+                currentMaxSpeed = Mathf.Lerp(speed, verticalInput > 0 ? maxForwardSpeed : maxReverseSpeed, resetBoostSpeed * Time.deltaTime);
+            }
+        }
     }
 
     void HandleDrag()
