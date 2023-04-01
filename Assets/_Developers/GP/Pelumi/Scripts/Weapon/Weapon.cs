@@ -63,6 +63,7 @@ public abstract class Weapon : MonoBehaviour
         targetPositionInLocalSpace.y = rotateVertical ? Mathf.Clamp(targetPositionInLocalSpace.y, -upRotationLimit, downRotationLimit) : 0;
         targetPositionInLocalSpace.x = Mathf.Clamp(targetPositionInLocalSpace.x, -leftRotationLimit, rightRotationLimit);
         Vector3 limitedRotation = Vector3.RotateTowards(Vector3.forward, targetPositionInLocalSpace, float.MaxValue, float.MaxValue);
+        if (limitedRotation.magnitude < Mathf.Epsilon) return;
         Quaternion whereToRotate = Quaternion.LookRotation(limitedRotation);
         content.rotation = Quaternion.RotateTowards(content.rotation, whereToRotate, turnSpeed * Time.deltaTime);
     }

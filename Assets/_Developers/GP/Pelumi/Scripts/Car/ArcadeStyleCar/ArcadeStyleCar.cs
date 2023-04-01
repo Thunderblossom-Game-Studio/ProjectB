@@ -59,7 +59,7 @@ public class ArcadeStyleCar : MonoBehaviour
     private void Awake()
     {
         carRB = GetComponent<Rigidbody>();
-        carRB.centerOfMass = _centreOfMass.localPosition;
+       // carRB.centerOfMass = _centreOfMass.localPosition;
     }
 
     private void Start()
@@ -164,7 +164,7 @@ public class ArcadeStyleCar : MonoBehaviour
         {
             switch (wheel.axel)
             {
-                case Axel.FRONT: wheel.wheelCollider.motorTorque = motorPower * gasInput; break;
+                case Axel.REAR: wheel.wheelCollider.motorTorque = motorPower * gasInput; break;
                 default: break;
             }
         }

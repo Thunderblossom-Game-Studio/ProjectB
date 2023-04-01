@@ -152,13 +152,13 @@ public class CarController : MonoBehaviour
         //Ackerman steering formula
         if (hInput > 0)
         {
-            wheels[0].steerAngle = Mathf.Rad2Deg * Mathf.Atan(2.5f / (turningRadius + (1.5f / 2))) * hInput;
-            wheels[1].steerAngle = Mathf.Rad2Deg * Mathf.Atan(2.5f / (turningRadius - (1.5f / 2))) * hInput;
+            wheels[0].steerAngle = Mathf.Rad2Deg * Mathf.Atan(2.5f / (turningRadius - (1.5f / 2))) * hInput;
+            wheels[1].steerAngle = Mathf.Rad2Deg * Mathf.Atan(2.5f / (turningRadius + (1.5f / 2))) * hInput;
         }
         else if (hInput < 0)
         {
-            wheels[0].steerAngle = Mathf.Rad2Deg * Mathf.Atan(2.5f / (turningRadius - (1.5f / 2))) * hInput;
-            wheels[1].steerAngle = Mathf.Rad2Deg * Mathf.Atan(2.5f / (turningRadius + (1.5f / 2))) * hInput;
+            wheels[0].steerAngle = Mathf.Rad2Deg * Mathf.Atan(2.5f / (turningRadius + (1.5f / 2))) * hInput;
+            wheels[1].steerAngle = Mathf.Rad2Deg * Mathf.Atan(2.5f / (turningRadius - (1.5f / 2))) * hInput;
         }
         else
         {
