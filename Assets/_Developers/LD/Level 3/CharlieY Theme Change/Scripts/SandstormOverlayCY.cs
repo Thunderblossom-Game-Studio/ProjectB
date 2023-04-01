@@ -21,14 +21,14 @@ public class SandstormOverlayCY : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name== "Main Car(Clone)")
+        if (other.gameObject.name== "Combat Car")
         {
             SandStormOverlay.SetActive(true);
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.name == "Main Car(Clone)")
+        if (other.gameObject.name == "Combat Car")
         {
             SandStormOverlay.SetActive(false);
         }

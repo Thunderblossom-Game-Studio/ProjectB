@@ -381,6 +381,7 @@ GameObject:
   - component: {fileID: 2348935256322974010}
   - component: {fileID: 137178964629545983}
   - component: {fileID: 1287298311465283690}
+  - component: {fileID: 2487067307228105631}
   m_Layer: 0
   m_Name: TrafficLightPole
   m_TagString: Untagged
@@ -453,6 +454,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2487067307228105631
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6984431669898574766}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0072000003, y: 0.007199999, z: 0.06999998}
+  m_Center: {x: 0.000000059604645, y: 3.8554814e-20, z: 0.035}
 --- !u!1 &7535574847842848297
 GameObject:
   m_ObjectHideFlags: 0
