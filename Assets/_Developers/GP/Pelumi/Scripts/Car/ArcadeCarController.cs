@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ImprovedCar : MonoBehaviour
+public class ArcadeCarController : MonoBehaviour
 {
     public enum Axel
     {
@@ -73,8 +73,6 @@ public class ImprovedCar : MonoBehaviour
     [Viewable] [SerializeField] private float verticalInput;
     [Viewable] [SerializeField] private bool handbrakeInput;
     [Viewable] [SerializeField] private bool boostInput;
-    [Viewable] [SerializeField] private bool jumpInput;
-    [Viewable] [SerializeField] private bool flipInput;
 
     [Viewable] [SerializeField] private bool isFlipping;
 
@@ -87,10 +85,6 @@ public class ImprovedCar : MonoBehaviour
     private void Update()
     {
         _isGrounded = IsAllWheelGrounded();
-
-        HandleInput();
-
-        FlipCar();
 
         HandleWheelEffect();
     }
@@ -109,21 +103,25 @@ public class ImprovedCar : MonoBehaviour
 
         AdjustDrag();
 
-        HandleJump();
-
         Boost();
 
         AddDownForce();
     }
 
-    private void HandleInput()
+    public void SetHorizontalAndVerticalInput(float _horizontalInput, float _verticalInput)
     {
-        verticalInput = InputManager.Instance.HandleMoveInput().ReadValue<Vector2>().y;
-        horizontalInput = InputManager.Instance.HandleMoveInput().ReadValue<Vector2>().x;
-        handbrakeInput = InputManager.Instance.HandleBrakeInput().IsPressed();
-        boostInput = Input.GetKey(KeyCode.LeftShift);
-        flipInput = Input.GetKeyDown(KeyCode.F);
-        jumpInput = Input.GetKeyDown(KeyCode.Space);
+        horizontalInput = _horizontalInput;
+        verticalInput = _verticalInput;
+    }
+
+    public void SetBreakInput(bool isBreaked)
+    {
+        handbrakeInput = isBreaked;
+    }
+
+    public void SetBoost(bool _boostInput)
+    {
+        boostInput = _boostInput;
     }
 
     private void HandleAcceleration(float vInput)
@@ -290,9 +288,9 @@ public class ImprovedCar : MonoBehaviour
         }
     }
 
-    public void HandleJump()
+    public void Jump()
     {
-        if (_isGrounded && jumpInput)
+        if (_isGrounded)
         {
             rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
@@ -300,7 +298,7 @@ public class ImprovedCar : MonoBehaviour
 
     public void FlipCar()
     {
-        if(flipInput && !isFlipping)
+        if(!isFlipping)
         {
             isFlipping = true;
             StartCoroutine(FlipCarRoutine());

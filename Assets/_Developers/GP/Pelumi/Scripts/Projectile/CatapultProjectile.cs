@@ -22,11 +22,6 @@ public class CatapultProjectile : Projectile
         sphereDamager = GetComponent<SphereDamager>();
     }
 
-    private void Update()
-    {
-        if (!launched)  transform.position = transform.parent.position;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (!launched || !detectLayer.ContainsLayer(other.gameObject.layer) || hasHit) return;
@@ -36,7 +31,6 @@ public class CatapultProjectile : Projectile
         transform.position = other.ClosestPoint(transform.position);
         transform.SetParent(other.transform);
         OnHit();
-        Debug.Log(other.transform);
     }
 
     public void SetUp(Vector3 targetPos, float _speed, float angle)
