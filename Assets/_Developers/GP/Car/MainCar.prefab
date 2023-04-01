@@ -442,16 +442,17 @@ MonoBehaviour:
   centerOfMass: {fileID: 3299715640164507794}
   driveType: 0
   brakeType: 2
-  maxBoostSpeed: 40
+  maxBoostSpeed: 60
   maxForwardSpeed: 30
   maxReverseSpeed: 10
   currentMaxSpeed: 0
   carPower: 3500
-  startAccelerationRate: 25
-  startAccelerationSpeedThreshold: 20
+  startAccelerationSpeed: 20
+  startSpeedThreshold: 20
   accelerationToDecelerationSpeed: 5
   decelerationForce: 500
   driftingDecelerationRate: 0.1
+  reverseSpeedMultiplier: 5
   brakePower: 7500
   breakDecelerationRate: 0.5
   _steeringSensitivity: 1
@@ -460,7 +461,7 @@ MonoBehaviour:
   boostDuration: 5
   boostReductionSpeed: 1
   boostRegenerationSpeed: 1
-  resetBoostSpeed: 0.1
+  resetBoostSpeed: 0.5
   boostParticle: {fileID: 8191494182904727030}
   isBoosting: 0
   currentBoostDuration: 0

@@ -49,18 +49,30 @@ public class ArcadeCarController : MonoBehaviour
 
     [Header("Acceleration")]
     [SerializeField] private float carPower;
-    [SerializeField] private float startAccelerationRate;
-    [SerializeField] private float startAccelerationSpeedThreshold;
 
-    [Header("Acceleration / Decceleration")]
+    [Space(20)]
+
+    [SerializeField] private float startAccelerationSpeed = 20;
+    [SerializeField] private float startSpeedThreshold;
+
+    [Header("Acceleration / Deceleration")]
     [SerializeField] private float accelerationToDecelerationSpeed = 5;
 
     [Header("Decceleration")]
     [SerializeField] private float decelerationForce;
+
+    [Space(20)]
+
     [SerializeField] private float driftingDecelerationRate;
+
+    [Header("Reverse")]
+    [SerializeField] private float reverseSpeedMultiplier;
 
     [Header("Brake")]
     [SerializeField] private float brakePower;
+
+    [Space(20)]
+
     [SerializeField] private float breakDecelerationRate;
 
     [Header("Steering")]
@@ -177,9 +189,9 @@ public class ArcadeCarController : MonoBehaviour
     {
         if (_isGrounded)
         {
-            if (verticalInput > 0 && currentSpeed < startAccelerationSpeedThreshold)
+            if (verticalInput > 0 && currentSpeed < startSpeedThreshold)
             {
-                rigidBody.velocity += transform.forward * startAccelerationRate * Time.deltaTime;
+                rigidBody.velocity += transform.forward * startAccelerationSpeed * Time.deltaTime;
             }
             else  if (verticalInput < 0)
             {
@@ -187,8 +199,11 @@ public class ArcadeCarController : MonoBehaviour
                 {
                     rigidBody.velocity = Vector3.Lerp(rigidBody.velocity, Vector3.zero, accelerationToDecelerationSpeed * Time.deltaTime);
                 }
+                else if (currentSpeed < maxReverseSpeed)
+                {
+                    rigidBody.velocity += -transform.forward * reverseSpeedMultiplier * Time.deltaTime;
+                }
             }
-
         }
 
         if (driveType == DriveType.FourWheelDrive)
