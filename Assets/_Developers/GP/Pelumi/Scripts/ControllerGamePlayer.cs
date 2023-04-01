@@ -24,12 +24,17 @@ public class ControllerGamePlayer : GamePlayer
             carController.Jump();
         }
 
-        Vector2 input = InputManager.Instance.HandleMoveInput().ReadValue<Vector2>();
-        carController.SetHorizontalAndVerticalInput(input.x, input.y);
-
         carController.SetBreakInput(InputManager.Instance.HandleBrakeInput().IsPressed());
 
         carController.SetBoost(Input.GetKey(KeyCode.LeftShift));
+
+        GameMenu.GetInstance().SetCarSpeed(carController.GetSpeed().ToString("F0"));
+    }
+
+    private void FixedUpdate()
+    {
+        Vector2 input = InputManager.Instance.HandleMoveInput().ReadValue<Vector2>();
+        carController.SetHorizontalAndVerticalInput(input.x, input.y);
     }
 
     public void SetUpPakageTracker()

@@ -4,14 +4,7 @@ using UnityEngine;
 
 public class ArcadeCarSounds : MonoBehaviour
 {
-    [SerializeField] private float minSpeed;
-    [SerializeField] private float maxSpeed;
-    [SerializeField] private float minPitch;
-    [SerializeField] private float maxPitch;
-
-    [Viewable] [SerializeField] private float currentSpeed;
-    [Viewable] [SerializeField] private float pitchFromCar;
-
+    private float initialCarEngineSoundPitch;
     private Rigidbody _rigidbody;
     private AudioSource _carAudio;
 
@@ -21,6 +14,11 @@ public class ArcadeCarSounds : MonoBehaviour
         _carAudio = GetComponent<AudioSource>();
     }
 
+    private void Start()
+    {
+        initialCarEngineSoundPitch = _carAudio.pitch;
+    }
+
     private void Update()
     {
         EngineSound();
@@ -28,22 +26,7 @@ public class ArcadeCarSounds : MonoBehaviour
 
     private void EngineSound()
     {
-        currentSpeed = _rigidbody.velocity.magnitude;
-        pitchFromCar = _rigidbody.velocity.magnitude / 50f;
-
-        if(currentSpeed < minSpeed)
-        {
-            _carAudio.pitch = minPitch;
-        }
-
-        if (currentSpeed > minSpeed && currentSpeed < maxSpeed)
-        {
-            _carAudio.pitch = minPitch + pitchFromCar;
-        }
-
-        if (currentSpeed > maxSpeed)
-        {
-            _carAudio.pitch = maxSpeed;
-        }
+        float engineSoundPitch = initialCarEngineSoundPitch + (Mathf.Abs(_rigidbody.velocity.magnitude) / 25f);
+        _carAudio.pitch = engineSoundPitch;
     }
 }

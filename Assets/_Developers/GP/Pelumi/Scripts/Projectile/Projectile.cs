@@ -23,7 +23,7 @@ public abstract class Projectile : MonoBehaviour
         PopUpManager.Instance?.PopUpAtTextPosition(transform.position + Vector3.up * .5f, Vector3.zero, damageValue.ToString(), Color.red);
     }
 
-    protected virtual void DestroyProjectile()
+    public virtual void DestroyProjectile()
     {
         transform.SetParent(null);
         Destroy(gameObject);

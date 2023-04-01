@@ -154,6 +154,7 @@ GameObject:
   - component: {fileID: 2158425892378620387}
   - component: {fileID: 2305005301174971557}
   - component: {fileID: 2532410576275774344}
+  - component: {fileID: -5430673127369799938}
   m_Layer: 13
   m_Name: Projectile
   m_TagString: Untagged
@@ -253,9 +254,9 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!114 &2532410576275774344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,6 +277,56 @@ MonoBehaviour:
   impactParticle: {fileID: 1894376261830645168, guid: 0681e849e3837b24bb11e851afe115c5, type: 3}
   speed: 0
   destroyTime: 10
-  damageRadius: 0.2
-  _damageAmount: 0
-  _hitEntitiesMaximum: 10
+--- !u!114 &-5430673127369799938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3748333741428973819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 013bce30a2c58514995c2a3b01f19d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageLayers:
+    serializedVersion: 2
+    m_Bits: 221179
+  _damageAmount: 10
+  _criticalDamagePercentage: 0
+  _criticalChance: 0
+  _duration: 0
+  _tickRate: 0
+  _onHitDamage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2532410576275774344}
+        m_TargetAssemblyTypeName: DartProjectile, Assembly-CSharp
+        m_MethodName: OnDamage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onHitNormal:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2532410576275774344}
+        m_TargetAssemblyTypeName: DartProjectile, Assembly-CSharp
+        m_MethodName: DestroyProjectile
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _damageType: 0
+  _maxHit: 1
+  currentHit: 0

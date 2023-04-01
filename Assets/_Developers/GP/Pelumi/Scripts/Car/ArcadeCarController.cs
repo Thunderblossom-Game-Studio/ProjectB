@@ -49,11 +49,16 @@ public class ArcadeCarController : MonoBehaviour
     [SerializeField] private float brakePower;
 
     [Header("Boost")]
-    [SerializeField] private float boostSpeed = 200f;
+    [SerializeField] private float boostForce = 200f;
     [SerializeField] private float boostDuration = 2f;
+    [SerializeField] private float boostReductionSpeed;
+    [SerializeField] private float boostRegenerationSpeed;
+    [SerializeField] private ParticleSystem boostParticle;
+    [Viewable] [SerializeField] private bool isBoosting;
+    [Viewable] [SerializeField] private float currentBoostDuration;
 
     [Header("Turning")]
-    [SerializeField] private float turningRadius;
+    [SerializeField] private float maxTurnAngle;
     [SerializeField] private float _turnSensitivity = 1.0f;
 
     [Header("Jump")]
@@ -62,9 +67,9 @@ public class ArcadeCarController : MonoBehaviour
 
     [Header("Air Control")]
     [SerializeField] private float airHorizontalForce = 10.0f;
+    [SerializeField] private float downForceValue;
 
     [Header("Debug")]
-    [Viewable] [SerializeField] private float downForceValue;
     [Viewable] [SerializeField] private float currentSpeed;
     [Viewable] [SerializeField] private float topSpeedDrag;
     [Viewable] [SerializeField] private float idleDrag = 50f;
@@ -84,15 +89,13 @@ public class ArcadeCarController : MonoBehaviour
 
     private void Update()
     {
-        _isGrounded = IsAllWheelGrounded();
+        _isGrounded = IsAnyWheelGrounded();
 
         HandleWheelEffect();
     }
 
     private void FixedUpdate()
     {
-        AnimateWheels();
-
         HandleAirControl();
 
         HandleAcceleration(verticalInput);
@@ -101,11 +104,15 @@ public class ArcadeCarController : MonoBehaviour
 
         HandleBraking(handbrakeInput);
 
-        AdjustDrag();
+        HandleWheelRotation();
 
-        Boost();
+        HandleCarDrift();
 
-        AddDownForce();
+        HandleDrag();
+
+        HandleBoost();
+
+        HandleDownForce();
     }
 
     public void SetHorizontalAndVerticalInput(float _horizontalInput, float _verticalInput)
@@ -217,7 +224,7 @@ public class ArcadeCarController : MonoBehaviour
                 switch (wheel.axel)
                 {
                     case Axel.FRONT:
-                        float steerAngle = hInput * _turnSensitivity * turningRadius;
+                        float steerAngle = hInput * _turnSensitivity * maxTurnAngle;
                         wheel.wheelCollider.steerAngle = Mathf.Lerp(wheel.wheelCollider.steerAngle, steerAngle, 0.6f);
                         break;
                     default: break;
@@ -231,7 +238,7 @@ public class ArcadeCarController : MonoBehaviour
         }
     }
 
-    private void AnimateWheels()
+    private void HandleWheelRotation()
     {
         foreach (Wheel wheel in _wheels)
         {
@@ -240,9 +247,9 @@ public class ArcadeCarController : MonoBehaviour
         }
     }
 
-    private void AddDownForce()
+    private void HandleDownForce()
     {
-        downForceValue = currentSpeed / 2;
+       // downForceValue = currentSpeed / 2;
         rigidBody.AddForce(-transform.up * downForceValue * rigidBody.velocity.magnitude);
     }
 
@@ -262,7 +269,7 @@ public class ArcadeCarController : MonoBehaviour
         }
     }
 
-    void AdjustDrag()
+    void HandleDrag()
     {
         if (currentSpeed >= topSpeed)
         {
@@ -274,16 +281,59 @@ public class ArcadeCarController : MonoBehaviour
         }
     }
 
+    void HandleCarDrift()
+    {
+        WheelHit hit;
+        float radius;
+        float velocity = rigidBody.velocity.magnitude;
+        WheelFrictionCurve wheelFowardFriction;
+        WheelFrictionCurve wheelSideFriction;
+        foreach (Wheel wheel in _wheels)
+        {
+            switch (wheel.axel)
+            {
+                case Axel.REAR:
+                    if(wheel.wheelCollider.GetGroundHit(out hit))
+                    {
+                        radius = 4 + (-Mathf.Abs(hit.sidewaysSlip) * 2) + rigidBody.velocity.magnitude / 10;
+
+                        wheelFowardFriction = wheel.wheelCollider.forwardFriction;
+                        wheelFowardFriction.stiffness = (handbrakeInput) ? Mathf.SmoothDamp(wheel.wheelCollider.forwardFriction.stiffness, .5f, ref velocity, Time.deltaTime * 2) : 2;
+                        wheel.wheelCollider.forwardFriction = wheelFowardFriction;
+
+                        wheelSideFriction = wheel.wheelCollider.sidewaysFriction;
+                        wheelSideFriction.stiffness = (handbrakeInput) ? Mathf.SmoothDamp(wheel.wheelCollider.sidewaysFriction.stiffness, .5f, ref velocity, Time.deltaTime * 2) : 2;
+                        wheel.wheelCollider.sidewaysFriction = wheelSideFriction;
+                    }           
+                    break;
+                default: break;
+            }
+        }
+    }
+
     public float GetSpeed() => currentSpeed;
 
-    public void Boost()
+    public void HandleBoost()
     {
         if (boostInput)
         {
-            if (boostDuration > 0f)
+            if (currentBoostDuration > 0f)
             {
-                rigidBody.AddForce(transform.forward * boostSpeed, ForceMode.Acceleration);
-                boostDuration -= Time.deltaTime;
+                isBoosting = true;
+                if (_isGrounded) rigidBody.AddForce(transform.forward * boostForce, ForceMode.Acceleration);
+                currentBoostDuration -= boostReductionSpeed * Time.deltaTime;
+            }
+            else
+            {
+                isBoosting = false;
+            }
+        }
+        else
+        {
+            isBoosting = false;
+            if (currentBoostDuration < boostDuration)
+            {
+                currentBoostDuration += boostRegenerationSpeed *  Time.deltaTime;
             }
         }
     }
@@ -319,17 +369,31 @@ public class ArcadeCarController : MonoBehaviour
     {
         foreach (Wheel wheel in _wheels)
         {
-            wheel.wheelEffectTrail.emitting = InputManager.Instance.HandleBrakeInput().IsPressed() && wheel.axel == Axel.REAR && wheel.wheelCollider.isGrounded;
+            wheel.wheelEffectTrail.emitting = InputManager.Instance.HandleBrakeInput().IsPressed() && wheel.axel == Axel.REAR && wheel.wheelCollider.isGrounded && rigidBody.velocity.magnitude >= 10f;
+        }
+
+        if(isBoosting)
+        {
+            boostParticle.Emit(1);
         }
     }
 
-    public bool IsAllWheelGrounded()
+    public bool IsAnyWheelGrounded()
     {
         foreach (Wheel wheel in _wheels)
         {
             if (wheel.wheelCollider.isGrounded) return true;
         }
         return false;
+    }
+
+    public bool IsAllWheelGrounded()
+    {
+        foreach (Wheel wheel in _wheels)
+        {
+            if (!wheel.wheelCollider.isGrounded) return false;
+        }
+        return true;
     }
 
     public void ToggleWheelActive(bool state)

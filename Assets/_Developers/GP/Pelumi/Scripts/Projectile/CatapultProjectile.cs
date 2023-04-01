@@ -38,12 +38,15 @@ public class CatapultProjectile : Projectile
         targetPostion = targetPos;
         speed = _speed;
         launched = true;
+        Rigidbody rb = gameObject.AddComponent<Rigidbody>();
+        rb.useGravity = false;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
         moveRoutine = StartCoroutine(PathUtil.MoveObjectAlongPath(transform, transform.position, targetPostion, angle, speed, null));
     }
 
     public void OnHit()
     {
-        if (playerBullet) hitEvent.Raise(this, new HitMarkInfo(Color.red, transform.position));
         StartCoroutine(ExplosionTimeDelay());
     }
 
@@ -53,7 +56,7 @@ public class CatapultProjectile : Projectile
         DestroyProjectile();
     }
 
-    protected override void DestroyProjectile()
+    public override void DestroyProjectile()
     {
         sphereDamager.Damage();
         Instantiate(explosionParticle, transform.position, Quaternion.identity);

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1758521870478393235}
   - component: {fileID: 179080462243790140}
   - component: {fileID: 5498174138268868678}
-  - component: {fileID: -5467055438715165502}
   - component: {fileID: 6037735248930878602}
   - component: {fileID: 179080462243790142}
   - component: {fileID: 2330946739643637859}
@@ -87,22 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &-5467055438715165502
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6924119838141226827}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!135 &6037735248930878602
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -114,7 +97,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.84
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &179080462243790142
 MonoBehaviour:
@@ -157,23 +140,14 @@ MonoBehaviour:
   _criticalChance: 0
   _duration: 0
   _tickRate: 0
-  _onDamage:
+  _onHitDamage:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 179080462243790142}
-        m_TargetAssemblyTypeName: Projectile, Assembly-CSharp
-        m_MethodName: OnDamage
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  _onHitNormal:
+    m_PersistentCalls:
+      m_Calls: []
   _debugColor: {r: 0.9528302, g: 0, b: 0, a: 1}
   _damageSpheres:
   - _sphereOffset: {x: 0, y: 0, z: 0}
-    _sphereRadius: 1
+    _sphereRadius: 2.5
   _hitEntitiesMaximum: 10
