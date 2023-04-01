@@ -1,5 +1,4 @@
-using FishNet.Object;
-using FishNet.Object.Synchronizing;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,18 +10,18 @@ using UnityEngine;
 /// </summary>
 
 [RequireComponent(typeof(AICarController), typeof(AIDecisionHandler), typeof(AICombatHandler))]
-public class AIPlayerHandler : NetworkBehaviour
+public class AIPlayerHandler : MonoBehaviour
 {
     public enum CurrentState { IDLE, PURSUE, FLEE, PICKUP, DELIVERY}
 
-    [SyncVar][Viewable] private CurrentState _state;
+    [Viewable] private CurrentState _state;
 
     private AICarController _carHandler;
     private AIDecisionHandler _decisionHandler;
     private AICombatHandler _combatHandler;
 
     private bool _newState = false;
-    [SyncVar] private CurrentState _previousState;
+    private CurrentState _previousState;
 
     private void Awake()
     {
@@ -40,9 +39,6 @@ public class AIPlayerHandler : NetworkBehaviour
 
     private void Update()
     {
-        if (!IsServer)
-            return;
-
         Evaluations();
 
         StateController();
@@ -58,7 +54,6 @@ public class AIPlayerHandler : NetworkBehaviour
         if (_state != _previousState || _carHandler.StalePath()) _newState = true;
     }
 
-    [ServerRpc(RequireOwnership = false)]
     private void StateController()
     {
         switch (_state)

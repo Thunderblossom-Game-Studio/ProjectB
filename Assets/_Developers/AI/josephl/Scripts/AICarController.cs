@@ -1,13 +1,12 @@
-using FishNet.Object;
-using RVP;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AICarController : NetworkBehaviour
+public class AICarController : MonoBehaviour
 {
-    private VehicleParent _car;
+   // private VehicleParent _car;
 
     [Header("Pathfinding Settings")]
 
@@ -40,13 +39,12 @@ public class AICarController : NetworkBehaviour
 
     private float _distanceMultiplier = 1.6f;
 
-    [Viewable]
-    private BasicInput.MoveData _md;
+   // private BasicInput.MoveData _md;
 
     // Start is called before the first frame update
     private void Start()
     {
-        _car = GetComponent<VehicleParent>();
+       // _car = GetComponent<VehicleParent>();
 
         if (_agent)
             _agent.Warp(transform.position);
@@ -54,9 +52,6 @@ public class AICarController : NetworkBehaviour
 
     private void Update()
     {
-        if (!IsServer)
-            return;
-
         if (!_agent)
         {
             Debug.LogWarning("No NavMesh Agent Assigned");
@@ -71,9 +66,6 @@ public class AICarController : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (!IsServer)
-            return;
-
         if (!_agent)
         {
             Debug.LogWarning("No NavMesh Agent Assigned");
@@ -91,7 +83,6 @@ public class AICarController : NetworkBehaviour
     /// <summary>
     /// Makes the car move in the direction of the navmesh agent it's chasing at all times
     /// </summary>
-    [ServerRpc(RequireOwnership = false)]
     public void FollowAgent()
     {
         Vector3 dir = (_agent.transform.position - transform.position).normalized;
@@ -127,28 +118,28 @@ public class AICarController : NetworkBehaviour
             horizontalInput *= forwardInput;
 
 
-        if ((_car.localVelocity.magnitude > _speedSensitivity)
-            ||
-            ((Vector3.Distance(transform.position, _agent.transform.position) < _stopDistance
-            &&
-            _car.localVelocity.magnitude > _brakeSensitivity)))
-        {
-            forwardInput = -.25f;
-        }
-        // braking
-        int brake = 0;
+        //if ((_car.localVelocity.magnitude > _speedSensitivity)
+        //    ||
+        //    ((Vector3.Distance(transform.position, _agent.transform.position) < _stopDistance
+        //    &&
+        //    _car.localVelocity.magnitude > _brakeSensitivity)))
+        //{
+        //    forwardInput = -.25f;
+        //}
+        //// braking
+        //int brake = 0;
 
-        if (Mathf.Abs(horizontalInput) >= 0.6f && _car.localVelocity.magnitude > _brakeSensitivity)
-        {
-            brake = 1;
-        }
+        //if (Mathf.Abs(horizontalInput) >= 0.6f && _car.localVelocity.magnitude > _brakeSensitivity)
+        //{
+        //    brake = 1;
+        //}
 
-        forwardInput = Mathf.Clamp(forwardInput, -.75f, .75f);
-        horizontalInput = Mathf.Clamp(horizontalInput, -1f, 1f);
+        //forwardInput = Mathf.Clamp(forwardInput, -.75f, .75f);
+        //horizontalInput = Mathf.Clamp(horizontalInput, -1f, 1f);
 
-        _md.AccelInput = forwardInput;
-        _md.SteerInput = horizontalInput;
-        _md.EbrakeInput = brake;
+        //_md.AccelInput = forwardInput;
+        //_md.SteerInput = horizontalInput;
+        //_md.EbrakeInput = brake;
     }
 
     /// <summary>
@@ -212,22 +203,22 @@ public class AICarController : NetworkBehaviour
 
     private void IdleTiming()
     {
-        if (_car.localVelocity.magnitude < 3)
-        {
-            _idleTimer += Time.deltaTime;
+        //if (_car.localVelocity.magnitude < 3)
+        //{
+        //    _idleTimer += Time.deltaTime;
 
-            if (_idleTimer > _maxIdleTimer)
-            {
-                _stuck = true;
-                transform.position = _agent.transform.position;
-                transform.rotation = _agent.transform.rotation;
-            }
-        }
-        else
-        {
-            _stuck = false;
-            _idleTimer = 0f;
-        }
+        //    if (_idleTimer > _maxIdleTimer)
+        //    {
+        //        _stuck = true;
+        //        transform.position = _agent.transform.position;
+        //        transform.rotation = _agent.transform.rotation;
+        //    }
+        //}
+        //else
+        //{
+        //    _stuck = false;
+        //    _idleTimer = 0f;
+        //}
     }
 
     public void OnDrawGizmos()
@@ -240,10 +231,10 @@ public class AICarController : NetworkBehaviour
         }
     }
 
-    public void GetAIMoveData(out BasicInput.MoveData md)
-    {
-        md = default;
+    //public void GetAIMoveData(out BasicInput.MoveData md)
+    //{
+    //    md = default;
 
-        md = _md;
-    }
+    //    md = _md;
+    //}
 }

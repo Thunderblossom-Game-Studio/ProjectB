@@ -1,10 +1,9 @@
-using FishNet;
-using FishNet.Object;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Projectile : NetworkBehaviour
+public abstract class Projectile : MonoBehaviour
 {
     [SerializeField] protected bool playerBullet;
     [SerializeField] protected GameEvent hitEvent;
@@ -24,9 +23,9 @@ public abstract class Projectile : NetworkBehaviour
         PopUpManager.Instance?.PopUpAtTextPosition(transform.position + Vector3.up * .5f, Vector3.zero, damageValue.ToString(), Color.red);
     }
 
-    protected virtual void DestroyProjectile()
+    public virtual void DestroyProjectile()
     {
         transform.SetParent(null);
-        InstanceFinder.ServerManager.Despawn(gameObject);
+        Destroy(gameObject);
     }
 }

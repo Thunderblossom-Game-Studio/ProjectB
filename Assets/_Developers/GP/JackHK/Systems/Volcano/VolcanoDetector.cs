@@ -1,5 +1,4 @@
 using JE.General;
-using RVP;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +9,17 @@ public class VolcanoDetector : MonoBehaviour
 
     private Volcano volcano;
     private Transform randPos;
+    private GameObject targetObj;
 
-    private void Awake() { volcano = GetComponentInParent<Volcano>(); }
+    private void Awake() 
+    { 
+        volcano = GetComponentInParent<Volcano>();
+    }
+
+    private void Start()
+    {
+        targetObj = Instantiate(new GameObject(), transform.position, Quaternion.identity);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -27,16 +35,19 @@ public class VolcanoDetector : MonoBehaviour
 
     private void ChangeDetectionState(Collider other, Transform target)
     {
-        if (!other.gameObject.TryGetComponent(out VehicleParent vehicle)) return;
-
-        if (volcano.targetsPlayer) volcano.SetTarget(target);
+        if (volcano.targetsPlayer)
+        {
+            if (!other.gameObject.TryGetComponent(out GamePlayer vehicle)) return;
+            volcano.SetTarget(target);
+        }
         else
         {
-            volcano.SetTarget(randPos);
+            targetObj.transform.position = RandomPointInCircle(gameObject.transform.localScale.x / 2);
+            volcano.SetTarget(targetObj.transform);
         }
 
 
-        if (target) HazardIndicator.Instance?.ActivateIndicator(HazardIndicator.IndicatorType.Volcano);
+        if (target || !volcano.targetsPlayer) HazardIndicator.Instance?.ActivateIndicator(HazardIndicator.IndicatorType.Volcano);
         else HazardIndicator.Instance?.DeActivateIndicator(HazardIndicator.IndicatorType.Volcano);
     }
 
@@ -46,6 +57,6 @@ public class VolcanoDetector : MonoBehaviour
         float distance = Mathf.Sqrt(Random.Range(0f, 1f)) * radius;
         float x = Mathf.Cos(angle) * distance;
         float z = Mathf.Sin(angle) * distance;
-        return new Vector3(x, 0, z);
+        return new Vector3(x, 0, z) + gameObject.transform.position;
     }
 }

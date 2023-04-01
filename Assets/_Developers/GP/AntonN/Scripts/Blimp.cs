@@ -2,6 +2,7 @@ using HeathenEngineering.SteamworksIntegration;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Blimp : MonoBehaviour
 {
@@ -19,21 +20,19 @@ public class Blimp : MonoBehaviour
     [SerializeField] private int dropAmount = 1;
     [SerializeField] private float raycastDistance;
     [SerializeField] private Audio3D fanAudio;
+    [SerializeField] private float detectDelay = 3f;
     private float timer;
     private bool GizmosActive;
-    RaycastHit hit;
-
+    private float delayTimer;
+    private bool delayActive;
     private Vector3 hitPoint;
-
-    private void Awake()
-    {
-        //fanAudio.PlaySoundEffect("BlimpFan");
-    }
 
     private void Start()
     {
         ru.Activate(0);
         GizmosActive = false;
+        delayActive = false;
+        delayTimer = 0;
     }
 
     private void Update()
@@ -49,11 +48,22 @@ public class Blimp : MonoBehaviour
             case State.Moving:
                 if (DetectTarget())
                 {
-                    OnTargetDetected();
+                    if (delayActive == false)
+                    {
+                        OnTargetDetected();
+                        delayActive = true;
+                    }
+                    else if (delayActive == true)
+                    {
+                        DelayAfterDetect();
+                        ru.ToggleMovement(true);
+                        DeactivateIndicator();
+                    }
                 }
                 else if (!DetectTarget())
                 {
                     ru.ToggleMovement(true);
+                    DeactivateIndicator();
                 }
                 break;
             case State.Attacking:
@@ -94,7 +104,6 @@ public class Blimp : MonoBehaviour
             hitPoint = groundHit.point;
 
             SpawnGround(hitPoint);
-
 
             Debug.DrawLine(transform.position, hitPoint, Color.red);
 
@@ -149,6 +158,7 @@ public class Blimp : MonoBehaviour
         for (int i = 0; i < dropAmount; i++)
         {
             Instantiate(droppableObject, dropPoint.position, Quaternion.Euler(new Vector3(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360))));
+
         }
     }
 
@@ -175,16 +185,17 @@ public class Blimp : MonoBehaviour
         spawnIndicator.transform.localScale = new Vector3(scaleX, scaleY, 5);
     }
 
-    /*void UpdateTransform()
+    private void DelayAfterDetect()
     {
-        float distance =
-            Vector3.Distance(StartObject.transform.position, EndObject.transform.position);
-        transform.localScale = new Vector3(InitialScale.x, distance / 2f, InitialScale.z);
-
-        Vector3 middlePoint = (StartObject.transform.position + EndObject.transform.position) / 2f;
-        transform.position = middlePoint;
-
-        Vector3 rotationDirection = (EndObject.transform.position - StartObject.transform.position) / 2f;
-        transform.up = rotationDirection;
-    }*/
+        if (delayTimer >= detectDelay)
+        {
+            delayTimer = 0;
+            delayActive = false;
+        }
+        else
+        {
+            delayTimer += Time.deltaTime;
+            delayActive = true;
+        }
+    }
 }

@@ -11,7 +11,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private bool invertHorizontal;
 
     [Range(0.01f, 1.0f)]
-    [SerializeField] private float sensitivity = 70.0f;
+    [SerializeField] private float sensitivity = 0.2f;
     [SerializeField] private float TopClamp = 70.0f;
     [SerializeField] private float BottomClamp = -30.0f;   
     [SerializeField] private float CameraAngleOverride = 0.0f;

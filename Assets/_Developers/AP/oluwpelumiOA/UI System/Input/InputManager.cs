@@ -126,6 +126,8 @@ public class InputManager : MonoBehaviour
 
     public InputAction HandleInteractInput() => playerInputActions.Player.Interact;
 
+    public InputAction RadioInteractInput() => playerInputActions.Player.Radio;
+
     public InputAction HandleAccelerateInput() => playerInputActions.Player.Accelerate;
 
     public InputAction HandleDecelerateInput() => playerInputActions.Player.Decelerate;
@@ -146,6 +148,7 @@ public class InputManager : MonoBehaviour
         Interact,
         Gamepad_Fire,
         Gamepad_Interact,
+        Radio,
     }
 
     public string GetBindingName(Binding binding)
@@ -164,6 +167,8 @@ public class InputManager : MonoBehaviour
             case Binding.Fire:
                 return playerInputActions.Player.Fire.bindings[0].ToDisplayString();
             case Binding.Interact:
+                return playerInputActions.Player.Interact.bindings[0].ToDisplayString();
+            case Binding.Radio:
                 return playerInputActions.Player.Interact.bindings[0].ToDisplayString();
 
             case Binding.Gamepad_Fire:
@@ -216,6 +221,11 @@ public class InputManager : MonoBehaviour
                 inputAction = playerInputActions.Player.Interact;
                 bindingIndex = 1;
                 break;
+            case Binding.Radio:
+                inputAction = playerInputActions.Player.Interact;
+                bindingIndex = 1;
+                break;
+
             default: return;
         }
 

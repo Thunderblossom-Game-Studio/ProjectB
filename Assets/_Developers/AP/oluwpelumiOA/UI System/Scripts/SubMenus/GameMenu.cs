@@ -10,6 +10,9 @@ public class GameMenu : BaseMenu<GameMenu>
 {
     [SerializeField] private CanvasGroup _buttonHolder;
 
+    [Header("Car UI")]
+    [SerializeField] private TextMeshProUGUI _carSpeedText;
+
     [Header( "Package UI")]
     [SerializeField] private JuicerVector3Properties _packageUIProperties;
     [SerializeField] private TextMeshProUGUI _currentPackageText;
@@ -139,6 +142,11 @@ public class GameMenu : BaseMenu<GameMenu>
     private void OnTimerUpdate(Component arg1, object value)
     {
         _timerText.text = (string)value;
+    }
+
+    public void SetCarSpeed(string speed)
+    {
+        _carSpeedText.text = speed;
     }
 
     private void OnCentreTextUpdate(Component arg1, object value)

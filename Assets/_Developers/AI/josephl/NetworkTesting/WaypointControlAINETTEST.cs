@@ -1,16 +1,14 @@
-using FishNet.Object;
-using FishNet.Object.Synchronizing;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaypointControlAINETTEST : NetworkBehaviour
+public class WaypointControlAINETTEST : MonoBehaviour
 {
     public List<GameObject> Exits;
 
-    [SyncVar] public GameObject Next;
+    public GameObject Next;
 
-    [ServerRpc (RequireOwnership = false)]
     public void ChangeToNextGoal(TrafficBrainAINETTEST car)
     {
         //Debug.Log(Exits.Count + " exits found");

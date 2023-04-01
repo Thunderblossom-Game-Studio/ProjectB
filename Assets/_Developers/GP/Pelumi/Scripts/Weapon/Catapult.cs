@@ -1,5 +1,4 @@
-using FishNet;
-using FishNet.Object;
+
 using Pelumi.Juicer;
 using System;
 using System.Collections;
@@ -23,6 +22,7 @@ public class Catapult : Weapon
     [SerializeField] private float minAngle;
     [SerializeField] private float maxAngle;
     [SerializeField] private int vertextCount;
+   // [SerializeField] private float angle;
 
     [Header("Test")]
     [Viewable] [SerializeField] private float angle;
@@ -85,10 +85,8 @@ public class Catapult : Weapon
         GameObject projectile = Instantiate(weaponSO.projectile, position, Quaternion.identity).gameObject;
         loadedProjectile = projectile.GetComponent<CatapultProjectile>();
         loadedProjectile.transform.SetParent(firePoint[0]);
-        InstanceFinder.ServerManager.Spawn(projectile);
     }
 
-    [ObserversRpc]
     public void FireProjectile(Vector3 target, float speed, float angle)
     {
         if (loadedProjectile == null) return;

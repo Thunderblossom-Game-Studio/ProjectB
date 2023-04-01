@@ -1,17 +1,15 @@
-using FishNet.Object;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnableAllMeshes : NetworkBehaviour
+public class EnableAllMeshes : MonoBehaviour
 {
 
     private MeshRenderer[] meshes;
 
-    public override void OnStartServer()
+    public void OnStartServer()
     {
-        base.OnStartServer();
-
         StartCoroutine(delayedstart());
     }
     

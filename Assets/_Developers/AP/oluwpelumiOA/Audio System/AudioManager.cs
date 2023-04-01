@@ -35,7 +35,7 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
-        if(InputManager.Instance.HandleInteractInput().WasPressedThisFrame() && !fadingMusic && audioAlbum != null)
+        if(InputManager.Instance.RadioInteractInput().WasPressedThisFrame() && !fadingMusic && audioAlbum != null)
         {
             audioAlbum.Switch(ref albumIndex);
         }
