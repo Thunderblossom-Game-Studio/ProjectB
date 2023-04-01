@@ -42,11 +42,20 @@ public class ArcadeCarController : MonoBehaviour
     [Header("Car Properties")]
     [SerializeField] private DriveType driveType = DriveType.FourWheelDrive;
     [SerializeField] private BrakeType brakeType = BrakeType.FourWheelBrake;
-
-    [Header("Acceleration / Break")]
     [SerializeField] private float topSpeed;
+
+    [Header("Acceleration")]
     [SerializeField] private float carPower;
+
+    [Header("Decceleration")]
+    [SerializeField] private float decelerationForce;
+
+    [Header("Brake")]
     [SerializeField] private float brakePower;
+
+    [Header("Steering")]
+    [SerializeField] private float _steeringSensitivity = 1.0f;
+    [SerializeField] private float maxSteeringAngle = 35;
 
     [Header("Boost")]
     [SerializeField] private float boostForce = 200f;
@@ -56,10 +65,6 @@ public class ArcadeCarController : MonoBehaviour
     [SerializeField] private ParticleSystem boostParticle;
     [Viewable] [SerializeField] private bool isBoosting;
     [Viewable] [SerializeField] private float currentBoostDuration;
-
-    [Header("Turning")]
-    [SerializeField] private float maxTurnAngle;
-    [SerializeField] private float _turnSensitivity = 1.0f;
 
     [Header("Jump")]
     [SerializeField] private float jumpForce = 1000.0f;
@@ -98,9 +103,7 @@ public class ArcadeCarController : MonoBehaviour
     {
         HandleAirControl();
 
-        HandleAcceleration(verticalInput);
-
-        HandleSteering(horizontalInput);
+        HandleEngine();
 
         HandleBraking(handbrakeInput);
 
@@ -131,13 +134,34 @@ public class ArcadeCarController : MonoBehaviour
         boostInput = _boostInput;
     }
 
-    private void HandleAcceleration(float vInput)
+    private void HandleEngine()
+    {
+        float motor = carPower * verticalInput;
+        float steering = maxSteeringAngle * _steeringSensitivity * horizontalInput;
+        currentSpeed = rigidBody.velocity.magnitude * 3.6f;
+
+        if (motor != 0f)
+        {
+            Debug.Log("HandleAcceleration");
+            HandleAcceleration(motor);
+        }
+        else
+        {
+            Debug.Log("HandleDecceleration");
+            HandleDecceleration();
+        }
+
+        HandleSteering(steering);
+    }
+
+    private void HandleAcceleration(float motor)
     {
         if (driveType == DriveType.FourWheelDrive)
         {
             foreach (Wheel wheel in _wheels)
             {
-                wheel.wheelCollider.motorTorque = vInput * (carPower / 4);
+                wheel.wheelCollider.brakeTorque = 0;
+                wheel.wheelCollider.motorTorque = motor;
             }
         }
         else if (driveType == DriveType.RearWheelDrive)
@@ -146,7 +170,10 @@ public class ArcadeCarController : MonoBehaviour
             {
                 switch (wheel.axel)
                 {
-                    case Axel.REAR: wheel.wheelCollider.motorTorque = vInput * (carPower / 2); break;
+                    case Axel.REAR:
+                        wheel.wheelCollider.brakeTorque = 0;
+                        wheel.wheelCollider.motorTorque = motor; 
+                        break;
                     default: break;
                 }    
             }
@@ -157,18 +184,50 @@ public class ArcadeCarController : MonoBehaviour
             {
                 switch (wheel.axel)
                 {
-                    case Axel.FRONT: wheel.wheelCollider.motorTorque = vInput * (carPower / 2); break;
+                    case Axel.FRONT:
+                        wheel.wheelCollider.brakeTorque = 0;
+                        wheel.wheelCollider.motorTorque = motor; 
+                        break;
                     default: break;
                 }
             }
         }
+    }
 
-        currentSpeed = rigidBody.velocity.magnitude * 3.6f;
-
-        foreach (Wheel wheel in _wheels)
+    private void HandleDecceleration()
+    {
+        if (driveType == DriveType.FourWheelDrive)
         {
-            if (wheel.wheelCollider.rpm > 400 && vInput == 0)
-                wheel.wheelCollider.motorTorque = 0;
+            foreach (Wheel wheel in _wheels)
+            {
+                wheel.wheelCollider.brakeTorque = decelerationForce;
+            }
+        }
+        else if (driveType == DriveType.RearWheelDrive)
+        {
+            foreach (Wheel wheel in _wheels)
+            {
+                switch (wheel.axel)
+                {
+                    case Axel.REAR:
+                        wheel.wheelCollider.brakeTorque = decelerationForce;
+                        break;
+                    default: break;
+                }
+            }
+        }
+        else if (driveType == DriveType.FrontWheelDrive)
+        {
+            foreach (Wheel wheel in _wheels)
+            {
+                switch (wheel.axel)
+                {
+                    case Axel.FRONT:
+                        wheel.wheelCollider.brakeTorque = decelerationForce;
+                        break;
+                    default: break;
+                }
+            }
         }
     }
 
@@ -182,7 +241,9 @@ public class ArcadeCarController : MonoBehaviour
                 {
                     switch (wheel.axel)
                     {
-                        case Axel.REAR: wheel.wheelCollider.brakeTorque = brakePower; break;
+                        case Axel.REAR:
+                            wheel.wheelCollider.brakeTorque = brakePower; 
+                            break;
                         default: break;
                     }
                 }
@@ -215,17 +276,16 @@ public class ArcadeCarController : MonoBehaviour
         }
     }
 
-    private void HandleSteering(float hInput)
+    private void HandleSteering(float steering)
     {
-        if (hInput != 0)
+        if (steering != 0)
         {
             foreach (Wheel wheel in _wheels)
             {
                 switch (wheel.axel)
                 {
                     case Axel.FRONT:
-                        float steerAngle = hInput * _turnSensitivity * maxTurnAngle;
-                        wheel.wheelCollider.steerAngle = Mathf.Lerp(wheel.wheelCollider.steerAngle, steerAngle, 0.6f);
+                        wheel.wheelCollider.steerAngle = Mathf.Lerp(wheel.wheelCollider.steerAngle, steering, 0.6f);
                         break;
                     default: break;
                 }
