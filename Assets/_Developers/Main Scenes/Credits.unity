@@ -325,8 +325,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 15.285889, y: 31.715393}
-  m_SizeDelta: {x: 299.42822, y: 66.569214}
+  m_AnchoredPosition: {x: 19, y: 18.8687}
+  m_SizeDelta: {x: 139.4442, y: 89.7917}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &1562832003
 GameObject:
@@ -587,8 +587,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: BACK
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4940ecde0b9b4964f864998837be773c, type: 2}
-  m_sharedMaterial: {fileID: 7228553157967671213, guid: 4940ecde0b9b4964f864998837be773c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 472313e67f6bca64dacb82aee856a795, type: 2}
+  m_sharedMaterial: {fileID: 7870171956306160041, guid: 472313e67f6bca64dacb82aee856a795, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -599,10 +599,10 @@ MonoBehaviour:
   m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 0.7764706, b: 0, a: 1}
-    bottomRight: {r: 1, g: 0.7764706, b: 0, a: 1}
+    topLeft: {r: 0, g: 0.97854304, b: 1, a: 1}
+    topRight: {r: 0, g: 0.98039216, b: 1, a: 1}
+    bottomLeft: {r: 0, g: 0.50827456, b: 1, a: 1}
+    bottomRight: {r: 0, g: 0.50980395, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -612,17 +612,17 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 70
+  m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 0
   m_fontSizeMax: 0
-  m_fontStyle: 0
+  m_fontStyle: 17
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -18.72
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -711,7 +711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -810,8 +810,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.114624, y: -16.716797}
-  m_SizeDelta: {x: 260.79517, y: 50.914917}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &587100531076774707
 MonoBehaviour:
@@ -909,13 +909,19 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Producers:\n\nKostas Dokos\nSam Lake \n\n\nLevel Design:\n\nTiago Bennetts\nCharlie
-    York\nNektarios Pissas\nQuinn Grist\nChelsea Holtz\nNorton Dioszegi\nPhillip
-    Southam\nTom Avery\n\nGame Design:\n\nBenjamin De Gheselle\nDavid Tuner\nJakub
-    Muszynski\nTyler Denman\nDiogo Abreu\nMicheal Maley\nRiyadh Abu Omar\n\n\nUX
-    Design:\n\nAdam Sheppard\nLuqman Beig\nLiam Guiver\nOdafe Richard jagboro\nThorne
-    Bolton \nCassie Hobbs \nJonas Smrcka\n\n\nNarrative Design:\n\nNathan Whitehead\nLauren
-    Paddock\n\n\nAudio Design:\n\nSofia Denchovska \nSean Pearse\n"
+  m_text: "Producers:\n\nKostas Dokos\nSam Lake \n\n\nGameplay Programming\r\n\r\n(Lead)
+    Oluwapelumi Ayeni\r\nJake Evans\r\nJack Hughes-King\r\nAnton Narva\r\nMiguel
+    De Matos\r\nVasco Almedia\r\nWilliam Monk\r\n\n\nAssets Programming\r\n\r\n(Lead)
+    Jessica Wright\r\nHarrison Hicks\r\nPaul Sburlea\r\n\n\nAi Programming\r\n\r\n(Lead)
+    Joseph Livingstone\r\nJordan Caines\r\nTimothy Mitchell \r\nJack Thorne\r\n\r\n\nLevel
+    Design\n\n(Lead)Tiago Bennetts\nCharlie York\nNektarios Pissas\nQuinn Grist\nChelsea
+    Holtz\nNorton Dioszegi\nPhillip Southam\nTom Avery\n\n\nGame Design\n\n(Lead)Benjamin
+    De Gheselle\nDavid Tuner\nJakub Muszynski\nTyler Denman\nDiogo Abreu\nMicheal
+    Maley\nRiyadh Abu Omar\n\n\nUX Design\n\n(Lead)Adam Sheppard\nLuqman Beig\nLiam
+    Guiver\nOdafe Richard jagboro\nThorne Bolton \nCassie Hobbs \nJonas Smrcka\n\n\nNarrative
+    Design\n\n(Lead)Nathan Whitehead\nLauren Paddock\n\n\nAudio Design\n\n(Lead)Sofia
+    Denchovska \nSean Pearse\n\nArt\n\n(Lead) Shireen Deshmukh\nConnor Britton\nGeorge
+    Compton\nTobias Hodgson\nNicky Hudson\nAlexandria Sims\nChloe Torne\nOwen West\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1009,7 +1015,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15.236, y: -574}
+  m_AnchoredPosition: {x: -0.000022888, y: 1881}
   m_SizeDelta: {x: 1100.9, y: 513}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &587100532898943541
