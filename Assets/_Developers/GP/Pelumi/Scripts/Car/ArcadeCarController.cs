@@ -166,6 +166,11 @@ public class ArcadeCarController : MonoBehaviour
         boostInput = _boostInput;
     }
 
+    public Vector3 GetCarVelocity()
+    {
+      return  rigidBody.velocity;
+    }
+
     private void HandleEngine()
     {
         float motor = carPower * verticalInput;
