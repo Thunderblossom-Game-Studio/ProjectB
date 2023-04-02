@@ -28,7 +28,7 @@ public class ControllerGamePlayer : GamePlayer
 
         carController.SetBoost(Input.GetKey(KeyCode.LeftShift));
 
-        GameMenu.GetInstance().SetCarSpeed(carController.GetSpeed().ToString("F0"));
+        GameMenu.GetInstance()?.SetCarSpeed(carController.GetSpeed().ToString("F0"));
     }
 
     private void FixedUpdate()

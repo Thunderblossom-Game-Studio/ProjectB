@@ -201,7 +201,7 @@ public class ArcadeCarController : MonoBehaviour
                 }
                 else if (currentSpeed < maxReverseSpeed)
                 {
-                    rigidBody.velocity += -transform.forward * reverseSpeedMultiplier * Time.deltaTime;
+                    rigidBody.velocity += -transform.forward * reverseSpeedMultiplier * MathF.Abs(verticalInput) * Time.deltaTime;
                 }
             }
         }
