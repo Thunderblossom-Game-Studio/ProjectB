@@ -1,4 +1,5 @@
 
+using JE.DamageSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,9 @@ public abstract class Projectile : MonoBehaviour
     [SerializeField] protected GameEvent hitEvent;
     [SerializeField] protected LayerMask detectLayer;
     [SerializeField] protected GameObject impactParticle;
+    [SerializeField] protected DamageSystem damageSystem;
     [Viewable] [SerializeField] protected float speed = 0;
+    [Viewable] [SerializeField] protected float damage = 0;
     protected Rigidbody rb;
 
     protected virtual void Awake()

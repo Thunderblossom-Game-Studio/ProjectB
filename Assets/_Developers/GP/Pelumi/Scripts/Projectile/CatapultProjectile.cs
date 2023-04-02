@@ -33,11 +33,12 @@ public class CatapultProjectile : Projectile
         OnHit();
     }
 
-    public void SetUp(Vector3 targetPos, float _speed, float angle)
+    public void SetUp(Vector3 targetPos, float angle, float _speed, float damage)
     {
         targetPostion = targetPos;
         speed = _speed;
         launched = true;
+        damageSystem.SetDamage(damage);
         Rigidbody rb = gameObject.AddComponent<Rigidbody>();
         rb.useGravity = false;
         rb.interpolation = RigidbodyInterpolation.Interpolate;

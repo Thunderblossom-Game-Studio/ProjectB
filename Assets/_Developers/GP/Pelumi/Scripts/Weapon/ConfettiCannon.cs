@@ -31,6 +31,6 @@ public class ConfettiCannon : Weapon
     public void SpawnProjectile(Vector3 position, Vector3 direction)
     {
         Projectile projectile = Instantiate(weaponSO.projectile, position, Quaternion.LookRotation(direction, Vector3.up));
-        (projectile as DartProjectile).SetUp(weaponSO.projectileSpeed);
+        (projectile as DartProjectile).SetUp(weaponSO.projectileSpeed, weaponSO.projectileDamage);
     }
 }

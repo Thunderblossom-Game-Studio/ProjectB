@@ -27,6 +27,8 @@ namespace JE.DamageSystem
 
         public UnityEvent _onHitNormal;
 
+        public void SetDamage(float damage) => _damageAmount = damage;
+
         protected void DamageEntity(GameObject damageObject)
         {
             IDamageable healthSystem = damageObject.GetComponent<IDamageable>();
