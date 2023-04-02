@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using JE.DamageSystem;
-using static AIDirector;
 
 public class AICombatHandler : MonoBehaviour
 {
@@ -181,6 +180,7 @@ public class AICombatHandler : MonoBehaviour
     private void Shoot()
     {
         if (!_shootTarget) return;
+        _weaponHandler.SetAim(_shootTarget.transform.position);
         _weaponHandler.Shoot(_shootTarget.transform.position);
     }
 }
