@@ -8,70 +8,39 @@ using UnityEngine.UI;
 
 public class Sandstorm : MonoBehaviour
 {
-    [Serializable]
-    public class Wave
-    {
-        public int waveNumber;
-        public Vector3 waveSize;
-        public float duration;
-    }
-
-    [SerializeField] List<Wave> waves = new List<Wave>();
-    [SerializeField] private float secondsToNextWave;
-    [SerializeField] private float waveChangeDelay;
+    [SerializeField] private GameObject SandstormOverlay;
+    [SerializeField] private float secondsToSandstorm;
+    [SerializeField] private float minimumRangeOnX;
+    [SerializeField] private float maximumRangeOnX;
+    [SerializeField] private float minimumRangeOnZ;
+    [SerializeField] private float maximumRangeOnZ;
     [SerializeField] private Text countdownTimerText;
-    private int currentWaveIndex;
-    private Wave currentWave;
+    private float currentYpos;
 
     private void Start()
     {
-        currentWave = waves[currentWaveIndex];
         StartCoroutine(Timer());
+        currentYpos = transform.position.y;
+        SandstormOverlay.SetActive(false);
     }
 
     IEnumerator Timer()
     {
-        float currentTime = secondsToNextWave;
+        float currentTime = secondsToSandstorm;
         while (currentTime > 0)
         {
             currentTime -= Time.deltaTime;
-            countdownTimerText.text = "Sandstorm incoming!\n " + currentTime;
+            countdownTimerText.text = "Sandstorm incoming!\n " + currentTime.ToString("N0");
             yield return null;
         }
-        StartCoroutine(ScaleZone());
+        SandstormMove();
     }
 
-    IEnumerator ScaleZone()
+    private void SandstormMove()
     {
-        Vector3 originalScale = transform.localScale;
-        float elapsedTime = 0f;
-        while (elapsedTime < currentWave.duration)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / currentWave.duration);
-            transform.localScale = Vector3.Lerp(originalScale, currentWave.waveSize, t);
-            yield return null;
-        }
-        NextWave();
-    }
-
-    private void NextWave()
-    {
-        if (currentWaveIndex < waves.Count - 1)
-        {
-            currentWaveIndex++;
-            currentWave = waves[currentWaveIndex];
-            StartCoroutine(Timer()); //starts timer
-        }
-        else
-        {
-            WaveCompleted();
-        }
-    }
-
-    private void WaveCompleted()
-    {
-        Debug.Log("Wave Completed");
+        SandstormOverlay.SetActive(true);
+        transform.position = transform.position = new Vector3(UnityEngine.Random.Range(minimumRangeOnX, maximumRangeOnX), currentYpos, UnityEngine.Random.Range(minimumRangeOnZ, maximumRangeOnZ));
+        StartCoroutine(Timer());
     }
 }
 
