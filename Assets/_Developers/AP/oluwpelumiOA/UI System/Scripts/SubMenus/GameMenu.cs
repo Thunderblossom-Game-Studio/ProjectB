@@ -27,6 +27,7 @@ public class GameMenu : BaseMenu<GameMenu>
     [Header("Gameplay UI")] 
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private TextMeshProUGUI _centreScreenText;
+    [SerializeField] private GameObject _endGamePanel;
 
     [Header("Team UI")] 
     [SerializeField] private TextMeshProUGUI _bluePackages;
@@ -53,6 +54,7 @@ public class GameMenu : BaseMenu<GameMenu>
     [Header("Gameplay Events")]
     [SerializeField] private GameEvent _onTimerUpdate;
     [SerializeField] private GameEvent _onCountDown;
+    [SerializeField] private GameEvent _onGameOverScreen;
 
     private Coroutine _reloadRoutine;
 
@@ -70,6 +72,7 @@ public class GameMenu : BaseMenu<GameMenu>
         
         _onTimerUpdate.Register(OnTimerUpdate);
         _onCountDown.Register(OnCentreTextUpdate);
+        _onGameOverScreen.Register(GameOver);
     }
     
     public override IEnumerator OpenMenuRoutine(Action onCompleted = null)
@@ -172,9 +175,12 @@ public class GameMenu : BaseMenu<GameMenu>
         _redPackages.text = ((int[])value)[1].ToString();
     }
 
-    private void OnPopup(Component arg1, object value)
+    private void GameOver(Component arg1, object value)
     {
-        StartCoroutine(Juicer.DoVector3(null, Vector3.zero, (pos) => _centreScreenText.transform.localScale = pos, _packageUIProperties, null));
+        if ((bool)value)
+            _endGamePanel.SetActive(true);
+        else 
+            _endGamePanel.SetActive(false);
     }
 
     public void SetHealthView(float amount)

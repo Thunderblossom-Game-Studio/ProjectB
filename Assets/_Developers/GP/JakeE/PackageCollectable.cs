@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PackageCollectable : Collectable
@@ -9,19 +7,9 @@ public class PackageCollectable : Collectable
 
     protected override void Collect(GameObject collideObject)
     {
-        if (collideObject.TryGetComponent(out PackageSystem packageSystem))
-        {
-            if (packageSystem.PackageAmount >= packageSystem.MaxPackages)
-                return;
-
-            packageSystem.AddPackageData(_packageData);
-            _onCollect?.Invoke();
-            DestroyObject();
-        }
-
-        GameObject targetObject = collideObject.transform.root.gameObject;
+        GameObject targetObject = collideObject.transform.parent.gameObject;
         
-        if (!targetObject.TryGetComponent(out packageSystem))
+        if (!targetObject.TryGetComponent(out PackageSystem packageSystem))
             return;
         
         if (packageSystem.PackageAmount >= packageSystem.MaxPackages) 
@@ -31,6 +19,7 @@ public class PackageCollectable : Collectable
         _onCollect?.Invoke();
         DestroyObject();
     }
+
 }
 
 [Serializable]

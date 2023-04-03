@@ -7,7 +7,7 @@ public class GameStateManager : Singleton<GameStateManager>
     public event Action OnStart;
     public event Action OnComplete;
 
-    private void Start()
+    public void Begin()
     {
         GameTimer.Instance.OnGameComplete += StartCompleteState; 
         StartBeginState();

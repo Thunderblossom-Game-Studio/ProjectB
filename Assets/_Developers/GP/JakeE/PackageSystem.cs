@@ -81,6 +81,7 @@ public class PackageSystem : MonoBehaviour
             (_packageObjectVisual, _bodyVisual.position, Quaternion.identity);
         
         _currentPackageObjects.Add(packageObject);
+        
         packageObject.transform.SetParent(_bodyVisual);
         packageObject.transform.GetComponentInChildren<MeshRenderer>()
                 .material.color = _currentPackages[^1].PackageColor;
@@ -88,7 +89,7 @@ public class PackageSystem : MonoBehaviour
         packageObject.transform.localPosition = _packageSpawns[_currentPackages.Count - 1];
     }
 
-    private void DropPackages()
+    public void DropPackages()
     {
         foreach (PackageData package in _currentPackages)
         {

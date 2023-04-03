@@ -36,6 +36,6 @@ public class GameSequencer : Singleton<GameSequencer>
         GameUtilities.SlowMotion(false);
         GameUtilities.PauseGame();
         
-        _onMenuUpdate.Raise(this, null);
+        _onMenuUpdate.Raise(this, true);
     }
 }

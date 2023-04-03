@@ -42,6 +42,11 @@ public class GamePlayer : MonoBehaviour, IKillable
             return;
         
         currentBody.velocity = Vector3.zero;
+        
+        if (!gameObject.TryGetComponent(out PackageSystem packageSystem))
+            return;
+        
+        packageSystem.DropPackages();
     }
 }
 
