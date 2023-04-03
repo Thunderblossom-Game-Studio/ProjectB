@@ -442,16 +442,26 @@ MonoBehaviour:
   centerOfMass: {fileID: 3299715640164507794}
   driveType: 0
   brakeType: 2
-  topSpeed: 1000
+  maxBoostSpeed: 60
+  maxForwardSpeed: 30
+  maxReverseSpeed: 10
+  currentMaxSpeed: 0
   carPower: 3500
-  decelerationForce: 7500
+  startAccelerationSpeed: 10
+  startSpeedThreshold: 20
+  accelerationToDecelerationSpeed: 5
+  decelerationForce: 500
+  driftingDecelerationRate: 0.05
+  reverseSpeedMultiplier: 5
   brakePower: 7500
+  breakDecelerationRate: 0.5
   _steeringSensitivity: 1
-  maxSteeringAngle: 35
+  maxSteeringAngle: 30
   boostForce: 5
   boostDuration: 5
   boostReductionSpeed: 1
   boostRegenerationSpeed: 1
+  resetBoostSpeed: 0.5
   boostParticle: {fileID: 8191494182904727030}
   isBoosting: 0
   currentBoostDuration: 0
@@ -6868,6 +6878,7 @@ GameObject:
   - component: {fileID: 3299715640332679480}
   - component: {fileID: 3299715640332679481}
   - component: {fileID: 3299715640332679478}
+  - component: {fileID: 639091369}
   m_Layer: 9
   m_Name: Body
   m_TagString: Untagged
@@ -6956,6 +6967,33 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 7673246021391805175, guid: 2646bf6dde75c044786a5b290da291da, type: 3}
+--- !u!114 &639091369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3299715640332679476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7785a010800737047a0bed67963ea298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _OnHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3299715638745964913}
+        m_TargetAssemblyTypeName: ArcadeCarSounds, Assembly-CSharp
+        m_MethodName: OnHit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3299715640336568683
 GameObject:
   m_ObjectHideFlags: 0
@@ -7464,6 +7502,8 @@ MonoBehaviour:
   currentAmmo: 0
   weaponState: 0
   timer: 0
+  bulletPerShot: 10
+  spreadAngle: 10
 --- !u!1 &3299715640698057113
 GameObject:
   m_ObjectHideFlags: 0

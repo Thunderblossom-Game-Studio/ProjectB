@@ -8,6 +8,7 @@ public class WeaponSO : ScriptableObject
     [Header("Projectile")]
     public Projectile projectile;
     public float projectileSpeed;
+    public float projectileDamage;
 
     [Header("Stats")]
     public float range;

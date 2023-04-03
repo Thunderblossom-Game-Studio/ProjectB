@@ -18,9 +18,11 @@ public class DartProjectile : Projectile
         rb.velocity = transform.forward * speed;
     }
 
-    public void SetUp(float _speed)
+    public void SetUp(float _speed, float _damage)
     {
         speed = _speed;
+        damage = _damage;
+        damageSystem.SetDamage(damage);
     }
 
     protected IEnumerator LifeTimeDelay()

@@ -42,16 +42,38 @@ public class ArcadeCarController : MonoBehaviour
     [Header("Car Properties")]
     [SerializeField] private DriveType driveType = DriveType.FourWheelDrive;
     [SerializeField] private BrakeType brakeType = BrakeType.FourWheelBrake;
-    [SerializeField] private float topSpeed;
+    [SerializeField] private float maxBoostSpeed;
+    [SerializeField] private float maxForwardSpeed;
+    [SerializeField] private float maxReverseSpeed;
+    [Viewable] [SerializeField] private float currentMaxSpeed;
 
     [Header("Acceleration")]
     [SerializeField] private float carPower;
 
+    [Space(20)]
+
+    [SerializeField] private float startAccelerationSpeed = 20;
+    [SerializeField] private float startSpeedThreshold;
+
+    [Header("Acceleration / Deceleration")]
+    [SerializeField] private float accelerationToDecelerationSpeed = 5;
+
     [Header("Decceleration")]
     [SerializeField] private float decelerationForce;
 
+    [Space(20)]
+
+    [SerializeField] private float driftingDecelerationRate;
+
+    [Header("Reverse")]
+    [SerializeField] private float reverseSpeedMultiplier;
+
     [Header("Brake")]
     [SerializeField] private float brakePower;
+
+    [Space(20)]
+
+    [SerializeField] private float breakDecelerationRate;
 
     [Header("Steering")]
     [SerializeField] private float _steeringSensitivity = 1.0f;
@@ -62,6 +84,9 @@ public class ArcadeCarController : MonoBehaviour
     [SerializeField] private float boostDuration = 2f;
     [SerializeField] private float boostReductionSpeed;
     [SerializeField] private float boostRegenerationSpeed;
+
+    [SerializeField] private float resetBoostSpeed;
+
     [SerializeField] private ParticleSystem boostParticle;
     [Viewable] [SerializeField] private bool isBoosting;
     [Viewable] [SerializeField] private float currentBoostDuration;
@@ -90,6 +115,11 @@ public class ArcadeCarController : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         rigidBody.centerOfMass = centerOfMass.transform.localPosition;
+
+        foreach (Wheel wheel in _wheels)
+        {
+            wheel.wheelCollider.ConfigureVehicleSubsteps(5, 12, 15);
+        }
     }
 
     private void Update()
@@ -97,6 +127,8 @@ public class ArcadeCarController : MonoBehaviour
         _isGrounded = IsAnyWheelGrounded();
 
         HandleWheelEffect();
+
+        ClampCarSpeed();
     }
 
     private void FixedUpdate()
@@ -105,7 +137,7 @@ public class ArcadeCarController : MonoBehaviour
 
         HandleEngine();
 
-        HandleBraking(handbrakeInput);
+        HandleBrakingAndDeceleration();
 
         HandleWheelRotation();
 
@@ -134,34 +166,57 @@ public class ArcadeCarController : MonoBehaviour
         boostInput = _boostInput;
     }
 
+    public Vector3 GetCarVelocity()
+    {
+      return  rigidBody.velocity;
+    }
+
     private void HandleEngine()
     {
         float motor = carPower * verticalInput;
         float steering = maxSteeringAngle * _steeringSensitivity * horizontalInput;
-        currentSpeed = rigidBody.velocity.magnitude * 3.6f;
+        currentSpeed = rigidBody.velocity.magnitude;
+
+        HandleSteering(steering);
 
         if (motor != 0f)
         {
-            Debug.Log("HandleAcceleration");
             HandleAcceleration(motor);
         }
-        else
-        {
-            Debug.Log("HandleDecceleration");
-            HandleDecceleration();
-        }
 
-        HandleSteering(steering);
+        foreach (Wheel wheel in _wheels)
+        {
+            if (wheel.wheelCollider.rpm > 400 && verticalInput == 0)   wheel.wheelCollider.motorTorque = 0;
+        }
     }
 
     private void HandleAcceleration(float motor)
     {
+        if (_isGrounded)
+        {
+            if (verticalInput > 0 && currentSpeed < startSpeedThreshold)
+            {
+                rigidBody.velocity += transform.forward * startAccelerationSpeed * Time.deltaTime;
+            }
+            else  if (verticalInput < 0)
+            {
+                if (Vector3.Dot(transform.forward, rigidBody.velocity) > 0)
+                {
+                    rigidBody.velocity = Vector3.Lerp(rigidBody.velocity, Vector3.zero, accelerationToDecelerationSpeed * Time.deltaTime);
+                }
+                else if (currentSpeed < maxReverseSpeed)
+                {
+                    rigidBody.velocity += -transform.forward * reverseSpeedMultiplier * MathF.Abs(verticalInput) * Time.deltaTime;
+                }
+            }
+        }
+
         if (driveType == DriveType.FourWheelDrive)
         {
             foreach (Wheel wheel in _wheels)
             {
                 wheel.wheelCollider.brakeTorque = 0;
-                wheel.wheelCollider.motorTorque = motor;
+                wheel.wheelCollider.motorTorque = currentSpeed < maxForwardSpeed ?  motor :  0;
             }
         }
         else if (driveType == DriveType.RearWheelDrive)
@@ -172,45 +227,7 @@ public class ArcadeCarController : MonoBehaviour
                 {
                     case Axel.REAR:
                         wheel.wheelCollider.brakeTorque = 0;
-                        wheel.wheelCollider.motorTorque = motor; 
-                        break;
-                    default: break;
-                }    
-            }
-        }
-        else if (driveType == DriveType.FrontWheelDrive)
-        {
-            foreach (Wheel wheel in _wheels)
-            {
-                switch (wheel.axel)
-                {
-                    case Axel.FRONT:
-                        wheel.wheelCollider.brakeTorque = 0;
-                        wheel.wheelCollider.motorTorque = motor; 
-                        break;
-                    default: break;
-                }
-            }
-        }
-    }
-
-    private void HandleDecceleration()
-    {
-        if (driveType == DriveType.FourWheelDrive)
-        {
-            foreach (Wheel wheel in _wheels)
-            {
-                wheel.wheelCollider.brakeTorque = decelerationForce;
-            }
-        }
-        else if (driveType == DriveType.RearWheelDrive)
-        {
-            foreach (Wheel wheel in _wheels)
-            {
-                switch (wheel.axel)
-                {
-                    case Axel.REAR:
-                        wheel.wheelCollider.brakeTorque = decelerationForce;
+                        wheel.wheelCollider.motorTorque = currentSpeed < maxForwardSpeed ? motor : 0;
                         break;
                     default: break;
                 }
@@ -223,7 +240,8 @@ public class ArcadeCarController : MonoBehaviour
                 switch (wheel.axel)
                 {
                     case Axel.FRONT:
-                        wheel.wheelCollider.brakeTorque = decelerationForce;
+                        wheel.wheelCollider.brakeTorque = 0;
+                        wheel.wheelCollider.motorTorque = currentSpeed < maxForwardSpeed ?  motor :  0;
                         break;
                     default: break;
                 }
@@ -231,40 +249,52 @@ public class ArcadeCarController : MonoBehaviour
         }
     }
 
-    private void HandleBraking(bool brakeInput)
+    private void HandleBrakingAndDeceleration()
     {
-        if (brakeInput)
+        if (handbrakeInput || verticalInput == 0)
         {
-            if (brakeType == BrakeType.RearWheelBrake)
+            if (rigidBody.velocity.magnitude > 0)
             {
-                foreach (Wheel wheel in _wheels)
-                {
-                    switch (wheel.axel)
-                    {
-                        case Axel.REAR:
-                            wheel.wheelCollider.brakeTorque = brakePower; 
-                            break;
-                        default: break;
-                    }
-                }
+                rigidBody.velocity = Vector3.Lerp(rigidBody.velocity, Vector3.zero, (horizontalInput == 0 && handbrakeInput) ?  breakDecelerationRate : driftingDecelerationRate * Time.deltaTime);
             }
-            else if (brakeType == BrakeType.FrontWheelBrake)
+
+            switch (brakeType)
             {
-                foreach (Wheel wheel in _wheels)
-                {
-                    switch (wheel.axel)
+                case BrakeType.FrontWheelBrake:
+
+                    foreach (Wheel wheel in _wheels)
                     {
-                        case Axel.FRONT: wheel.wheelCollider.brakeTorque = brakePower; break;
-                        default: break;
+                        switch (wheel.axel)
+                        {
+                            case Axel.FRONT:
+                                wheel.wheelCollider.brakeTorque = handbrakeInput ?  brakePower : decelerationForce;
+                                break;
+                            default: break;
+                        }
                     }
-                }
-            }
-            else if (brakeType == BrakeType.FourWheelBrake)
-            {
-                foreach (Wheel wheel in _wheels)
-                {
-                    wheel.wheelCollider.brakeTorque = brakePower;
-                }
+
+                    break;
+                case BrakeType.RearWheelBrake:
+
+                    foreach (Wheel wheel in _wheels)
+                    {
+                        switch (wheel.axel)
+                        {
+                            case Axel.REAR:
+                                wheel.wheelCollider.brakeTorque = handbrakeInput ? brakePower : decelerationForce; break;
+                            default: break;
+                        }
+                    }
+
+                    break;
+                case BrakeType.FourWheelBrake:
+
+                    foreach (Wheel wheel in _wheels)
+                    {
+                        wheel.wheelCollider.brakeTorque = handbrakeInput ? brakePower : decelerationForce;
+                    }
+
+                    break;
             }
         }
         else
@@ -309,7 +339,6 @@ public class ArcadeCarController : MonoBehaviour
 
     private void HandleDownForce()
     {
-       // downForceValue = currentSpeed / 2;
         rigidBody.AddForce(-transform.up * downForceValue * rigidBody.velocity.magnitude);
     }
 
@@ -329,9 +358,33 @@ public class ArcadeCarController : MonoBehaviour
         }
     }
 
+    public void ClampCarSpeed()
+    {
+        CalculateMaxSpeed();
+        rigidBody.velocity = Vector3.ClampMagnitude(rigidBody.velocity, currentMaxSpeed);
+    }
+
+    public void CalculateMaxSpeed()
+    {
+        if (isBoosting) currentMaxSpeed = maxBoostSpeed;
+        else
+        {
+            if (currentSpeed > maxForwardSpeed)
+            {
+                float speed = currentMaxSpeed;
+                currentMaxSpeed = Mathf.Lerp(speed, maxForwardSpeed, resetBoostSpeed * Time.deltaTime);
+            }
+            else 
+            {
+                float speed = currentMaxSpeed;
+                currentMaxSpeed = Mathf.Lerp(speed, verticalInput > 0 ? maxForwardSpeed : maxReverseSpeed, resetBoostSpeed * Time.deltaTime);
+            }
+        }
+    }
+
     void HandleDrag()
     {
-        if (currentSpeed >= topSpeed)
+        if (currentSpeed >= maxForwardSpeed)
         {
             rigidBody.drag = topSpeedDrag;
         }
@@ -353,7 +406,7 @@ public class ArcadeCarController : MonoBehaviour
             switch (wheel.axel)
             {
                 case Axel.REAR:
-                    if(wheel.wheelCollider.GetGroundHit(out hit))
+                    if (wheel.wheelCollider.GetGroundHit(out hit))
                     {
                         radius = 4 + (-Mathf.Abs(hit.sidewaysSlip) * 2) + rigidBody.velocity.magnitude / 10;
 
@@ -364,7 +417,7 @@ public class ArcadeCarController : MonoBehaviour
                         wheelSideFriction = wheel.wheelCollider.sidewaysFriction;
                         wheelSideFriction.stiffness = (handbrakeInput) ? Mathf.SmoothDamp(wheel.wheelCollider.sidewaysFriction.stiffness, .5f, ref velocity, Time.deltaTime * 2) : 2;
                         wheel.wheelCollider.sidewaysFriction = wheelSideFriction;
-                    }           
+                    }
                     break;
                 default: break;
             }
@@ -393,7 +446,7 @@ public class ArcadeCarController : MonoBehaviour
             isBoosting = false;
             if (currentBoostDuration < boostDuration)
             {
-                currentBoostDuration += boostRegenerationSpeed *  Time.deltaTime;
+                currentBoostDuration += boostRegenerationSpeed * Time.deltaTime;
             }
         }
     }
@@ -408,7 +461,7 @@ public class ArcadeCarController : MonoBehaviour
 
     public void FlipCar()
     {
-        if(!isFlipping)
+        if (!isFlipping)
         {
             isFlipping = true;
             StartCoroutine(FlipCarRoutine());
@@ -432,7 +485,7 @@ public class ArcadeCarController : MonoBehaviour
             wheel.wheelEffectTrail.emitting = InputManager.Instance.HandleBrakeInput().IsPressed() && wheel.axel == Axel.REAR && wheel.wheelCollider.isGrounded && rigidBody.velocity.magnitude >= 10f;
         }
 
-        if(isBoosting)
+        if (isBoosting)
         {
             boostParticle.Emit(1);
         }

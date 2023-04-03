@@ -74,7 +74,7 @@ public class Catapult : Weapon
                 break;
             case State.Fire:
                 ModifyAmmo(currentAmmo - 1);
-                FireProjectile(targetPos, weaponSO.projectileSpeed, angle);
+                FireProjectile(targetPos, angle);
                 AudioManager.PlaySoundEffect(FireSoundID, true);
                 break;
         }
@@ -87,10 +87,10 @@ public class Catapult : Weapon
         loadedProjectile.transform.SetParent(firePoint[0]);
     }
 
-    public void FireProjectile(Vector3 target, float speed, float angle)
+    public void FireProjectile(Vector3 target, float angle)
     {
         if (loadedProjectile == null) return;
         loadedProjectile.transform.SetParent(null);
-        loadedProjectile.SetUp(target, speed, angle);
+        loadedProjectile.SetUp(target, angle, weaponSO.projectileSpeed, weaponSO.projectileDamage);
     }
 }
