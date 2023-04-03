@@ -100,6 +100,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""2ac1ef67-4f69-413a-a669-ccd13c3fa7b7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Radio"",
                     ""type"": ""Button"",
                     ""id"": ""b6831d7f-ffc3-4c25-935a-f1e4b172f477"",
@@ -393,6 +402,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Radio"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fea94b1a-a888-4675-bc3c-8762d9050ecf"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0541f3ed-84ba-4083-95a7-4432dc719925"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1054,6 +1085,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Decelerate = m_Player.FindAction("Decelerate", throwIfNotFound: true);
         m_Player_Brake = m_Player.FindAction("Brake", throwIfNotFound: true);
         m_Player_Boost = m_Player.FindAction("Boost", throwIfNotFound: true);
+        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Radio = m_Player.FindAction("Radio", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1140,6 +1172,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Decelerate;
     private readonly InputAction m_Player_Brake;
     private readonly InputAction m_Player_Boost;
+    private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Radio;
     public struct PlayerActions
     {
@@ -1153,6 +1186,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Decelerate => m_Wrapper.m_Player_Decelerate;
         public InputAction @Brake => m_Wrapper.m_Player_Brake;
         public InputAction @Boost => m_Wrapper.m_Player_Boost;
+        public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Radio => m_Wrapper.m_Player_Radio;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -1187,6 +1221,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Boost.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBoost;
                 @Boost.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBoost;
                 @Boost.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBoost;
+                @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Radio.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRadio;
                 @Radio.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRadio;
                 @Radio.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRadio;
@@ -1218,6 +1255,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Boost.started += instance.OnBoost;
                 @Boost.performed += instance.OnBoost;
                 @Boost.canceled += instance.OnBoost;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
                 @Radio.started += instance.OnRadio;
                 @Radio.performed += instance.OnRadio;
                 @Radio.canceled += instance.OnRadio;
@@ -1415,6 +1455,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnDecelerate(InputAction.CallbackContext context);
         void OnBrake(InputAction.CallbackContext context);
         void OnBoost(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
         void OnRadio(InputAction.CallbackContext context);
     }
     public interface IUIActions
