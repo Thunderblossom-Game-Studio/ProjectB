@@ -47,6 +47,7 @@ public class GamePlayer : MonoBehaviour, IKillable
             return;
         
         packageSystem.DropPackages();
+        //packageSystem.ClearPackageData();
     }
 }
 

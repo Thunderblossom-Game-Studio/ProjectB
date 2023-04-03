@@ -95,11 +95,11 @@ public class AICarController : MonoBehaviour
         // acceleration/reversing
         if ((direction < -90) || (direction > 90))
         {
-            forwardInput = -30;
+            forwardInput = -1;
         }
         else
         {
-            forwardInput = 30;
+            forwardInput = 1;
         }
 
         // turning
@@ -123,7 +123,7 @@ public class AICarController : MonoBehaviour
             _car.GetSpeed() > _brakeSensitivity)))
         {
             Debug.Log("Other thing");
-            forwardInput = -30f;
+            forwardInput = -1f;
         }
         // braking
         bool brake = false;
@@ -209,6 +209,7 @@ public class AICarController : MonoBehaviour
             if (_idleTimer > _maxIdleTimer)
             {
                 _stuck = true;
+                Debug.Log("HERLO1");
                 transform.position = _agent.transform.position;
                 transform.rotation = _agent.transform.rotation;
             }
