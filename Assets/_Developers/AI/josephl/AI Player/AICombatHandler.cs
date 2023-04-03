@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using JE.DamageSystem;
-using static AIDirector;
 
 public class AICombatHandler : MonoBehaviour
 {
@@ -27,6 +26,9 @@ public class AICombatHandler : MonoBehaviour
     private Transform _deliveryZone;
     private float _distanceToDeiveryZone;
     private float _distanceToSpawnPoint;
+
+    [SerializeField] private Vector3 _randomShootVariation;
+    private Vector3 _shootVariation;
 
     // Start is called before the first frame update
     private void Start()
@@ -79,10 +81,10 @@ public class AICombatHandler : MonoBehaviour
         if (_shootTarget)
         {
             // Pursue
-            if (Vector3.Distance(transform.position, _shootTarget.transform.position) <= _aggroRange)
-            {
-                state = AIPlayerHandler.CurrentState.PURSUE;
-            }
+            //if (Vector3.Distance(transform.position, _shootTarget.transform.position) <= _aggroRange)
+            //{
+            //    //state = AIPlayerHandler.CurrentState.PURSUE;
+            //}
         }
 
         if (_health.HealthPercentage <= _fleeThreshold)
@@ -166,6 +168,10 @@ public class AICombatHandler : MonoBehaviour
             {
                 if (_shootTarget.TryGetComponent<HealthSystem>(out HealthSystem hs))
                 {
+                    //Physics.Raycast(transform.position, _shootTarget.transform.position, out RaycastHit hit);
+
+                    //if (hit.transform.gameObject == _shootTarget)
+                    
                     Shoot();
                 }
             }
@@ -181,6 +187,11 @@ public class AICombatHandler : MonoBehaviour
     private void Shoot()
     {
         if (!_shootTarget) return;
-        _weaponHandler.Shoot(_shootTarget.transform.position);
+        _shootVariation = new Vector3(
+            Random.Range(-_randomShootVariation.x, _randomShootVariation.x),
+            Random.Range(-_randomShootVariation.y, _randomShootVariation.y),
+            Random.Range(-_randomShootVariation.z, _randomShootVariation.z));
+        _weaponHandler.SetAim(_shootTarget.transform.position + _shootVariation);
+        _weaponHandler.Shoot(_shootTarget.transform.position + _shootVariation);
     }
 }
