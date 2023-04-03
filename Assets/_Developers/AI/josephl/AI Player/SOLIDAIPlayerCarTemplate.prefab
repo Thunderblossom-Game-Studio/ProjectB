@@ -5816,6 +5816,8 @@ MonoBehaviour:
   currentAmmo: 0
   weaponState: 0
   timer: 0
+  bulletPerShot: 0
+  spreadAngle: 10
 --- !u!1 &941969981878345465
 GameObject:
   m_ObjectHideFlags: 0
@@ -6752,6 +6754,8 @@ MonoBehaviour:
   _spawnHealth: 100
   _maximumHealth: 100
   _minimumHealth: 0
+  _regenerationInterval: 2
+  _regenerationAmount: 5
   _onHealthChange:
     m_PersistentCalls:
       m_Calls: []
@@ -6853,16 +6857,26 @@ MonoBehaviour:
   centerOfMass: {fileID: 941969981299612523}
   driveType: 0
   brakeType: 2
-  topSpeed: 1000
+  maxBoostSpeed: 0
+  maxForwardSpeed: 0
+  maxReverseSpeed: 0
+  currentMaxSpeed: 0
   carPower: 3500
+  startAccelerationSpeed: 20
+  startSpeedThreshold: 0
+  accelerationToDecelerationSpeed: 5
   decelerationForce: 7500
+  driftingDecelerationRate: 0
+  reverseSpeedMultiplier: 0
   brakePower: 7500
+  breakDecelerationRate: 0
   _steeringSensitivity: 1
   maxSteeringAngle: 35
   boostForce: 5
   boostDuration: 5
   boostReductionSpeed: 1
   boostRegenerationSpeed: 1
+  resetBoostSpeed: 0
   boostParticle: {fileID: 5870008761808633359}
   isBoosting: 0
   currentBoostDuration: 0
