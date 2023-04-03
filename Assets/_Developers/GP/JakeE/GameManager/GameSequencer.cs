@@ -7,8 +7,7 @@ public class GameSequencer : Singleton<GameSequencer>
     
     [Header("Game Events")]
     [SerializeField] private GameEvent _onCentreTextUpdate;
-
-    public void GameCompleteSequence(TeamData winningTeam) => StartCoroutine(CompleteGameSequence(winningTeam));
+    [SerializeField] private GameEvent _onMenuUpdate;
     
     public IEnumerator CountDownSequence()
     {
@@ -36,5 +35,7 @@ public class GameSequencer : Singleton<GameSequencer>
         _onCentreTextUpdate.Raise(this, new object[] {"Hide", int.MaxValue, int.MaxValue});
         GameUtilities.SlowMotion(false);
         GameUtilities.PauseGame();
+        
+        _onMenuUpdate.Raise(this, true);
     }
 }
