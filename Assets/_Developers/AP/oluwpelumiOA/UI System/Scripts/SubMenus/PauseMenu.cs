@@ -10,7 +10,7 @@ public class PauseMenu : BaseMenu<PauseMenu>
     [SerializeField] private CanvasGroup buttonHolder;
 
     [Header("Buttons")]
-    [SerializeField] private AdvanceButton restartButton;
+    //[SerializeField] private AdvanceButton restartButton;
     [SerializeField] private AdvanceButton resumeButton;
     [SerializeField] private AdvanceButton settingsButton;
     [SerializeField] private AdvanceButton menuButton;

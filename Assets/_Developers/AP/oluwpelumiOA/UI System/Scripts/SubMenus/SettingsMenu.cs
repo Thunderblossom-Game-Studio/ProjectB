@@ -30,6 +30,8 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
     [SerializeField] private BindUI moveRightBind;
     [SerializeField] private BindUI fireBind;
     [SerializeField] private BindUI interactBind;
+    //[SerializeField] private BindUI radioBind;
+
 
     [Header("Gamepad")]
     [SerializeField] private BindUI gamepadFireText;
@@ -222,6 +224,10 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
         fireBind.SetBindText(InputManager.Instance.GetBindingName(InputManager.Binding.Fire));
         interactBind.SetBindText(InputManager.Instance.GetBindingName(InputManager.Binding.Interact));
 
+        //radioBind.SetBindText(InputManager.Instance.GetBindingName(InputManager.Binding.Radio));
+
+
+
         gamepadFireText.SetBindText(InputManager.Instance.GetBindingName(InputManager.Binding.Gamepad_Fire));
         gamepadInteractText.SetBindText(InputManager.Instance.GetBindingName(InputManager.Binding.Gamepad_Interact));
     }
@@ -235,6 +241,8 @@ public class SettingsMenu : BaseMenu <SettingsMenu>
 
         fireBind.SetBindButton(() => RebingBinding(InputManager.Binding.Fire));
         interactBind.SetBindButton(() => RebingBinding(InputManager.Binding.Interact));
+
+        //radioBind.SetBindButton(() => RebingBinding(InputManager.Binding.Radio));
 
         gamepadFireText.SetBindButton(() => RebingBinding(InputManager.Binding.Gamepad_Fire));
         gamepadInteractText.SetBindButton(() => RebingBinding(InputManager.Binding.Gamepad_Interact));
