@@ -6853,10 +6853,10 @@ MonoBehaviour:
   centerOfMass: {fileID: 941969981299612523}
   driveType: 0
   brakeType: 2
-  topSpeed: 10000
-  carPower: 35000
-  decelerationForce: 75000
-  brakePower: 75000
+  topSpeed: 1000
+  carPower: 3500
+  decelerationForce: 7500
+  brakePower: 7500
   _steeringSensitivity: 1
   maxSteeringAngle: 35
   boostForce: 5
@@ -6950,7 +6950,7 @@ MonoBehaviour:
   _brakeSensitivity: 25
   _speedSensitivity: 35
   _angle: 10
-  _stopDistance: 60
+  _stopDistance: 5
   _defaultSpawnWeight: 5
   _spawnWeight: 2
   _frontTriggerCheck: {fileID: 4165763358179291033}
@@ -6980,6 +6980,7 @@ MonoBehaviour:
   _car:
     serializedVersion: 2
     m_Bits: 520
+  _randomShootVariation: {x: 3, y: 3, z: 3}
 --- !u!114 &5611679890664241314
 MonoBehaviour:
   m_ObjectHideFlags: 0
