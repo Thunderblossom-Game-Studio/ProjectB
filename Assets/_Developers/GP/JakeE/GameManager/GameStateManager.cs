@@ -1,11 +1,21 @@
 using System;
 using System.Collections;
+using UnityEngine;
 
 
 public class GameStateManager : Singleton<GameStateManager>
 {
     public event Action OnStart;
     public event Action OnComplete;
+    
+    [SerializeField] private bool _runOnAwake;
+
+
+    private void Start()
+    {   
+        if (_runOnAwake)
+            Begin();
+    }
 
     public void Begin()
     {
