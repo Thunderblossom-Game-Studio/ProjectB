@@ -8,9 +8,13 @@ public class PackageCollectable : Collectable
     protected override void Collect(GameObject collideObject)
     {
         GameObject targetObject = collideObject.transform.parent.gameObject;
-        
+
         if (!targetObject.TryGetComponent(out PackageSystem packageSystem))
-            return;
+        {
+            if (!collideObject.TryGetComponent(out packageSystem))
+                return;
+        }
+            
         
         if (packageSystem.PackageAmount >= packageSystem.MaxPackages) 
             return;
