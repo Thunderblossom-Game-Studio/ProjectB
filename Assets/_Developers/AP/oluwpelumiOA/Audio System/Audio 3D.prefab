@@ -45,8 +45,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 5174313804198701302, guid: 883c77b4e1a35bf4c9266e2821f07ee0, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
+  m_Volume: 0.729
+  m_Pitch: 0.67
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -55,7 +55,7 @@ AudioSource:
   DopplerLevel: 1
   MinDistance: 0
   MaxDistance: 500
-  Pan2D: 0
+  Pan2D: -0.02
   rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
@@ -141,3 +141,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8464503384b23c34aac079501b4d5fa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  control3DSettingHere: 1
+  _dopplerLevel: 2.56
+  _spread: 65
+  _audioRolloffMode: 1
+  _minDistance: 0
+  _maxDistance: 500
+  playAudioOnStart: 0
+  musicClipID: 
+  loopAudio: 0
