@@ -5,7 +5,6 @@ using System.Collections;
 public class GameStateManager : Singleton<GameStateManager>
 {
     public event Action OnStart;
-    //public event Action OnUpdate;
     public event Action OnComplete;
 
     private void Start()
@@ -17,7 +16,6 @@ public class GameStateManager : Singleton<GameStateManager>
     private IEnumerator StartState()
     {
         yield return GameSequencer.Instance.CountDownSequence();
-        //yield return null;
         GameTeamManager.Instance.InitialiseTeams();
         GameTimer.Instance.GameStart();
         OnStart?.Invoke();
@@ -25,10 +23,9 @@ public class GameStateManager : Singleton<GameStateManager>
 
     private IEnumerator CompleteState()
     {
-        OnComplete?.Invoke();
         TeamData winningTeam =  GameTeamManager.Instance.GetWinningTeam();
-        GameSequencer.Instance.GameCompleteSequence(winningTeam);
-        yield return null;
+        yield return GameSequencer.Instance.CompleteGameSequence(winningTeam);
+        OnComplete?.Invoke();
     }
     
     private void StartCompleteState() => StartCoroutine(CompleteState());
