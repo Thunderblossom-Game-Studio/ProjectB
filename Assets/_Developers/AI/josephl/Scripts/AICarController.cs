@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class AICarController : MonoBehaviour
 {
-   // private VehicleParent _car;
+    private ArcadeCarController _car;
 
     [Header("Pathfinding Settings")]
 
@@ -39,12 +39,10 @@ public class AICarController : MonoBehaviour
 
     private float _distanceMultiplier = 1.6f;
 
-   // private BasicInput.MoveData _md;
-
     // Start is called before the first frame update
     private void Start()
     {
-       // _car = GetComponent<VehicleParent>();
+        _car = GetComponent<ArcadeCarController>();
 
         if (_agent)
             _agent.Warp(transform.position);
@@ -97,11 +95,11 @@ public class AICarController : MonoBehaviour
         // acceleration/reversing
         if ((direction < -90) || (direction > 90))
         {
-            forwardInput = -1;
+            forwardInput = -30;
         }
         else
         {
-            forwardInput = 1;
+            forwardInput = 30;
         }
 
         // turning
@@ -118,28 +116,29 @@ public class AICarController : MonoBehaviour
             horizontalInput *= forwardInput;
 
 
-        //if ((_car.localVelocity.magnitude > _speedSensitivity)
-        //    ||
-        //    ((Vector3.Distance(transform.position, _agent.transform.position) < _stopDistance
-        //    &&
-        //    _car.localVelocity.magnitude > _brakeSensitivity)))
-        //{
-        //    forwardInput = -.25f;
-        //}
-        //// braking
-        //int brake = 0;
+        if ((_car.GetSpeed() > _speedSensitivity)
+            ||
+            ((Vector3.Distance(transform.position, _agent.transform.position) < _stopDistance
+            &&
+            _car.GetSpeed() > _brakeSensitivity)))
+        {
+            Debug.Log("Other thing");
+            forwardInput = -30f;
+        }
+        // braking
+        bool brake = false;
 
-        //if (Mathf.Abs(horizontalInput) >= 0.6f && _car.localVelocity.magnitude > _brakeSensitivity)
-        //{
-        //    brake = 1;
-        //}
+        if (Mathf.Abs(horizontalInput) >= 0.6f && _car.GetSpeed() > _brakeSensitivity)
+        {
+            brake = true;
+            Debug.Log("Brake");
+        }
 
-        //forwardInput = Mathf.Clamp(forwardInput, -.75f, .75f);
-        //horizontalInput = Mathf.Clamp(horizontalInput, -1f, 1f);
+        forwardInput = Mathf.Clamp(forwardInput, -30f, 30f);
+        horizontalInput = Mathf.Clamp(horizontalInput, -1f, 1f);
 
-        //_md.AccelInput = forwardInput;
-        //_md.SteerInput = horizontalInput;
-        //_md.EbrakeInput = brake;
+        _car.SetHorizontalAndVerticalInput(horizontalInput, forwardInput);
+        _car.SetBreakInput(brake);
     }
 
     /// <summary>
@@ -203,22 +202,22 @@ public class AICarController : MonoBehaviour
 
     private void IdleTiming()
     {
-        //if (_car.localVelocity.magnitude < 3)
-        //{
-        //    _idleTimer += Time.deltaTime;
+        if (_car.GetSpeed() < 3)
+        {
+            _idleTimer += Time.deltaTime;
 
-        //    if (_idleTimer > _maxIdleTimer)
-        //    {
-        //        _stuck = true;
-        //        transform.position = _agent.transform.position;
-        //        transform.rotation = _agent.transform.rotation;
-        //    }
-        //}
-        //else
-        //{
-        //    _stuck = false;
-        //    _idleTimer = 0f;
-        //}
+            if (_idleTimer > _maxIdleTimer)
+            {
+                _stuck = true;
+                transform.position = _agent.transform.position;
+                transform.rotation = _agent.transform.rotation;
+            }
+        }
+        else
+        {
+            _stuck = false;
+            _idleTimer = 0f;
+        }
     }
 
     public void OnDrawGizmos()
@@ -230,11 +229,4 @@ public class AICarController : MonoBehaviour
             Gizmos.DrawSphere(_agent.transform.position, .5f);
         }
     }
-
-    //public void GetAIMoveData(out BasicInput.MoveData md)
-    //{
-    //    md = default;
-
-    //    md = _md;
-    //}
 }
