@@ -95,11 +95,11 @@ public class AICarController : MonoBehaviour
         // acceleration/reversing
         if ((direction < -90) || (direction > 90))
         {
-            forwardInput = -1;
+            forwardInput = -30;
         }
         else
         {
-            forwardInput = 1;
+            forwardInput = 30;
         }
 
         // turning
@@ -122,7 +122,8 @@ public class AICarController : MonoBehaviour
             &&
             _car.GetSpeed() > _brakeSensitivity)))
         {
-            forwardInput = -.25f;
+            Debug.Log("Other thing");
+            forwardInput = -30f;
         }
         // braking
         bool brake = false;
@@ -130,9 +131,10 @@ public class AICarController : MonoBehaviour
         if (Mathf.Abs(horizontalInput) >= 0.6f && _car.GetSpeed() > _brakeSensitivity)
         {
             brake = true;
+            Debug.Log("Brake");
         }
 
-        forwardInput = Mathf.Clamp(forwardInput, -1f, 1f);
+        forwardInput = Mathf.Clamp(forwardInput, -30f, 30f);
         horizontalInput = Mathf.Clamp(horizontalInput, -1f, 1f);
 
         _car.SetHorizontalAndVerticalInput(horizontalInput, forwardInput);
