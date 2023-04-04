@@ -10,7 +10,7 @@ public class GamePlayer : MonoBehaviour, IKillable
     public TeamData PlayerTeamData => _playerTeamData;
     #endregion
 
-    private TeamData _playerTeamData;
+    [Viewable] [SerializeField] private TeamData _playerTeamData;
 
     private bool activated = false;
 
@@ -55,6 +55,7 @@ public class GamePlayer : MonoBehaviour, IKillable
 
     public virtual void Respawn(HealthSystem healthSystem)
     {
+        Debug.Log(_playerTeamData.TeamName + " : " + _playerTeamData.GetRandomSpawnPoint());
         transform.position = _playerTeamData.GetRandomSpawnPoint();
         transform.rotation = Quaternion.identity;     
         healthSystem.RestoreHealth(healthSystem.MaximumHealth);

@@ -436,6 +436,66 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2324102193477866730
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1007367893668635861}
+  - component: {fileID: 829148783800794712}
+  m_Layer: 9
+  m_Name: DartGun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1007367893668635861
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2324102193477866730}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.039058648, y: 1.1672995, z: 0.016840328}
+  m_LocalScale: {x: 1.1764704, y: 1.1764704, z: 1.1764704}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 3032291552938743402}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &829148783800794712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2324102193477866730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c68221e66c9043d43ac52a8350c993fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visual: {fileID: 4414687793689120350}
+  content: {fileID: 5940766545483672535}
+  rotateVertical: 1
+  rightRotationLimit: 180
+  leftRotationLimit: 180
+  upRotationLimit: 180
+  downRotationLimit: 180
+  turnSpeed: 300
+  fireSoundID: NerfGunShot
+  weaponSO: {fileID: 11400000, guid: db7b7786ca0cc244086dbc3df2a828b0, type: 2}
+  firePoint:
+  - {fileID: 4818684358921624904}
+  - {fileID: 3664821616634101657}
+  currentAmmo: 0
+  weaponState: 0
+  timer: 0
 --- !u!1 &2367732035436001831
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,6 +675,67 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2886078693720701075
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8538149168736825221}
+  - component: {fileID: 4654676490351550732}
+  m_Layer: 9
+  m_Name: ConfettiCannon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8538149168736825221
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2886078693720701075}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.03905775, y: 1.3032261, z: 0.18678594}
+  m_LocalScale: {x: 0.5882352, y: 0.5882352, z: 0.5882352}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3032291552938743402}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4654676490351550732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2886078693720701075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05afe5b8dcf50ca468528c4571c5f878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visual: {fileID: 6768226782252464719}
+  content: {fileID: 3541710903754491962}
+  rotateVertical: 1
+  rightRotationLimit: 180
+  leftRotationLimit: 180
+  upRotationLimit: 180
+  downRotationLimit: 20
+  turnSpeed: 300
+  fireSoundID: ConfettiCannon
+  weaponSO: {fileID: 11400000, guid: 68268341ce3857d4892d302995dc1593, type: 2}
+  firePoint:
+  - {fileID: 1788245222853919302}
+  currentAmmo: 0
+  weaponState: 0
+  timer: 0
+  bulletPerShot: 10
+  spreadAngle: 10
 --- !u!1 &3271412514200246655
 GameObject:
   m_ObjectHideFlags: 0
@@ -1154,9 +1275,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugMode: 0
   allWeapon:
-  - {fileID: 1174515808406011534}
-  - {fileID: 1958931062018815812}
-  - {fileID: 4400235560545523867}
+  - {fileID: 829148783800794712}
+  - {fileID: 4654676490351550732}
+  - {fileID: 1875563068675194807}
   _onOnAmmoChanged: {fileID: 11400000, guid: 939b6139d5c6a5d47b0b1a64c06aadc4, type: 2}
   _onReloadStart: {fileID: 11400000, guid: 298e4d990f18343478ce00a4397a7d27, type: 2}
   _onReloading: {fileID: 11400000, guid: 974087877887f7f4fb952b0138e44d54, type: 2}
@@ -6481,6 +6602,7 @@ Transform:
   m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3032291552938743402}
   - {fileID: 1904392647709013773}
   m_Father: {fileID: 3299715638745964914}
   m_RootOrder: 1
@@ -6835,7 +6957,7 @@ Transform:
   - {fileID: 3299715640528249338}
   - {fileID: 3299715640269311529}
   m_Father: {fileID: 3299715640332679479}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8721147213777083682
 MeshFilter:
@@ -7141,7 +7263,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6465989456656356413}
-  - component: {fileID: 1174515808406011534}
   m_Layer: 9
   m_Name: DartGun
   m_TagString: Untagged
@@ -7165,33 +7286,40 @@ Transform:
   m_Father: {fileID: 1898641863466742702}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1174515808406011534
-MonoBehaviour:
+--- !u!1 &4464738921211408104
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4414687793689120350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68221e66c9043d43ac52a8350c993fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  content: {fileID: 5940766545483672535}
-  rotateVertical: 1
-  rightRotationLimit: 180
-  leftRotationLimit: 180
-  upRotationLimit: 180
-  downRotationLimit: 180
-  turnSpeed: 300
-  fireSoundID: NerfGunShot
-  weaponSO: {fileID: 11400000, guid: db7b7786ca0cc244086dbc3df2a828b0, type: 2}
-  firePoint:
-  - {fileID: 4818684358921624904}
-  - {fileID: 3664821616634101657}
-  currentAmmo: 0
-  weaponState: 0
-  timer: 0
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3032291552938743402}
+  m_Layer: 9
+  m_Name: Weapons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3032291552938743402
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4464738921211408104}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1007367893668635861}
+  - {fileID: 8538149168736825221}
+  - {fileID: 8255015132309304790}
+  m_Father: {fileID: 3299715640332679479}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4519840642638898339
 GameObject:
   m_ObjectHideFlags: 0
@@ -7324,7 +7452,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8394708036336627503
 Transform:
   m_ObjectHideFlags: 0
@@ -12771,14 +12899,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1687827224975138036}
-  - component: {fileID: 1958931062018815812}
   m_Layer: 9
   m_Name: ConfettiCannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1687827224975138036
 Transform:
   m_ObjectHideFlags: 0
@@ -12795,34 +12922,133 @@ Transform:
   m_Father: {fileID: 1898641863466742702}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1958931062018815812
+--- !u!1 &7591923256727710444
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8255015132309304790}
+  - component: {fileID: 1875563068675194807}
+  m_Layer: 9
+  m_Name: Catapult
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8255015132309304790
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7591923256727710444}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.06611407, y: 1.639108, z: 0.2373706}
+  m_LocalScale: {x: 0.5882352, y: 0.5882352, z: 0.5882352}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3032291552938743402}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1875563068675194807
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6768226782252464719}
+  m_GameObject: {fileID: 7591923256727710444}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05afe5b8dcf50ca468528c4571c5f878, type: 3}
+  m_Script: {fileID: 11500000, guid: c4398a01757d91d4394e7a91d4bf090a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: {fileID: 3541710903754491962}
-  rotateVertical: 1
+  visual: {fileID: 8073997110029155745}
+  content: {fileID: 7411726120437522194}
+  rotateVertical: 0
   rightRotationLimit: 180
   leftRotationLimit: 180
-  upRotationLimit: 180
-  downRotationLimit: 20
+  upRotationLimit: 20
+  downRotationLimit: 180
   turnSpeed: 300
-  fireSoundID: ConfettiCannon
-  weaponSO: {fileID: 11400000, guid: 68268341ce3857d4892d302995dc1593, type: 2}
+  fireSoundID: CatapultShooting
+  weaponSO: {fileID: 11400000, guid: 430526edd0f905646982879f60bbc628, type: 2}
   firePoint:
-  - {fileID: 1788245222853919302}
+  - {fileID: 8414624342621420027}
   currentAmmo: 0
   weaponState: 0
   timer: 0
-  bulletPerShot: 10
-  spreadAngle: 10
+  thrower: {fileID: 7876244897935158193}
+  lineRenderer: {fileID: 3004716836542072486}
+  throwProperties:
+  - destination: {x: 0, y: 0, z: 90}
+    duration: 0.2
+    animationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 69
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 69
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - destination: {x: 0, y: 0, z: 0}
+    duration: 0.25
+    animationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 69
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 69
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  throwerResetDelay: 0
+  range: 20
+  minAngle: 5
+  maxAngle: 15
+  vertextCount: 50
+  angle: 10
+  state: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 32759
+  loadedProjectile: {fileID: 0}
+  inAction: 0
+  targetPos: {x: 0, y: 0, z: 0}
 --- !u!1 &7814287416053483349
 GameObject:
   m_ObjectHideFlags: 0
@@ -12915,14 +13141,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7848684371967222387}
-  - component: {fileID: 4400235560545523867}
   m_Layer: 9
   m_Name: Catapult
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7848684371967222387
 Transform:
   m_ObjectHideFlags: 0
@@ -12939,100 +13164,6 @@ Transform:
   m_Father: {fileID: 1898641863466742702}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4400235560545523867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8073997110029155745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4398a01757d91d4394e7a91d4bf090a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  content: {fileID: 7411726120437522194}
-  rotateVertical: 0
-  rightRotationLimit: 180
-  leftRotationLimit: 180
-  upRotationLimit: 20
-  downRotationLimit: 180
-  turnSpeed: 300
-  fireSoundID: CatapultShooting
-  weaponSO: {fileID: 11400000, guid: 430526edd0f905646982879f60bbc628, type: 2}
-  firePoint:
-  - {fileID: 8414624342621420027}
-  currentAmmo: 0
-  weaponState: 0
-  timer: 0
-  thrower: {fileID: 7876244897935158193}
-  lineRenderer: {fileID: 3004716836542072486}
-  throwProperties:
-  - destination: {x: 0, y: 0, z: 90}
-    duration: 0.2
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 69
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 69
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  - destination: {x: 0, y: 0, z: 0}
-    duration: 0.25
-    animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 1
-        tangentMode: 69
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 0
-        tangentMode: 69
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  throwerResetDelay: 0
-  range: 20
-  minAngle: 5
-  maxAngle: 15
-  vertextCount: 50
-  angle: 10
-  state: 0
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 32759
-  loadedProjectile: {fileID: 0}
-  inAction: 0
-  targetPos: {x: 0, y: 0, z: 0}
 --- !u!1 &8083283370755545307
 GameObject:
   m_ObjectHideFlags: 0
@@ -13165,7 +13296,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3541710903754491962
 Transform:
   m_ObjectHideFlags: 0

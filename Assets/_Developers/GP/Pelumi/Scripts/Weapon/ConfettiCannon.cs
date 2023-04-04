@@ -26,6 +26,7 @@ public class ConfettiCannon : Weapon
 
             SpawnProjectile(firePoint[0].position, spreadDirection);
         }
+        ModifyAmmo(currentAmmo - 1);
     }
 
     public void SpawnProjectile(Vector3 position, Vector3 direction)

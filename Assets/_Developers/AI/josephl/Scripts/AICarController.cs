@@ -119,11 +119,7 @@ public class AICarController : MonoBehaviour
             horizontalInput *= forwardInput;
 
 
-        if ((_car.GetSpeed() > _speedSensitivity)
-            ||
-            ((Vector3.Distance(transform.position, _agent.transform.position) < _stopDistance
-            &&
-            _car.GetSpeed() > _brakeSensitivity)))
+        if ((_car.GetSpeed() > _speedSensitivity) ||  (distance < _stopDistance &&_car.GetSpeed() > _brakeSensitivity))
         {
             forwardInput = -1f;
         }

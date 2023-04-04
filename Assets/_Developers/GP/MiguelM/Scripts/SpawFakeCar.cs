@@ -12,7 +12,6 @@ public class SpawFakeCar : MonoBehaviour
 
     public void InstantiateNewCar()
     {
-        Debug.Log("Spawn Cra");
         carBodyPosition = new Vector3(carBody.position.x, carBody.position.y, carBody.position.z + offsetonZ);
         Instantiate(fakeCar, carBodyPosition, carBody.rotation);
     }

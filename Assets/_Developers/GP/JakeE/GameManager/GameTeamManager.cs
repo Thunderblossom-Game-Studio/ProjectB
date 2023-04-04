@@ -99,8 +99,11 @@ public class TeamData
     public string TeamName => _teamName;
     public int TeamPackages => _teamPackages;
 
+    public Color TeamColor => _color;
+
     #endregion
-    
+
+    [SerializeField] private Color _color;
     [SerializeField] private string _teamName;
     [SerializeField] private int _teamPoints;
     [SerializeField] private int _teamPackages;

@@ -9,6 +9,7 @@ public abstract class Weapon : MonoBehaviour
     public enum WeaponState { Idle, Firing, Reloading }
 
     [Header("Content")]
+    public GameObject visual;
     [SerializeField] protected Transform content;
 
     [Header("Rotation settings")]
