@@ -6084,7 +6084,6 @@ GameObject:
   - component: {fileID: 941969982070964928}
   - component: {fileID: 941969982070964943}
   - component: {fileID: 86819684813775143}
-  - component: {fileID: 2801920377210858335}
   m_Layer: 9
   m_Name: Body
   m_TagString: Untagged
@@ -6200,18 +6199,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2801920377210858335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 941969982070964941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ec6168e457becd458f1ddc957493ebb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &941969982113693653
 GameObject:
   m_ObjectHideFlags: 0
@@ -6767,8 +6754,8 @@ MonoBehaviour:
   _spawnHealth: 100
   _maximumHealth: 100
   _minimumHealth: 0
-  _regenerationInterval: 2
-  _regenerationAmount: 5
+  _regenerationInterval: 0
+  _regenerationAmount: 0
   _onHealthChange:
     m_PersistentCalls:
       m_Calls: []
@@ -6971,7 +6958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9547ffe71daf33e4e93ee6f934c74bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _agent: {fileID: 0}
+  _agent: {fileID: 1330326868928177836}
   _forwardmultiplier: 1
   _turnmultiplier: 5
   _brakeSensitivity: 25
@@ -13236,5 +13223,10 @@ PrefabInstance:
 --- !u!4 &1330326868928177835 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5725102409683620108, guid: 9636c90de6396184d86e232e0748f7c4, type: 3}
+  m_PrefabInstance: {fileID: 6703013699955980199}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &1330326868928177836 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 5725102409683620107, guid: 9636c90de6396184d86e232e0748f7c4, type: 3}
   m_PrefabInstance: {fileID: 6703013699955980199}
   m_PrefabAsset: {fileID: 0}

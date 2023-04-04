@@ -26,15 +26,18 @@ public class GameTeamManager : Singleton<GameTeamManager>
             if (toggleTeam == false)
             {
                 toggleTeam = true;
-
                 _blueTeamData.AddPlayer(gamePlayer);
                 gamePlayer.InitialisePlayer(_blueTeamData);
+                gamePlayer.gameObject.GetComponentInChildren<RendererReference>().gameObject.GetComponent<Renderer>()
+                    .material.color = new Color(0, 0.5775f, 1, 1);
             }
             else
             {
                 toggleTeam = false;
                 _redTeamData.AddPlayer(gamePlayer);
                 gamePlayer.InitialisePlayer(_redTeamData);
+                gamePlayer.gameObject.GetComponentInChildren<RendererReference>().gameObject.GetComponent<Renderer>()
+                    .material.color = new Color(1, 0.1296277f, 0, 1);
             }
         }
     }
