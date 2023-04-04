@@ -27,10 +27,4 @@ public class AIGamePlayer : GamePlayer
         aIPlayerHandler.enabled = false;
         base.DeactivatePlayer();
     }
-
-    public override void HandleDeath(HealthSystem healthSystem)
-    {
-        base.HandleDeath(healthSystem);
-        Respawn(healthSystem);
-    }
 }

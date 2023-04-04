@@ -125,7 +125,6 @@ public class AICarController : MonoBehaviour
             &&
             _car.GetSpeed() > _brakeSensitivity)))
         {
-            Debug.Log("Other thing");
             forwardInput = -1f;
         }
 
@@ -133,15 +132,14 @@ public class AICarController : MonoBehaviour
         if (Mathf.Abs(horizontalInput) >= 0.6f && _car.GetSpeed() > _brakeSensitivity)
         {
             brake = true;
-            Debug.Log("Brake");
         }
 
-        forwardInput = Mathf.Clamp(forwardInput, -30f, 30f);
+        forwardInput = Mathf.Clamp(forwardInput, -1, 1);
         horizontalInput = Mathf.Clamp(horizontalInput, -1f, 1f);
 
         _car.SetHorizontalAndVerticalInput(horizontalInput, forwardInput);
         _car.SetBreakInput(brake);
-      //  _car.SetBoost(forwardInput > 0 && horizontalInput == 0);
+       // _car.SetBoost(forwardInput > 0 && horizontalInput == 0);
     }
 
     /// <summary>
@@ -212,7 +210,6 @@ public class AICarController : MonoBehaviour
             if (_idleTimer > _maxIdleTimer)
             {
                 _stuck = true;
-                Debug.Log("HERLO1");
                 transform.position = _agent.transform.position;
                 transform.rotation = _agent.transform.rotation;
             }

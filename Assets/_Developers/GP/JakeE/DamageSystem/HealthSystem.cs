@@ -58,7 +58,7 @@ namespace JE.DamageSystem
             
         public void ReduceHealth(float reduceAmount)
         {
-            if (_isImmune) return;
+            if (_isImmune || _currentHealth <= 0) return;
 
             _currentHealth -= reduceAmount;
 
@@ -68,6 +68,7 @@ namespace JE.DamageSystem
            if (!(_currentHealth <= _minimumHealth)) return;
             
             _currentHealth = _minimumHealth;
+            Debug.Log(_currentHealth);
             _onDeath?.Invoke();
 
             if (_reduceHealthRoutine == null) return;

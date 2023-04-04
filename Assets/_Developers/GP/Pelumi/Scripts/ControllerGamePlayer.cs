@@ -61,7 +61,6 @@ public class ControllerGamePlayer : GamePlayer
     public override void HandleDeath(HealthSystem healthSystem)
     {
         base.HandleDeath(healthSystem);
-        Respawn(healthSystem);
         deathCam.SetActive(true);
     }
 
