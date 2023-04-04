@@ -17,7 +17,7 @@ public class PlayerWeaponController : MonoBehaviour
 
     [Viewable] [SerializeField] private Weapon currentWeapon;
 
-    private void OnEnable()
+    private void Start()
     {
         currentWeapon = allWeapon[0];
         SubscribeWeaponEvent();
@@ -53,10 +53,10 @@ public class PlayerWeaponController : MonoBehaviour
 
     public void UnSubscribeWeaponEvent()
     {
-        currentWeapon.OnAmmoChanged += WeaponHandler_OnAmmoChanged;
-        currentWeapon.OnReloadStart += WeaponHandler_OnReloadStart;
-        currentWeapon.OnReloading += WeaponHandler_OnReloadDuration;
-        currentWeapon.OnReloadEnd += WeaponHandler_OnReloadEnd;
+        currentWeapon.OnAmmoChanged -= WeaponHandler_OnAmmoChanged;
+        currentWeapon.OnReloadStart -= WeaponHandler_OnReloadStart;
+        currentWeapon.OnReloading -= WeaponHandler_OnReloadDuration;
+        currentWeapon.OnReloadEnd -= WeaponHandler_OnReloadEnd;
     }
 
     void Update()
@@ -72,7 +72,7 @@ public class PlayerWeaponController : MonoBehaviour
 
     public void DebugSwitchWeapons()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) && currentWeapon.State != Weapon.WeaponState.Reloading)
         {
             currentWeapon.transform.GetChild(0).gameObject.SetActive(false);
             UnSubscribeWeaponEvent();

@@ -17,6 +17,7 @@ public class GamePlayer : MonoBehaviour, IKillable
     public bool IsActivated => activated;
 
     [SerializeField] private GameObject bodyVisual;
+    [SerializeField] private Collider bodyCollider;
     [SerializeField] private float respawnDelay = 2;
 
     public void InitialisePlayer(TeamData playerTeamData)
@@ -42,6 +43,7 @@ public class GamePlayer : MonoBehaviour, IKillable
         if (!gameObject.TryGetComponent(out PackageSystem packageSystem)) return;
         packageSystem.DropPackages();
         DeactivatePlayer();
+        bodyCollider.gameObject.layer = LayerMask.NameToLayer("Not Shootable");
         StartCoroutine(RespawnDelay(healthSystem));
     }
 
@@ -57,6 +59,7 @@ public class GamePlayer : MonoBehaviour, IKillable
         transform.rotation = Quaternion.identity;     
         healthSystem.RestoreHealth(healthSystem.MaximumHealth);
         bodyVisual.SetActive(true);
+        bodyCollider.gameObject.layer = LayerMask.NameToLayer("Detachable Part");
         ActivatePlayer();
     }
 }

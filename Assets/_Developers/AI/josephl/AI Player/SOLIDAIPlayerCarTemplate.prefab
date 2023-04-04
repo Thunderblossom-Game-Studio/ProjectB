@@ -5951,7 +5951,7 @@ MonoBehaviour:
   reverseSpeedMultiplier: 1
   brakePower: 7500
   breakDecelerationRate: 0.05
-  _steeringMultiplier: 2
+  _steeringMultiplier: 1.5
   maxSteeringAngle: 35
   boostForce: 5
   boostDuration: 5
@@ -6101,6 +6101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyVisual: {fileID: 6610442432087082167}
+  bodyCollider: {fileID: 941969982070964943}
   respawnDelay: 5
   carController: {fileID: 2564594097973458753}
   aICombatHandler: {fileID: 523945576565026227}

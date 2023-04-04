@@ -44,7 +44,7 @@ public abstract class Weapon : MonoBehaviour
     public int MaxAmmo => weaponSO.maxAmmo;
     public float Range => weaponSO.range;
 
-
+    public WeaponState State => weaponState;
     public string FireSoundID =>fireSoundID;
 
     protected virtual void Start()
