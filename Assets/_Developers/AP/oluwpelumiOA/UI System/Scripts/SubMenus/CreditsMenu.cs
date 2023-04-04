@@ -34,6 +34,6 @@ public class CreditsMenu : BaseMenu<CreditsMenu>
 
     public void CloseButton()
     {
-        Close(() => lastMenu.OpenMenu());
+        Close(() => MainMenu.Open());
     }
 }
