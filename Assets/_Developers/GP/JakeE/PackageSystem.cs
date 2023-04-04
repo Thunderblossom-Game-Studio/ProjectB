@@ -28,8 +28,8 @@ public class PackageSystem : MonoBehaviour
     [SerializeField] private UnityEvent _onDeliverEvent;
 
     private GameObject _spawningPackage;
-    private readonly List<GameObject> _currentPackageObjects = new List<GameObject>();
-    private readonly List<PackageData> _currentPackages = new List<PackageData>();
+    [Viewable] [SerializeField] private List<GameObject> _currentPackageObjects = new List<GameObject>();
+    [Viewable] [SerializeField] private List<PackageData> _currentPackages = new List<PackageData>();
     private Action _onPickUp;
     private Action _onDeliver;
 
@@ -97,13 +97,13 @@ public class PackageSystem : MonoBehaviour
 
     public void DropPackages()
     {
-        foreach (PackageData package in _currentPackages)
-        {
-            GameObject droppedPackage =
-                Instantiate(_packageDrop, transform.position + (Vector3.up * 2), Quaternion.identity);
-        }
-
         ClearPackageData();
+
+        //foreach (PackageData package in _currentPackages)
+        //{
+        //    GameObject droppedPackage =
+        //        Instantiate(_packageDrop, transform.position + (Vector3.up * 2), Quaternion.identity);
+        //}
     }
 
     private void ClearPackageVisuals()

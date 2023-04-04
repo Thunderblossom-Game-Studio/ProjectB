@@ -5572,7 +5572,7 @@ GameObject:
   - component: {fileID: 8232786042871274322}
   - component: {fileID: 5397882205156728182}
   m_Layer: 0
-  m_Name: Main Car
+  m_Name: Ai Main Car
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5781,6 +5781,8 @@ MonoBehaviour:
   _onDeliverEvent:
     m_PersistentCalls:
       m_Calls: []
+  _currentPackageObjects: []
+  _currentPackages: []
 --- !u!114 &8100164130637864486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6006,6 +6008,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbcb4f1763419f5488d99106b076b6b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerTeamData:
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _teamName: 
+    _teamPoints: 0
+    _teamPackages: 0
+    _spawnPoints: []
+    _teamPlayers: []
   bodyVisual: {fileID: 6610442432087082167}
   bodyCollider: {fileID: 941969982070964943}
   respawnDelay: 5
@@ -12485,6 +12494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05afe5b8dcf50ca468528c4571c5f878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visual: {fileID: 0}
   content: {fileID: 6306006465613173196}
   rotateVertical: 1
   rightRotationLimit: 180
@@ -12545,6 +12555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4398a01757d91d4394e7a91d4bf090a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visual: {fileID: 0}
   content: {fileID: 7686700300035353308}
   rotateVertical: 0
   rightRotationLimit: 180
@@ -13294,6 +13305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c68221e66c9043d43ac52a8350c993fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visual: {fileID: 0}
   content: {fileID: 2389190170596337472}
   rotateVertical: 1
   rightRotationLimit: 180
