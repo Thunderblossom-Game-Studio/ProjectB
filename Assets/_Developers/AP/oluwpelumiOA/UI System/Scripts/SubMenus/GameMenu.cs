@@ -28,6 +28,8 @@ public class GameMenu : BaseMenu<GameMenu>
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private TextMeshProUGUI _centreScreenText;
     [SerializeField] private GameObject _endGamePanel;
+    [SerializeField] private GameObject _gamePanel;
+    [SerializeField] private TextMeshProUGUI _winningTeam;
 
     [Header("Team UI")] 
     [SerializeField] private TextMeshProUGUI _bluePackages;
@@ -178,9 +180,17 @@ public class GameMenu : BaseMenu<GameMenu>
     private void GameOver(Component arg1, object value)
     {
         if ((bool)value)
+        {
             _endGamePanel.SetActive(true);
-        else 
+            _gamePanel.SetActive(false);
+        }
+        else
+        {
             _endGamePanel.SetActive(false);
+            _gamePanel.SetActive(true);
+        }
+
+        _winningTeam.text = GameTeamManager.Instance.GetWinningTeam().TeamName;
     }
 
     public void SetHealthView(float amount)
