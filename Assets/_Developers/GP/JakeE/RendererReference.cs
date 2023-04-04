@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class RendererReference : MonoBehaviour
 {
-    
+    public Renderer _renderer;
 }

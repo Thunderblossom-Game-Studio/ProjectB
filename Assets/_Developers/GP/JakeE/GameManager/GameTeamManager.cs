@@ -28,7 +28,7 @@ public class GameTeamManager : Singleton<GameTeamManager>
                 toggleTeam = true;
                 _blueTeamData.AddPlayer(gamePlayer);
                 gamePlayer.InitialisePlayer(_blueTeamData);
-                gamePlayer.gameObject.GetComponentInChildren<RendererReference>().gameObject.GetComponent<Renderer>()
+                gamePlayer.gameObject.GetComponentInChildren<RendererReference>()._renderer
                     .material.color = new Color(0, 0.5775f, 1, 1);
             }
             else
@@ -36,9 +36,11 @@ public class GameTeamManager : Singleton<GameTeamManager>
                 toggleTeam = false;
                 _redTeamData.AddPlayer(gamePlayer);
                 gamePlayer.InitialisePlayer(_redTeamData);
-                gamePlayer.gameObject.GetComponentInChildren<RendererReference>().gameObject.GetComponent<Renderer>()
+                gamePlayer.gameObject.GetComponentInChildren<RendererReference>()._renderer
                     .material.color = new Color(1, 0.1296277f, 0, 1);
             }
+
+            gamePlayer.ActivatePlayer();
         }
     }
 
@@ -72,7 +74,7 @@ public class GameTeamManager : Singleton<GameTeamManager>
         foreach (Vector3 spawnPoint in _blueTeamData.SpawnPoints)
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireCube(spawnPoint, new Vector3(0.5f, 0.5f, 0.5f));
+            Gizmos.DrawWireCube(spawnPoint, new Vector3(1f,1f, 1f));
         }
         
         if (_redTeamData.SpawnPoints.IsEmpty())
@@ -81,7 +83,7 @@ public class GameTeamManager : Singleton<GameTeamManager>
         foreach (Vector3 spawnPoint in _redTeamData.SpawnPoints)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(spawnPoint, new Vector3(0.5f, 0.5f, 0.5f));
+            Gizmos.DrawWireCube(spawnPoint, new Vector3(1f, 1f,1f));
         }
     }
 }

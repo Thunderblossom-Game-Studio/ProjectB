@@ -59,7 +59,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6587357321306171343}
   - component: {fileID: 6587357321306171342}
-  - component: {fileID: 6587357321306171337}
   - component: {fileID: 6587357321306171341}
   - component: {fileID: 3912833450826920348}
   m_Layer: 0
@@ -76,8 +75,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6587357321306171336}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.169131, y: 3.5199966, z: 323.50412}
+  m_LocalRotation: {x: 0.046985473, y: 0.919616, z: -0.11604838, w: 0.3723326}
+  m_LocalPosition: {x: 95.27834, y: 1.1600037, z: 587.8313}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -127,14 +126,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &6587357321306171337
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6587357321306171336}
-  m_Enabled: 1
 --- !u!114 &6587357321306171341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,8 +218,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6587357322158247034}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.169131, y: 3.5199966, z: 323.50412}
+  m_LocalRotation: {x: -0, y: 0.9251767, z: -0, w: 0.37953687}
+  m_LocalPosition: {x: 15.229766, y: -46.269783, z: 620.0072}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -257,7 +248,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 88.3
+    FieldOfView: 40
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -365,7 +356,7 @@ MonoBehaviour:
   ShoulderOffset: {x: 0, y: 0, z: 0}
   VerticalArmLength: 1.68
   CameraSide: 1
-  CameraDistance: 3.52
+  CameraDistance: 11.7
   CameraCollisionFilter:
     serializedVersion: 2
     m_Bits: 0

@@ -89,6 +89,9 @@ public class AICarController : MonoBehaviour
 
         float direction = Vector3.SignedAngle(transform.forward, dir, Vector3.up);
 
+        // braking
+        bool brake = false;
+
         float forwardInput = 0;
         float horizontalInput = 0;
 
@@ -125,8 +128,7 @@ public class AICarController : MonoBehaviour
             Debug.Log("Other thing");
             forwardInput = -1f;
         }
-        // braking
-        bool brake = false;
+
 
         if (Mathf.Abs(horizontalInput) >= 0.6f && _car.GetSpeed() > _brakeSensitivity)
         {
@@ -139,6 +141,7 @@ public class AICarController : MonoBehaviour
 
         _car.SetHorizontalAndVerticalInput(horizontalInput, forwardInput);
         _car.SetBreakInput(brake);
+      //  _car.SetBoost(forwardInput > 0 && horizontalInput == 0);
     }
 
     /// <summary>

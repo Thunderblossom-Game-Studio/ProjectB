@@ -23,6 +23,7 @@ public class VolcanoDetector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!detectingLayers.ContainsLayer(other.gameObject.layer)) return;
         ChangeDetectionState(other, other.transform);
         AudioManager.PlaySoundEffect("Erruption");
 
@@ -30,6 +31,7 @@ public class VolcanoDetector : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (!detectingLayers.ContainsLayer(other.gameObject.layer)) return;
         ChangeDetectionState(other, null);
     }
 

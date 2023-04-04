@@ -102,6 +102,8 @@ public class PackageSystem : MonoBehaviour
             GameObject droppedPackage =
                 Instantiate(_packageDrop, transform.position + (Vector3.up * 2), Quaternion.identity);
         }
+
+        ClearPackageData();
     }
 
     private void ClearPackageVisuals()

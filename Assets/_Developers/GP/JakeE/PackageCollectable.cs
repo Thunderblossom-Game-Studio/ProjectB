@@ -7,12 +7,14 @@ public class PackageCollectable : Collectable
 
     protected override void Collect(GameObject collideObject)
     {
-        GameObject targetObject = collideObject.transform.parent.gameObject;
-
-        if (!targetObject.TryGetComponent(out PackageSystem packageSystem))
+        if (!collideObject.TryGetComponent(out PackageSystem packageSystem))
         {
-            if (!collideObject.TryGetComponent(out packageSystem))
+            if (collideObject.transform.parent == null) return;
+            GameObject targetObject = collideObject.transform.parent.gameObject;
+            if (!targetObject.TryGetComponent(out packageSystem))
+            {
                 return;
+            }
         }
 
         if (packageSystem.PackageAmount >= packageSystem.MaxPackages)

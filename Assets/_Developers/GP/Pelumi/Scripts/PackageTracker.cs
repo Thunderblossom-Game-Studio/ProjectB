@@ -25,12 +25,10 @@ public class PackageTracker : Singleton<PackageTracker>
         if (!_packageSystem) return;
         if (_packageSystem.PackageAmount == _packageSystem.MaxPackages)
         {
-            Debug.Log("Working");
             LocateClosestDropPoint();
         }
         else
         {
-            Debug.Log("Very Working");
             LocateClosestPackage();
         }
 

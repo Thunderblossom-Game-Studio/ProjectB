@@ -10,44 +10,54 @@ public class GamePlayer : MonoBehaviour, IKillable
     public TeamData PlayerTeamData => _playerTeamData;
     #endregion
 
-    [SerializeField] private bool addOnAwake = true;
-
     private TeamData _playerTeamData;
+
+    private bool activated = false;
+
+    public bool IsActivated => activated;
+
+    [SerializeField] private GameObject bodyVisual;
+    [SerializeField] private float respawnDelay = 2;
 
     public void InitialisePlayer(TeamData playerTeamData)
     {
         _playerTeamData = playerTeamData;
     }
 
-    private void Awake()
+    public virtual void ActivatePlayer()
     {
-        if (addOnAwake)
-        {
-            GameTeamManager.Instance._gamePlayers.Add(this);
-            GameTeamManager.Instance.InitialiseTeams();
-        }
+        activated = true;
+    }
+
+    public virtual void DeactivatePlayer()
+    {
+        activated = true;
     }
 
     public virtual void HandleDeath(HealthSystem healthSystem)
     {
-        if (!gameObject.TryGetComponent(out GamePlayer gamePlayer))
-            return;
-
-        transform.position = gamePlayer.PlayerTeamData.GetRandomSpawnPoint();
-        transform.rotation = Quaternion.identity;
-        
-        healthSystem.RestoreHealth(healthSystem.MaximumHealth);
-        
-        if (!gameObject.TryGetComponent(out Rigidbody currentBody)) 
-            return;
-        
+        if (!gameObject.TryGetComponent(out Rigidbody currentBody)) return;
         currentBody.velocity = Vector3.zero;
-        
-        if (!gameObject.TryGetComponent(out PackageSystem packageSystem))
-            return;
-        
+        bodyVisual.SetActive(false);
+        if (!gameObject.TryGetComponent(out PackageSystem packageSystem)) return;
         packageSystem.DropPackages();
-        //packageSystem.ClearPackageData();
+        DeactivatePlayer();
+        StartCoroutine(RespawnDelay(healthSystem));
+    }
+
+    IEnumerator RespawnDelay(HealthSystem healthSystem)
+    {
+        yield return new WaitForSeconds(respawnDelay);
+        Respawn(healthSystem);
+    }
+
+    public virtual void Respawn(HealthSystem healthSystem)
+    {
+        transform.position = _playerTeamData.GetRandomSpawnPoint();
+        transform.rotation = Quaternion.identity;     
+        healthSystem.RestoreHealth(healthSystem.MaximumHealth);
+        bodyVisual.SetActive(true);
+        ActivatePlayer();
     }
 }
 

@@ -8,6 +8,7 @@ using Pelumi.Juicer;
 
 public class GameMenu : BaseMenu<GameMenu>
 {
+    [SerializeField] private CanvasGroup _gameUI;
     [SerializeField] private CanvasGroup _buttonHolder;
 
     [Header("Car UI")]
@@ -196,6 +197,11 @@ public class GameMenu : BaseMenu<GameMenu>
     public void SetHealthView(float amount)
     {
         _healthView.alpha =  1 - amount;
+    }
+
+    public void ToggleVisibility(bool status )
+    {
+        _gameUI.alpha = status  ? 1 : 0;
     }
 
     private void OnDisable()

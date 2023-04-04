@@ -6,6 +6,8 @@ using UnityEngine;
 public class ControllerGamePlayer : GamePlayer
 {
     [SerializeField] private ArcadeCarController carController;
+    [SerializeField] private PlayerWeaponController weaponController;
+    [SerializeField] private GameObject deathCam;
 
     private void Start()
     {
@@ -14,27 +16,36 @@ public class ControllerGamePlayer : GamePlayer
 
     private void Update()
     {
-       if (Input.GetKeyDown(KeyCode.F))
-       {
-            carController.FlipCar();
-       }
+        carController.SetBreakInput(InputManager.Instance.HandleBrakeInput().IsPressed());
 
-        if (Input.GetKeyDown(KeyCode.J))
+        carController.SetBoost(InputManager.Instance.HandleBoostInput().IsPressed());
+
+        if(InputManager.Instance.HandleJumpInput().WasPressedThisFrame())
         {
             carController.Jump();
         }
 
-        carController.SetBreakInput(InputManager.Instance.HandleBrakeInput().IsPressed());
-
-        carController.SetBoost(Input.GetKey(KeyCode.LeftShift));
-
-        GameMenu.GetInstance()?.SetCarSpeed(carController.GetSpeed().ToString("F0"));
+        GameMenu.GetInstance()?.SetCarSpeed(carController.GetSpeed().ToString("F0") + " Km/h");
     }
 
     private void FixedUpdate()
     {
         Vector2 input = InputManager.Instance.HandleMoveInput().ReadValue<Vector2>();
         carController.SetHorizontalAndVerticalInput(input.x, input.y);
+    }
+
+    public override void ActivatePlayer()
+    {
+        carController.enabled = true;
+        weaponController.enabled = true;
+        base.ActivatePlayer();
+    }
+
+    public override void DeactivatePlayer()
+    {
+        carController.enabled = false;
+        weaponController.enabled = false;
+        base.DeactivatePlayer();
     }
 
     public void SetUpPakageTracker()
@@ -49,17 +60,14 @@ public class ControllerGamePlayer : GamePlayer
 
     public override void HandleDeath(HealthSystem healthSystem)
     {
-        if (!gameObject.TryGetComponent(out GamePlayer gamePlayer))
-            return;
+        base.HandleDeath(healthSystem);
+        Respawn(healthSystem);
+        deathCam.SetActive(true);
+    }
 
-        transform.position = gamePlayer.PlayerTeamData.GetRandomSpawnPoint();
-        transform.rotation = Quaternion.identity;
-
-        healthSystem.RestoreHealth(healthSystem.MaximumHealth);
-
-        if (!gameObject.TryGetComponent(out Rigidbody currentBody))
-            return;
-
-        currentBody.velocity = Vector3.zero;
+    public override void Respawn(HealthSystem healthSystem)
+    {
+        base.Respawn(healthSystem);
+        deathCam.SetActive(false);
     }
 }
