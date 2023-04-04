@@ -14,12 +14,12 @@ public class ControllerGamePlayer : GamePlayer
 
     private void Update()
     {
-       if(Input.GetKeyDown(KeyCode.F))
+       if (Input.GetKeyDown(KeyCode.F))
        {
             carController.FlipCar();
        }
 
-        if(Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.J))
         {
             carController.Jump();
         }

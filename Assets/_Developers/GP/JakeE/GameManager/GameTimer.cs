@@ -20,7 +20,8 @@ public class GameTimer : Singleton<GameTimer>
     {
         if (_gameTimer == null) return;
         _gameTimer.Tick(Time.deltaTime);
-        _onTimerUpdate.Raise(this, _gameTimer.GetRemainingTime().ToString("F2"));
+        //_onTimerUpdate.Raise(this, _gameTimer.GetRemainingTime().ToString("F2"));
+        _onTimerUpdate.Raise(this, _gameTimer.FormatRemainingTime());
     } 
     
     public void GameStart()
