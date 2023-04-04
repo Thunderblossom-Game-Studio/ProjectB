@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 5118489825940378692}
   - component: {fileID: 6710946267986816467}
   - component: {fileID: 8889610213048671143}
+  - component: {fileID: 1949109535682270733}
   m_Layer: 0
   m_Name: MainCar
   m_TagString: Untagged
@@ -353,7 +354,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _packageScore: 0
   _packageDrop: {fileID: 5676333477140487690, guid: 7f1a74560e12b0244b97855cdfd21ef8, type: 3}
-  _packageObjectVisual: {fileID: 5676333477140487690, guid: c273e1d1bba822c448ad29ab53a3e576, type: 3}
+  _normalPackageVisual: {fileID: 5676333477140487690, guid: 4e0991922b41e954ebe6f85e7590ffc3, type: 3}
+  _rarePackageVisual: {fileID: 5676333477140487690, guid: c273e1d1bba822c448ad29ab53a3e576, type: 3}
   _bodyVisual: {fileID: 3299715640332679479}
   _maxPackages: 2
   _packageSpawns:
@@ -560,6 +562,20 @@ MonoBehaviour:
     m_Bits: 24575
   gunSocket: {fileID: 3299715639805187832}
   currentWeapon: {fileID: 0}
+--- !u!114 &1949109535682270733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3299715638745964876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ce7e71471ee29448acaee2de22a6528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPickUp: {fileID: 11400000, guid: 4b1759fe418d4464da69da8ce2ab9dde, type: 2}
+  _onDeliver: {fileID: 11400000, guid: e94fc5f98f5aaf34ba76062f76667d49, type: 2}
 --- !u!1 &3299715638782746682
 GameObject:
   m_ObjectHideFlags: 0
@@ -6934,7 +6950,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e181efb8f8a2dd5408d48a61cd743eb0, type: 2}
+  - {fileID: 2100000, guid: b99bcef578053214596055356faa67cf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7607,7 +7623,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2439526456295136268
 Transform:
   m_ObjectHideFlags: 0
@@ -12992,6 +13008,10 @@ PrefabInstance:
     - target: {fileID: 3140852594855674898, guid: eaa6c93df1084c34abafc95ace0e9533, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 11.347
+      objectReference: {fileID: 0}
+    - target: {fileID: 3140852594855674899, guid: eaa6c93df1084c34abafc95ace0e9533, type: 3}
+      propertyPath: looping
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eaa6c93df1084c34abafc95ace0e9533, type: 3}

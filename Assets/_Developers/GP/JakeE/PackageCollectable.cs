@@ -14,9 +14,8 @@ public class PackageCollectable : Collectable
             if (!collideObject.TryGetComponent(out packageSystem))
                 return;
         }
-            
-        
-        if (packageSystem.PackageAmount >= packageSystem.MaxPackages) 
+
+        if (packageSystem.PackageAmount >= packageSystem.MaxPackages)
             return;
 
         packageSystem.AddPackageData(_packageData);
@@ -31,13 +30,17 @@ public struct PackageData
 {
     #region GET & SET
 
-    public int PackageWeight => _packageWeight;
+    public PackageType PackageType => _packageType;
     public int PackageScore => _packageScore;
-    public Color PackageColor => _packageVisualColor;
 
     #endregion
 
-    [SerializeField] private Color _packageVisualColor;
-    [SerializeField] private int _packageWeight;
+    [SerializeField] private PackageType _packageType;
     [SerializeField] private int _packageScore;
+}
+
+public enum PackageType
+{
+    Normal,
+    Rare
 }
