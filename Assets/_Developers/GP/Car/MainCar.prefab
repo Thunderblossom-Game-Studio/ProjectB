@@ -1085,6 +1085,8 @@ MonoBehaviour:
   _onDeliverEvent:
     m_PersistentCalls:
       m_Calls: []
+  _currentPackageObjects: []
+  _currentPackages: []
 --- !u!114 &5814689235859957215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1180,7 +1182,7 @@ MonoBehaviour:
   reverseSpeedMultiplier: 5
   brakePower: 7500
   breakDecelerationRate: 0.5
-  _steeringMultiplier: 1.5
+  _steeringMultiplier: 1
   maxSteeringAngle: 30
   boostForce: 5
   boostDuration: 5
@@ -1255,6 +1257,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e59fa4d9252c0c48968eca7a2a71ebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerTeamData:
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _teamName: 
+    _teamPoints: 0
+    _teamPackages: 0
+    _spawnPoints: []
+    _teamPlayers: []
   bodyVisual: {fileID: 3770737034744951889}
   bodyCollider: {fileID: 3299715640332679478}
   respawnDelay: 5
