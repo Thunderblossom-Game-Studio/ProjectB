@@ -31,13 +31,16 @@ namespace JE.DamageSystem
 
         protected void DamageEntity(GameObject damageObject)
         {
-            IDamageable healthSystem = damageObject.GetComponent<IDamageable>();
-            if (healthSystem == null)
+            if (!damageObject.TryGetComponent(out IDamageable damageAble))
             {
-                _onHitNormal?.Invoke();
-                return;
+                if (!damageObject.transform.root.TryGetComponent(out damageAble))
+                {
+                    _onHitNormal?.Invoke();
+                    return;
+                }
             }
-            healthSystem.ReduceHealth(IsCritical ? CriticalDamage : _damageAmount);
+
+            damageAble.ReduceHealth(IsCritical ? CriticalDamage : _damageAmount);
             _onHitDamage?.Invoke(IsCritical ? CriticalDamage : _damageAmount);
         }
 

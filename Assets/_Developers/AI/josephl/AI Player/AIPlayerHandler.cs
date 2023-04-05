@@ -14,7 +14,7 @@ public class AIPlayerHandler : MonoBehaviour
 {
     public enum CurrentState { IDLE, PURSUE, FLEE, PICKUP, DELIVERY}
 
-    [Viewable] private CurrentState _state;
+    [Viewable][SerializeField] private CurrentState _state;
 
     private AICarController _carHandler;
     private AIDecisionHandler _decisionHandler;

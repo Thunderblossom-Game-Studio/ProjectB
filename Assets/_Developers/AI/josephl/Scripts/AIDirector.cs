@@ -52,9 +52,6 @@ public class AIDirector : Singleton<AIDirector>
             }
 
         }
-
-        Debug.Log(NearestPoint);
-
         return NearestPoint;
     }
 

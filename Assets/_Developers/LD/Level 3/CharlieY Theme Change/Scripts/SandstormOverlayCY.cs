@@ -9,14 +9,14 @@ public class SandstormOverlayCY : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "MainCar")
+        if (other.transform.root.TryGetComponent<ControllerGamePlayer>(out ControllerGamePlayer gamePlayer))
         {
             SandStormOverlay.SetActive(true);
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.name == "MainCar")
+        if (other.transform.root.TryGetComponent<ControllerGamePlayer>(out ControllerGamePlayer gamePlayer))
         {
             SandStormOverlay.SetActive(false);
         }

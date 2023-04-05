@@ -17,7 +17,9 @@ public class PlayerWeaponController : MonoBehaviour
 
     [Viewable] [SerializeField] private Weapon currentWeapon;
 
-    private void OnEnable()
+
+
+    private void Start()
     {
         currentWeapon = allWeapon[0];
         SubscribeWeaponEvent();
@@ -53,10 +55,10 @@ public class PlayerWeaponController : MonoBehaviour
 
     public void UnSubscribeWeaponEvent()
     {
-        currentWeapon.OnAmmoChanged += WeaponHandler_OnAmmoChanged;
-        currentWeapon.OnReloadStart += WeaponHandler_OnReloadStart;
-        currentWeapon.OnReloading += WeaponHandler_OnReloadDuration;
-        currentWeapon.OnReloadEnd += WeaponHandler_OnReloadEnd;
+        currentWeapon.OnAmmoChanged -= WeaponHandler_OnAmmoChanged;
+        currentWeapon.OnReloadStart -= WeaponHandler_OnReloadStart;
+        currentWeapon.OnReloading -= WeaponHandler_OnReloadDuration;
+        currentWeapon.OnReloadEnd -= WeaponHandler_OnReloadEnd;
     }
 
     void Update()
@@ -72,13 +74,14 @@ public class PlayerWeaponController : MonoBehaviour
 
     public void DebugSwitchWeapons()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) && currentWeapon.State != Weapon.WeaponState.Reloading)
         {
-            currentWeapon.transform.GetChild(0).gameObject.SetActive(false);
+            currentWeapon.visual.gameObject.SetActive(false);
             UnSubscribeWeaponEvent();
             currentWeapon = allWeapon[ allWeapon.IndexOf(currentWeapon)  == allWeapon.Count  - 1 ? 0 : allWeapon.IndexOf(currentWeapon) + 1];
-            currentWeapon.transform.GetChild(0).gameObject.SetActive(true);
+            currentWeapon.visual.SetActive(true);
             SubscribeWeaponEvent();
+            _onOnAmmoChanged.Raise(this, new int[] { currentWeapon.CurrentAmmo, currentWeapon.MaxAmmo });
         }
     }
 

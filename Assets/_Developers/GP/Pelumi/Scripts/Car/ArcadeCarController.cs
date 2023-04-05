@@ -76,7 +76,7 @@ public class ArcadeCarController : MonoBehaviour
     [SerializeField] private float breakDecelerationRate;
 
     [Header("Steering")]
-    [SerializeField] private float _steeringSensitivity = 1.0f;
+    [SerializeField] private float _steeringMultiplier= 1.0f;
     [SerializeField] private float maxSteeringAngle = 35;
 
     [Header("Boost")]
@@ -174,7 +174,7 @@ public class ArcadeCarController : MonoBehaviour
     private void HandleEngine()
     {
         float motor = carPower * verticalInput;
-        float steering = maxSteeringAngle * _steeringSensitivity * horizontalInput;
+        float steering = maxSteeringAngle * horizontalInput;
         currentSpeed = rigidBody.velocity.magnitude;
 
         HandleSteering(steering);
@@ -253,7 +253,7 @@ public class ArcadeCarController : MonoBehaviour
     {
         if (handbrakeInput || verticalInput == 0)
         {
-            if (rigidBody.velocity.magnitude > 0)
+            if (rigidBody.velocity.magnitude > 0 && _isGrounded)
             {
                 rigidBody.velocity = Vector3.Lerp(rigidBody.velocity, Vector3.zero, (horizontalInput == 0 && handbrakeInput) ?  breakDecelerationRate : driftingDecelerationRate * Time.deltaTime);
             }
@@ -320,6 +320,9 @@ public class ArcadeCarController : MonoBehaviour
                     default: break;
                 }
             }
+
+            Vector3 rotation = new Vector3(0f, horizontalInput * _steeringMultiplier, 0f);
+            rigidBody.AddTorque(rotation, ForceMode.Acceleration);
         }
         else
         {

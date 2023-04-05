@@ -60,11 +60,8 @@ public class Volcano : MonoBehaviour
     {
         float count = 0.0f;
         Vector3 midPoint = startPoint + (endPoint + -startPoint) / 2 + Vector3.up * angle;
-        Debug.Log("curve");
-
         distance = Vector3.Distance(startPoint, endPoint);
         timeToReachTarget = (distance / speed);
-        Debug.Log(timeToReachTarget);
         Warn();
 
         while (count < 1.0f)

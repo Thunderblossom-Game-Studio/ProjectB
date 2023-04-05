@@ -43,11 +43,14 @@ public class DestructibleObject : MonoBehaviour
 
     private IEnumerator OnTriggerEnter(Collider collideObject)
     {
+        float carSpeed = 0;
         if (!_layerMask.ContainsLayer(collideObject.gameObject.layer))
             yield break;
 
-        GameObject rootObject = collideObject.transform.root.gameObject;
-        float carSpeed = rootObject.GetComponent<Rigidbody>().velocity.magnitude;
+        GameObject parentObject = collideObject.transform.parent.gameObject;
+        
+        if (parentObject.TryGetComponent(out Rigidbody objectBody))
+            carSpeed = objectBody.velocity.magnitude;
 
         _currentCollider.enabled = false;
         yield return Explode(carSpeed);

@@ -23,8 +23,7 @@ public class WaypointMarker : MonoBehaviour
     }
 
     private void Start()
-    {
-       
+    {    
         canvasGroup = GetComponent<CanvasGroup>();
         mainCam = Camera.main;
     }

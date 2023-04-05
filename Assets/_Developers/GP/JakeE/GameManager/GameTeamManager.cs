@@ -26,16 +26,21 @@ public class GameTeamManager : Singleton<GameTeamManager>
             if (toggleTeam == false)
             {
                 toggleTeam = true;
-
                 _blueTeamData.AddPlayer(gamePlayer);
                 gamePlayer.InitialisePlayer(_blueTeamData);
+                gamePlayer.gameObject.GetComponentInChildren<RendererReference>()._renderer
+                    .material.color = new Color(0, 0.5775f, 1, 1);
             }
             else
             {
                 toggleTeam = false;
                 _redTeamData.AddPlayer(gamePlayer);
                 gamePlayer.InitialisePlayer(_redTeamData);
+                gamePlayer.gameObject.GetComponentInChildren<RendererReference>()._renderer
+                    .material.color = new Color(1, 0.1296277f, 0, 1);
             }
+
+            gamePlayer.ActivatePlayer();
         }
     }
 
@@ -69,7 +74,7 @@ public class GameTeamManager : Singleton<GameTeamManager>
         foreach (Vector3 spawnPoint in _blueTeamData.SpawnPoints)
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireCube(spawnPoint, new Vector3(0.5f, 0.5f, 0.5f));
+            Gizmos.DrawWireCube(spawnPoint, new Vector3(1f,1f, 1f));
         }
         
         if (_redTeamData.SpawnPoints.IsEmpty())
@@ -78,7 +83,7 @@ public class GameTeamManager : Singleton<GameTeamManager>
         foreach (Vector3 spawnPoint in _redTeamData.SpawnPoints)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(spawnPoint, new Vector3(0.5f, 0.5f, 0.5f));
+            Gizmos.DrawWireCube(spawnPoint, new Vector3(1f, 1f,1f));
         }
     }
 }
@@ -94,8 +99,11 @@ public class TeamData
     public string TeamName => _teamName;
     public int TeamPackages => _teamPackages;
 
+    public Color TeamColor => _color;
+
     #endregion
-    
+
+    [SerializeField] private Color _color;
     [SerializeField] private string _teamName;
     [SerializeField] private int _teamPoints;
     [SerializeField] private int _teamPackages;

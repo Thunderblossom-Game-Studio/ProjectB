@@ -18,16 +18,18 @@ public class PackageSystem : MonoBehaviour
     [Header("Debug")]
     [Viewable] [SerializeField] private int _packageScore;
 
-    [Header("Settings")] 
+    [Header("Settings")]
     [SerializeField] private GameObject _packageDrop;
-    [SerializeField] private GameObject _packageObjectVisual;
+    [SerializeField] private GameObject _normalPackageVisual;
+    [SerializeField] private GameObject _rarePackageVisual;
     [SerializeField] private Transform _bodyVisual;
     [SerializeField] private int _maxPackages;
     [SerializeField] private List<Vector3> _packageSpawns;
     [SerializeField] private UnityEvent _onDeliverEvent;
 
-    private readonly List<GameObject> _currentPackageObjects = new List<GameObject>();
-    private readonly List<PackageData> _currentPackages = new List<PackageData>();
+    private GameObject _spawningPackage;
+    [Viewable] [SerializeField] private List<GameObject> _currentPackageObjects = new List<GameObject>();
+    [Viewable] [SerializeField] private List<PackageData> _currentPackages = new List<PackageData>();
     private Action _onPickUp;
     private Action _onDeliver;
 
@@ -35,9 +37,9 @@ public class PackageSystem : MonoBehaviour
     {
         _currentPackages.Add(packageData);
         OnPickUp?.Invoke();
-        AddPackageVisual();
+        AddPackageVisual(packageData);
     }
-    
+
     public void RemovePackageData(PackageData packageData)
     {
         _currentPackages.Remove(packageData);
@@ -48,7 +50,7 @@ public class PackageSystem : MonoBehaviour
     {
         _currentPackages.Clear();
         ClearPackageVisuals();
-    } 
+    }
 
     public void DeliverPackages()
     {
@@ -60,9 +62,9 @@ public class PackageSystem : MonoBehaviour
             totalScore += package.PackageScore;
             totalPackage++;
         }
-        
+
         _packageScore += totalScore;
-        
+
         if (TryGetComponent(out GamePlayer gamePlayer))
             if (GameTeamManager.Instance)
                 GameTeamManager.Instance.AddScore
@@ -73,29 +75,35 @@ public class PackageSystem : MonoBehaviour
         _onDeliverEvent?.Invoke();
     }
 
-    private void AddPackageVisual()
+    private void AddPackageVisual(PackageData packageData)
     {
         if (!(_packageSpawns.Count >= _currentPackages.Count)) return;
-            
+
+        if (packageData.PackageType == PackageType.Normal)
+            _spawningPackage = _normalPackageVisual;
+
+        if (packageData.PackageType == PackageType.Rare)
+            _spawningPackage = _rarePackageVisual;
+
         GameObject packageObject = Instantiate
-            (_packageObjectVisual, _bodyVisual.position, Quaternion.identity);
-        
+            (_spawningPackage, _bodyVisual.position, Quaternion.identity);
+
         _currentPackageObjects.Add(packageObject);
-        
         packageObject.transform.SetParent(_bodyVisual);
-        packageObject.transform.GetComponentInChildren<MeshRenderer>()
-                .material.color = _currentPackages[^1].PackageColor;
+
         packageObject.transform.localEulerAngles = Vector3.zero;
         packageObject.transform.localPosition = _packageSpawns[_currentPackages.Count - 1];
     }
 
     public void DropPackages()
     {
-        foreach (PackageData package in _currentPackages)
-        {
-            GameObject droppedPackage =
-                Instantiate(_packageDrop, transform.position + (Vector3.up * 2), Quaternion.identity);
-        }
+        ClearPackageData();
+
+        //foreach (PackageData package in _currentPackages)
+        //{
+        //    GameObject droppedPackage =
+        //        Instantiate(_packageDrop, transform.position + (Vector3.up * 2), Quaternion.identity);
+        //}
     }
 
     private void ClearPackageVisuals()
@@ -111,9 +119,8 @@ public class PackageSystem : MonoBehaviour
         foreach (Vector3 packageLocation in _packageSpawns)
         {
             Gizmos.color = Color.grey;
-            Gizmos.DrawCube(_bodyVisual.position + packageLocation, _packageObjectVisual.transform.localScale);
+            Gizmos.DrawCube(_bodyVisual.position + packageLocation, _rarePackageVisual.transform.localScale);
         }
     }
 #endif
 }
-

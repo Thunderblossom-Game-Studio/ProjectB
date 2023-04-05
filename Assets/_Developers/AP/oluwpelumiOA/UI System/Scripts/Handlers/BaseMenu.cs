@@ -53,7 +53,7 @@ public abstract class BaseMenu<T> : Menu
         } 
         else
         {
-            UIManager.Instance.InstantiateMenu<T>(OnOpened);
+            UIManager.Instance?.InstantiateMenu<T>(OnOpened);
         }
     }
 
