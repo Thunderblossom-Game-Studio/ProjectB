@@ -8,4 +8,6 @@ public class PlaySoundEffect : MonoBehaviour
 
    public void PlaySound() =>
       AudioManager.PlaySoundEffect(_soundID);
+
+
 }

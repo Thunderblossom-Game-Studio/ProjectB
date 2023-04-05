@@ -64,6 +64,15 @@ namespace JE.Utilities
             return _timerDuration - _currentTime;
         }
 
+        public string FormatRemainingTime()
+        {
+            float remainingTime = _timerDuration - _currentTime;
+            float minutes = remainingTime / 60;
+            float remainingSeconds = remainingTime % 60;
+
+            return $"{Math.Floor(minutes)} : {Math.Ceiling(remainingSeconds)}";
+        }
+
         public float GetElapsedTime()
         {
             return _currentTime;

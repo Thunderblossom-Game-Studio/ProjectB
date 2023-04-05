@@ -9,6 +9,7 @@ public abstract class Weapon : MonoBehaviour
     public enum WeaponState { Idle, Firing, Reloading }
 
     [Header("Content")]
+    public GameObject visual;
     [SerializeField] protected Transform content;
 
     [Header("Rotation settings")]
@@ -44,7 +45,7 @@ public abstract class Weapon : MonoBehaviour
     public int MaxAmmo => weaponSO.maxAmmo;
     public float Range => weaponSO.range;
 
-
+    public WeaponState State => weaponState;
     public string FireSoundID =>fireSoundID;
 
     protected virtual void Start()

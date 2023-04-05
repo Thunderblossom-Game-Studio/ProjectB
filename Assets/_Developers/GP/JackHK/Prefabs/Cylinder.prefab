@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6506910957147672965}
   - component: {fileID: 7599249036722686474}
   - component: {fileID: 6414235121321645617}
-  - component: {fileID: 1470688063292102243}
+  - component: {fileID: 8663503520996955043}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -101,7 +101,7 @@ MonoBehaviour:
   scale: {x: 12, y: 0.04, z: 12}
   fadeDuration: 0.15
   fadeAmount: 0.05
---- !u!114 &1470688063292102243
+--- !u!114 &8663503520996955043
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,10 +110,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5875307805515243409}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f244f524a030c6459722c6594b1e9bd, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c6199e2548981c458651ca9e8f17223, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _delay: 5
+  delay: 5
+  fadeMaterial: 1
 --- !u!1 &7060169846811251428
 GameObject:
   m_ObjectHideFlags: 0

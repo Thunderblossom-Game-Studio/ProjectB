@@ -399,9 +399,9 @@ RectTransform:
   m_Father: {fileID: 2032848479}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -604, y: -334}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 17, y: 15}
   m_SizeDelta: {x: 140, y: 90}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &1562832003
@@ -986,22 +986,33 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Producers:\n\nKostas Dokos\nSam Lake \n\n\nGameplay Programming\r\n\r\n(Lead)
-    Oluwapelumi Ayeni\r\nJake Evans\r\nJack Hughes-King\r\nAnton Narva\r\nMiguel
-    De Matos\r\nVasco Almedia\r\nWilliam Monk\r\n\n\nAssets Programming\r\n\r\n(Lead)
-    Jessica Wright\r\nHarrison Hicks\r\nPaul Sburlea\r\n\n\nAi Programming\r\n\r\n(Lead)
-    Joseph Livingstone\r\nJordan Caines\r\nTimothy Mitchell \r\nJack Thorne\r\n\r\n\nLevel
-    Design\n\n(Lead)Tiago Bennetts\nCharlie York\nNektarios Pissas\nQuinn Grist\nChelsea
-    Holtz\nNorton Dioszegi\nPhil Southam\nTom Avery\n\n\nGame Design\n\n(Lead)Benjamin
-    De Gheselle\nDavid Tuner\nJakub Muszynski\nTyler Denman\nDiogo Abreu\nMicheal
-    Maley\nRiyadh Abu Omar\n\n\nUX Design\n\n(Lead)Adam Sheppard\nLuqman Beig\nLiam
-    Guiver\nOdafe Richard jagboro\nThorne Bolton \nCassie Hobbs \nJonas Smrcka\n\n\nNarrative
-    Design\n\n(Lead)Nathan Whitehead\nLauren Paddock\n\n\nAudio Design\n\n(Lead)Sofia
-    Denchovska \nSean Pearse\n\nArt\n\n(Lead) Shireen Deshmukh\nConnor Britton\nGeorge
-    Compton\nTobias Hodgson\nNicky Hudson\nAlexandria Sims\nChloe Torne\nOwen West\n"
+  m_text: "<color=\"yellow\">----------------------------------</color=\"yellow\">\nProducers:\n<color=\"yellow\">----------------------------------</color=\"yellow\">\n\nKostas
+    Dokos\nSam Lake \n\n<color=\"yellow\">----------------------------------</color=\"yellow\">\nGameplay
+    Programming\r\n<color=\"yellow\">----------------------------------</color=\"yellow\">\n\r\n(Lead)
+    Oluwapelumi Ayeni\r\n(Co-Lead) Jake Evans\r\nJack Hughes-King\r\nAnton Narva\r\nMiguel
+    De Matos\r\nVasco Almedia\r\nWilliam Monk\r\n\n<color=\"yellow\">----------------------------------</color=\"yellow\">\nAssets
+    Programming\r\n<color=\"yellow\">----------------------------------</color=\"yellow\">\n\n(Lead)
+    Jessica Wright\r\nHarrison Hicks\r\nPaul Sburlea\r\n\n<color=\"yellow\">----------------------------------</color=\"yellow\">\nAi
+    Programming\r\n<color=\"yellow\">----------------------------------</color=\"yellow\">\n\n(Lead)
+    Joseph Livingstone\r\nJordan Caines\r\nTimothy Mitchell \r\nJack Thorne\r\n\r\n<color=\"yellow\">----------------------------------</color=\"yellow\">\nLevel
+    Design\n<color=\"yellow\">----------------------------------</color=\"yellow\">\n\n(Lead)
+    Tiago Bennetts\n(Co-Lead) Emily Holmes\nCharlie York\nNektarios Pissas\nQuinn
+    Grist\nChelsea Holtz\nNorton Dioszegi\nPhil Southam\nTom Avery\n\n<color=\"yellow\">----------------------------------</color=\"yellow\">\nGame
+    Design\n<color=\"yellow\">----------------------------------</color=\"yellow\">\n\n(Lead)
+    Benjamin De Gheselle\n(Co-Lead) David Tuner\nJakub Muszynski\nTyler Denman\nDiogo
+    Abreu\nMicheal Maley\nRiyadh Abu Omar\n\n<color=\"yellow\">----------------------------------</color=\"yellow\">\nUX
+    Design\n<color=\"yellow\">----------------------------------</color=\"yellow\">\n\n(Lead)
+    Adam Sheppard\nLuqman Beig\nLiam Guiver\nOdafe Jagboro\nThorne Bolton \nCassie
+    Hobbs \nJonas Smrcka\n\n<color=\"yellow\">----------------------------------</color=\"yellow\">\nNarrative
+    Design\n<color=\"yellow\">----------------------------------</color=\"yellow\">\n\n(Lead)
+    Nathan Whitehead\nLauren Paddock\n\n<color=\"yellow\">----------------------------------</color=\"yellow\">\nAudio
+    Design\n<color=\"yellow\">----------------------------------</color=\"yellow\">\n\n(Lead)
+    Sofia Denchovska \nSean Pearse\n\nMusic By:\nBenjamin Malden\nEric Mateyas\r\nhttps://soundimage.org/world/\"\n\n<color=\"yellow\">----------------------------------</color=\"yellow\">\nArt\n<color=\"yellow\">----------------------------------</color=\"yellow\">\n\n(Lead)
+    Shireen Deshmukh\nConnor Britton\nGeorge Compton\nTobias Hodgson\nNicky Hudson\nAlexandria
+    Sims\nChloe Torne\nOwen West\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7bbb6b8b40d7f0e408864459be4ef85d, type: 2}
-  m_sharedMaterial: {fileID: -5580606607497324227, guid: 7bbb6b8b40d7f0e408864459be4ef85d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e05831578fd50c143856f16005c1d3ef, type: 2}
+  m_sharedMaterial: {fileID: -3520486902496684686, guid: e05831578fd50c143856f16005c1d3ef, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1025,8 +1036,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
