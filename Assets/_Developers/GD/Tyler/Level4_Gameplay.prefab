@@ -54,7 +54,11 @@ MonoBehaviour:
   _spawnZones:
   - _zonePosition: {x: -292.1, y: 63.6, z: 63.4}
     _zoneSize: {x: 8, y: 5, z: 9.11}
-  - _zonePosition: {x: -392.4, y: 71.7, z: -61.9}
+  - _zonePosition: {x: -378.3, y: 67.4, z: -60.7}
+    _zoneSize: {x: 13.02, y: 5, z: 12.04}
+  - _zonePosition: {x: -200.9, y: 49.1, z: 94.6}
+    _zoneSize: {x: 13.02, y: 5, z: 12.04}
+  - _zonePosition: {x: -172.8, y: 30.3, z: -226.5}
     _zoneSize: {x: 13.02, y: 5, z: 12.04}
   _objectTypes:
   - _spawnObject: {fileID: 5676333477140487690, guid: b244b0bae907de34ba04a931acbe1b66, type: 3}
@@ -121,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isLocal: 0
-  _spawnMode: 1
+  _spawnMode: 0
   _groundLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -129,23 +133,31 @@ MonoBehaviour:
   _spawnZones:
   - _zonePosition: {x: -105.7, y: 32.71, z: 182.38}
     _zoneSize: {x: 10, y: 5, z: 10}
-  - _zonePosition: {x: -200.1, y: 48.77, z: 93.73}
-    _zoneSize: {x: 10, y: 5, z: 10}
-  - _zonePosition: {x: -459.17, y: 23.9, z: 275.19}
-    _zoneSize: {x: 10, y: 5, z: 10}
-  - _zonePosition: {x: -402.2, y: 23.9, z: 335.2}
+  - _zonePosition: {x: -436.3, y: 23.9, z: 311.4}
     _zoneSize: {x: 10, y: 5, z: 10}
   - _zonePosition: {x: -225.9, y: 35.1, z: 152.6}
     _zoneSize: {x: 10, y: 5, z: 10}
-  - _zonePosition: {x: -167.5, y: 30, z: -142.7}
+  - _zonePosition: {x: -167.5, y: 32, z: -142.7}
     _zoneSize: {x: 8.58, y: 5, z: 12.7}
   - _zonePosition: {x: 63.35, y: 16.5, z: 6.7}
     _zoneSize: {x: 8.58, y: 5, z: 12.7}
-  - _zonePosition: {x: -77.5, y: 0, z: 308}
+  - _zonePosition: {x: -58.96, y: 2.51, z: 329}
     _zoneSize: {x: 10, y: 5, z: 10}
   - _zonePosition: {x: 138.93, y: 2.3, z: 93.5}
     _zoneSize: {x: 10, y: 5, z: 10}
-  - _zonePosition: {x: -147.5, y: 0, z: -68}
+  - _zonePosition: {x: -147.5, y: 2.24, z: -68}
+    _zoneSize: {x: 10, y: 5, z: 10}
+  - _zonePosition: {x: -75.6, y: 2.5, z: -200.4}
+    _zoneSize: {x: 10, y: 5, z: 10}
+  - _zonePosition: {x: -77.99, y: 2.5, z: -94.75}
+    _zoneSize: {x: 10, y: 5, z: 10}
+  - _zonePosition: {x: 183, y: 2.5, z: -65.3}
+    _zoneSize: {x: 10, y: 5, z: 10}
+  - _zonePosition: {x: 178.8, y: 2.5, z: 320.2}
+    _zoneSize: {x: 10, y: 5, z: 10}
+  - _zonePosition: {x: 22.5, y: 2.5, z: 320.2}
+    _zoneSize: {x: 10, y: 5, z: 10}
+  - _zonePosition: {x: -407.7, y: 2.5, z: 172.4}
     _zoneSize: {x: 10, y: 5, z: 10}
   _objectTypes:
   - _spawnObject: {fileID: 5676333477140487690, guid: 7f1a74560e12b0244b97855cdfd21ef8, type: 3}
@@ -164,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnerStatus: 0
-  _spawnRate: 1
+  _spawnRate: 0.5
   _spawnMaximum: 16
 --- !u!1 &8902450426129374576
 GameObject:
@@ -214,9 +226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b77cd1797860dd4b99f82204f6cba7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 7212076374310680500}
-  _networkObjectCache: {fileID: 7212076374310680500}
 --- !u!114 &8902450426129374590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,6 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d66ffefb1437e14b91a9506d4519ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _runOnAwake: 1
 --- !u!114 &8902450426129374591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,6 +268,7 @@ MonoBehaviour:
   _onBlueTeamScore: {fileID: 11400000, guid: 1ce1f797dae8adf4fa524eea19247b71, type: 2}
   _onRedTeamScore: {fileID: 11400000, guid: ff307cd9262bd5b459e83bac2ae20c0f, type: 2}
   _blueTeamData:
+    _color: {r: 0, g: 0, b: 0, a: 0}
     _teamName: Blue
     _teamPoints: 0
     _teamPackages: 0
@@ -265,13 +276,18 @@ MonoBehaviour:
     - {x: -150, y: -0.04, z: 60}
     _teamPlayers: []
   _redTeamData:
+    _color: {r: 0, g: 0, b: 0, a: 0}
     _teamName: Red
     _teamPoints: 0
     _teamPackages: 0
     _spawnPoints:
     - {x: -150, y: -0.04, z: 130}
     _teamPlayers: []
-  _gamePlayers: []
+  _gamePlayers:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &8902450426129374589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,6 +302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameSettings: {fileID: 11400000, guid: 15f5e1793c4f6ee4b9b788972857b870, type: 2}
   _onCentreTextUpdate: {fileID: 11400000, guid: b764a52f099040640a0c2bd6e4a79319, type: 2}
+  _onMenuUpdate: {fileID: 0}
 --- !u!1 &8902450426418623228
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,7 +313,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8902450426418623231}
   - component: {fileID: 157162791286418239}
-  - component: {fileID: 7212076374310680500}
   m_Layer: 0
   m_Name: Level4_Gameplay
   m_TagString: Untagged
@@ -339,37 +355,6 @@ MonoBehaviour:
   _entitySpawner: {fileID: 8902450425985197850}
   _packageSystem: {fileID: 0}
   ObjectToLocate: {fileID: 0}
---- !u!114 &7212076374310680500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8902450426418623228}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <IsNested>k__BackingField: 0
-  <ComponentIndex>k__BackingField: 0
-  <PredictedSpawn>k__BackingField: {fileID: 0}
-  _networkBehaviours:
-  - {fileID: 8902450426129374585}
-  <ParentNetworkObject>k__BackingField: {fileID: 0}
-  <ChildNetworkObjects>k__BackingField: []
-  _isNetworked: 1
-  _isGlobal: 0
-  _initializeOrder: 0
-  _defaultDespawnType: 0
-  NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 0
-  <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 945796307
-  <SceneId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 16509211291656663899
-  _sceneNetworkObjects:
-  - {fileID: 7212076374310680500}
 --- !u!1001 &157162790056166016
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -436,6 +421,10 @@ PrefabInstance:
     - target: {fileID: 3738754516813699930, guid: 9f009ff8e951d9145a1006382f8a6538, type: 3}
       propertyPath: m_Name
       value: DeliveryZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 3738754516813699930, guid: 9f009ff8e951d9145a1006382f8a6538, type: 3}
+      propertyPath: m_Layer
+      value: 19
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f009ff8e951d9145a1006382f8a6538, type: 3}

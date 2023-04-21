@@ -1170,21 +1170,21 @@ MonoBehaviour:
   driveType: 0
   brakeType: 2
   maxBoostSpeed: 60
-  maxForwardSpeed: 30
+  maxForwardSpeed: 50
   maxReverseSpeed: 10
   currentMaxSpeed: 0
-  carPower: 3500
-  startAccelerationSpeed: 10
-  startSpeedThreshold: 20
-  accelerationToDecelerationSpeed: 5
+  carPower: 10000
+  startAccelerationSpeed: 20
+  startSpeedThreshold: 30
+  accelerationToDecelerationSpeed: 10
   decelerationForce: 7500
   driftingDecelerationRate: 0.05
   reverseSpeedMultiplier: 5
   brakePower: 7500
   breakDecelerationRate: 0.5
-  _steeringMultiplier: 1
-  maxSteeringAngle: 30
-  boostForce: 5
+  _steeringMultiplier: 1.5
+  maxSteeringAngle: 40
+  boostForce: 10
   boostDuration: 5
   boostReductionSpeed: 1
   boostRegenerationSpeed: 1

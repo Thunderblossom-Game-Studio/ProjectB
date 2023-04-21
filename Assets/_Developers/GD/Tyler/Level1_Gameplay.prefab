@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2021905575178762063}
   - component: {fileID: 536619426128106200}
   - component: {fileID: 7954413785458939212}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DeliveryZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,12 +29,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4790112753705582169}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -247.2643, y: 83.33962, z: 1214.4343}
-  m_LocalScale: {x: 10, y: 10, z: 10}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -251.78, y: 83.33962, z: 1178.58}
+  m_LocalScale: {x: 12, y: 12, z: 12}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8186241508201617499}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &9116532362820303647
 MeshFilter:
@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 2021905573955791869}
   - component: {fileID: 536619425174752874}
   - component: {fileID: 7954413786388826622}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DeliveryZone (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,12 +168,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4790112754639659755}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 338.74298, y: 83.14963, z: 1215.3223}
-  m_LocalScale: {x: 10, y: 10, z: 10}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 338.74298, y: 83.14963, z: 1180.03}
+  m_LocalScale: {x: 12, y: 12, z: 12}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8186241508201617499}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &9116532361619351469
 MeshFilter:
@@ -353,89 +353,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnerStatus: 0
-  _spawnRate: 0.5
-  _spawnMaximum: 1
---- !u!1 &8186241506937615970
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8186241506937615973}
-  - component: {fileID: 8186241506937615975}
-  - component: {fileID: 8186241506937615972}
-  m_Layer: 0
-  m_Name: NormalPackageSpawner2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8186241506937615973
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8186241506937615970}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -101.6, y: 64.34, z: 1050.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8186241508201617499}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8186241506937615975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8186241506937615970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 200469d93d082174789c67c6130d37ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isLocal: 1
-  _spawnMode: 1
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  _spawnZoneColor: {r: 0.41217256, g: 1, b: 0, a: 1}
-  _spawnZones:
-  - _zonePosition: {x: 295, y: 0, z: 0}
-    _zoneSize: {x: 17.5, y: 10, z: 20}
-  - _zonePosition: {x: 258, y: 0, z: 0}
-    _zoneSize: {x: 17.5, y: 10, z: 20}
-  - _zonePosition: {x: 275, y: 0, z: -20.3}
-    _zoneSize: {x: 17.5, y: 10, z: 20}
-  - _zonePosition: {x: 275, y: 0, z: 20.1}
-    _zoneSize: {x: 17.5, y: 10, z: 20}
-  - _zonePosition: {x: 260.8, y: 20, z: -413.2}
-    _zoneSize: {x: 17.5, y: 10, z: 20}
-  _objectTypes:
-  - _spawnObject: {fileID: 5676333477140487690, guid: 7f1a74560e12b0244b97855cdfd21ef8, type: 3}
-    _spawnChance: 100
-  _spawnedObjects: []
---- !u!114 &8186241506937615972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8186241506937615970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09ef69fa1206da04ba0bfa6c14ea3899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawnerStatus: 0
   _spawnRate: 0.25
-  _spawnMaximum: 2
+  _spawnMaximum: 4
 --- !u!1 &8186241507624340925
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,22 +401,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isLocal: 1
-  _spawnMode: 1
+  _spawnMode: 0
   _groundLayer:
     serializedVersion: 2
     m_Bits: 0
-  _spawnZoneColor: {r: 0.41217256, g: 1, b: 0, a: 1}
+  _spawnZoneColor: {r: 1, g: 0.009896898, b: 0, a: 1}
   _spawnZones:
-  - _zonePosition: {x: 1, y: 0, z: 0}
+  - _zonePosition: {x: 30, y: 24.8, z: -413}
     _zoneSize: {x: 17.5, y: 10, z: 20}
-  - _zonePosition: {x: 38.01, y: 0, z: 0}
-    _zoneSize: {x: 17.5, y: 10, z: 20}
-  - _zonePosition: {x: 19.5, y: 0, z: 21.5}
-    _zoneSize: {x: 17.5, y: 10, z: 20}
-  - _zonePosition: {x: 19.5, y: 0, z: -20.3}
-    _zoneSize: {x: 17.5, y: 10, z: 20}
-  - _zonePosition: {x: 19.5, y: 20.7, z: -418.1}
-    _zoneSize: {x: 17.5, y: 10, z: 20}
+  - _zonePosition: {x: 265.7, y: 24.7, z: -317}
+    _zoneSize: {x: 20, y: 10, z: 20}
+  - _zonePosition: {x: 106.4, y: 1, z: -49.1}
+    _zoneSize: {x: 50, y: 10, z: 50}
+  - _zonePosition: {x: 191.6, y: 1, z: -49.1}
+    _zoneSize: {x: 50, y: 10, z: 50}
   _objectTypes:
   - _spawnObject: {fileID: 5676333477140487690, guid: 7f1a74560e12b0244b97855cdfd21ef8, type: 3}
     _spawnChance: 100
@@ -516,7 +433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnerStatus: 0
   _spawnRate: 0.25
-  _spawnMaximum: 2
+  _spawnMaximum: 8
 --- !u!1 &8186241507752802260
 GameObject:
   m_ObjectHideFlags: 0
@@ -607,20 +524,23 @@ MonoBehaviour:
   _onBlueTeamScore: {fileID: 11400000, guid: 1ce1f797dae8adf4fa524eea19247b71, type: 2}
   _onRedTeamScore: {fileID: 11400000, guid: ff307cd9262bd5b459e83bac2ae20c0f, type: 2}
   _blueTeamData:
+    _color: {r: 0, g: 0, b: 0, a: 0}
     _teamName: Blue
-    _teamPoints: 0
-    _teamPackages: 0
-    _spawnPoints:
-    - {x: 28, y: 18, z: 231}
-    _teamPlayers: []
-  _redTeamData:
-    _teamName: Red
     _teamPoints: 0
     _teamPackages: 0
     _spawnPoints:
     - {x: 580, y: 18, z: 201}
     _teamPlayers: []
+  _redTeamData:
+    _color: {r: 0, g: 0, b: 0, a: 0}
+    _teamName: Red
+    _teamPoints: 0
+    _teamPackages: 0
+    _spawnPoints:
+    - {x: 28, y: 18, z: 231}
+    _teamPlayers: []
   _gamePlayers:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -638,7 +558,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameSettings: {fileID: 11400000, guid: 15f5e1793c4f6ee4b9b788972857b870, type: 2}
   _onCentreTextUpdate: {fileID: 11400000, guid: b764a52f099040640a0c2bd6e4a79319, type: 2}
-  _onMenuUpdate: {fileID: 0}
+  _onMenuUpdate: {fileID: 11400000, guid: 15f8f0fa4f5c0644cb433f28da4803f6, type: 2}
 --- !u!1 &8186241508201617496
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,7 +591,6 @@ Transform:
   - {fileID: 8186241506478969029}
   - {fileID: 8186241507624340924}
   - {fileID: 8186241507752802263}
-  - {fileID: 8186241506937615973}
   - {fileID: 6065922467666841416}
   - {fileID: 6065922468881290234}
   m_Father: {fileID: 0}
