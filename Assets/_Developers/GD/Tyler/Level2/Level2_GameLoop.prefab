@@ -48,9 +48,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b77cd1797860dd4b99f82204f6cba7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 7657610776526662035}
-  _networkObjectCache: {fileID: 7657610776526662035}
 --- !u!114 &8742992681866484449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,6 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d66ffefb1437e14b91a9506d4519ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _runOnAwake: 0
 --- !u!114 &8742992681866484448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,20 +90,23 @@ MonoBehaviour:
   _onBlueTeamScore: {fileID: 11400000, guid: 1ce1f797dae8adf4fa524eea19247b71, type: 2}
   _onRedTeamScore: {fileID: 11400000, guid: ff307cd9262bd5b459e83bac2ae20c0f, type: 2}
   _blueTeamData:
+    _color: {r: 0, g: 0, b: 0, a: 0}
     _teamName: Blue
     _teamPoints: 0
     _teamPackages: 0
     _spawnPoints:
-    - {x: 146.7, y: 15, z: 122.4}
+    - {x: 171.28, y: 13.489998, z: 245.83}
     _teamPlayers: []
   _redTeamData:
+    _color: {r: 0, g: 0, b: 0, a: 0}
     _teamName: Red
     _teamPoints: 0
     _teamPackages: 0
     _spawnPoints:
-    - {x: 145.4, y: 15, z: 105.6}
+    - {x: 188.4123, y: 15, z: -20}
     _teamPlayers: []
   _gamePlayers:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -123,6 +124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameSettings: {fileID: 11400000, guid: 15f5e1793c4f6ee4b9b788972857b870, type: 2}
   _onCentreTextUpdate: {fileID: 11400000, guid: b764a52f099040640a0c2bd6e4a79319, type: 2}
+  _onMenuUpdate: {fileID: 11400000, guid: 15f8f0fa4f5c0644cb433f28da4803f6, type: 2}
 --- !u!1 &8742992682006470790
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,16 +177,18 @@ MonoBehaviour:
     m_Bits: 0
   _spawnZoneColor: {r: 0.41217256, g: 1, b: 0, a: 1}
   _spawnZones:
-  - _zonePosition: {x: 158, y: 18, z: 254.3}
-    _zoneSize: {x: 42, y: 10, z: 12}
-  - _zonePosition: {x: 162, y: 10, z: -61.8}
+  - _zonePosition: {x: 147.3, y: 18, z: 254.3}
+    _zoneSize: {x: 13.2, y: 10, z: 12}
+  - _zonePosition: {x: 162, y: 18.11, z: -61.8}
     _zoneSize: {x: 25, y: 10, z: 25}
-  - _zonePosition: {x: 248.6, y: 10, z: 207}
+  - _zonePosition: {x: 248.6, y: 18.3, z: 207}
     _zoneSize: {x: 14, y: 10, z: 11}
   - _zonePosition: {x: 308.7, y: 5, z: 123.5}
     _zoneSize: {x: 18, y: 10, z: 15.1}
   - _zonePosition: {x: 0, y: 6, z: 52}
     _zoneSize: {x: 12.7, y: 10, z: 11.6}
+  - _zonePosition: {x: -103.5, y: 6, z: 244.42}
+    _zoneSize: {x: 12.3, y: 10, z: 11.6}
   _objectTypes:
   - _spawnObject: {fileID: 5676333477140487690, guid: 7f1a74560e12b0244b97855cdfd21ef8, type: 3}
     _spawnChance: 100
@@ -202,8 +206,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnerStatus: 0
-  _spawnRate: 1
-  _spawnMaximum: 15
+  _spawnRate: 0.1
+  _spawnMaximum: 10
 --- !u!1 &8742992682508252515
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,7 +218,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8742992682508252512}
   - component: {fileID: 67791774554500256}
-  - component: {fileID: 7657610776526662035}
   m_Layer: 0
   m_Name: Level2_GameLoop
   m_TagString: Untagged
@@ -253,40 +256,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81d532d726d88de48902e80d415b2a1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DeliveryPoints: []
   _entitySpawner: {fileID: 8742992682006470789}
-  closestPackage: {fileID: 0}
---- !u!114 &7657610776526662035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8742992682508252515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <IsNested>k__BackingField: 0
-  <ComponentIndex>k__BackingField: 0
-  <PredictedSpawn>k__BackingField: {fileID: 0}
-  _networkBehaviours:
-  - {fileID: 8742992681866484454}
-  <ParentNetworkObject>k__BackingField: {fileID: 0}
-  <ChildNetworkObjects>k__BackingField: []
-  _isNetworked: 1
-  _isGlobal: 0
-  _initializeOrder: 0
-  _defaultDespawnType: 0
-  NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 0
-  <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 1124516008
-  <SceneId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 1294253641573650952
-  _sceneNetworkObjects:
-  - {fileID: 7657610776526662035}
-  - {fileID: 0}
+  _packageSystem: {fileID: 0}
+  ObjectToLocate: {fileID: 0}
 --- !u!1 &8742992682603314681
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,7 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isLocal: 1
-  _spawnMode: 1
+  _spawnMode: 0
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -375,7 +348,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2717116569646528249, guid: 9f009ff8e951d9145a1006382f8a6538, type: 3}
       propertyPath: m_LocalScale.x
-      value: 6.2172003
+      value: 9.846402
       objectReference: {fileID: 0}
     - target: {fileID: 2717116569646528249, guid: 9f009ff8e951d9145a1006382f8a6538, type: 3}
       propertyPath: m_LocalScale.y
@@ -387,7 +360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2717116569646528249, guid: 9f009ff8e951d9145a1006382f8a6538, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 119.43616
+      value: 116.32
       objectReference: {fileID: 0}
     - target: {fileID: 2717116569646528249, guid: 9f009ff8e951d9145a1006382f8a6538, type: 3}
       propertyPath: m_LocalPosition.y
@@ -395,7 +368,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2717116569646528249, guid: 9f009ff8e951d9145a1006382f8a6538, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 59.737152
+      value: 59.27
       objectReference: {fileID: 0}
     - target: {fileID: 2717116569646528249, guid: 9f009ff8e951d9145a1006382f8a6538, type: 3}
       propertyPath: m_LocalRotation.w
@@ -428,6 +401,10 @@ PrefabInstance:
     - target: {fileID: 3738754516813699930, guid: 9f009ff8e951d9145a1006382f8a6538, type: 3}
       propertyPath: m_Name
       value: DeliveryZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 3738754516813699930, guid: 9f009ff8e951d9145a1006382f8a6538, type: 3}
+      propertyPath: m_Layer
+      value: 19
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f009ff8e951d9145a1006382f8a6538, type: 3}
