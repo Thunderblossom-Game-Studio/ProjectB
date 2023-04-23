@@ -104,7 +104,7 @@ public class AICombatHandler : MonoBehaviour
     /// <summary>
     /// This method is the code for the flee state. If the AIBot has packages on them it will go to a delivery zone, if not it will flee to a spawn zone.
     /// </summary>
-    public void Flee()
+    public AIPlayerHandler.CurrentState Flee()
     {
         _deliveryZone = AIDirector.Instance.FindClosestDeliveryZone(transform.position);
 
@@ -127,6 +127,13 @@ public class AICombatHandler : MonoBehaviour
         {
             _carHandler.SetAgentTarget(_spawnPoint);
         }
+
+        if (_packageSystem.PackageAmount == 0 && _health.HealthPercentage >= _fleeThreshold)
+        {
+            return AIPlayerHandler.CurrentState.PICKUP;
+        }
+
+        return AIPlayerHandler.CurrentState.FLEE;
     }
 
     private void LookForTargets()
