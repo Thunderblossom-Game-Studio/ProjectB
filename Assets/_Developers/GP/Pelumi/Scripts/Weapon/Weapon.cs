@@ -1,4 +1,5 @@
 
+using JE.DamageSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,6 +30,8 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected string fireSoundID;
     [SerializeField] protected WeaponSO weaponSO;
     [SerializeField] protected Transform[] firePoint;
+    [SerializeField] protected GameObject hitEffect;
+    [SerializeField] protected ParticleSystem fireParticle;
 
     [Viewable] [SerializeField] protected int currentAmmo;
     [Viewable] [SerializeField] protected WeaponState weaponState;
@@ -56,6 +59,8 @@ public abstract class Weapon : MonoBehaviour
     protected virtual void Update()
     {
         NewHandleHorizontalAndVerticalRotation();
+
+        if (timer < weaponSO.fireRate) timer += Time.deltaTime;
     }
 
     private void NewHandleHorizontalAndVerticalRotation()
@@ -71,25 +76,24 @@ public abstract class Weapon : MonoBehaviour
 
     public void Shoot(Vector3 targetPos, Action onFireSuccess = null)
     {
-        if (weaponState == WeaponState.Reloading) return;
-
-        if (timer <= 0)
-        {
-            TryShootProjectile(targetPos, onFireSuccess);
-            timer = weaponSO.fireRate;
-        }
-        else timer -= Time.deltaTime;
+        if (timer < weaponSO.fireRate || weaponState == WeaponState.Reloading) return;
+        TryShootProjectile(targetPos, onFireSuccess);
     }
 
     public void TryShootProjectile(Vector3 targetPos, Action onFireSuccess = null)
     {
-        if (currentAmmo > 0) ShootProjectile(targetPos, onFireSuccess); else if (weaponState != WeaponState.Reloading) Reload();
+        if (currentAmmo > 0)
+        {
+            ShootProjectile(targetPos, onFireSuccess);
+        }
+        else if (weaponState != WeaponState.Reloading) Reload();
     }
 
     public virtual void ShootProjectile(Vector3 targetPos, Action onFireSuccess = null)
     {
         weaponState = WeaponState.Firing;
         onFireSuccess?.Invoke();
+        timer = 0;
     }
 
     public void ModifyAmmo(int newValue)
@@ -121,5 +125,19 @@ public abstract class Weapon : MonoBehaviour
         ModifyAmmo(weaponSO.maxAmmo);
         weaponState = WeaponState.Idle;
         OnReloadEnd?.Invoke(this, EventArgs.Empty);
+    }
+
+    protected void DealDamage(GameObject damageObject, Vector3 targetPos)
+    {
+        if (!damageObject.TryGetComponent(out IDamageable damageAble))
+        {
+            if (!damageObject.transform.root.TryGetComponent(out damageAble))
+            {
+                Instantiate(hitEffect, targetPos, Quaternion.identity);
+                return;
+            }
+        }
+        Instantiate(hitEffect, targetPos, Quaternion.identity);
+        damageAble.ReduceHealth(weaponSO.projectileDamage);
     }
 }
