@@ -96,13 +96,21 @@ public class AIDecisionHandler : MonoBehaviour
     /// <summary>
     /// This method is the code for the delivery state. It finds the close delivery zone and then sets the agents destination to that delivery zone 
     /// </summary>
-    public void Delivery()
+    public AIPlayerHandler.CurrentState Delivery()
     {
         if (AIDirector.Instance)
         {
             _deliveryPoint = AIDirector.Instance.FindClosestDeliveryZone(transform.position);
         }
 
-        _carHandler.SetAgentTarget(_deliveryPoint.position);
+
+        if (_packageSystem.PackageAmount == 0)
+            return AIPlayerHandler.CurrentState.PICKUP;
+        else
+        {
+            _carHandler.SetAgentTarget(_deliveryPoint.position);
+
+            return AIPlayerHandler.CurrentState.DELIVERY;
+        }
     }
 }
