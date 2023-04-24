@@ -65,13 +65,13 @@ public class AIPlayerHandler : MonoBehaviour
                 _combatHandler.Pursue();
                 break;
             case CurrentState.FLEE:
-                _combatHandler.Flee();
+                _state = _combatHandler.Flee();
                 break;
             case CurrentState.PICKUP:
                 _state = _decisionHandler.Pickup(_newState,_state);
                 break;
             case CurrentState.DELIVERY:
-                _decisionHandler.Delivery();
+                _state = _decisionHandler.Delivery();
                 break;
         }
     }

@@ -160,7 +160,6 @@ public class AICarController : MonoBehaviour
         }
         if (_frontTriggerCheck.active || _backTriggerCheck.active)
         {
-            _agent.isStopped = false;
             RecallAgent();
         }
         if (Mathf.Abs(_agent.transform.position.y - transform.position.y) > _yWarp)
@@ -173,7 +172,11 @@ public class AICarController : MonoBehaviour
     {
         Vector3 pos = transform.position;
         pos += transform.forward * _agentSpawnWeight;
-        SetAgentTarget(pos);
+
+        if (FindPath(pos))
+            SetAgentTarget(pos);
+        else
+            SetAgentTarget(transform.position);
     }
 
     public bool FindPath(Vector3 target)
