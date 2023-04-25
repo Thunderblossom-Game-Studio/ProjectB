@@ -14,11 +14,18 @@ public class Volcano : MonoBehaviour
     public float randomDeviation;
     public float angle;
     public float attackRate;
+    public float debugTargetModifier;
 
+    private VolcanoDetector detector;
     private float timer;
     private Vector3 tempTarget;
     private float distance;
     public float timeToReachTarget;
+
+    private void Start()
+    {
+        detector = GetComponentInParent<VolcanoDetector>();
+    }
 
     private void Update()
     {
@@ -45,12 +52,12 @@ public class Volcano : MonoBehaviour
     private void Attack()
     {
         if (target == null) return;
-        tempTarget = RandomVector(target.position);
+        tempTarget = RandomVector(target.transform.position);
         GameObject proj = Instantiate(projectile, origin.position, Quaternion.identity);
         StartCoroutine(Curve(proj, speed, angle, origin.position, tempTarget));
     }
 
-    private Vector3 RandomVector(Vector3 vector)
+    public Vector3 RandomVector(Vector3 vector)
     {
         vector += new Vector3(UnityEngine.Random.Range(-randomDeviation, randomDeviation), 0, UnityEngine.Random.Range(-randomDeviation, randomDeviation));
         return vector;
