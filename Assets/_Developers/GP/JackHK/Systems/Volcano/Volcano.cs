@@ -5,22 +5,41 @@ using UnityEngine;
 
 public class Volcano : MonoBehaviour
 {
-    public GameObject projectile;
-    public GameObject warning;
-    public Transform origin;
-    public Transform target;
-    public bool targetsPlayer;
-    public float speed;
-    public float randomDeviation;
-    public float angle;
-    public float attackRate;
-    public float debugTargetModifier;
-
     private VolcanoDetector detector;
     private float timer;
     private Vector3 tempTarget;
     private float distance;
     public float timeToReachTarget;
+
+    [Tooltip("The projectile that the volcano will shoot")]
+    public GameObject projectile;
+
+    [Tooltip("The warning displayed before projectile hits target")]
+    public GameObject warning;
+
+    [Tooltip("Where the projectile fires from")]
+    public Transform origin;
+
+    [Tooltip("Does this volcano target the player's position or a random spot?")]
+    public bool targetsPlayer;
+
+    [Tooltip("Speed at which the projectile travels")]
+    public float speed;
+
+    [Tooltip("Randomness in deviation where the projectile will land")]
+    public float randomDeviation;
+
+    [Tooltip("Vertical angle of the projectile path")]
+    public float angle;
+
+    [Tooltip("Attack fire rate in seconds")]
+    public float attackRate;
+
+    [Tooltip("Ignore this. Used for debugging only")]
+    public float debugTargetModifier;
+
+    // The target of the volcano.
+    [HideInInspector] public Transform target;
 
     private void Start()
     {

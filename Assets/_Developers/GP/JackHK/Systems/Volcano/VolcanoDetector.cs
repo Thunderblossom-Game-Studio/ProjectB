@@ -5,10 +5,15 @@ using UnityEngine;
 
 public class VolcanoDetector : MonoBehaviour
 {
+    private Volcano volcano;
+    
+    // The current target of the volcano.
+    [HideInInspector] private GameObject targetObj;
+
+    [Tooltip("The layers that the volcano can detect")]
     public LayerMask detectingLayers;
 
-    private Volcano volcano;
-    public GameObject targetObj;
+    [Tooltip("Do not touch. Re-locate the blue circle in the scene view instead")]
     public GameObject randomSpot;
 
 
