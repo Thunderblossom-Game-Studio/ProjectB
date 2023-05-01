@@ -53,6 +53,10 @@ public class GameMenu : BaseMenu<GameMenu>
 
     [Header("Health")]
     [SerializeField] private CanvasGroup _healthView;
+    [SerializeField] private Image _healthBar;
+
+    [Header("Boost")]
+    [SerializeField] private Image _boostBar;
 
     [Header("Gameplay Events")]
     [SerializeField] private GameEvent _onTimerUpdate;
@@ -196,7 +200,13 @@ public class GameMenu : BaseMenu<GameMenu>
 
     public void SetHealthView(float amount)
     {
-        _healthView.alpha =  1 - amount;
+        _healthView.alpha = 1 - amount;
+        _healthBar.fillAmount = amount;
+    }
+
+    public void SetBoostBar(float amount)
+    {
+        _boostBar.fillAmount = amount;
     }
 
     public void ToggleVisibility(bool status )

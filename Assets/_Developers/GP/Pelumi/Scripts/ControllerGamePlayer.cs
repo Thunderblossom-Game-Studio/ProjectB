@@ -26,6 +26,7 @@ public class ControllerGamePlayer : GamePlayer
         }
 
         GameMenu.GetInstance()?.SetCarSpeed(carController.GetSpeed().ToString("F0") + " Km/h");
+        GameMenu.GetInstance()?.SetBoostBar(carController.NormalisedBoostAmount());
     }
 
     private void FixedUpdate()

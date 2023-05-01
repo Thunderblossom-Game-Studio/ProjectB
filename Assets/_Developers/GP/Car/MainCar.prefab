@@ -5931,14 +5931,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isImmune: 0
   _currentHealth: 0
-  _spawnHealth: 1e+15
-  _maximumHealth: 1e+15
-  _minimumHealth: 1
+  _spawnHealth: 100
+  _maximumHealth: 100
+  _minimumHealth: 0
   _regenerationInterval: 0
   _regenerationAmount: 0
   _onHealthChange:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6710946267986816467}
+        m_TargetAssemblyTypeName: ControllerGamePlayer, Assembly-CSharp
+        m_MethodName: OnHealthChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _onReduceHealth:
     m_PersistentCalls:
       m_Calls: []

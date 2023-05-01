@@ -429,6 +429,8 @@ public class ArcadeCarController : MonoBehaviour
 
     public float GetSpeed() => currentSpeed;
 
+    public float NormalisedBoostAmount() => currentBoostDuration / boostDuration;
+
     public void HandleBoost()
     {
         if (boostInput)
