@@ -1,6 +1,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -158,6 +159,7 @@ public class AICarController : MonoBehaviour
         {
             _agent.isStopped = false;
         }
+
         if (_frontTriggerCheck.active || _backTriggerCheck.active)
         {
             RecallAgent();
@@ -208,6 +210,7 @@ public class AICarController : MonoBehaviour
 
             if (_idleTimer > _maxIdleTimer)
             {
+
                 _stuck = true;
                 transform.position = _agent.transform.position;
                 transform.rotation = _agent.transform.rotation;
@@ -215,7 +218,8 @@ public class AICarController : MonoBehaviour
         }
         else
         {
-            _stuck = false;
+            _stuck = false; 
+            
             _idleTimer = 0f;
         }
     }

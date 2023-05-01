@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AIDecisionHandler : MonoBehaviour
 {
     private AICarController _carHandler;
     private PackageSystem _packageSystem;
 
-    [Viewable] private Transform _deliveryPoint;
+    [SerializeField] private NavMeshAgent _agent;
+
+    [Viewable] public Transform _deliveryPoint;
 
     private EntitySpawner _packageSpawner;
     private int _numOfAttempts = 3;
@@ -105,12 +108,20 @@ public class AIDecisionHandler : MonoBehaviour
 
 
         if (_packageSystem.PackageAmount == 0)
+        {
+
             return AIPlayerHandler.CurrentState.PICKUP;
+        }
         else
         {
             _carHandler.SetAgentTarget(_deliveryPoint.position);
+            _carHandler.MoveTarget = _deliveryPoint.gameObject;
+                _agent.isStopped = true;
+                _agent.isStopped = false;
 
             return AIPlayerHandler.CurrentState.DELIVERY;
         }
     }
+
+
 }
