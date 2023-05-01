@@ -5931,9 +5931,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isImmune: 0
   _currentHealth: 0
-  _spawnHealth: 100
-  _maximumHealth: 100
-  _minimumHealth: 0
+  _spawnHealth: 1e+15
+  _maximumHealth: 1e+15
+  _minimumHealth: 1
   _regenerationInterval: 0
   _regenerationAmount: 0
   _onHealthChange:
@@ -6083,9 +6083,9 @@ MonoBehaviour:
   driftingDecelerationRate: 0.05
   reverseSpeedMultiplier: 5
   brakePower: 7500
-  breakDecelerationRate: 0.5
+  breakDecelerationRate: 0.01
   _steeringMultiplier: 1.5
-  maxSteeringAngle: 40
+  maxSteeringAngle: 30
   boostForce: 10
   boostDuration: 5
   boostReductionSpeed: 1
@@ -11495,7 +11495,7 @@ GameObject:
   - component: {fileID: 1375342073}
   m_Layer: 9
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
