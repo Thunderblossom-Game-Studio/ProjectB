@@ -5983,6 +5983,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80c230f41ba2eea46a04c993611a57d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _agent: {fileID: 0}
+  _deliveryPoint: {fileID: 0}
 --- !u!114 &4628055793581007800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11837,7 +11839,6 @@ MonoBehaviour:
   _prefabs:
   - {fileID: 5676333477140487690, guid: 7f1a74560e12b0244b97855cdfd21ef8, type: 3}
   - {fileID: 5676333477140487690, guid: b244b0bae907de34ba04a931acbe1b66, type: 3}
-  - {fileID: 7737993145323667219, guid: 7421455426133044792a35d36882d91d, type: 3}
 --- !u!1 &4668393050658716932
 GameObject:
   m_ObjectHideFlags: 0
@@ -12180,8 +12181,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6526028886044331353}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.85, z: 4.58}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 1.85, z: 4.65}
+  m_LocalScale: {x: 1, y: 1, z: 0.51298}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 941969982583904907}
@@ -12198,7 +12199,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 2.2186794, z: 2.87}
+  m_Size: {x: 3, y: 2.2186794, z: 5.79}
   m_Center: {x: 0, y: -0.39066023, z: 0}
 --- !u!114 &4165763358179291033
 MonoBehaviour:
@@ -12215,7 +12216,6 @@ MonoBehaviour:
   _prefabs:
   - {fileID: 5676333477140487690, guid: 7f1a74560e12b0244b97855cdfd21ef8, type: 3}
   - {fileID: 5676333477140487690, guid: b244b0bae907de34ba04a931acbe1b66, type: 3}
-  - {fileID: 7737993145323667219, guid: 7421455426133044792a35d36882d91d, type: 3}
 --- !u!1 &6610442432087082167
 GameObject:
   m_ObjectHideFlags: 0
@@ -12494,7 +12494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05afe5b8dcf50ca468528c4571c5f878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visual: {fileID: 0}
+  visual: {fileID: 2942760421706376013}
   content: {fileID: 6306006465613173196}
   rotateVertical: 1
   rightRotationLimit: 180
@@ -12506,11 +12506,20 @@ MonoBehaviour:
   weaponSO: {fileID: 11400000, guid: 68268341ce3857d4892d302995dc1593, type: 2}
   firePoint:
   - {fileID: 3534655103060611777}
+  hitEffect: {fileID: 0}
+  fireParticle: {fileID: 0}
   currentAmmo: 0
   weaponState: 0
   timer: 0
   bulletPerShot: 0
-  spreadAngle: 10
+  bulletSpread: 0
+  virtualBulletSize: 0.2
+  hitEffectLinePrefab: {fileID: 0}
+  hitEffectLines: []
+  _hitEntities: []
+  damageLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &7786636909677464759
 GameObject:
   m_ObjectHideFlags: 0
@@ -12555,7 +12564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4398a01757d91d4394e7a91d4bf090a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visual: {fileID: 0}
+  visual: {fileID: 198176051261551454}
   content: {fileID: 7686700300035353308}
   rotateVertical: 0
   rightRotationLimit: 180
@@ -12567,6 +12576,8 @@ MonoBehaviour:
   weaponSO: {fileID: 11400000, guid: 430526edd0f905646982879f60bbc628, type: 2}
   firePoint:
   - {fileID: 9004862188932132654}
+  hitEffect: {fileID: 0}
+  fireParticle: {fileID: 0}
   currentAmmo: 0
   weaponState: 0
   timer: 0
@@ -13305,7 +13316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c68221e66c9043d43ac52a8350c993fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visual: {fileID: 0}
+  visual: {fileID: 1111883745770819285}
   content: {fileID: 2389190170596337472}
   rotateVertical: 1
   rightRotationLimit: 180
@@ -13318,9 +13329,16 @@ MonoBehaviour:
   firePoint:
   - {fileID: 7835724667886049124}
   - {fileID: 7396680833622595456}
+  hitEffect: {fileID: 0}
+  fireParticle: {fileID: 0}
   currentAmmo: 0
   weaponState: 0
   timer: 0
+  virtualBulletSize: 0.2
+  _hitEntities: []
+  damageLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1001 &6703013699955980199
 PrefabInstance:
   m_ObjectHideFlags: 0
