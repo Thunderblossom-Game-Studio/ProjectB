@@ -17,7 +17,10 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
         DeliverPackage,
         ReachedWeaponArea,
         ReachedHat,
-        HasDeliveredVolcanoPackage
+        HasDeliveredVolcanoPackage,
+        HasTurnRight, 
+        HasTurnLeft,
+        HasJumped
     }
 
     [SerializeField] private GameEvent infoEvent;
@@ -36,9 +39,9 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     [SerializeField] private Transform _destinationArea;
     [SerializeField] private TutorialInstruction _driveControlIntroText;
     [SerializeField] private TutorialInstruction _driveForwardText;
+    [SerializeField] private TutorialInstruction _breakText;
     [SerializeField] private TutorialInstruction _turnLeftText;
     [SerializeField] private TutorialInstruction _turnRightText;
-    [SerializeField] private TutorialInstruction _breakText;
     [SerializeField] private TutorialInstruction _reachDestinationText;
 
     [Header("Package State")]
@@ -53,6 +56,10 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     [SerializeField] private TutorialInstruction _shootingInputText;
     [SerializeField] private TutorialInstruction _shootingWeaponSwapText;
 
+    [Header("Jump and Boost State")]
+    [SerializeField] private TutorialInstruction _jumpText;
+    [SerializeField] private TutorialInstruction _boostText;
+
     [Header("Hat State")]
     [SerializeField] private Transform _magicHatTrigger;
     [SerializeField] private TutorialInstruction _magicHatText;
@@ -64,7 +71,9 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     [SerializeField] private TutorialInstruction _volcanoIntroText;
     [SerializeField] private TutorialInstruction _volcanoPackageText;
 
-    [Header("Tutorial Walls")] 
+    [Header("Tutorial Walls")]
+    [SerializeField] private GameObject _boostStopWall;
+    [SerializeField] private GameObject _breakStopWall;
     [SerializeField] private GameObject _drivingStopWall;
     [SerializeField] private GameObject _shootingStopWall;
     [SerializeField] private GameObject _volcanoStopWall;
@@ -84,11 +93,14 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
     [Viewable] private bool _hasReachedWeaponArea;
     [Viewable] private bool _hasShootTargets;
 
+    [Viewable] private bool _hasJumped;
+    [Viewable] private bool _hasBoost;
+
     [Viewable] private bool _hasEnteredHat;
 
     [Viewable] private bool _hasDeliveredVolcanoPackage;
 
-    [Viewable] private float _buttonPressThresshold = 1;
+    [Viewable] private float _buttonPressThresshold = .025f;
     [Viewable] private float _currentThreeshold;
 
     private IEnumerator Start() 
@@ -105,6 +117,7 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
         yield return ReachDestination();
         yield return PackageState();
         yield return ShootingState();
+        yield return JumpAndBoostState();
         yield return MagicHatState();
 
         yield return Area2CutSceneState();
@@ -122,7 +135,6 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
 
     private IEnumerator WelcomeState()
     {
-        yield return new WaitForSeconds(2f);
         yield return TriggerInstrution(_welcomeText);
     }
 
@@ -131,49 +143,37 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
         yield return TriggerInstrution(_driveControlIntroText);
 
         yield return TriggerInstrution(_driveForwardText);
-
         while (!_hasDriveFoward)
         {
             InputConditionCheck(ref _hasDriveFoward, InputManager.Instance.HandleAccelerateInput().ReadValue<float>() > 0);
             yield return null;
         }
 
-        yield return DisplaySuccess();
-
-        yield return TriggerInstrution(_turnLeftText);
-
-        while (!_hasTurnLeft)
-        {
-            InputConditionCheck(ref _hasTurnLeft, InputManager.Instance.HandleMoveInput().ReadValue<Vector2>().x < 0);
-            yield return null;
-        }
-
-        yield return DisplaySuccess();
-
-        yield return TriggerInstrution(_turnRightText);
-
-        while (!_hasTurnRight)
-        {
-            InputConditionCheck(ref _hasTurnRight, InputManager.Instance.HandleMoveInput().ReadValue<Vector2>().x > 0);
-            yield return null;
-        }
-
-        yield return DisplaySuccess();
-
         yield return TriggerInstrution(_breakText);
-
         while (!_hasBreaked)
         {
             InputConditionCheck(ref _hasBreaked, InputManager.Instance.HandleBrakeInput().IsPressed());
             yield return null;
         }
-
+        StartCoroutine(Juicer.FadeOutMaterial(_breakStopWall.GetComponent<Renderer>().material, .25f, () => _breakStopWall.SetActive(false)));
         yield return DisplaySuccess();
+
+        yield return TriggerInstrution(_turnLeftText);
+        while (!_hasTurnLeft)
+        {
+            yield return null;
+        }
+
+        yield return TriggerInstrution(_turnRightText);
+        while (!_hasTurnRight)
+        {
+            yield return null;
+        }
     }
 
     private IEnumerator ReachDestination()
     {
-        StartCoroutine(Juicer.FadeOutMaterial(_drivingStopWall.GetComponent<Renderer>().material, 1f, () => _drivingStopWall.SetActive(false)));
+        StartCoroutine(Juicer.FadeOutMaterial(_drivingStopWall.GetComponent<Renderer>().material, .1f, () => _drivingStopWall.SetActive(false)));
 
         WaypointMarker.Instance.SetTarget(_destinationArea.transform);
 
@@ -229,7 +229,22 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
 
         yield return new WaitUntil(() => Input.GetKey(KeyCode.Tab));
 
-        StartCoroutine(Juicer.FadeOutMaterial(_shootingStopWall.GetComponent<Renderer>().material, 1f, () => _shootingStopWall.SetActive(false)));
+        StartCoroutine(Juicer.FadeOutMaterial(_shootingStopWall.GetComponent<Renderer>().material, .25f, () => _shootingStopWall.SetActive(false)));
+    }
+
+    private IEnumerator JumpAndBoostState()
+    {
+        yield return TriggerInstrution(_jumpText);
+        yield return new WaitUntil(() => _hasJumped);
+
+        yield return TriggerInstrution(_boostText);
+        while (!_hasBoost)
+        {
+            InputConditionCheck(ref _hasBoost, InputManager.Instance.HandleBoostInput().IsPressed());
+            yield return null;
+        }
+        StartCoroutine(Juicer.FadeOutMaterial(_boostStopWall.GetComponent<Renderer>().material, .05f, () => _boostStopWall.SetActive(false)));
+        yield return DisplaySuccess();
     }
 
     private IEnumerator MagicHatState()
@@ -271,7 +286,7 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
 
         infoEvent.Raise(this, new InfoHUDData { Enable = false });
 
-        StartCoroutine(Juicer.FadeOutMaterial(_volcanoStopWall.GetComponent<Renderer>().material, 1f, () => _volcanoStopWall.SetActive(false)));
+        StartCoroutine(Juicer.FadeOutMaterial(_volcanoStopWall.GetComponent<Renderer>().material, .25f, () => _volcanoStopWall.SetActive(false)));
     }
 
     private IEnumerator BattleEnemyState()
@@ -311,6 +326,15 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
             case TutorialAttribute.HasDeliveredVolcanoPackage:
                 _hasDeliveredVolcanoPackage = true;
                 return;
+            case TutorialAttribute.HasTurnRight:
+                _hasTurnRight = true;
+                return;
+            case TutorialAttribute.HasTurnLeft:
+                _hasTurnLeft = true;
+                return;
+            case TutorialAttribute.HasJumped:
+                _hasJumped = true;
+                return;
         }
     }
 
@@ -348,5 +372,5 @@ public class TutorialInstruction
 {
     public string Message;
     public string AudioID;
-    public float duration = 2;
+    public float duration = .25f;
 }

@@ -5938,7 +5938,19 @@ MonoBehaviour:
   _regenerationAmount: 0
   _onHealthChange:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6710946267986816467}
+        m_TargetAssemblyTypeName: ControllerGamePlayer, Assembly-CSharp
+        m_MethodName: OnHealthChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _onReduceHealth:
     m_PersistentCalls:
       m_Calls: []
@@ -6083,9 +6095,9 @@ MonoBehaviour:
   driftingDecelerationRate: 0.05
   reverseSpeedMultiplier: 5
   brakePower: 7500
-  breakDecelerationRate: 0.5
+  breakDecelerationRate: 0.01
   _steeringMultiplier: 1.5
-  maxSteeringAngle: 40
+  maxSteeringAngle: 30
   boostForce: 10
   boostDuration: 5
   boostReductionSpeed: 1
@@ -11495,7 +11507,7 @@ GameObject:
   - component: {fileID: 1375342073}
   m_Layer: 9
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
