@@ -119,8 +119,6 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
         yield return ShootingState();
         yield return JumpAndBoostState();
         yield return MagicHatState();
-
-        yield return Area2CutSceneState();
         yield return VolcanoState();
         //  yield return BattleEnemyState();
         //  yield return GoodbyeState();
@@ -260,12 +258,6 @@ public class TutorialStateManager : Singleton<TutorialStateManager>
         WaypointMarker.Instance.SetTarget(null);
 
         infoEvent.Raise(this, new InfoHUDData { Enable = false });
-    }
-
-    private IEnumerator Area2CutSceneState()
-    {
-        area2CutSceneTrigger.StartCutScene();
-        yield return new WaitUntil(() => _hasCutSceneComplected);
     }
 
     private IEnumerator VolcanoState()
